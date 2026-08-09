@@ -1,0 +1,75 @@
+<?php //Eccube%255CController%255CAdmin%255CSetting%255CShop%255CCalendarController%2523index
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Attribute\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Attribute\\Route')),
+        clone $p['Symfony\\Component\\Routing\\Attribute\\Route'],
+        clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Attribute\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/setting/shop/calendar',
+                '/%eccube_admin_route%/setting/shop/calendar/new',
+            ],
+            'methods' => [
+                [
+                    'GET',
+                    'POST',
+                ],
+                [
+                    'GET',
+                    'POST',
+                ],
+            ],
+            'schemes' => [
+                [],
+                [],
+            ],
+            'name' => [
+                'admin_setting_shop_calendar',
+                'admin_setting_shop_calendar_new',
+            ],
+            'requirements' => [
+                [],
+                [],
+            ],
+            'options' => [
+                [],
+                [],
+            ],
+            'defaults' => [
+                [],
+                [],
+            ],
+            'host' => [
+                null,
+                null,
+            ],
+            'condition' => [
+                null,
+                null,
+            ],
+            'priority' => [
+                null,
+                null,
+            ],
+            'env' => [
+                null,
+                null,
+            ],
+        ],
+        'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template' => [
+            'template' => [
+                2 => '@admin/Setting/Shop/calendar.twig',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+        $o[2],
+    ],
+    []
+)];

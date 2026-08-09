@@ -1,0 +1,44 @@
+{
+    "generated_at": "2026-03-18T15:37:28+09:00",
+    "source": "DataMigrationBackup42",
+    "components": [
+        "database.sql",
+        "databases.json",
+        "theme_default.tar.gz",
+        "precheck.json"
+    ],
+    "precheck_has_warning": false,
+    "backup_profile": "migrate_default",
+    "source_plugins": [
+        {
+            "code": "DataMigrationBackup42",
+            "name": "データ移行向けバックアップ生成プラグイン for EC-CUBE 3",
+            "version": "1.0.10",
+            "enabled": true
+        }
+    ],
+    "options": {
+        "backup_db": true,
+        "db_scope": "all",
+        "backup_plugin": false,
+        "backup_assets": true,
+        "backup_app_assets": true,
+        "backup_theme": true,
+        "theme_code": "default",
+        "theme_name": "デフォルト"
+    },
+    "asset_files": [
+        {
+            "name": "assets_html_20260318153727.tar.gz",
+            "size": 1056130,
+            "kind": "assets_html",
+            "destination": "html/upload, html/user_data"
+        },
+        {
+            "name": "assets_app_20260318153727.tar.gz",
+            "size": 98,
+            "kind": "assets_app",
+            "destination": "app/template/user_data"
+        }
+    ]
+}

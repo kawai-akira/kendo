@@ -1,0 +1,31 @@
+<?php //Eccube%255CEntity%255CAuthorityRole%2524deny_url
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'deny_url',
+            ],
+            'type' => [
+                'string',
+            ],
+            'length' => [
+                4000,
+            ],
+            'precision' => [
+                null,
+            ],
+            'scale' => [
+                null,
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+)];

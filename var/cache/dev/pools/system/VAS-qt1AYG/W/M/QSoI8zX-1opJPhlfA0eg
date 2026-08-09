@@ -1,0 +1,51 @@
+<?php //Eccube%255CController%255CAdmin%255CProduct%255CProductController%2523imageLoad
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Attribute\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Attribute\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Attribute\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/product/product/image/load',
+            ],
+            'methods' => [
+                [
+                    'GET',
+                ],
+            ],
+            'schemes' => [
+                [],
+            ],
+            'name' => [
+                'admin_product_image_load',
+            ],
+            'requirements' => [
+                [],
+            ],
+            'options' => [
+                [],
+            ],
+            'defaults' => [
+                [],
+            ],
+            'host' => [
+                null,
+            ],
+            'condition' => [
+                null,
+            ],
+            'priority' => [
+                null,
+            ],
+            'env' => [
+                null,
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+)];

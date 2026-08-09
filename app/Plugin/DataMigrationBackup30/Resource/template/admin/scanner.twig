@@ -1,0 +1,2560 @@
+{% extends 'default_frame.twig' %}
+
+{% block title %}{{ 'data_migration_backup.admin.nav.scanner'|trans }}{% endblock %}
+{% block sub_title %}{{ 'data_migration_backup.admin.nav.title'|trans }}{% endblock %}
+{% set menus = ['data_migration_backup', 'data_migration_backup_scanner'] %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<style>
+    .dmb-admin-screen {
+        font-size: 1.4rem;
+        line-height: 1.6;
+    }
+    .dmb-admin-screen .box-header .box-title,
+    .dmb-admin-screen .card-header {
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    .dmb-admin-screen .modal-header .modal-title {
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    .dmb-admin-screen .small,
+    .dmb-admin-screen .btn,
+    .dmb-admin-screen .form-control,
+    .dmb-admin-screen .select2-container--default .select2-selection--single .select2-selection__rendered {
+        font-size: 1.4rem;
+    }
+    .dmb-admin-screen table thead th {
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+    .card {
+        position: relative;
+        margin-bottom: 20px;
+        background: #fff;
+        border-top: 3px solid #d2d6de;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+        padding: 10px;
+        border-bottom: 1px solid #f4f4f4;
+        font-size: 16px;
+        font-weight: 700;
+    }
+    .card-body {
+        padding: 10px;
+    }
+    .form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 700;
+    }
+    .fw-bold,
+    .font-weight-bold {
+        font-weight: 700;
+    }
+    .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+    .form-check-input {
+        flex: 0 0 auto;
+        margin: 3px 0 0;
+    }
+    .form-check-label {
+        display: block;
+        margin: 0;
+        font-weight: normal;
+        line-height: 1.4;
+    }
+    .text-end {
+        text-align: right;
+    }
+    .mb-0 {
+        margin-bottom: 0;
+    }
+    .mb-2 {
+        margin-bottom: 10px;
+    }
+    .mb-3 {
+        margin-bottom: 15px;
+    }
+    .mb-4 {
+        margin-bottom: 20px;
+    }
+    .mt-1 {
+        margin-top: 5px;
+    }
+    .mt-2 {
+        margin-top: 10px;
+    }
+    .mt-3 {
+        margin-top: 15px;
+    }
+    .ml-1 {
+        margin-left: 5px;
+    }
+    .mr-2 {
+        margin-right: 10px;
+    }
+    .mx-2 {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .ms-1 {
+        margin-left: 5px;
+    }
+    .d-flex {
+        display: flex;
+    }
+    .justify-content-between {
+        justify-content: space-between;
+    }
+    .justify-content-center {
+        justify-content: center;
+    }
+    .align-items-center {
+        align-items: center;
+    }
+    .dmb-site-info-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .dmb-site-info-arrow svg {
+        display: block;
+        margin: 0 auto;
+    }
+    @media (min-width: 992px) {
+        .dmb-site-info-row {
+            display: flex;
+            align-items: center;
+        }
+        .dmb-site-info-row > [class*="col-md-"] {
+            float: none;
+        }
+        .dmb-site-info-arrow {
+            min-height: 100%;
+        }
+    }
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+    .badge {
+        display: inline-block;
+        min-width: 10px;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+    }
+    .bg-success {
+        background: #00a65a;
+    }
+    .bg-warning {
+        background: #f39c12;
+    }
+    .bg-info {
+        background: #00c0ef;
+    }
+    .table-light > th,
+    .table-light > td,
+    tr.table-light > th,
+    tr.table-light > td {
+        background: #f9fafc;
+    }
+    .c-contentsArea__cols.dmb-layout-cols,
+    .c-contentsArea__cols.dmb-layout-cols > .c-contentsArea__primaryCol,
+    .c-contentsArea__cols.dmb-layout-cols .c-primaryCol {
+        min-width: 0;
+        overflow-x: hidden;
+    }
+    .c-contentsArea__cols.dmb-layout-cols {
+        display: block;
+        table-layout: fixed;
+        width: 100%;
+    }
+    .c-contentsArea__cols.dmb-layout-cols > .c-contentsArea__primaryCol {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+    }
+    .dmb-step-dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 8px;
+        background: #e5e7eb;
+    }
+    .dmb-step-active {
+        background: #2563eb;
+        color: #fff;
+    }
+    .dmb-connector-table th,
+    .dmb-connector-table td {
+        vertical-align: middle;
+    }
+    #dmbConnectorScanWrap {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+    #dmbConnectorScanWrap .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    .dmb-connector-table {
+        width: 100%;
+        table-layout: fixed;
+    }
+    .dmb-connector-table th.dmb-col-plugin,
+    .dmb-connector-table td.dmb-col-plugin {
+        width: 50%;
+    }
+    .dmb-connector-table th.dmb-col-target,
+    .dmb-connector-table td.dmb-col-target {
+        width: 50%;
+    }
+    .dmb-connector-table td {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+    .dmb-connector-table code {
+        white-space: normal;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+    }
+    .dmb-col-target .form-control,
+    .dmb-col-target .select2-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+    .dmb-theme-issue-list {
+        margin: 8px 0 0;
+        padding-left: 18px;
+    }
+    .dmb-theme-issue-list li {
+        margin-bottom: 4px;
+    }
+    .dmb-theme-issue-list li:last-child {
+        margin-bottom: 0;
+    }
+    #dmbConnectorScanWrap .select2-container--default .select2-selection--single .select2-selection__rendered {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .dmb-module-status-trigger {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        margin-left: 6px;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+    }
+    .dmb-module-status-trigger:hover,
+    .dmb-module-status-trigger:focus {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+    .dmb-module-col {
+        margin-bottom: 10px;
+    }
+    .dmb-plugin-badge-wrap .badge {
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+    .select2-container--default .select2-selection--single {
+        height: calc(1.5em + 0.75rem + 2px);
+        border: 1px solid #ced4da;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: calc(1.5em + 0.75rem);
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: calc(1.5em + 0.75rem + 2px);
+    }
+    .dmb-preview-table-wrap {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+    .dmb-step3-preview-section {
+        display: none;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+    }
+    .dmb-preview-table-wrap .dt-container,
+    .dmb-preview-table-wrap .dataTables_wrapper,
+    .dmb-preview-table-wrap .dataTables_scroll,
+    .dmb-preview-table-wrap .dataTables_scrollHead,
+    .dmb-preview-table-wrap .dataTables_scrollBody {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+    .dmb-preview-table-wrap .dataTables_wrapper {
+        overflow-x: hidden;
+    }
+    .dmb-preview-table-wrap .dataTables_scroll {
+        overflow-x: auto !important;
+    }
+    .dmb-preview-table-wrap .dataTables_scrollHead {
+        overflow: hidden !important;
+    }
+    .dmb-preview-table-wrap .dataTables_scrollBody {
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+    }
+    .dmb-preview-table-wrap table.dataTable {
+        margin: 0 !important;
+    }
+    .dmb-preview-table-wrap table.dataTable.nowrap th,
+    .dmb-preview-table-wrap table.dataTable.nowrap td {
+        white-space: nowrap;
+    }
+    .dmb-preview-table-wrap table.dataTable thead th,
+    .dmb-preview-table-wrap table.dataTable tbody td {
+        font-size: 1.4rem !important;
+        line-height: 1.45;
+    }
+    .dmb-table-stats-scroll {
+        min-height: 300px;
+        max-height: 300px;
+        overflow: auto;
+    }
+    .dmb-guide-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #eef1f5;
+    }
+    .dmb-guide-step:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+    .dmb-guide-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f4f7fb;
+        color: #2d6cdf;
+    }
+    .dmb-guide-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+    .dmb-guide-title {
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+    .dmb-guide-result {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 6px;
+        padding: 12px 14px;
+        margin-bottom: 14px;
+    }
+    .dmb-guide-result-success {
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        background: transparent;
+        border: 0;
+        color: #198754;
+        padding: 10px 0 14px;
+    }
+    .dmb-guide-result-failed {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+    }
+    .dmb-guide-result-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.9);
+    }
+    .dmb-guide-result-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+    .dmb-guide-result-success .dmb-guide-result-icon {
+        background: transparent;
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        border: 2px solid rgba(25, 135, 84, 0.25);
+    }
+    .dmb-guide-result-success .dmb-guide-result-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+    .dmb-guide-result-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+    .dmb-guide-result-success .dmb-guide-result-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+    .modal-backdrop {
+        z-index: 1040 !important;
+    }
+    .modal {
+        z-index: 1050 !important;
+    }
+    .modal.fade,
+    .modal.fade .modal-dialog,
+    .modal.fade .modal-content,
+    .modal-backdrop.fade {
+        transition: none !important;
+        animation: none !important;
+    }
+    .modal.fade .modal-dialog {
+        transform: none !important;
+    }
+    .modal-dialog {
+        margin: 40px auto;
+    }
+    #dmbStartMigrationGuideModal.in,
+    #dmbStartMigrationGuideModal.show,
+    #dmbTargetFileGuideModal.in,
+    #dmbTargetFileGuideModal.show,
+    #dmbConnectorNgConfirmModal.in,
+    #dmbConnectorNgConfirmModal.show,
+    #dmbThemeIssueLogModal.in,
+    #dmbThemeIssueLogModal.show,
+    #dmbModuleTablesModal.in,
+    #dmbModuleTablesModal.show {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+    }
+    #dmbStartMigrationGuideModal .modal-dialog,
+    #dmbTargetFileGuideModal .modal-dialog,
+    #dmbConnectorNgConfirmModal .modal-dialog,
+    #dmbThemeIssueLogModal .modal-dialog,
+    #dmbModuleTablesModal .modal-dialog {
+        width: 100%;
+        max-width: 960px;
+        margin: 0;
+    }
+    #dmbStartMigrationGuideModal .modal-content,
+    #dmbTargetFileGuideModal .modal-content,
+    #dmbConnectorNgConfirmModal .modal-content,
+    #dmbModuleTablesModal .modal-content {
+        max-height: calc(100vh - 24px);
+        overflow: auto;
+    }
+    #dmbThemeIssueLogModal .modal-content {
+        max-height: calc(100vh - 24px);
+        overflow: auto;
+    }
+    #dmbThemeIssueLogModal .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    #dmbThemeIssueLogModal table {
+        width: 100%;
+        table-layout: fixed;
+    }
+    #dmbThemeIssueLogModal th,
+    #dmbThemeIssueLogModal td {
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        vertical-align: top;
+    }
+    #dmbThemeIssueLogModal td code,
+    #dmbThemeIssueLogModal th code {
+        white-space: normal;
+        word-break: normal;
+        overflow-wrap: break-word;
+        display: block;
+    }
+    #dmbThemeIssueLogModal th:nth-child(1),
+    #dmbThemeIssueLogModal td:nth-child(1) {
+        width: 46%;
+    }
+    #dmbThemeIssueLogModal th:nth-child(2),
+    #dmbThemeIssueLogModal td:nth-child(2) {
+        width: 54%;
+    }
+    .dmb-theme-issue-code {
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+    .dmb-theme-issue-path {
+        display: block;
+        white-space: normal;
+        word-break: normal;
+        overflow-wrap: break-word;
+    }
+    .dmb-theme-issue-file-note {
+        margin-top: 4px;
+        color: #6c757d;
+        font-size: 12px;
+    }
+    .dmb-theme-status-note {
+        padding-top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/i18n/ja.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script>
+$(function () {
+    const currentStep = Number('{{ step }}');
+    const dataTableLang = {
+        emptyTable: 'データがありません',
+        info: '_TOTAL_件中 _START_〜_END_件を表示',
+        infoEmpty: '0件中 0〜0件を表示',
+        infoFiltered: '（全 _MAX_ 件より抽出）',
+        lengthMenu: '_MENU_ 件表示',
+        loadingRecords: '読み込み中...',
+        processing: '処理中...',
+        search: '検索:',
+        zeroRecords: '一致するレコードがありません',
+        paginate: {
+            first: '先頭',
+            last: '最後',
+            next: '次へ',
+            previous: '前へ'
+        },
+        aria: {
+            sortAscending: ': 昇順で並び替える',
+            sortDescending: ': 降順で並び替える'
+        }
+    };
+
+    function extractErrorMessage(xhr, fallbackText) {
+        if (xhr && xhr.responseJSON && xhr.responseJSON.message) {
+            return String(xhr.responseJSON.message);
+        }
+
+        return String(fallbackText || '{{ 'data_migration_backup.admin.message.failed'|trans|e('js') }}');
+    }
+
+    function appendModalToBody(selector) {
+        const $modal = $(selector);
+        if ($modal.length > 0 && !$modal.parent().is('body')) {
+            $modal.appendTo(document.body);
+        }
+    }
+
+    appendModalToBody('#dmbStartMigrationGuideModal');
+    appendModalToBody('#dmbTargetFileGuideModal');
+    appendModalToBody('#dmbConnectorNgConfirmModal');
+    appendModalToBody('#dmbModuleTablesModal');
+
+    if (currentStep === 1) {
+        const $form = $('#dmbScannerForm');
+        const $sourceModeRadios = $('input[name="source_select_mode"]');
+        const $sourceSavedWrap = $('#dmbSourceSavedWrap');
+        const $sourceUploadWrap = $('#dmbSourceUploadWrap');
+        const $sourceFileInput = $('#dmbSourceMigrateFile');
+        const $sourceToken = $('#dmbSourceUploadToken');
+        const $sourceStatus = $('#dmbSourceUploadStatus');
+        const $sourceProgressWrap = $('#dmbSourceUploadProgressWrap');
+        const $sourceProgress = $('#dmbSourceUploadProgress');
+        const $targetFileModeRadios = $('input[name="target_file_mode"]');
+        const $targetDefaultWrap = $('#dmbTargetDefaultWrap');
+        const $targetUploadWrap = $('#dmbTargetUploadWrap');
+        const $targetFileInput = $('#dmbTargetMigrateFile');
+        const $targetToken = $('#dmbTargetUploadToken');
+        const $nextBtn = $('#dmbScannerNextBtn');
+        const $targetStatus = $('#dmbTargetUploadStatus');
+        const $targetProgressWrap = $('#dmbTargetUploadProgressWrap');
+        const $targetProgress = $('#dmbTargetUploadProgress');
+        const $targetVersionSelect = $('#dmbTargetVersionSelect');
+        const $guideVersion = $('#dmbTargetGuideVersion');
+        const chunkInitUrl = '{{ url('data_migration_backup_admin_scanner_chunk_init')|e('js') }}';
+        const chunkAppendUrlTemplate = '{{ url('data_migration_backup_admin_scanner_chunk_append', {uploadId: '__UPLOAD_ID__'})|e('js') }}';
+        const chunkCompleteUrlTemplate = '{{ url('data_migration_backup_admin_scanner_chunk_complete', {uploadId: '__UPLOAD_ID__'})|e('js') }}';
+        const chunkCancelUrlTemplate = '{{ url('data_migration_backup_admin_scanner_chunk_cancel', {uploadId: '__UPLOAD_ID__'})|e('js') }}';
+        const chunkSize = 8 * 1024 * 1024;
+        let uploadRunning = false;
+
+        function updateGuideVersion() {
+            const selected = String($targetVersionSelect.val() || '{{ targetVersion|e('js') }}').trim();
+            $guideVersion.text(selected !== '' ? selected : '-');
+        }
+
+        function resolveChunkUrl(template, uploadId) {
+            return String(template || '').replace('__UPLOAD_ID__', encodeURIComponent(uploadId));
+        }
+
+        function resolveApiMessage(response, fallbackText) {
+            if (response && typeof response.message === 'string' && response.message.trim() !== '') {
+                return String(response.message);
+            }
+
+            return String(fallbackText || '{{ 'data_migration_backup.admin.message.failed'|trans|e('js') }}');
+        }
+
+        async function requestJsonOrThrow(settings, fallbackText) {
+            try {
+                return await $.ajax(settings);
+            } catch (xhr) {
+                throw new Error(extractErrorMessage(xhr, fallbackText));
+            }
+        }
+
+        function getSourceMode() {
+            const checked = $sourceModeRadios.filter(':checked').val();
+
+            return String(checked || 'current');
+        }
+
+        function toggleSourceMode() {
+            const mode = getSourceMode();
+            $('#dmbSourceCurrentWrap').toggle(mode === 'current');
+            $sourceSavedWrap.toggle(mode === 'saved');
+            $sourceUploadWrap.toggle(mode === 'upload');
+            if (mode !== 'upload' && $sourceFileInput.length > 0) {
+                $sourceFileInput.val('');
+            }
+        }
+
+        function getTargetFileMode() {
+            const checked = $targetFileModeRadios.filter(':checked').val();
+
+            return String(checked || 'default');
+        }
+
+        function toggleTargetFileMode() {
+            const mode = getTargetFileMode();
+            $targetDefaultWrap.toggle(mode === 'default');
+            $targetUploadWrap.toggle(mode === 'upload');
+            if (mode !== 'upload' && $targetFileInput.length > 0) {
+                $targetFileInput.val('');
+            }
+        }
+
+        async function uploadChunkFile(file, $status, $progressWrap, $progressBar) {
+            const totalChunks = Math.max(1, Math.ceil(file.size / chunkSize));
+            const initRes = await requestJsonOrThrow({
+                url: chunkInitUrl,
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                    file_name: file.name,
+                    total_chunks: totalChunks,
+                    file_size: file.size
+                }
+            }, '{{ 'data_migration_backup.admin.scanner.chunk_init_failed'|trans|e('js') }}');
+            if (!initRes || !initRes.success || !initRes.upload_id) {
+                throw new Error(resolveApiMessage(initRes, '{{ 'data_migration_backup.admin.scanner.chunk_init_failed'|trans|e('js') }}'));
+            }
+
+            const uploadId = String(initRes.upload_id);
+            try {
+                for (let i = 0; i < totalChunks; i++) {
+                    const start = i * chunkSize;
+                    const end = Math.min(file.size, start + chunkSize);
+                    const blob = file.slice(start, end);
+                    const appendUrl = resolveChunkUrl(chunkAppendUrlTemplate, uploadId)
+                        + '?_token=' + encodeURIComponent(String($('input[name="_token"]').val() || ''))
+                        + '&chunk_index=' + encodeURIComponent(String(i));
+
+                    const appendRes = await requestJsonOrThrow({
+                        url: appendUrl,
+                        method: 'POST',
+                        dataType: 'json',
+                        data: blob,
+                        processData: false,
+                        contentType: 'application/octet-stream'
+                    }, '{{ 'data_migration_backup.admin.scanner.chunk_append_failed'|trans|e('js') }}');
+
+                    if (!appendRes || !appendRes.success) {
+                        throw new Error(resolveApiMessage(appendRes, '{{ 'data_migration_backup.admin.scanner.chunk_append_failed'|trans|e('js') }}'));
+                    }
+
+                    const progress = Number(appendRes.progress || 0);
+                    $progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
+                    $status.text('{{ 'data_migration_backup.admin.scanner.chunk_uploading'|trans|e('js') }} (' + Math.min(100, Math.max(0, progress)) + '%)');
+                }
+
+                const completeRes = await requestJsonOrThrow({
+                    url: resolveChunkUrl(chunkCompleteUrlTemplate, uploadId),
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        _token: $('input[name="_token"]').val()
+                    }
+                }, '{{ 'data_migration_backup.admin.scanner.chunk_complete_failed'|trans|e('js') }}');
+
+                if (!completeRes || !completeRes.success || !completeRes.token) {
+                    throw new Error(resolveApiMessage(completeRes, '{{ 'data_migration_backup.admin.scanner.chunk_complete_failed'|trans|e('js') }}'));
+                }
+
+                return completeRes;
+            } catch (error) {
+                try {
+                    await $.ajax({
+                        url: resolveChunkUrl(chunkCancelUrlTemplate, uploadId),
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {
+                            _token: $('input[name="_token"]').val()
+                        }
+                    });
+                } catch (ignore) {}
+
+                throw error;
+            }
+        }
+
+        $targetVersionSelect.on('change', function () {
+            updateGuideVersion();
+        });
+
+        $sourceModeRadios.on('change', function () {
+            toggleSourceMode();
+        });
+        $targetFileModeRadios.on('change', function () {
+            toggleTargetFileMode();
+        });
+
+        updateGuideVersion();
+        toggleSourceMode();
+        toggleTargetFileMode();
+
+        $form.on('submit', function (e) {
+            if (uploadRunning) {
+                e.preventDefault();
+
+                return;
+            }
+
+            const sourceMode = getSourceMode();
+            const targetFileMode = getTargetFileMode();
+            const sourceFile = sourceMode === 'upload'
+                && $sourceFileInput.length > 0
+                && $sourceFileInput.get(0).files.length > 0
+                ? $sourceFileInput.get(0).files[0]
+                : null;
+            const targetFile = targetFileMode === 'upload'
+                && $targetFileInput.length > 0
+                && $targetFileInput.get(0).files.length > 0
+                ? $targetFileInput.get(0).files[0]
+                : null;
+
+            if (sourceMode === 'upload' && !sourceFile && String($sourceToken.val() || '') === '') {
+                e.preventDefault();
+                window.alert('{{ 'data_migration_backup.admin.scanner.source_upload_required'|trans|e('js') }}');
+                return;
+            }
+            if (targetFileMode === 'upload' && !targetFile && String($targetToken.val() || '') === '') {
+                e.preventDefault();
+                window.alert('移行先バックアップファイルをアップロードしてください。');
+                return;
+            }
+
+            if (!sourceFile && !targetFile) {
+                return;
+            }
+
+            e.preventDefault();
+            uploadRunning = true;
+            $nextBtn.prop('disabled', true);
+
+            (async function () {
+                if (sourceFile) {
+                    $sourceStatus.text('{{ 'data_migration_backup.admin.scanner.chunk_uploading'|trans|e('js') }}');
+                    $sourceProgressWrap.show();
+                    $sourceProgress.css('width', '0%').attr('aria-valuenow', 0);
+                    const sourceRes = await uploadChunkFile(sourceFile, $sourceStatus, $sourceProgressWrap, $sourceProgress);
+                    $sourceToken.val(String(sourceRes.token || ''));
+                    $sourceFileInput.val('');
+                    $sourceStatus.text('{{ 'data_migration_backup.admin.scanner.chunk_uploaded'|trans|e('js') }}');
+                }
+
+                if (targetFile) {
+                    $targetStatus.text('{{ 'data_migration_backup.admin.scanner.chunk_uploading'|trans|e('js') }}');
+                    $targetProgressWrap.show();
+                    $targetProgress.css('width', '0%').attr('aria-valuenow', 0);
+                    const targetRes = await uploadChunkFile(targetFile, $targetStatus, $targetProgressWrap, $targetProgress);
+                    $targetToken.val(String(targetRes.token || ''));
+                    $targetFileInput.val('');
+                    $targetStatus.text('{{ 'data_migration_backup.admin.scanner.chunk_uploaded'|trans|e('js') }}');
+                }
+
+                const formNode = $form.get(0);
+                if (formNode && typeof formNode.submit === 'function') {
+                    formNode.submit();
+                }
+            })().catch(function (error) {
+                const text = error && error.message ? error.message : '{{ 'data_migration_backup.admin.scanner.chunk_failed'|trans|e('js') }}';
+                if (sourceFile) {
+                    $sourceStatus.text(text);
+                }
+                if (targetFile) {
+                    $targetStatus.text(text);
+                }
+                window.alert(text);
+            }).finally(function () {
+                uploadRunning = false;
+                $nextBtn.prop('disabled', false);
+            });
+        });
+    }
+
+    if (currentStep === 2) {
+        const $wrap = $('#dmbConnectorScanWrap');
+        if ($wrap.length === 0) {
+            return;
+        }
+
+        const scanUrl = String($wrap.data('scan-url') || '');
+        const $progressWrap = $('#dmbConnectorScanProgressWrap');
+        const $progress = $('#dmbConnectorScanProgress');
+        const $runBtn = $('#dmbRunScanBtn');
+        const $enableConnector = $('#dmbEnablePluginConnectors');
+        const $connectorTableWrap = $('#dmbConnectorTableWrap');
+        const $form = $('#dmbScannerForm');
+        const $connectorStateFields = $('#dmbConnectorStateFields');
+        const $ngConfirmModal = $('#dmbConnectorNgConfirmModal');
+        const $ngConfirmTitle = $('#dmbConnectorNgConfirmTitle');
+        const $ngConfirmMessage = $('#dmbConnectorNgConfirmMessage');
+        const $ngConfirmTableWrap = $('#dmbConnectorNgConfirmTableWrap');
+        const $ngConfirmTableBody = $('#dmbConnectorNgConfirmTableBody');
+        const $ngConfirmRunBtn = $('#dmbConnectorNgConfirmRunBtn');
+        const $migrateTheme = $('#dmbMigrateTheme');
+        const $themeStatus = $('#dmbThemeMigrationStatus');
+        const themeScanUrl = String($themeStatus.data('scan-url') || '');
+        const modulesRequiredMessage = '{{ 'data_migration_backup.admin.scanner.modules_required'|trans|e('js') }}';
+        let scanXhr = null;
+        let themeScanXhr = null;
+        let scanTimer = null;
+        let submitAction = '';
+        let allowRunScanWithNg = false;
+        let connectorScanRunning = false;
+        let themeScanRunning = false;
+        let themeScanResult = null;
+
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatThemeStatusHtml(note, fallback) {
+            const text = String(note !== '' ? note : fallback);
+            const lines = text.split(/\n+/).filter(function (line) {
+                return String(line).trim() !== '';
+            });
+            if (lines.length === 0) {
+                return escapeHtml(fallback);
+            }
+            if (lines.length === 1) {
+                return escapeHtml(lines[0]);
+            }
+            let html = '<div>' + escapeHtml(lines[0]) + '</div>';
+            for (let index = 1; index < lines.length; index += 1) {
+                html += '<div class="dmb-theme-status-note">' + escapeHtml(lines[index]) + '</div>';
+            }
+
+            return html;
+        }
+
+        if ($.fn.select2) {
+            $('.js-select2').each(function () {
+                const $el = $(this);
+                const $parent = $el.closest('.box-body');
+                $el.select2({
+                    width: '100%',
+                    language: 'ja',
+                    dropdownParent: $parent.length ? $parent : $(document.body)
+                });
+            });
+        }
+
+        function parseModuleTables(raw) {
+            const text = String(raw || '').trim();
+            if (text === '') {
+                return [];
+            }
+            try {
+                const parsed = JSON.parse(text);
+                if (!Array.isArray(parsed)) {
+                    return [];
+                }
+
+                return parsed
+                    .map(function (item) { return String(item || '').trim(); })
+                    .filter(function (item) { return item !== ''; });
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function buildModuleDetailTables($trigger) {
+            const preferred = parseModuleTables($trigger.attr('data-module-tables'));
+            if (preferred.length > 0) {
+                return preferred;
+            }
+
+            return parseModuleTables($trigger.attr('data-module-all-tables'));
+        }
+
+        function showModal($modal) {
+            if (!$modal || $modal.length === 0) {
+                return;
+            }
+            if (!$modal.parent().is('body')) {
+                $modal.appendTo(document.body);
+            }
+            const node = $modal.get(0);
+            if (window.bootstrap && bootstrap.Modal) {
+                if (typeof bootstrap.Modal.getOrCreateInstance === 'function') {
+                    bootstrap.Modal.getOrCreateInstance(node).show();
+                } else if (typeof bootstrap.Modal.getInstance === 'function') {
+                    const instance = bootstrap.Modal.getInstance(node) || new bootstrap.Modal(node);
+                    instance.show();
+                } else {
+                    const instance = new bootstrap.Modal(node);
+                    instance.show();
+                }
+
+                return;
+            }
+            $modal.modal('show');
+        }
+
+        function renderModuleDetailModal($trigger, migratable) {
+            const moduleDetailModalReasonEmpty = '';
+            const moduleTablesModalEmpty = '対象データはありません。';
+            const moduleLabel = String($trigger.attr('data-module-label') || '').trim();
+            const moduleCode = String($trigger.attr('data-module-code') || '').trim();
+            const reason = String($trigger.attr('data-module-reason') || '').trim();
+            const tables = buildModuleDetailTables($trigger);
+            const warningTables = parseModuleTables($trigger.attr('data-module-warning-tables'));
+            const validTables = parseModuleTables($trigger.attr('data-module-valid-tables'));
+            const postNotes = parseModuleTables($trigger.attr('data-module-post-notes'));
+            function isWarningPostNote(text) {
+                return false;
+            }
+
+            $('#dmbModuleTablesModalTitle').text(moduleLabel || moduleCode || '-');
+            if (!migratable && (reason || moduleDetailModalReasonEmpty)) {
+                $('#dmbModuleTablesModalReasonWrap').show();
+                $('#dmbModuleTablesModalReason').text(reason || moduleDetailModalReasonEmpty);
+            } else {
+                $('#dmbModuleTablesModalReasonWrap').hide();
+                $('#dmbModuleTablesModalReason').text('');
+            }
+
+            const $list = $('#dmbModuleTablesModalList');
+            $list.empty();
+            if (warningTables.length > 0 || validTables.length > 0) {
+                if (warningTables.length > 0) {
+                    warningTables.forEach(function (table) {
+                        const $item = $('<li class="list-group-item text-muted"></li>');
+                        $item.append($('<code></code>').text(table));
+                        $list.append($item);
+                    });
+                }
+                if (validTables.length > 0) {
+                    validTables.forEach(function (table) {
+                        const $item = $('<li class="list-group-item text-success"></li>');
+                        $item.append($('<code></code>').text(table));
+                        $list.append($item);
+                    });
+                }
+            } else if (tables.length === 0) {
+                $list.append($('<li class="list-group-item text-muted"></li>').text(moduleTablesModalEmpty));
+            } else {
+                tables.forEach(function (table) {
+                    const $item = $('<li class="list-group-item"></li>');
+                    $item.append($('<code></code>').text(table));
+                    $list.append($item);
+                });
+            }
+
+            const $postNotesWrap = $('#dmbModuleTablesModalPostNotesWrap');
+            const $postNotesList = $('#dmbModuleTablesModalPostNotes');
+            $postNotesList.empty();
+            if (postNotes.length > 0) {
+                postNotes.forEach(function (line) {
+                    const $item = $('<li></li>').text(line);
+                    if (isWarningPostNote(line)) {
+                        $item.addClass('text-warning');
+                    }
+                    $postNotesList.append($item);
+                });
+                $postNotesWrap.show();
+            } else {
+                $postNotesWrap.hide();
+            }
+
+            showModal($('#dmbModuleTablesModal'));
+        }
+
+        $(document).on('click', '.js-dmb-module-valid-detail', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            renderModuleDetailModal($(this), true);
+        });
+
+        $(document).on('click', '.js-dmb-module-invalid-detail', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            renderModuleDetailModal($(this), false);
+        });
+
+        function syncConflictPolicyState() {
+            const $clearTarget = $('#dmbClearTargetBeforeImport');
+            const $conflictRadios = $('input[name="conflict_policy"]');
+            const $note = $('#dmbConflictDisabledNote');
+            if ($clearTarget.length === 0 || $conflictRadios.length === 0) {
+                return;
+            }
+            const locked = $clearTarget.prop('checked');
+            if (locked) {
+                $('#dmbConflictPolicyOverwrite').prop('checked', true);
+            }
+            $conflictRadios.prop('disabled', locked);
+            if ($note.length) {
+                $note.toggleClass('show', locked);
+            }
+        }
+
+        function syncClearTargetByConflictPolicy() {
+            const $clearTarget = $('#dmbClearTargetBeforeImport');
+            const selected = String($('input[name="conflict_policy"]:checked').val() || '');
+            if ($clearTarget.length === 0) {
+                return;
+            }
+            if (selected === 'upsert' || selected === 'skip') {
+                $clearTarget.prop('checked', false);
+            }
+            syncConflictPolicyState();
+        }
+
+        $('#dmbClearTargetBeforeImport').on('change', syncConflictPolicyState);
+        $('input[name="conflict_policy"]').on('change', syncClearTargetByConflictPolicy);
+        syncConflictPolicyState();
+
+        function getPayload() {
+            const sourceSelectMode = String(
+                ($('input[name="source_select_mode"]:checked').val() || $('input[type="hidden"][name="source_select_mode"]').val() || '')
+            );
+            const sourceFileKey = String(
+                ($('select[name="source_file_key"]').val() || $('input[type="hidden"][name="source_file_key"]').val() || '')
+            );
+            const targetVersion = String(
+                ($('#dmbTargetVersionSelect').val() || $('input[type="hidden"][name="target_version"]').val() || '')
+            );
+            const targetCodes = {};
+            $('.dmb-target-plugin-select').each(function () {
+                const sourceCode = String($(this).data('source-code') || '');
+                if (!sourceCode) {
+                    return;
+                }
+                targetCodes[sourceCode] = String($(this).val() || '');
+            });
+
+            return {
+                _token: $('input[name="_token"]').val(),
+                source_select_mode: sourceSelectMode,
+                source_file_key: sourceFileKey,
+                source_upload_token: String($('input[name="source_upload_token"]').val() || ''),
+                target_version: targetVersion,
+                target_upload_token: $('#dmbTargetUploadToken').val(),
+                connector_target_codes: targetCodes
+            };
+        }
+
+        function syncConnectorStateFields() {
+            if ($connectorStateFields.length === 0) {
+                return;
+            }
+
+            $connectorStateFields.empty();
+            $('.dmb-connector-row').each(function () {
+                const $row = $(this);
+                const sourceCode = String($row.data('source-code') || '');
+                if (!sourceCode) {
+                    return;
+                }
+
+                const status = String($row.attr('data-connector-status') || 'pending').trim();
+                const note = String($row.find('.dmb-plugin-select-feedback').text() || '').trim();
+                $('<input>', {
+                    type: 'hidden',
+                    name: 'connector_statuses[' + sourceCode + ']',
+                    value: status
+                }).appendTo($connectorStateFields);
+                $('<input>', {
+                    type: 'hidden',
+                    name: 'connector_notes[' + sourceCode + ']',
+                    value: note
+                }).appendTo($connectorStateFields);
+            });
+        }
+
+        function renderRows(rows) {
+            rows.forEach(function (row) {
+                const sourceCode = String(row.source_code || '');
+                if (!sourceCode) {
+                    return;
+                }
+
+                const $tr = $('.dmb-connector-row[data-source-code="' + sourceCode + '"]');
+                if ($tr.length === 0) {
+                    return;
+                }
+
+                const targetCode = String(row.target_code || '');
+                $tr.find('.dmb-target-plugin-select').val(targetCode).trigger('change.select2');
+
+                const status = String(row.status || 'pending');
+                $tr.attr('data-connector-status', status);
+                const $feedback = $tr.find('.dmb-plugin-select-feedback');
+                const note = String(row.note || '');
+
+                if (status === 'supported') {
+                    $feedback.removeClass('text-muted text-danger').addClass('text-success')
+                        .text('{{ 'data_migration_backup.admin.scanner.connector_supported'|trans|e('js') }}')
+                        .show();
+                } else if (status === 'unsupported') {
+                    $feedback.removeClass('text-muted text-success').addClass('text-danger')
+                        .text(note !== '' ? note : '{{ 'data_migration_backup.admin.scanner.connector_unsupported'|trans|e('js') }}')
+                        .show();
+                } else if (note !== '') {
+                    $feedback.removeClass('text-success text-danger').addClass('text-muted')
+                        .text(note)
+                        .show();
+                } else {
+                    $feedback.text('').hide();
+                }
+            });
+            syncConnectorStateFields();
+        }
+
+        function collectUnsupportedRows() {
+            const rows = [];
+            $('.dmb-connector-row').each(function () {
+                const $row = $(this);
+                const status = String($row.attr('data-connector-status') || 'pending');
+                if (status !== 'unsupported') {
+                    return;
+                }
+                const name = String($row.find('.dmb-source-plugin-name').text() || '').trim();
+                const metaText = String($row.find('.dmb-source-plugin-code').text() || '').trim();
+                let code = '';
+                let version = '';
+                if (metaText !== '') {
+                    const parts = metaText.split('/').map(function (item) { return String(item || '').trim(); }).filter(function (item) { return item !== ''; });
+                    if (parts.length > 0) {
+                        code = parts[0];
+                    }
+                    if (parts.length > 1) {
+                        version = parts[1];
+                    }
+                }
+                const reason = String($row.find('.dmb-plugin-select-feedback').text() || '').trim();
+                rows.push({
+                    name: name !== '' ? name : '-',
+                    code: code !== '' ? code : '-',
+                    version: version !== '' ? version : '',
+                    reason: reason !== '' ? reason : '{{ 'data_migration_backup.admin.scanner.connector_unsupported'|trans|e('js') }}'
+                });
+            });
+
+            return rows;
+        }
+
+        function resetRunScanGuard() {
+            allowRunScanWithNg = false;
+        }
+
+        function isThemeDependencyBlocked() {
+            return isThemeMigrationEnabled()
+                && themeScanResult
+                && String(themeScanResult.status || '') === 'error';
+        }
+
+        function syncSubmitButtonsState() {
+            const lockSecondaryButtons = themeScanRunning;
+            $form.find('button[type="submit"]').each(function () {
+                const $button = $(this);
+                if ($button.is($runBtn)) {
+                    $button.prop('disabled', connectorScanRunning || themeScanRunning || isThemeDependencyBlocked());
+                } else {
+                    $button.prop('disabled', lockSecondaryButtons);
+                }
+            });
+        }
+
+        function isThemeMigrationEnabled() {
+            return $migrateTheme.length > 0 && $migrateTheme.prop('checked');
+        }
+
+        function isThemeTargetAvailable() {
+            if ($themeStatus.length === 0) {
+                return false;
+            }
+
+            return String($themeStatus.data('target-theme-backup') || '0') === '1';
+        }
+
+        function isThemeSourceAvailable() {
+            if ($themeStatus.length === 0) {
+                return false;
+            }
+
+            return String($themeStatus.data('source-theme-backup') || '0') === '1';
+        }
+
+        function isThemeMigrationFailed() {
+            if (!isThemeMigrationEnabled()) {
+                return false;
+            }
+
+            return !isThemeTargetAvailable();
+        }
+
+        function renderThemeScanResult() {
+            if ($themeStatus.length === 0) {
+                return;
+            }
+            if (!isThemeMigrationEnabled()) {
+                $themeStatus.removeClass('text-success text-danger text-warning text-info text-muted');
+                $themeStatus.html('').hide();
+                syncSubmitButtonsState();
+
+                return;
+            }
+
+            $themeStatus.show();
+            if (!isThemeSourceAvailable()) {
+                $themeStatus.removeClass('text-success text-danger text-info text-muted').addClass('text-warning');
+                $themeStatus.text('移行元バックアップにテーマファイルが含まれていません。テーマは移行されません。');
+                syncSubmitButtonsState();
+
+                return;
+            }
+            if (!isThemeTargetAvailable()) {
+                $themeStatus.removeClass('text-success text-warning text-info text-muted').addClass('text-danger');
+                $themeStatus.text('移行先バックアップにテーマファイル（theme_*.tar.gz）がないため、テーマを移行できません。');
+                syncSubmitButtonsState();
+
+                return;
+            }
+            if (themeScanRunning) {
+                $themeStatus.removeClass('text-success text-danger text-warning text-muted').addClass('text-info');
+                $themeStatus.text('テーマ内のプラグイン依存を確認しています...');
+                syncSubmitButtonsState();
+
+                return;
+            }
+            if (!themeScanResult || typeof themeScanResult !== 'object') {
+                $themeStatus.removeClass('text-success text-danger text-warning text-info').addClass('text-muted');
+                $themeStatus.text('テーマ内のプラグイン依存を確認してください。');
+                syncSubmitButtonsState();
+
+                return;
+            }
+
+            const status = String(themeScanResult.status || 'pending');
+            const note = String(themeScanResult.note || '').trim();
+            const dependencyScan = (themeScanResult.dependency_scan && typeof themeScanResult.dependency_scan === 'object')
+                ? themeScanResult.dependency_scan
+                : {};
+            const issues = Array.isArray(dependencyScan.issues) ? dependencyScan.issues : [];
+
+            if (status === 'ok') {
+                let html = '<div>' + formatThemeStatusHtml(note, 'テーマデータを安全に移行できます。') + '</div>';
+                $themeStatus.removeClass('text-danger text-warning text-info text-muted').addClass('text-success');
+                $themeStatus.html(html);
+            } else if (status === 'error') {
+                let html = '<div>' + formatThemeStatusHtml(note, 'テーマを移行できません。') + '</div>';
+                if (issues.length > 0) {
+                    html += '<div class="mt-2"><a href="#" class="js-dmb-theme-issue-log">詳細を見る</a></div>';
+                }
+                $themeStatus.removeClass('text-success text-warning text-info text-muted').addClass('text-danger');
+                $themeStatus.html(html);
+            } else {
+                $themeStatus.removeClass('text-success text-danger text-info text-muted').addClass('text-warning');
+                let html = '<div>' + formatThemeStatusHtml(note, 'テーマ依存チェックの結果を確認してください。') + '</div>';
+                if (issues.length > 0) {
+                    html += '<div class="mt-2"><a href="#" class="js-dmb-theme-issue-log">詳細を見る</a></div>';
+                }
+                $themeStatus.html(html);
+            }
+            syncSubmitButtonsState();
+        }
+
+        function syncThemeMigrationStatus() {
+            renderThemeScanResult();
+        }
+
+        function requestThemeScan() {
+            if (!isThemeMigrationEnabled()) {
+                themeScanResult = null;
+                themeScanRunning = false;
+                renderThemeScanResult();
+
+                return;
+            }
+            if (!isThemeSourceAvailable() || !isThemeTargetAvailable() || themeScanUrl === '') {
+                themeScanResult = null;
+                themeScanRunning = false;
+                renderThemeScanResult();
+
+                return;
+            }
+            if (themeScanXhr && themeScanXhr.readyState && themeScanXhr.readyState < 4) {
+                try { themeScanXhr.abort(); } catch (ignore) {}
+            }
+
+            themeScanRunning = true;
+            themeScanResult = null;
+            renderThemeScanResult();
+            themeScanXhr = $.ajax({
+                url: themeScanUrl,
+                method: 'POST',
+                dataType: 'json',
+                data: getPayload()
+            }).done(function (res) {
+                if (!res || !res.success || !res.theme_migration) {
+                    themeScanResult = {
+                        status: 'warning',
+                        note: 'テーマ依存チェックの応答を取得できませんでした。',
+                        dependency_scan: {
+                            issues: [],
+                            dependencies: []
+                        }
+                    };
+
+                    return;
+                }
+                themeScanResult = res.theme_migration;
+            }).fail(function (xhr) {
+                const message = extractErrorMessage(xhr, 'テーマ依存チェックに失敗しました。');
+                if (message !== '') {
+                    themeScanResult = {
+                        status: 'warning',
+                        note: message,
+                        dependency_scan: {
+                            issues: [],
+                            dependencies: []
+                        }
+                    };
+                }
+            }).always(function () {
+                themeScanRunning = false;
+                themeScanXhr = null;
+                renderThemeScanResult();
+            });
+        }
+
+        function startProgress() {
+            let value = 4;
+            $progressWrap.show();
+            $progress.css('width', value + '%').attr('aria-valuenow', value);
+            connectorScanRunning = true;
+            syncSubmitButtonsState();
+            if (scanTimer) {
+                clearInterval(scanTimer);
+                scanTimer = null;
+            }
+            scanTimer = setInterval(function () {
+                if (value >= 92) {
+                    return;
+                }
+                value += Math.max(1, Math.floor(Math.random() * 7));
+                if (value > 92) {
+                    value = 92;
+                }
+                $progress.css('width', value + '%').attr('aria-valuenow', value);
+            }, 160);
+        }
+
+        function finishProgress() {
+            if (scanTimer) {
+                clearInterval(scanTimer);
+                scanTimer = null;
+            }
+            $progress.css('width', '100%').attr('aria-valuenow', 100);
+            setTimeout(function () {
+                $progressWrap.hide();
+                connectorScanRunning = false;
+                syncSubmitButtonsState();
+            }, 180);
+        }
+
+        function runScan() {
+            if ($enableConnector.length > 0 && !$enableConnector.prop('checked')) {
+                return;
+            }
+            if (!scanUrl) {
+                return;
+            }
+            if (scanXhr && scanXhr.readyState && scanXhr.readyState < 4) {
+                try { scanXhr.abort(); } catch (ignore) {}
+            }
+
+            startProgress();
+            scanXhr = $.ajax({
+                url: scanUrl,
+                method: 'POST',
+                dataType: 'json',
+                data: getPayload()
+            }).done(function (res) {
+                if (!res || !res.success || !Array.isArray(res.rows)) {
+                    return;
+                }
+                renderRows(res.rows);
+            }).fail(function (xhr) {
+                window.alert(extractErrorMessage(xhr, '{{ 'data_migration_backup.admin.scanner.scan_failed'|trans|e('js') }}'));
+            }).always(function () {
+                scanXhr = null;
+                finishProgress();
+            });
+        }
+
+        $('.dmb-target-plugin-select').on('change', function () {
+            resetRunScanGuard();
+            runScan();
+        });
+
+        function syncConnectorVisibility() {
+            const enabled = $enableConnector.length === 0 ? true : $enableConnector.prop('checked');
+            if ($connectorTableWrap.length > 0) {
+                $connectorTableWrap.toggle(enabled);
+            }
+            $('.dmb-target-plugin-select').prop('disabled', !enabled).trigger('change.select2');
+        }
+
+        if ($enableConnector.length > 0) {
+            $enableConnector.on('change', function () {
+                resetRunScanGuard();
+                syncConnectorVisibility();
+                if ($(this).prop('checked')) {
+                    runScan();
+                }
+            });
+            syncConnectorVisibility();
+            syncConnectorStateFields();
+        }
+
+        if ($migrateTheme.length > 0) {
+            $migrateTheme.on('change', function () {
+                resetRunScanGuard();
+                themeScanResult = null;
+                syncThemeMigrationStatus();
+                if ($(this).prop('checked')) {
+                    requestThemeScan();
+                }
+            });
+            syncThemeMigrationStatus();
+            if ($migrateTheme.prop('checked')) {
+                requestThemeScan();
+            }
+        }
+        syncSubmitButtonsState();
+
+        $form.find('button[type="submit"][name="action"]').on('click', function () {
+            submitAction = String($(this).val() || '');
+        });
+        $(document).on('click', '.js-dmb-theme-issue-log', function (e) {
+            e.preventDefault();
+            const issues = themeScanResult && themeScanResult.dependency_scan && Array.isArray(themeScanResult.dependency_scan.issues)
+                ? themeScanResult.dependency_scan.issues
+                : [];
+            const $tbody = $('#dmbThemeIssueLogBody');
+            $tbody.empty();
+            issues.forEach(function (issue) {
+                const file = String((issue && issue.file) || '-');
+                const line = Number((issue && issue.line) || 0);
+                const snippet = String((issue && issue.snippet) || '');
+                const pluginName = String((issue && issue.plugin_name) || (issue && issue.plugin_code) || '');
+                const editUrl = String((issue && issue.edit_url) || '');
+                const $tr = $('<tr></tr>');
+                const $fileCell = $('<td></td>');
+                if (pluginName !== '') {
+                    $fileCell.append($('<div class="small text-muted mb-1"></div>').text(pluginName));
+                }
+                $fileCell.append($('<code class="dmb-theme-issue-path"></code>').text(file));
+                if (line > 0) {
+                    $fileCell.append($('<div class="dmb-theme-issue-file-note"></div>').text('行: ' + String(line)));
+                }
+                if (editUrl !== '') {
+                    const $editLink = $('<a href="#" class="small d-inline-block mt-1"></a>').text('編集する');
+                    $editLink.on('click', function (event) {
+                        event.preventDefault();
+                        const screenWidth = Math.max(320, Number(window.screen && window.screen.width) || 740);
+                        const width = screenWidth < 800 ? screenWidth : 740;
+                        const height = 800;
+                        const left = Math.max(0, Math.round((window.screen.width - width) / 2));
+                        const top = Math.max(0, Math.round((window.screen.height - height) / 2));
+                        window.open(
+                            editUrl,
+                            'dmbThemeIssueEditor',
+                            'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes'
+                        );
+                    });
+                    $fileCell.append($('<div></div>').append($editLink));
+                }
+                $tr.append($fileCell);
+                $tr.append($('<td class="small dmb-theme-issue-code"></td>').text(snippet !== '' ? snippet : '-'));
+                $tbody.append($tr);
+            });
+            showModal($('#dmbThemeIssueLogModal'));
+        });
+
+        $form.on('submit', function (e) {
+            syncConnectorStateFields();
+            if (submitAction !== 'run_scan') {
+                return;
+            }
+            const selectedModules = $('input[name="modules[]"]:checked').length;
+            if (selectedModules === 0) {
+                e.preventDefault();
+                window.alert(modulesRequiredMessage);
+                return;
+            }
+            if (themeScanRunning) {
+                e.preventDefault();
+                window.alert('テーマ依存を確認中です。完了後に再度実行してください。');
+                return;
+            }
+            if (isThemeDependencyBlocked()) {
+                e.preventDefault();
+                window.alert(String((themeScanResult && themeScanResult.note) || 'テーマ内のプラグイン依存を解決してから再実行してください。'));
+                return;
+            }
+            if (allowRunScanWithNg) {
+                return;
+            }
+            const connectorEnabled = $enableConnector.length === 0 ? false : $enableConnector.prop('checked');
+            const unsupportedRows = connectorEnabled ? collectUnsupportedRows() : [];
+            const themeFailed = isThemeMigrationFailed();
+            if (unsupportedRows.length === 0 && !themeFailed) {
+                return;
+            }
+
+            e.preventDefault();
+            let message = '要確認項目があります。このままスキャンを実行してよろしいですか？';
+            let title = '要確認項目があります';
+            if (unsupportedRows.length > 0 && themeFailed) {
+                title = '要確認: 連携プラグインとテーマ移行';
+                message = '連携プラグインに互換性の問題があり、テーマ移行も実行できません。互換性がないプラグインは移行時にスキップされ、テーマは移行されません。このままスキャンを実行してよろしいですか？';
+            } else if (unsupportedRows.length > 0) {
+                title = '要確認: 連携プラグイン';
+                message = '以下の連携プラグインは互換性に問題があります。互換性がないプラグインは移行時にスキップされます。このままスキャンを実行してよろしいですか？';
+            } else if (themeFailed) {
+                title = '要確認: テーマ移行';
+                message = '移行先バックアップにテーマファイル（theme_*.tar.gz）がないため、テーマ移行は実行できません。テーマは移行時にスキップされます。このままスキャンを実行してよろしいですか？';
+            }
+            if ($ngConfirmTitle.length > 0) {
+                $ngConfirmTitle.text(title);
+            }
+            if ($ngConfirmMessage.length > 0) {
+                $ngConfirmMessage.text(message);
+            }
+            if ($ngConfirmTableWrap.length > 0) {
+                $ngConfirmTableWrap.toggle(unsupportedRows.length > 0);
+            }
+            $ngConfirmTableBody.empty();
+            unsupportedRows.forEach(function (row) {
+                const $tr = $('<tr></tr>');
+                const $title = $('<div></div>').text(row.name);
+                const $meta = $('<div class="small text-muted dmb-source-plugin-code"></div>');
+                const $code = $('<code></code>').text(row.code);
+                $meta.append($code);
+                if (row.version) {
+                    $meta.append(document.createTextNode(' / ' + row.version));
+                }
+                $tr.append($('<td></td>').append($title).append($meta));
+                $tr.append($('<td></td>').text(row.reason));
+                $ngConfirmTableBody.append($tr);
+            });
+            showModal($ngConfirmModal);
+        });
+
+        $ngConfirmRunBtn.on('click', function () {
+            allowRunScanWithNg = true;
+            if (window.bootstrap && bootstrap.Modal && typeof bootstrap.Modal.getInstance === 'function') {
+                const modalInstance = bootstrap.Modal.getInstance($ngConfirmModal.get(0));
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            } else {
+                $ngConfirmModal.modal('hide');
+            }
+            $form.find('input[name="action"][value="run_scan"]').remove();
+            const $actionInput = $('<input type="hidden" name="action" value="run_scan">');
+            $form.append($actionInput);
+            const formNode = $form.get(0);
+            if (formNode && typeof formNode.submit === 'function') {
+                formNode.submit();
+            }
+        });
+    }
+
+    function initPreviewDataTable($table) {
+        if (!$.fn.DataTable || !$table || $table.length === 0) {
+            return;
+        }
+        const node = $table.get(0);
+        if ($.fn.DataTable.isDataTable(node)) {
+            return;
+        }
+        const api = $table.DataTable({
+            paging: true,
+            pageLength: 10,
+            lengthChange: false,
+            searching: true,
+            ordering: true,
+            info: true,
+            scrollX: true,
+            language: dataTableLang
+        });
+        setTimeout(function () {
+            api.columns.adjust();
+        }, 0);
+    }
+
+    function adjustVisiblePreviewTables() {
+        if (!$.fn.DataTable) {
+            return;
+        }
+        $('.dmb-step3-preview-section:visible .js-dmb-preview-table').each(function () {
+            if ($.fn.DataTable.isDataTable(this)) {
+                $(this).DataTable().columns.adjust();
+            }
+        });
+    }
+
+    $(window).on('resize', function () {
+        adjustVisiblePreviewTables();
+    });
+
+    if (currentStep === 3) {
+        const $select = $('#dmbStep3PreviewTable');
+        const $sections = $('.dmb-step3-preview-section');
+        if ($select.length > 0 && $sections.length > 0) {
+            if ($.fn.select2) {
+                $select.select2({
+                    width: '100%',
+                    language: 'ja',
+                    dropdownParent: $select.closest('.box-body')
+                });
+            }
+
+            const syncPreview = function () {
+                let selected = String($select.val() || '').trim();
+                if (selected === '') {
+                    const preferredValue = String($select.find('option[value="dtb_product"]').first().val() || '');
+                    const fallbackValue = String($select.find('option[value!=""]').first().val() || '');
+                    const nextValue = preferredValue !== '' ? preferredValue : fallbackValue;
+                    if (nextValue !== '') {
+                        selected = nextValue;
+                        $select.val(nextValue);
+                        if ($select.data('select2')) {
+                            $select.trigger('change.select2');
+                        }
+                    }
+                }
+                $sections.each(function () {
+                    const $section = $(this);
+                    const matched = selected !== '' && String($section.data('table') || '') === selected;
+                    $section.toggle(matched);
+                    if (matched) {
+                        $section.find('.js-dmb-preview-table').each(function () {
+                            initPreviewDataTable($(this));
+                        });
+                    }
+                });
+                setTimeout(adjustVisiblePreviewTables, 0);
+            };
+
+            $select.on('change', syncPreview);
+            syncPreview();
+        }
+    }
+
+    if (currentStep === 3) {
+        const $guideModal = $('#dmbStartMigrationGuideModal');
+        const shouldAutoOpen = '{{ step == 3 and scanResult is not null and scanResult.can_migrate ? '1' : '0' }}' === '1';
+        if ($guideModal.length > 0 && shouldAutoOpen) {
+            setTimeout(function () {
+                if (window.bootstrap && bootstrap.Modal) {
+                    if (typeof bootstrap.Modal.getOrCreateInstance === 'function') {
+                        bootstrap.Modal.getOrCreateInstance($guideModal.get(0)).show();
+                    } else if (typeof bootstrap.Modal.getInstance === 'function') {
+                        const instance = bootstrap.Modal.getInstance($guideModal.get(0)) || new bootstrap.Modal($guideModal.get(0));
+                        instance.show();
+                    } else {
+                        const instance = new bootstrap.Modal($guideModal.get(0));
+                        instance.show();
+                    }
+                } else {
+                    $guideModal.modal('show');
+                }
+            }, 120);
+        }
+    }
+
+    if ($.fn.tooltip) {
+        const tooltipAttr = 'data-toggle';
+        $('[' + tooltipAttr + '="tooltip"]').tooltip();
+    }
+});
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="c-contentsArea__cols dmb-layout-cols dmb-admin-screen">
+    <div class="c-contentsArea__primaryCol">
+        <div class="mb-3 d-flex justify-content-center align-items-center flex-wrap">
+            <span class="dmb-step-dot {{ step == 1 ? 'dmb-step-active' : '' }}">1</span>
+            <span>{{ 'data_migration_backup.admin.scanner.step1'|trans }}</span>
+            <span class="mx-2">→</span>
+            <span class="dmb-step-dot {{ step == 2 ? 'dmb-step-active' : '' }}">2</span>
+            <span>{{ 'data_migration_backup.admin.scanner.step2'|trans }}</span>
+            <span class="mx-2">→</span>
+            <span class="dmb-step-dot {{ step == 3 ? 'dmb-step-active' : '' }}">3</span>
+            <span>{{ 'data_migration_backup.admin.scanner.step3'|trans }}</span>
+        </div>
+        {% if step == 1 %}
+            <div class="alert alert-info mb-3">
+                移行元サイト（EC-CUBE {{ sourceInfo.eccube_version ?: '-' }}）で連携プラグインのデータを移行する場合、移行先サイトにも対応プラグインのインストールと有効化が必要です。<br>
+                EC-CUBE標準に含まれないプラグインを移行する場合は、「移行先サイトのバックアップファイルをアップロード」を選択して、移行先サイトで作成したバックアップファイルをアップロードしてください。
+            </div>
+        {% endif %}
+        {% if step == 2 %}
+            <div class="alert alert-info mb-3">
+                移行対象データを選択してスキャンを実行してください。連携プラグインのデータも移行する場合は「連携プラグインのデータを移行する」をONにして、移行先プラグインを選択してください。
+            </div>
+        {% endif %}
+        {% if step == 3 %}
+            {% set sourceScanVersion = (scanResult is not null and scanResult.source.eccube_version is defined and scanResult.source.eccube_version) ? scanResult.source.eccube_version : (sourceInfo.eccube_version ?: '-') %}
+            {% set targetScanVersion = (scanResult is not null and scanResult.target.eccube_version is defined and scanResult.target.eccube_version) ? scanResult.target.eccube_version : (targetInfo is not null and targetInfo.eccube_version ? targetInfo.eccube_version : (targetVersion ?: '-')) %}
+            <div class="alert alert-info mb-3">
+                この一覧は、移行元サイト（EC-CUBE {{ sourceScanVersion }}）から移行先サイト（EC-CUBE {{ targetScanVersion }}）へ移行されるデータ一覧です。
+            </div>
+        {% endif %}
+        <form id="dmbScannerForm" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ token_value }}">
+            <input type="hidden" id="dmbSourceUploadToken" name="source_upload_token" value="{{ sourceUploadToken }}">
+            <input type="hidden" id="dmbTargetUploadToken" name="target_upload_token" value="{{ targetUploadToken }}">
+
+            {% if step == 1 %}
+                <div class="box">
+                    <div class="box-header"><h3 class="box-title">{{ 'data_migration_backup.admin.scanner.target_setup_title'|trans }}</h3></div>
+                    <div class="box-body">
+                        {% if targetVersionOptions is empty %}
+                            <div class="alert alert-warning">{{ 'data_migration_backup.admin.scanner.no_higher_target_version'|trans }}</div>
+                        {% else %}
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">
+                                    {{ 'data_migration_backup.admin.scanner.source_file'|trans }}
+                                    <i class="fa fa-info-circle text-info ml-1" data-toggle="tooltip" data-placement="top" title="{{ 'data_migration_backup.admin.scanner.source_file_note'|trans|e('html_attr') }}"></i>
+                                </label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="source_select_mode" id="dmbSourceModeCurrent" value="current" {{ sourceSelectMode == 'current' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="dmbSourceModeCurrent">{{ 'data_migration_backup.admin.scanner.target_source_current'|trans }}</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="source_select_mode" id="dmbSourceModeSaved" value="saved" {{ sourceSelectMode == 'saved' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="dmbSourceModeSaved">{{ 'data_migration_backup.admin.scanner.target_source_saved'|trans }}</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="source_select_mode" id="dmbSourceModeUpload" value="upload" {{ sourceSelectMode == 'upload' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="dmbSourceModeUpload">{{ 'data_migration_backup.admin.scanner.target_source_upload'|trans }}</label>
+                                </div>
+
+                                <div id="dmbSourceCurrentWrap" class="mt-2">
+                                    <div class="small text-muted">{{ 'data_migration_backup.admin.scanner.source_current_note'|trans }}</div>
+                                </div>
+
+                                <div id="dmbSourceSavedWrap" class="mt-2">
+                                    {% if sourceFileOptions is not empty %}
+                                        <select class="form-control" name="source_file_key">
+                                            {% for option in sourceFileOptions %}
+                                                <option value="{{ option.key }}" {{ option.key == sourceFileKey ? 'selected' : '' }}>{{ option.name }} ({{ option.updated_at }})</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <div class="small text-muted">{{ 'data_migration_backup.admin.scanner.source_file_empty'|trans }}</div>
+                                        <input type="hidden" name="source_file_key" value="{{ sourceFileKey }}">
+                                    {% endif %}
+                                </div>
+
+                                <div id="dmbSourceUploadWrap" class="mt-2">
+                                    <input id="dmbSourceMigrateFile" name="source_migrate_file" type="file" class="form-control" accept=".tar.gz,.tgz,.tar,.zip,.gz,application/gzip,application/x-gzip,application/x-tar,application/zip">
+                                    <div id="dmbSourceUploadStatus" class="small text-muted mt-2"></div>
+                                    <div id="dmbSourceUploadProgressWrap" class="progress mt-2" style="display:none; height:3px;">
+                                        <div id="dmbSourceUploadProgress" class="progress-bar bg-info" role="progressbar" style="width:0%;" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">{{ 'data_migration_backup.admin.scanner.target_version_title'|trans }}</label>
+                                <select id="dmbTargetVersionSelect" class="form-control" name="target_version">
+                                    {% for option in targetVersionOptions %}
+                                        <option value="{{ option.value }}" {{ option.value == targetVersion ? 'selected' : '' }}>{{ option.label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">{{ 'data_migration_backup.admin.scanner.target_file'|trans }}</label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="target_file_mode" id="dmbTargetFileModeDefault" value="default" {{ targetFileMode != 'upload' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="dmbTargetFileModeDefault">EC-CUBE標準構成（新規サイト）を使用</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="target_file_mode" id="dmbTargetFileModeUpload" value="upload" {{ targetFileMode == 'upload' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="dmbTargetFileModeUpload">移行先サイトのバックアップファイルをアップロード</label>
+                                </div>
+
+                                <div id="dmbTargetDefaultWrap" class="mt-2">
+                                    <div class="small text-muted">選択したEC-CUBEバージョンに対応する標準構成ファイルを使用してスキャンします。</div>
+                                </div>
+
+                                <div id="dmbTargetUploadWrap" class="mt-2">
+                                    <input id="dmbTargetMigrateFile" name="target_migrate_file" type="file" class="form-control" accept=".tar.gz,.tgz,.tar,.zip,.gz,application/gzip,application/x-gzip,application/x-tar,application/zip">
+                                    <div class="small text-muted mt-1">{{ 'data_migration_backup.admin.scanner.target_file_note'|trans }}</div>
+                                    <div class="small mt-1">
+                                        <a href="#" class="text-primary" style="text-decoration: underline;" data-toggle="modal" data-target="#dmbTargetFileGuideModal" aria-label="{{ 'data_migration_backup.admin.scanner.target_file_help_aria'|trans }}">{{ 'data_migration_backup.admin.scanner.target_file_help_text'|trans }}</a>
+                                    </div>
+                                    <div id="dmbTargetUploadStatus" class="small text-muted mt-2"></div>
+                                    <div id="dmbTargetUploadProgressWrap" class="progress mt-2" style="display:none; height:3px;">
+                                        <div id="dmbTargetUploadProgress" class="progress-bar bg-info" role="progressbar" style="width:0%;" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="text-end mb-4">
+                    <button id="dmbScannerNextBtn" type="submit" name="action" value="to_step2" class="btn btn-primary" {{ targetVersionOptions is empty ? 'disabled' : '' }}>{{ 'data_migration_backup.admin.scanner.next'|trans }}</button>
+                </div>
+            {% elseif step == 2 %}
+                <input type="hidden" name="source_select_mode" value="{{ sourceSelectMode }}">
+                <input type="hidden" name="source_file_key" value="{{ sourceFileKey }}">
+                <input type="hidden" name="target_version" value="{{ targetVersion }}">
+                <input type="hidden" name="target_file_mode" value="{{ targetFileMode }}">
+
+                <div class="box">
+                    <div class="box-header"><h3 class="box-title">サイト情報</h3></div>
+                    <div class="box-body">
+                        <div class="row dmb-site-info-row">
+                            <div class="col-md-5 mb-3 mb-md-0">
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0">
+                                        <tbody>
+                                        <tr>
+                                            <th>EC-CUBEバージョン</th>
+                                            <td>{{ sourceInfo.eccube_version }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>PHPバージョン</th>
+                                            <td>{{ sourceInfo.php_version }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>データベース種別</th>
+                                            <td>{{ sourceInfo.database_platform ?: '-' }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-3 mb-md-0 text-muted dmb-site-info-arrow">
+                                <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M5 12h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                    <path d="M13 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0">
+                                        <tbody>
+                                        <tr>
+                                            <th>EC-CUBEバージョン</th>
+                                            <td>{{ targetInfo is not null and targetInfo.eccube_version ? targetInfo.eccube_version : '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>PHPバージョン</th>
+                                            <td>{{ targetInfo is not null and targetInfo.php_version ? targetInfo.php_version : '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>データベース種別</th>
+                                            <td>{{ targetInfo is not null and targetInfo.database_platform ? targetInfo.database_platform : '-' }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% set migrationModules = scannerModuleSections.migration|default([]) %}
+                <div class="box">
+                    <div class="box-header"><h3 class="box-title">移行対象データの選択</h3></div>
+                    <div class="box-body">
+                        <input type="hidden" name="modules_present" value="1">
+                        <div class="small text-info mb-1">✓ アイコンをクリックすると、移行対象テーブルの詳細を確認できます。</div>
+                        <div class="small text-muted mb-2">移行元サイトから移行するデータを選択してください。</div>
+                        {% if migrationModules %}
+                            <div class="row mb-3">
+                                {% for row in migrationModules %}
+                                    <div class="col-md-4 dmb-module-col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="modules[]" id="dmb_module_{{ row.key }}" value="{{ row.key }}" {{ row.key in scannerOptions.modules ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="dmb_module_{{ row.key }}">{{ row.label }}</label>
+                                            <button
+                                                type="button"
+                                                class="dmb-module-status-trigger text-success js-dmb-module-valid-detail"
+                                                data-module-label="{{ row.label|e('html_attr') }}"
+                                                data-module-code="{{ row.key|e('html_attr') }}"
+                                                data-module-reason="{{ row.note|e('html_attr') }}"
+                                                data-module-tables="{{ row.tables|json_encode|e('html_attr') }}"
+                                                data-module-all-tables="{{ row.all_tables|default(row.tables)|json_encode|e('html_attr') }}"
+                                                data-module-warning-tables="{{ row.warning_tables|default([])|json_encode|e('html_attr') }}"
+                                                data-module-valid-tables="{{ row.valid_tables|default(row.tables)|json_encode|e('html_attr') }}"
+                                                data-module-post-notes="{{ row.post_notes|default([])|json_encode|e('html_attr') }}"
+                                                aria-label="{{ row.label }} 詳細"
+                                            >✓</button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <input type="hidden" name="clear_target_before_import" value="{{ scannerOptions.clear_target_before_import ? '1' : '0' }}">
+                        <input type="hidden" name="disable_foreign_key_checks" value="{{ scannerOptions.disable_foreign_key_checks ? '1' : '0' }}">
+                        <input type="hidden" name="use_custom_mapping" value="{{ scannerOptions.use_custom_mapping ? '1' : '0' }}">
+                        <input type="hidden" name="conflict_policy" value="{{ scannerOptions.conflict_policy }}">
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-header"><h3 class="box-title">テーマ移行</h3></div>
+                    <div class="box-body">
+                        {% set sourceThemeName = sourceInfo.theme_name ?: '' %}
+                        {% set sourceThemeCode = sourceInfo.theme_code ?: 'default' %}
+                        <div class="small text-muted mb-2">
+                            このバックアップに含まれるテーマ:
+                            {% if sourceThemeName %}
+                                {{ sourceThemeName }} <code>({{ sourceThemeCode }})</code>
+                            {% else %}
+                                <code>{{ sourceThemeCode }}</code>
+                            {% endif %}
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="dmbMigrateTheme" name="migrate_theme" value="1" {{ scannerOptions.migrate_theme ? 'checked' : '' }}>
+                            <label class="form-check-label" for="dmbMigrateTheme">テーマを移行して有効化する</label>
+                        </div>
+                        <div
+                            id="dmbThemeMigrationStatus"
+                            class="small text-muted"
+                            data-scan-url="{{ url('data_migration_backup_admin_scanner_scan_theme') }}"
+                            data-target-theme-backup="{{ targetInfo is not null and targetInfo.backup_theme ? '1' : '0' }}"
+                            data-source-theme-backup="{{ sourceInfo.backup_theme ? '1' : '0' }}"
+                            data-theme-name="{{ sourceInfo.theme_name ?: '' }}"
+                            data-theme-code="{{ sourceInfo.theme_code ?: '' }}"
+                            data-target-version="{{ targetVersion ?: '' }}"
+                        ></div>
+                    </div>
+                </div>
+
+                <div id="dmbThemeIssueLogModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">テーマ依存ログ</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped mb-0">
+                                        <thead>
+                                        <tr>
+                                            <th>ファイル</th>
+                                            <th>該当コード</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="dmbThemeIssueLogBody">
+                                        <tr>
+                                            <td colspan="2" class="text-muted">表示できるTwig依存ログがありません。</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-header"><h3 class="box-title">{{ 'data_migration_backup.admin.scanner.connector_title'|trans }}</h3></div>
+                    <div class="box-body" id="dmbConnectorScanWrap" data-scan-url="{{ url('data_migration_backup_admin_scanner_scan_connectors') }}">
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="dmbEnablePluginConnectors" name="enable_plugin_connectors" {{ pluginConnectorEnabled ? 'checked' : '' }}>
+                            <label class="form-check-label" for="dmbEnablePluginConnectors">連携プラグインのデータを移行する</label>
+                        </div>
+                        <div class="small text-info mb-3">連携プラグインデータは、移行元サイトと移行先サイトの両方で対象プラグインが有効化されている場合のみ移行できます。</div>
+                        <div id="dmbConnectorTableWrap" style="{{ pluginConnectorEnabled ? '' : 'display:none;' }}">
+                            {% set sourceConnectorVersion = sourceInfo.eccube_version ?: '-' %}
+                            {% set targetConnectorVersion = (targetInfo is not null and targetInfo.eccube_version ? targetInfo.eccube_version : targetVersion) %}
+                            {% set sourceEnabledCount = 0 %}
+                            {% for plugin in sourceInfo.plugins|default([]) %}
+                                {% set sourceCodeLower = (plugin.code|default('')|lower) %}
+                                {% set isInternalSourcePlugin = sourceCodeLower starts with 'datamigrationbackup' or sourceCodeLower starts with 'datamigrationassistant' %}
+                                {% if plugin.enabled and not isInternalSourcePlugin %}
+                                    {% set sourceEnabledCount = sourceEnabledCount + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            {% set targetEnabledCount = 0 %}
+                            {% if targetInfo is not null %}
+                                {% for plugin in targetInfo.plugins|default([]) %}
+                                    {% set targetCodeLower = (plugin.code|default('')|lower) %}
+                                    {% set isInternalTargetPlugin = targetCodeLower starts with 'datamigrationbackup' or targetCodeLower starts with 'datamigrationassistant' %}
+                                    {% if plugin.enabled and not isInternalTargetPlugin %}
+                                        {% set targetEnabledCount = targetEnabledCount + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="table-responsive">
+                                <table class="table table-sm mb-0 dmb-connector-table">
+                                    <thead>
+                                    <tr>
+                                        <th class="dmb-col-plugin">
+                                            <div>移行元プラグイン (EC-CUBE {{ sourceConnectorVersion }})</div>
+                                            <div class="small text-muted">有効プラグイン: {{ sourceEnabledCount }}件</div>
+                                        </th>
+                                        <th class="dmb-col-target">
+                                            <div>移行先プラグイン (EC-CUBE {{ targetConnectorVersion }})</div>
+                                            <div class="small text-muted">有効プラグイン: {{ targetEnabledCount }}件</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for row in connectorRows %}
+                                        <tr class="dmb-connector-row" data-source-code="{{ row.source_code }}" data-connector-status="{{ row.status ?: 'pending' }}">
+                                            <td class="dmb-col-plugin">
+                                                <div class="dmb-source-plugin-name">{{ row.source_name }}</div>
+                                                <div class="small text-muted dmb-source-plugin-code"><code>{{ row.source_code }}</code>{% if row.source_version %} / {{ row.source_version }}{% endif %}</div>
+                                            </td>
+                                            <td class="dmb-col-target">
+                                                <select class="form-control form-control-sm dmb-target-plugin-select js-select2" name="connector_target_codes[{{ row.source_code }}]" data-source-code="{{ row.source_code }}">
+                                                    <option value="">{{ 'data_migration_backup.admin.scanner.connector_target_none'|trans }}</option>
+                                                    {% for option in row.target_options %}
+                                                        <option value="{{ option.code }}" {{ option.code == row.target_code ? 'selected' : '' }}>{{ option.label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% set feedbackClass = 'text-muted' %}
+                                                {% set feedbackText = '' %}
+                                                {% if row.status == 'supported' %}
+                                                    {% set feedbackClass = 'text-success' %}
+                                                    {% set feedbackText = 'data_migration_backup.admin.scanner.connector_supported'|trans %}
+                                                {% elseif row.status == 'unsupported' %}
+                                                    {% set feedbackClass = 'text-danger' %}
+                                                    {% set feedbackText = row.note ?: ('data_migration_backup.admin.scanner.connector_unsupported'|trans) %}
+                                                {% elseif row.note %}
+                                                    {% set feedbackText = row.note %}
+                                                {% endif %}
+                                                <div class="small dmb-plugin-select-feedback mt-1 {{ feedbackClass }}" {{ feedbackText == '' ? 'style="display:none;"' : '' }}>{{ feedbackText }}</div>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="2" class="text-muted">{{ 'data_migration_backup.admin.scanner.no_plugin'|trans }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-3">
+                                <div id="dmbConnectorScanProgressWrap" class="progress" style="display:none; height:3px;">
+                                    <div id="dmbConnectorScanProgress" class="progress-bar bg-info" role="progressbar" style="width:0%;" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dmbConnectorStateFields">
+                            {% for row in connectorRows %}
+                                {% if row.source_code is defined and row.source_code %}
+                                    <input type="hidden" name="connector_statuses[{{ row.source_code }}]" value="{{ row.status|default('pending') }}">
+                                    <input type="hidden" name="connector_notes[{{ row.source_code }}]" value="{{ row.note|default('') }}">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-4">
+                    <button type="submit" name="action" value="back_step1" class="btn btn-default">{{ 'data_migration_backup.admin.scanner.back'|trans }}</button>
+                    <button id="dmbRunScanBtn" type="submit" name="action" value="run_scan" class="btn btn-primary">{{ 'data_migration_backup.admin.scanner.run'|trans }}</button>
+                </div>
+            {% elseif step == 3 %}
+                <input type="hidden" name="source_select_mode" value="{{ sourceSelectMode }}">
+                <input type="hidden" name="source_file_key" value="{{ sourceFileKey }}">
+                <input type="hidden" name="target_version" value="{{ targetVersion }}">
+                <input type="hidden" name="target_file_mode" value="{{ targetFileMode }}">
+                <input type="hidden" name="enable_plugin_connectors" value="{{ pluginConnectorEnabled ? '1' : '0' }}">
+                <input type="hidden" name="clear_target_before_import" value="{{ scannerOptions.clear_target_before_import ? '1' : '0' }}">
+                <input type="hidden" name="disable_foreign_key_checks" value="{{ scannerOptions.disable_foreign_key_checks ? '1' : '0' }}">
+                <input type="hidden" name="use_custom_mapping" value="{{ scannerOptions.use_custom_mapping ? '1' : '0' }}">
+                <input type="hidden" name="conflict_policy" value="{{ scannerOptions.conflict_policy }}">
+                <input type="hidden" name="migrate_theme" value="{{ scannerOptions.migrate_theme ? '1' : '0' }}">
+                <input type="hidden" name="modules_present" value="1">
+                {% for moduleKey in scannerOptions.modules %}
+                    <input type="hidden" name="modules[]" value="{{ moduleKey }}">
+                {% endfor %}
+                {% for sourceCode, targetCode in connectorTargetCodes %}
+                    <input type="hidden" name="connector_target_codes[{{ sourceCode }}]" value="{{ targetCode }}">
+                {% endfor %}
+                <div id="dmbConnectorStateFields">
+                    {% for row in connectorRows %}
+                        {% if row.source_code is defined and row.source_code %}
+                            <input type="hidden" name="connector_statuses[{{ row.source_code }}]" value="{{ row.status|default('pending') }}">
+                            <input type="hidden" name="connector_notes[{{ row.source_code }}]" value="{{ row.note|default('') }}">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% set orderPreviewRows = scanResult is not null ? scanResult.preview.dtb_order|default([]) : [] %}
+                {% set orderStatusNullDetected = false %}
+                {% set orderStatusPreviewAvailable = orderPreviewRows is iterable and orderPreviewRows|length > 0 %}
+                {% for orderPreviewRow in orderPreviewRows %}
+                    {% set orderStatusValue = orderPreviewRow.order_status_id|default(orderPreviewRow.status|default(null)) %}
+                    {% if orderStatusValue is same as(null) or ((orderStatusValue ~ '')|trim == '') %}
+                        {% set orderStatusNullDetected = true %}
+                    {% endif %}
+                {% endfor %}
+                {% set orderStatusNote = orderStatusNullDetected
+                    ? '現在のプレビューで dtb_order.order_status_id が NULL の行を確認しました。移行実行時にも警告ログへ記録します。移行後に状態確認してください。'
+                    : (orderStatusPreviewAvailable
+                        ? '現在のプレビューでは dtb_order.order_status_id の NULL は確認されませんでした。移行実行時に NULL の行が見つかった場合は警告ログへ記録します。'
+                        : 'dtb_order.order_status_id が NULL の行が含まれる場合は、移行実行時に警告ログへ記録します。移行後に状態確認してください。') %}
+                {% set groupPostNotes = {
+                    '受注データ': [orderStatusNote],
+                    '支払・配送': ['dtb_payment は公開状態を維持したまま移行します。移行後に設定内容を確認してください。', 'dtb_delivery は公開状態を維持したまま移行します。移行後に設定内容を確認してください。'],
+                    'カート': ['dtb_cart は移行後に全件クリアします。セッション差異で無効なカートが残るのを防ぐためです。', 'dtb_cart_item は移行後に全件クリアします。セッション差異で無効なカート明細が残るのを防ぐためです。'],
+                    'ショップ設定': ['dtb_template は移行対象外です。移行先EC-CUBEで既存テンプレートを利用するため、取り込みません。'],
+                    'システム設定データ': ['dtb_plugin は移行対象外です。プラグイン本体情報は移行先で管理し、連携プラグインデータは移行先で選択したプラグインに対応する plg_* テーブルのみ移行します。']
+                } %}
+
+                <div class="box">
+                    <div class="box-header"><h3 class="box-title">テーブル別結果</h3></div>
+                    <div class="box-body">
+                        <p class="small text-muted mb-3">{{ 'data_migration_backup.admin.scanner.step3_table_stats_note'|trans }}</p>
+                        {% if scanResult is not null and scanResult.table_stats is not empty %}
+                            <div class="dmb-table-stats-scroll">
+                            <div class="table-responsive">
+                                <table class="table table-sm mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>テーブル名</th>
+                                        <th>種別</th>
+                                        <th class="text-end">移行件数</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% set currentGroup = '' %}
+                                    {% for row in scanResult.table_stats %}
+                                        {% set groupLabel = row.group|default('その他') %}
+                                        {% if groupLabel != currentGroup %}
+                                            <tr class="table-light">
+                                                <th colspan="3">{{ groupLabel }}</th>
+                                            </tr>
+                                            {% set groupNotes = groupPostNotes[groupLabel]|default([]) %}
+                                            {% for note in groupNotes %}
+                                                {% set isWarningGroupNote = false %}
+                                                <tr>
+                                                    <td colspan="3" class="small {{ isWarningGroupNote ? 'text-warning' : 'text-muted' }}">{{ note }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            {% set currentGroup = groupLabel %}
+                                        {% endif %}
+                                        <tr>
+                                            <td>
+                                                <code>{{ row.table }}</code>
+                                            </td>
+                                            <td>
+                                                {% if row.type == 'plugin' %}
+                                                    プラグインテーブル
+                                                {% else %}
+                                                    コアテーブル
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-end">{{ row.estimated_rows is same as(null) or row.estimated_rows is same as('') ? '-' : row.estimated_rows }}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="3" class="text-muted">-</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        {% else %}
+                            <div class="text-muted">-</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-header"><h3 class="box-title">移行データプレビュー</h3></div>
+                    <div class="box-body">
+                        <p class="small text-muted mb-3">{{ 'data_migration_backup.admin.scanner.step3_preview_description'|trans }}</p>
+                        {% if scanResult is not null and scanResult.preview is not empty %}
+                            {% set previewTableKeys = scanResult.preview|keys %}
+                            {% set preferredPreviewTable = 'dtb_product' in previewTableKeys ? 'dtb_product' : (previewTableKeys|first) %}
+                            {% set tableCountMap = {} %}
+                            {% for stat in scanResult.table_stats|default([]) %}
+                                {% if stat.table is defined %}
+                                    {% set tableCountMap = tableCountMap|merge({ (stat.table): stat.estimated_rows|default('-') }) %}
+                                {% endif %}
+                            {% endfor %}
+                            <div class="mb-3">
+                                <label for="dmbStep3PreviewTable" class="form-label">表示するデータ</label>
+                                <select class="form-control js-select2" id="dmbStep3PreviewTable">
+                                    <option value="">表示するデータを選択してください</option>
+                                    {% for table, rows in scanResult.preview %}
+                                        {% set countLabel = tableCountMap[table]|default(rows|length) %}
+                                        <option value="{{ table }}" {{ table == preferredPreviewTable ? 'selected' : '' }}>{{ table }} ({{ countLabel }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            {% for table, rows in scanResult.preview %}
+                                {% set columns = [] %}
+                                {% for row in rows %}
+                                    {% for key, value in row %}
+                                        {% if key not in columns %}
+                                            {% set columns = columns|merge([key]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                {% if columns is empty %}
+                                    {% set columns = ['データ'] %}
+                                {% endif %}
+                                <div class="dmb-step3-preview-section mb-3" data-table="{{ table }}">
+                                    <div class="dmb-preview-table-wrap">
+                                        <table class="display nowrap js-dmb-preview-table" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                {% for col in columns %}
+                                                    <th>{{ col }}</th>
+                                                {% endfor %}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for row in rows %}
+                                                <tr>
+                                                    {% for col in columns %}
+                                                        {% set cellValue = attribute(row, col) %}
+                                                        <td>{{ cellValue is same as(null) or cellValue == 'NULL' ? '' : cellValue|default('') }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-muted">-</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-4">
+                    <button type="submit" name="action" value="back_step2" class="btn btn-default">{{ 'data_migration_backup.admin.scanner.back_to_conditions'|trans }}</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dmbStartMigrationGuideModal">データ移行を開始</button>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% set guideMigratable = scanResult is not null and scanResult.status in ['ok', 'warning'] %}
+<div class="modal fade" id="dmbStartMigrationGuideModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title font-weight-bold">データ移行の進め方</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if step == 3 and scanResult is not null %}
+                    <div class="dmb-guide-result {{ guideMigratable ? 'dmb-guide-result-success' : 'dmb-guide-result-failed' }}">
+                        <div class="dmb-guide-result-icon">
+                            {% if guideMigratable %}
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="m8.5 12.5 2.3 2.3 4.7-5.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            {% else %}
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="M12 7.5v5.2M12 16.3h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="dmb-guide-result-title">{{ guideMigratable ? 'スキャン完了：移行可能です' : 'スキャン完了：要確認があります' }}</div>
+                            {% if guideMigratable %}
+                                {% if scannerOptions.migrate_theme and scanResult.theme_migration is defined and scanResult.theme_migration.migratable %}
+                                    <div class="small mt-1">
+                                        {% set themeName = scanResult.theme_migration.source_theme_name ?: '' %}
+                                        {% set themeCode = scanResult.theme_migration.source_theme_code ?: '' %}
+                                        {% if themeName and themeCode %}
+                                            テーマ「{{ themeName }}」（コード: {{ themeCode }}）は移行可能です。
+                                        {% elseif themeName %}
+                                            テーマ「{{ themeName }}」は移行可能です。
+                                        {% elseif themeCode %}
+                                            テーマ（コード: {{ themeCode }}）は移行可能です。
+                                        {% else %}
+                                            テーマは移行可能です。
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if pluginConnectorEnabled and scanResult.migratable_plugin_count is defined and scanResult.migratable_plugin_count > 0 %}
+                                    <div class="small mt-1">連携プラグインは {{ scanResult.migratable_plugin_count }} 件移行可能です。</div>
+                                {% endif %}
+                            {% endif %}
+                            {% if not guideMigratable %}
+                                <div class="small">結果詳細を確認し、要因を修正してから再スキャンしてください。</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="dmb-guide-step">
+                    <div class="dmb-guide-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="M8 10h8M8 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="dmb-guide-title">手順1</div>
+                        <div>移行先サイト（EC-CUBE {{ targetVersion ?: '-' }}）に <strong>データ移行アシスタントプラグイン for EC-CUBE 4</strong> をインストールして有効化します。</div>
+                    </div>
+                </div>
+                <div class="dmb-guide-step">
+                    <div class="dmb-guide-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="m8.5 11.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="dmb-guide-title">手順2</div>
+                        <div>
+                            移行先の管理画面で移行ウィザードを開き、移行元バックアップファイルをアップロードします。
+                            {% if sourceFileInfo is not null and sourceFileInfo.name is defined and sourceFileInfo.name %}
+                                <span class="ms-1">今すぐダウンロードしてアップロードに利用できます:</span>
+                                <a href="{{ url('data_migration_backup_admin_download_query') }}?name={{ sourceFileInfo.name|url_encode }}">{{ sourceFileInfo.name }}</a>
+                                {% if sourceFileInfo.size_label is defined %} ({{ sourceFileInfo.size_label }}){% endif %}
+                            {% elseif sourceFileKey %}
+                                <span class="ms-1">今すぐダウンロードしてアップロードに利用できます:</span>
+                                <a href="{{ url('data_migration_backup_admin_download_query') }}?name={{ sourceFileKey|url_encode }}">{{ sourceFileKey }}</a>
+                            {% elseif sourceUploadInfo is not null and sourceUploadInfo.name is defined and sourceUploadInfo.name %}
+                                <span class="ms-1">アップロード済みファイル:</span>
+                                <span>{{ sourceUploadInfo.name }}</span>
+                                {% if sourceUploadInfo.size_label is defined %} ({{ sourceUploadInfo.size_label }}){% endif %}
+                            {% else %}
+                                <span class="ms-1">今すぐダウンロードしてアップロードに利用できます: data_migration_backup_20260313173833.tar.gz (3 MB)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="dmb-guide-step">
+                    <div class="dmb-guide-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 5h16v14H4z" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="M7.5 9.5h9M7.5 13h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="dmb-guide-title">手順3</div>
+                        <div>モジュール設定・判定結果・プレビューを確認して、問題がなければ移行を実行します。</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" href="https://smartit-kaizen.com/document/DataMigrationAssistant42/" target="_blank" rel="noopener">データ移行アシスタントプラグインの詳細を見る</a>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">移行データ一覧を確認</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dmbTargetFileGuideModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ 'data_migration_backup.admin.scanner.target_file_help_title'|trans }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="dmb-guide-step">
+                    <div class="dmb-guide-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="M7.5 9.5h9M7.5 13h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="dmb-guide-title">手順1</div>
+                        <div>移行先サイト（EC-CUBE <strong id="dmbTargetGuideVersion">{{ targetVersion ?: '-' }}</strong>）の管理画面で「<strong>データ移行向けバックアップ生成プラグイン for ECCUBE</strong>」をインストールし、有効化します。</div>
+                    </div>
+                </div>
+                <div class="dmb-guide-step">
+                    <div class="dmb-guide-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 5h16v14H4z" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="M8 10h8M8 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="dmb-guide-title">手順2</div>
+                        <div>メニュー「移行バックアップ」→「バックアップ作成」を開き、「バックアップを開始」を実行して <code>data_migration_backup_XXXXX.tar.gz</code> をダウンロードします。</div>
+                    </div>
+                </div>
+                <div class="dmb-guide-step">
+                    <div class="dmb-guide-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="m8.5 11.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="dmb-guide-title">手順3</div>
+                        <div>作成したバックアップファイルを、この画面の「移行先サイトのバックアップファイルをアップロード」で指定します。</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dmbConnectorNgConfirmModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="dmbConnectorNgConfirmTitle">要確認項目があります</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-3" id="dmbConnectorNgConfirmMessage">要確認項目があります。このままスキャンを実行してよろしいですか？</p>
+                <div class="table-responsive" id="dmbConnectorNgConfirmTableWrap">
+                    <table class="table table-sm mb-0">
+                        <thead>
+                        <tr>
+                            <th style="width: 38%;">移行元プラグイン</th>
+                            <th>理由</th>
+                        </tr>
+                        </thead>
+                        <tbody id="dmbConnectorNgConfirmTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+                <button type="button" class="btn btn-primary" id="dmbConnectorNgConfirmRunBtn">このままスキャン実行</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dmbModuleTablesModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="dmbModuleTablesModalTitle">-</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                <div class="mb-2" id="dmbModuleTablesModalReasonWrap" style="display:none;">
+                    <strong>理由:</strong> <span id="dmbModuleTablesModalReason">-</span>
+                </div>
+                    <div class="small text-muted mb-2">対象データ一覧</div>
+                    <ul class="list-group" id="dmbModuleTablesModalList"></ul>
+                    <div class="mt-3" id="dmbModuleTablesModalPostNotesWrap" style="display:none;">
+                        <div class="small text-muted mb-2">移行後の注意事項</div>
+                        <ul class="mb-0 pl-3" id="dmbModuleTablesModalPostNotes"></ul>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'default_frame.twig' %}
+
+{% block title %}{{ 'data_migration_backup.admin.nav.guide'|trans }}{% endblock %}
+{% block sub_title %}{{ 'data_migration_backup.admin.nav.title'|trans }}{% endblock %}
+{% set menus = ['data_migration_backup', 'data_migration_backup_guide'] %}
+
+{% block stylesheet %}
+<style>
+    .dmb-admin-screen {
+        font-size: 1.4rem;
+        line-height: 1.6;
+    }
+    .dmb-admin-screen .box-header .box-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    .dmb-admin-screen .help-step {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+    .dmb-admin-screen .help-step:last-child {
+        margin-bottom: 0;
+    }
+    .dmb-admin-screen .help-step-no {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 10px;
+        flex: 0 0 32px;
+    }
+    .dmb-admin-screen .help-step-text {
+        min-width: 0;
+        line-height: 1.6;
+    }
+    .dmb-admin-screen .help-note {
+        color: #6b7280;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="dmb-admin-screen">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">このプラグインで行うこと</h3>
+                </div>
+                <div class="box-body">
+                    <p class="mb-3">移行元サイトでバックアップを作成し、そのファイルを移行先サイトへ持っていくまでの流れを案内します。</p>
+                    <div class="help-step">
+                        <div class="help-step-no">1</div>
+                        <div class="help-step-text"><strong>バックアップ作成</strong> でファイルを作成します。</div>
+                    </div>
+                    <div class="help-step">
+                        <div class="help-step-no">2</div>
+                        <div class="help-step-text"><strong>バックアップ一覧</strong> で作成したファイルを確認・ダウンロードします。</div>
+                    </div>
+                    <div class="help-step">
+                        <div class="help-step-no">3</div>
+                        <div class="help-step-text"><strong>事前診断</strong> で、移行先サイトへ取り込めそうかを先に確認できます。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ステップ1: バックアップ作成</h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li>メニュー <strong>「移行バックアップ」→「バックアップ作成」</strong> を開きます。</li>
+                        <li>画面上部の <strong>「実行前チェック」</strong> を見て、バックアップを作成できる状態かを確認します。</li>
+                        <li>問題がなければ、画面下の <strong>「バックアップを開始」</strong> をクリックします。</li>
+                        <li>完了すると <strong>「バックアップ完了」</strong> のポップアップが開き、ダウンロードするファイルが表示されます。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ステップ2: どのファイルを使うか</h3>
+                </div>
+                <div class="box-body">
+                    <p class="mb-2">バックアップ完了後は、表示されたファイルをダウンロードします。よく使うのは次の3つです。</p>
+                    <ul>
+                        <li><strong>data_migration_backup_XXXXXX.tar.gz</strong>: メインの移行バックアップです。テーマ情報や会員パスワード互換に必要な情報もここに含まれます。まずこのファイルを移行先サイトへ持っていきます。</li>
+                        <li><strong>assets_html_XXXXXX.tar.gz</strong>: 商品画像や公開ファイルも移行したい場合に使います。</li>
+                        <li><strong>assets_app_XXXXXX.tar.gz</strong>: app 側の補助ファイルを移行したい場合に使います。テーマアーカイブ本体ではありません。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ステップ3: バックアップ一覧</h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li>メニュー <strong>「バックアップ一覧」</strong> では、作成済みのファイルをあとから確認できます。</li>
+                        <li>必要なファイルをここから再度 <strong>「ダウンロード」</strong> できます。</li>
+                        <li>不要になったファイルは <strong>「削除」</strong> できます。</li>
+                        <li><strong>「移行用デフォルト」</strong> のバックアップは、必要に応じて <strong>「復元」</strong> に使えます。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ステップ4: 事前診断</h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li>メニュー <strong>「事前診断」</strong> では、移行元サイトのバックアップと、移行先サイトのバックアップを比較できます。</li>
+                        <li>ここでは、移行元バックアップファイルを選び、比較したい移行先のバージョン <strong>EC-CUBE 4系</strong> やバックアップファイルを指定します。</li>
+                        <li><strong>「移行対象データの選択」</strong> では、どのまとまりのデータを移行したいかを確認できます。</li>
+                        <li>テーマ依存に警告が出た場合は <strong>「詳細を見る」</strong> からファイル・行番号・該当コードを確認し、必要なら修正してからバックアップを再作成します。</li>
+                        <li><strong>「テーブル別結果」</strong> と <strong>「移行データプレビュー」</strong> で、中身を先に確認できます。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ステップ5: 移行先サイトで行うこと</h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li>移行元サイトでダウンロードした <strong>data_migration_backup_XXXXXX.tar.gz</strong> を、移行先サイトの <strong>「データ移行アシスタント」</strong> でアップロードします。</li>
+                        <li>商品画像も移行する場合は <strong>assets_html_XXXXXX.tar.gz</strong>、app 側補助ファイルも移行する場合は <strong>assets_app_XXXXXX.tar.gz</strong> も使います。</li>
+                        <li>最新のバックアップであれば、移行先 EC-CUBE 4系でも会員は元のパスワードでログインでき、初回ログイン成功後に自動更新されます。</li>
+                        <li>移行先サイトでは、アップロード後に内容を確認してから移行を実行します。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">バックアップを復元したい場合</h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li>メニュー <strong>「バックアップ一覧」</strong> を開きます。</li>
+                        <li><strong>「移行用デフォルト」</strong> のファイルに表示される <strong>「復元」</strong> をクリックします。</li>
+                        <li>確認メッセージが表示されたら、そのバックアップの内容で現在のデータベースを戻します。</li>
+                        <li>復元は現在のデータを上書きするため、必要な場合だけ実行してください。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

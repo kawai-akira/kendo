@@ -1,0 +1,4813 @@
+{
+    "generated_at": "2026-03-18T15:37:27+09:00",
+    "database_platform": "sqlite",
+    "tables": {
+        "doctrine_migration_versions": {
+            "columns": {
+                "version": {
+                    "type": "string",
+                    "length": 255,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "version"
+            ]
+        },
+        "dtb_authority_role": {
+            "columns": {
+                "authority_role_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "authority_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "deny_url": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "authority_role_id"
+            ]
+        },
+        "dtb_base_info": {
+            "columns": {
+                "id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "country_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "pref": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "company_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "company_kana": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zip01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zip02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zipcode": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "addr01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "addr02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "business_hour": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "email01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "email02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "email03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "email04": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shop_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shop_kana": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shop_name_eng": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "good_traded": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "message": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "latitude": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "longitude": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "delivery_free_amount": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "delivery_free_quantity": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "option_multiple_shipping": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "0"
+                },
+                "option_mypage_order_status_display": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "1"
+                },
+                "nostock_hidden": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "0"
+                },
+                "option_favorite_product": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "1"
+                },
+                "option_product_delivery_fee": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "0"
+                },
+                "option_product_tax_rule": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "0"
+                },
+                "option_customer_activate": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "1"
+                },
+                "option_remember_me": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "0"
+                },
+                "authentication_key": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "dtb_block": {
+            "columns": {
+                "block_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "device_type_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "block_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "file_name": {
+                    "type": "string",
+                    "length": 200,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "logic_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "1"
+                },
+                "deletable_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "1"
+                }
+            },
+            "primary_keys": [
+                "block_id"
+            ]
+        },
+        "dtb_block_position": {
+            "columns": {
+                "page_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "target_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "block_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "block_row": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "anywhere": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "page_id",
+                "target_id",
+                "block_id"
+            ]
+        },
+        "dtb_category": {
+            "columns": {
+                "category_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "parent_category_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "category_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "level": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "category_id"
+            ]
+        },
+        "dtb_category_count": {
+            "columns": {
+                "category_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_count": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "category_id"
+            ]
+        },
+        "dtb_category_total_count": {
+            "columns": {
+                "category_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_count": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "category_id"
+            ]
+        },
+        "dtb_class_category": {
+            "columns": {
+                "class_category_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "class_name_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "class_category_id"
+            ]
+        },
+        "dtb_class_name": {
+            "columns": {
+                "class_name_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "class_name_id"
+            ]
+        },
+        "dtb_csv": {
+            "columns": {
+                "csv_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "csv_type": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "entity_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "field_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "reference_field_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "disp_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "enable_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "csv_id"
+            ]
+        },
+        "dtb_customer": {
+            "columns": {
+                "customer_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "status": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "sex": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "job": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "country_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "pref": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "name01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "kana01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "kana02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "company_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zip01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zip02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zipcode": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "addr01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "addr02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "email": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "tel01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "birth": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "password": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "salt": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "secret_key": {
+                    "type": "string",
+                    "length": 200,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "first_buy_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "last_buy_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "buy_times": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "0"
+                },
+                "buy_total": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "0"
+                },
+                "note": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "reset_key": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "reset_expire": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "customer_id"
+            ]
+        },
+        "dtb_customer_address": {
+            "columns": {
+                "customer_address_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "customer_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "country_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "pref": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "name01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "name02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "kana01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "kana02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "company_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zip01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zip02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "zipcode": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "addr01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "addr02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tel03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fax03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "customer_address_id"
+            ]
+        },
+        "dtb_customer_favorite_product": {
+            "columns": {
+                "favorite_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "customer_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "favorite_id"
+            ]
+        },
+        "dtb_delivery": {
+            "columns": {
+                "delivery_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_type_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "service_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "description": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "confirm_url": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "delivery_id"
+            ]
+        },
+        "dtb_delivery_date": {
+            "columns": {
+                "date_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "value": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "date_id"
+            ]
+        },
+        "dtb_delivery_fee": {
+            "columns": {
+                "fee_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "delivery_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "pref": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "fee": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "fee_id"
+            ]
+        },
+        "dtb_delivery_time": {
+            "columns": {
+                "time_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "delivery_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "delivery_time": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "time_id"
+            ]
+        },
+        "dtb_help": {
+            "columns": {
+                "id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "law_country_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_pref": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "customer_agreement": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_company": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_manager": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_zip01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_zip02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_zipcode": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_addr01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_addr02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_tel01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_tel02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_tel03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_fax01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_fax02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_fax03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_email": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_url": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term04": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term05": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term06": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term07": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term08": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term09": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "law_term10": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "dtb_mail_history": {
+            "columns": {
+                "send_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "template_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "send_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "subject": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "mail_body": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "send_id"
+            ]
+        },
+        "dtb_mail_template": {
+            "columns": {
+                "template_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "file_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "subject": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "header": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "footer": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "template_id"
+            ]
+        },
+        "dtb_member": {
+            "columns": {
+                "member_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "work": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "authority": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "department": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "login_id": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "password": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "salt": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "login_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "member_id"
+            ]
+        },
+        "dtb_news": {
+            "columns": {
+                "news_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "news_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "news_title": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "news_comment": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "news_url": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "news_select": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "link_method": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "news_id"
+            ]
+        },
+        "dtb_order": {
+            "columns": {
+                "order_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "customer_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_country_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_pref": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_sex": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_job": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "payment_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "device_type_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "pre_order_id": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "message": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_name01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_name02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_kana01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_kana02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_company_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_email": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_tel01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_tel02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_tel03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_fax01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_fax02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_fax03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_zip01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_zip02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_zipcode": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_addr01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_addr02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_birth": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "subtotal": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "discount": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "delivery_fee_total": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "charge": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tax": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "total": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "payment_total": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "payment_method": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "note": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "order_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "commit_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "payment_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "status": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "order_id"
+            ]
+        },
+        "dtb_order_detail": {
+            "columns": {
+                "order_detail_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "order_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_class_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_code": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_name1": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_name2": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_category_name1": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_category_name2": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "price": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "quantity": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tax_rate": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tax_rule": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "order_detail_id"
+            ]
+        },
+        "dtb_page_layout": {
+            "columns": {
+                "page_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "device_type_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "page_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "url": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "file_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "edit_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "1"
+                },
+                "author": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "description": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "keyword": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "update_url": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "meta_robots": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "meta_tags": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "page_id"
+            ]
+        },
+        "dtb_payment": {
+            "columns": {
+                "payment_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "payment_method": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "charge": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rule_max": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fix_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "1"
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "payment_image": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "charge_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": "1"
+                },
+                "rule_min": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "payment_id"
+            ]
+        },
+        "dtb_payment_option": {
+            "columns": {
+                "delivery_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "payment_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "delivery_id",
+                "payment_id"
+            ]
+        },
+        "dtb_plugin": {
+            "columns": {
+                "plugin_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "code": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "class_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "plugin_enable": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "version": {
+                    "type": "string",
+                    "length": 255,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "source": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "plugin_id"
+            ]
+        },
+        "dtb_plugin_event_handler": {
+            "columns": {
+                "id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "plugin_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "event": {
+                    "type": "string",
+                    "length": 255,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "priority": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "handler": {
+                    "type": "string",
+                    "length": 255,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "handler_type": {
+                    "type": "string",
+                    "length": 255,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "dtb_product": {
+            "columns": {
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "status": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "note": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "description_list": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "description_detail": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "search_word": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "free_area": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "product_id"
+            ]
+        },
+        "dtb_product_category": {
+            "columns": {
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "category_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "product_id",
+                "category_id"
+            ]
+        },
+        "dtb_product_class": {
+            "columns": {
+                "product_class_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_type_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "class_category_id1": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_category_id2": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "delivery_date_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_code": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "stock": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "stock_unlimited": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "sale_limit": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "price01": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "price02": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "delivery_fee": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "product_class_id"
+            ]
+        },
+        "dtb_product_image": {
+            "columns": {
+                "product_image_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "file_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "product_image_id"
+            ]
+        },
+        "dtb_product_stock": {
+            "columns": {
+                "product_stock_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_class_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "stock": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "product_stock_id"
+            ]
+        },
+        "dtb_product_tag": {
+            "columns": {
+                "product_tag_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "tag": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "product_tag_id"
+            ]
+        },
+        "dtb_shipment_item": {
+            "columns": {
+                "item_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "order_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_class_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "shipping_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_code": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_name1": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_name2": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_category_name1": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "class_category_name2": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "price": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "quantity": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "item_id"
+            ]
+        },
+        "dtb_shipping": {
+            "columns": {
+                "shipping_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "shipping_country_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_pref": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "order_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "delivery_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "time_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "fee_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_name01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_name02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_kana01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_kana02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_company_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_tel01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_tel02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_tel03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_fax01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_fax02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_fax03": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_zip01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_zip02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_zipcode": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_addr01": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_addr02": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_delivery_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_delivery_time": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_delivery_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_delivery_fee": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "shipping_commit_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                }
+            },
+            "primary_keys": [
+                "shipping_id"
+            ]
+        },
+        "dtb_tax_rule": {
+            "columns": {
+                "tax_rule_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "product_class_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "creator_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "country_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "pref_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "product_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "calc_rule": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "tax_rate": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "8"
+                },
+                "tax_adjust": {
+                    "type": "decimal",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "apply_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "del_flg": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": "0"
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "tax_rule_id"
+            ]
+        },
+        "dtb_template": {
+            "columns": {
+                "template_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "device_type_id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "template_code": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "template_name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "create_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "update_date": {
+                    "type": "datetime",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "template_id"
+            ]
+        },
+        "mtb_authority": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_country": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_csv_type": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_customer_order_status": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_customer_status": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_db": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_device_type": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_disp": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_job": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_order_status": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_order_status_color": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_page_max": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_pref": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_product_list_max": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_product_list_order_by": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_product_type": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_sex": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_tag": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_taxrule": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_work": {
+            "columns": {
+                "id": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "name": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "rank": {
+                    "type": "smallint",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "id"
+            ]
+        },
+        "mtb_zip": {
+            "columns": {
+                "zip_id": {
+                    "type": "integer",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": true,
+                    "default": null
+                },
+                "zipcode": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "state": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "city": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                },
+                "town": {
+                    "type": "text",
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "notnull": false,
+                    "default": null
+                }
+            },
+            "primary_keys": [
+                "zip_id"
+            ]
+        }
+    }
+}

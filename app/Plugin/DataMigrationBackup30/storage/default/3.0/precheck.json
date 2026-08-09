@@ -1,0 +1,123 @@
+{
+    "generated_at": "2026-03-18T15:37:28+09:00",
+    "has_warning": false,
+    "estimated_bytes": 10485760,
+    "required_bytes": 209715200,
+    "free_bytes": 58215264256,
+    "facts": {
+        "eccube_version": "3.0.18-p7",
+        "php_version": "5.6.40",
+        "database_platform": "sqlite",
+        "memory_limit": "128M",
+        "max_execution_time": 0,
+        "backup_dir": "/var/www/html/app/Plugin/DataMigrationBackup42/storage/backups",
+        "backup_dir_writable": true,
+        "disk_free_bytes": 58215264256,
+        "estimated_backup_bytes": 10485760,
+        "required_free_bytes": 209715200,
+        "db_scope": "all",
+        "db_tables_count": 61,
+        "db_tables": [
+            "doctrine_migration_versions",
+            "dtb_authority_role",
+            "dtb_base_info",
+            "dtb_block",
+            "dtb_block_position",
+            "dtb_category",
+            "dtb_category_count",
+            "dtb_category_total_count",
+            "dtb_class_category",
+            "dtb_class_name",
+            "dtb_csv",
+            "dtb_customer",
+            "dtb_customer_address",
+            "dtb_customer_favorite_product",
+            "dtb_delivery",
+            "dtb_delivery_date",
+            "dtb_delivery_fee",
+            "dtb_delivery_time",
+            "dtb_help",
+            "dtb_mail_history",
+            "dtb_mail_template",
+            "dtb_member",
+            "dtb_news",
+            "dtb_order",
+            "dtb_order_detail",
+            "dtb_page_layout",
+            "dtb_payment",
+            "dtb_payment_option",
+            "dtb_plugin",
+            "dtb_plugin_event_handler",
+            "dtb_product",
+            "dtb_product_category",
+            "dtb_product_class",
+            "dtb_product_image",
+            "dtb_product_stock",
+            "dtb_product_tag",
+            "dtb_shipment_item",
+            "dtb_shipping",
+            "dtb_tax_rule",
+            "dtb_template",
+            "mtb_authority",
+            "mtb_country",
+            "mtb_csv_type",
+            "mtb_customer_order_status",
+            "mtb_customer_status",
+            "mtb_db",
+            "mtb_device_type",
+            "mtb_disp",
+            "mtb_job",
+            "mtb_order_status",
+            "mtb_order_status_color",
+            "mtb_page_max",
+            "mtb_pref",
+            "mtb_product_list_max",
+            "mtb_product_list_order_by",
+            "mtb_product_type",
+            "mtb_sex",
+            "mtb_tag",
+            "mtb_taxrule",
+            "mtb_work",
+            "mtb_zip"
+        ],
+        "theme_code": "default",
+        "theme_exists": true,
+        "active_plugins": [
+            {
+                "code": "DataMigrationBackup42",
+                "name": "データ移行向けバックアップ生成プラグイン for EC-CUBE 3",
+                "version": "1.0.10",
+                "enabled": true
+            }
+        ],
+        "all_plugins": [
+            {
+                "code": "DataMigrationBackup42",
+                "name": "データ移行向けバックアップ生成プラグイン for EC-CUBE 3",
+                "version": "1.0.10",
+                "enabled": true
+            }
+        ],
+        "theme_name": "デフォルト"
+    },
+    "checks": [
+        {
+            "label": "EC-CUBE バージョン",
+            "value": "3.0.18-p7",
+            "ok": true,
+            "note": "確認済み"
+        },
+        {
+            "label": "空きディスク容量",
+            "value": "55 GB",
+            "ok": true,
+            "note": "必要目安 200 MB"
+        },
+        {
+            "label": "テーマディレクトリ",
+            "value": "default",
+            "ok": true,
+            "note": "確認済み"
+        }
+    ]
+}

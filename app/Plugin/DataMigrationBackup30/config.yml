@@ -1,0 +1,5 @@
+name: データ移行向けバックアップ生成プラグイン for EC-CUBE
+code: DataMigrationBackup30
+version: 1.0.10
+service:
+    - DataMigrationBackup30ServiceProvider

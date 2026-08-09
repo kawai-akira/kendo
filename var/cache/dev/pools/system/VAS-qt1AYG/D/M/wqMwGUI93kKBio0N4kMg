@@ -1,0 +1,73 @@
+<?php //Eccube%255CController%255CInstall%255CInstallController%2523index
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Attribute\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Attribute\\Route')),
+        clone $p['Symfony\\Component\\Routing\\Attribute\\Route'],
+        clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Attribute\\Route' => [
+            'path' => [
+                '/',
+                '/install',
+            ],
+            'methods' => [
+                [
+                    'GET',
+                ],
+                [
+                    'GET',
+                ],
+            ],
+            'schemes' => [
+                [],
+                [],
+            ],
+            'name' => [
+                'homepage',
+                'install',
+            ],
+            'requirements' => [
+                [],
+                [],
+            ],
+            'options' => [
+                [],
+                [],
+            ],
+            'defaults' => [
+                [],
+                [],
+            ],
+            'host' => [
+                null,
+                null,
+            ],
+            'condition' => [
+                null,
+                null,
+            ],
+            'priority' => [
+                null,
+                null,
+            ],
+            'env' => [
+                null,
+                null,
+            ],
+        ],
+        'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template' => [
+            'template' => [
+                2 => 'index.twig',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+        $o[2],
+    ],
+    []
+)];

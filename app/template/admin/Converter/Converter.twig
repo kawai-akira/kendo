@@ -1,0 +1,82 @@
+
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月06作成
+ #
+ # app\template\admin\Converter\Converter.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends '@admin/default_frame.twig' %}
+{% block title %}{{ 'Converter'|trans }}{% endblock %}
+{% block sub_title %}{% endblock %}
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+{% block main %}
+
+
+
+ <form name="member_form" role="form" id="member_form" method="post" action="" novalidate>
+    {{ form_widget(form._token) }}
+    {{ form_widget(form.mode) }}
+    <div class="c-contentsArea__cols">
+        <div class="c-contentsArea__primaryCol">
+            <div class="c-primaryCol">
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                    <h2>コンバーター</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="collapse show ec-cardCollapse" >
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-3">
+                                    {{ message1 }}
+                                </div>
+                                <div class="col">
+                                    コンバーター
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>    
+    </div>
+    <div class="c-conversionArea">
+        <div class="c-conversionArea__container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-6">
+                    <div class="c-conversionArea__leftBlockItem">
+                        <a class="c-baseLink"
+                            href="{{ url('admin_Converter') }}">
+                            <i class="fa fa-backward" aria-hidden="true"></i>
+                            <span>戻る</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="ex-conversion-action" class="row align-items-center justify-content-end">
+                        <div class="col-auto">
+                            <button class="btn btn-ec-conversion px-5"
+                                    type="submit">{{ 'admin.common.registration'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+
+{% endblock %}

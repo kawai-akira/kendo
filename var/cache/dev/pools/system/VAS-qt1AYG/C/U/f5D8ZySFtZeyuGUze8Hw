@@ -1,0 +1,36 @@
+<?php //Eccube%255CEntity%255COrderItem%2524tax_rule_id
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'tax_rule_id',
+            ],
+            'type' => [
+                'smallint',
+            ],
+            'precision' => [
+                null,
+            ],
+            'scale' => [
+                null,
+            ],
+            'nullable' => [
+                true,
+            ],
+            'options' => [
+                [
+                    'unsigned' => true,
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+)];

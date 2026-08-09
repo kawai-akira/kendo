@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CBlock%255CCalendarController%2523getDayOfWeekString
+
+return [PHP_INT_MAX, []];

@@ -1,0 +1,1 @@
+[2026-08-09T08:06:25.004028+09:00] doctrine.INFO [N/A] [156ce9a] [N/A] [Doctrine\DBAL\Logging\Connection:__destruct:27] - Disconnecting [] [GET, /kendo/www/, 172.16.77.9, http://172.16.77.9/, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0]
