@@ -14,12 +14,6 @@ return [
         '/_profiler/phpinfo' => [[['_route' => '_profiler_phpinfo', '_controller' => 'web_profiler.controller.profiler::phpinfoAction'], null, null, ['https' => 0, 'http' => 1], false, false, null]],
         '/_profiler/xdebug' => [[['_route' => '_profiler_xdebug', '_controller' => 'web_profiler.controller.profiler::xdebugAction'], null, null, ['https' => 0, 'http' => 1], false, false, null]],
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, ['https' => 0, 'http' => 1], false, false, null]],
-        '/backOffice/login' => [[['_route' => 'admin_login', '_controller' => 'Eccube\\Controller\\Admin\\AdminController::login'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
-        '/backOffice' => [[['_route' => 'admin_homepage', '_controller' => 'Eccube\\Controller\\Admin\\AdminController::index'], null, ['GET' => 0], ['https' => 0, 'http' => 1], true, false, null]],
-        '/backOffice/sale_chart' => [[['_route' => 'admin_homepage_sale', '_controller' => 'Eccube\\Controller\\Admin\\AdminController::sale'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
-        '/backOffice/change_password' => [[['_route' => 'admin_change_password', '_controller' => 'Eccube\\Controller\\Admin\\AdminController::changePassword'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
-        '/backOffice/search_nonstock' => [[['_route' => 'admin_homepage_nonstock', '_controller' => 'Eccube\\Controller\\Admin\\AdminController::searchNonStockProducts'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
-        '/backOffice/search_customer' => [[['_route' => 'admin_homepage_customer', '_controller' => 'Eccube\\Controller\\Admin\\AdminController::searchCustomer'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
         '/backOffice/content/block' => [[['_route' => 'admin_content_block', '_controller' => 'Eccube\\Controller\\Admin\\Content\\BlockController::index'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
         '/backOffice/content/block/new' => [[['_route' => 'admin_content_block_new', '_controller' => 'Eccube\\Controller\\Admin\\Content\\BlockController::edit'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
         '/backOffice/content/cache' => [[['_route' => 'admin_content_cache', '_controller' => 'Eccube\\Controller\\Admin\\Content\\CacheController::index'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
@@ -178,6 +172,13 @@ return [
         '/sitemap_page.xml' => [[['_route' => 'sitemap_page_xml', '_controller' => 'Eccube\\Controller\\SitemapController::page'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
         '/' => [[['_route' => 'homepage', '_controller' => 'Eccube\\Controller\\TopController::index'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
         '/help/tradelaw' => [[['_route' => 'help_tradelaw', '_controller' => 'Eccube\\Controller\\TradeLawController::index'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
+        '/admin/RenewPass_complete' => [[['_route' => 'admin_renew_pass_complete', '_controller' => 'Customize\\Controller\\AdminRenewPass\\RenewPassController::complete'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
+        '/backOffice/login' => [[['_route' => 'admin_login', '_controller' => 'Customize\\Controller\\Admin\\AdminController::login'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
+        '/backOffice/change_password' => [[['_route' => 'admin_change_password', '_controller' => 'Customize\\Controller\\Admin\\AdminController::changePassword'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
+        '/backOffice' => [[['_route' => 'admin_homepage', '_controller' => 'Customize\\Controller\\Admin\\AdminController::index'], null, ['GET' => 0], ['https' => 0, 'http' => 1], true, false, null]],
+        '/backOffice/sale_chart' => [[['_route' => 'admin_homepage_sale', '_controller' => 'Customize\\Controller\\Admin\\AdminController::sale'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
+        '/backOffice/search_nonstock' => [[['_route' => 'admin_homepage_nonstock', '_controller' => 'Customize\\Controller\\Admin\\AdminController::searchNonStockProducts'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
+        '/backOffice/search_customer' => [[['_route' => 'admin_homepage_customer', '_controller' => 'Customize\\Controller\\Admin\\AdminController::searchCustomer'], null, ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
         '/backOffice/Converter' => [[['_route' => 'admin_Converter', '_controller' => 'Customize\\Controller\\Admin\\AdminConverterController::index'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
         '/backOffice/Converter/Converter' => [[['_route' => 'admin_Converter_Converter', '_controller' => 'Customize\\Controller\\Admin\\AdminConverterController::Converter'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
         '/backOffice/Converter/inAdvance' => [[['_route' => 'admin_Converter_inAdvance', '_controller' => 'Customize\\Controller\\Admin\\AdminConverterController::inAdvance'], null, ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, false, null]],
@@ -382,6 +383,7 @@ return [
                     .'|itemap_product_(\\d+)\\.xml(*:2811)'
                 .')'
                 .'|/user_data/((?:[0-9a-zA-Z_\\-]+\\/?)+(?<!\\/))(*:2864)'
+                .'|/admin/RenewPass/([^/]++)(*:2898)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -483,8 +485,9 @@ return [
         2756 => [[['_route' => 'shopping_shipping', '_controller' => 'Eccube\\Controller\\ShoppingController::shipping'], ['id'], ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, true, null]],
         2776 => [[['_route' => 'shopping_shipping_edit', '_controller' => 'Eccube\\Controller\\ShoppingController::shippingEdit'], ['id'], ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, true, null]],
         2811 => [[['_route' => 'sitemap_product_xml', '_controller' => 'Eccube\\Controller\\SitemapController::product'], ['page'], ['GET' => 0], ['https' => 0, 'http' => 1], false, false, null]],
-        2864 => [
-            [['_route' => 'user_data', '_controller' => 'Eccube\\Controller\\UserDataController::index'], ['route'], ['GET' => 0], ['https' => 0, 'http' => 1], false, true, null],
+        2864 => [[['_route' => 'user_data', '_controller' => 'Eccube\\Controller\\UserDataController::index'], ['route'], ['GET' => 0], ['https' => 0, 'http' => 1], false, true, null]],
+        2898 => [
+            [['_route' => 'admin_renew_pass_index', '_controller' => 'Customize\\Controller\\AdminRenewPass\\RenewPassController::index'], ['reset_key'], ['GET' => 0, 'POST' => 1], ['https' => 0, 'http' => 1], false, true, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

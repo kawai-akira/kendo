@@ -1,0 +1,82 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月14日作成
+ #
+ # app\template\default\AdminRenewPass\index.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'front_page' %}
+
+{% block main %}
+    <div class="ec-registerRole">
+        <div class="ec-pageHeader"> 
+            <h2>{{ 'admin_login_mail_renew_title'|trans }}</h2>
+        <div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                {% if expireFlg == true %} 
+                    <div class="ec-role">
+                        <p>管理者のパスワード変更はすでに期限切れです。<br>最初から、もう一度行ってください。</p>
+                    </div>
+                {% else %}
+                    <form method="post" action="{{ url('admin_renew_pass_index',{'reset_key': reset_key}) }}" novalidate class="h-adr">
+                        {{ form_widget(form._token) }}
+                        <div class="ec-borderedDefs">
+                            <dl>
+                                <dt>
+                                    {{ 'admin_login_mail_renew_login'|trans }}
+                                </dt>
+                                <dd>
+                                    <div class="ec-input{{ has_errors(form.login_id) ? ' error'}}">
+                                        {{ form_widget(form.login_id, { 'attr': { 'placeholder': '管理画面用EMAil' }}) }}    
+                                        {{ form_errors(form.login_id) }}
+          
+                                    </div>
+                                </dd>
+                            </dl>
+
+                            <dl>
+                                <dt>
+                                    {{ 'admin.change_password.new_password'|trans  }}
+                                </dt>
+                                <dd>
+                                    <div class="ec-input{{ has_errors(form.change_password) ? ' error' }}">
+                                        {{ form_widget(form.change_password.first, { type: 'password', value: '' }) }}
+                                        {{ form_errors(form.change_password.first) }}
+                                    </div>
+                                    <p class="ec-font-size-1">パスワードは{{eccube_config.eccube_password_min_len}}桁以上、{{eccube_config.eccube_password_max_len}}桁以下で設定してください。英数字記号が使えます。</p>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    {{ 'admin.change_password.new_password_confirm'|trans  }}
+                                </dt>
+                                <dd>
+                                    <div class="ec-input{{ has_errors(form.change_password) ? ' error' }}">
+                                        {{ form_widget(form.change_password.second, { type: 'password', value: '' }) }}
+                                        {{ form_errors(form.change_password.second) }}
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ec-off4Grid">
+                            <div class="ec-off4Grid__cell">
+                                <button class="ec-blockBtn--action" type="submit" name="mode" value="confirm">{{ '登録する'|trans }}</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>        
+{% endblock %}

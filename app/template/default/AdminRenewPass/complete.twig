@@ -1,0 +1,43 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月14日作成
+ #
+ # app\template\default\AdminRenewPass\index.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'front_page' %}
+
+{% block main %}
+    <div class="ec-registerRole">
+        <div class="ec-pageHeader"> 
+            <h2>{{ 'admin_login_mail_renew_title'|trans }}</h2>
+        <div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                {% if flg == 'success' %} 
+                    <div class="ec-role">
+                        <p>パスワードの変更が終了しました。<br>管理画面でログインできます。</p>
+                    </div>
+                {% else %}
+                  
+                    <div class="ec-role">
+                        <p>パスワードの更新ができませんでした。<br>管理画面からもう一度やり直すか<br>管理者迄ご連絡ください。</p>
+                    </div>
+      
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>        
+{% endblock %}

@@ -284,7 +284,7 @@
     </parameter>
     <parameter key="eccube_login_throttling_max_attempts">5</parameter>
     <parameter key="eccube_login_throttling_interval">30 minutes</parameter>
-    <parameter key="eccube_max_number_new_items_get">5</parameter>
+    <parameter key="eccube_max_number_new_items_get">500</parameter>
     <parameter key="eccube_nav" type="collection">
       <parameter key="product" type="collection">
         <parameter key="name">admin.product.product_management</parameter>
@@ -985,10 +985,9 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <parameter key="related_product.max_item_count">6</parameter>
     <parameter key="sales_report_product_maximum_display">20</parameter>
     <parameter key="securitychecker42_receiver">https://www.ec-cube.net/info/security/receiver.php</parameter>
+    <parameter key="admin_renew_pass_count_max">3</parameter>
     <parameter key="eccube_rate_limiter_configs" type="collection"/>
-    <parameter key="eccube.plugins.enabled" type="collection">
-      <parameter>DataMigrationBackup30</parameter>
-    </parameter>
+    <parameter key="eccube.plugins.enabled" type="collection"/>
     <parameter key="eccube.plugins.disabled" type="collection">
       <parameter>AmazonPayV2_42_Bundle</parameter>
       <parameter>Api42</parameter>
@@ -5031,12 +5030,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="Plugin\Api42\Tests" class="Plugin\Api42\Tests" abstract="true"/>
     <service id="Plugin\Coupon42\Entity" class="Plugin\Coupon42\Entity" abstract="true"/>
     <service id="Plugin\Coupon42\Resource" class="Plugin\Coupon42\Resource" abstract="true"/>
-    <service id="Plugin\DataMigrationBackup30\Resource" class="Plugin\DataMigrationBackup30\Resource" abstract="true">
-      <tag name="container.excluded" source="in &quot;eccube/services.yaml&quot;"/>
-    </service>
-    <service id="Plugin\DataMigrationBackup30\ServiceProvider" class="Plugin\DataMigrationBackup30\ServiceProvider" abstract="true">
-      <tag name="container.excluded" source="in &quot;eccube/services.yaml&quot;"/>
-    </service>
     <service id="Plugin\EccubePaymentLite42\Entity" class="Plugin\EccubePaymentLite42\Entity" abstract="true"/>
     <service id="Plugin\EccubePaymentLite42\Resource" class="Plugin\EccubePaymentLite42\Resource" abstract="true"/>
     <service id="Plugin\MailMagazine42\Entity" class="Plugin\MailMagazine42\Entity" abstract="true"/>
@@ -5771,48 +5764,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
       <argument type="service" id="Plugin\Coupon42\Service\CouponService"/>
       <argument type="service" id="Plugin\Coupon42\Repository\CouponRepository"/>
       <argument type="service" id="Plugin\Coupon42\Repository\CouponOrderRepository"/>
-    </service>
-    <service id="Plugin\DataMigrationBackup30\Controller\Admin\BackupController" class="Plugin\DataMigrationBackup30\Controller\Admin\BackupController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setEccubeConfig">
-        <argument type="service" id="Eccube\Common\EccubeConfig"/>
-      </call>
-      <call method="setEntityManager">
-        <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      </call>
-      <call method="setTranslator">
-        <argument type="service" id="translator.data_collector"/>
-      </call>
-      <call method="setSession">
-        <argument type="service" id="Eccube\Session\Session"/>
-      </call>
-      <call method="setFormFactory">
-        <argument type="service" id="form.factory"/>
-      </call>
-      <call method="setEventDispatcher">
-        <argument type="service" id="debug.event_dispatcher"/>
-      </call>
-      <call method="setRouter">
-        <argument type="service" id="router.default"/>
-      </call>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.7U.Zm_z.Plugin\DataMigrationBackup30\Controller\Admin\BackupController"/>
-      </call>
-    </service>
-    <service id="Plugin\DataMigrationBackup30\DataMigrationBackupNav" class="Plugin\DataMigrationBackup30\DataMigrationBackupNav" autowire="true" autoconfigure="true"/>
-    <service id="Plugin\DataMigrationBackup30\PluginManager" class="Plugin\DataMigrationBackup30\PluginManager" autowire="true" autoconfigure="true"/>
-    <service id="Plugin\DataMigrationBackup30\Service\BackupBuilderService" class="Plugin\DataMigrationBackup30\Service\BackupBuilderService" autowire="true" autoconfigure="true">
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument>D:\htdocs82\kendo\www</argument>
-      <argument type="service" id="Plugin\DataMigrationBackup30\Service\BackupPrecheckService"/>
-    </service>
-    <service id="Plugin\DataMigrationBackup30\Service\BackupPrecheckService" class="Plugin\DataMigrationBackup30\Service\BackupPrecheckService" autowire="true" autoconfigure="true">
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument>D:\htdocs82\kendo\www</argument>
-    </service>
-    <service id="Plugin\DataMigrationBackup30\Twig\BootstrapHelperExtension" class="Plugin\DataMigrationBackup30\Twig\BootstrapHelperExtension" autowire="true" autoconfigure="true">
-      <tag name="twig.extension"/>
     </service>
     <service id="Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" class="Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" autowire="true" autoconfigure="true">
       <argument type="service" id="Eccube\Repository\OrderRepository"/>
@@ -8134,10 +8085,79 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="Customize\Resource" class="Customize\Resource" abstract="true">
       <tag name="container.excluded" source="in &quot;eccube/services.yaml&quot;"/>
     </service>
+    <service id="Customize\Controller\AdminRenewPass\RenewPassController" class="Customize\Controller\AdminRenewPass\RenewPassController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="Customize\Repository\MemberRepository"/>
+      <argument type="service" id="security.user_password_hasher"/>
+      <argument type="service" id="debug.validator"/>
+      <call method="setEccubeConfig">
+        <argument type="service" id="Eccube\Common\EccubeConfig"/>
+      </call>
+      <call method="setEntityManager">
+        <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.data_collector"/>
+      </call>
+      <call method="setSession">
+        <argument type="service" id="Eccube\Session\Session"/>
+      </call>
+      <call method="setFormFactory">
+        <argument type="service" id="form.factory"/>
+      </call>
+      <call method="setEventDispatcher">
+        <argument type="service" id="debug.event_dispatcher"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router.default"/>
+      </call>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.RLCgHJH.Customize\Controller\AdminRenewPass\RenewPassController"/>
+      </call>
+    </service>
+    <service id="Customize\Controller\Admin\AdminController" class="Customize\Controller\Admin\AdminController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="security.authorization_checker"/>
+      <argument type="service" id="security.authentication_utils"/>
+      <argument type="service" id="Eccube\Repository\MemberRepository"/>
+      <argument type="service" id="security.user_password_hasher"/>
+      <argument type="service" id="Eccube\Repository\OrderRepository"/>
+      <argument type="service" id="Eccube\Repository\Master\OrderStatusRepository"/>
+      <argument type="service" id="Eccube\Repository\CustomerRepository"/>
+      <argument type="service" id="Eccube\Repository\ProductRepository"/>
+      <argument type="service" id="Eccube\Service\PluginApiService"/>
+      <call method="setEccubeConfig">
+        <argument type="service" id="Eccube\Common\EccubeConfig"/>
+      </call>
+      <call method="setEntityManager">
+        <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.data_collector"/>
+      </call>
+      <call method="setSession">
+        <argument type="service" id="Eccube\Session\Session"/>
+      </call>
+      <call method="setFormFactory">
+        <argument type="service" id="form.factory"/>
+      </call>
+      <call method="setEventDispatcher">
+        <argument type="service" id="debug.event_dispatcher"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router.default"/>
+      </call>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.RLCgHJH.Customize\Controller\Admin\AdminController"/>
+      </call>
+    </service>
     <service id="Customize\Controller\Admin\AdminConverterController" class="Customize\Controller\Admin\AdminConverterController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
       <argument type="service" id="Customize\Service\SqlService"/>
+      <argument type="service" id="Eccube\Repository\Master\PrefRepository"/>
       <call method="setEccubeConfig">
         <argument type="service" id="Eccube\Common\EccubeConfig"/>
       </call>
@@ -8166,6 +8186,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="Customize\Controller\Admin\AdminMyTestController" class="Customize\Controller\Admin\AdminMyTestController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
+      <argument type="service" id="Customize\Service\MailService"/>
       <call method="setEccubeConfig">
         <argument type="service" id="Eccube\Common\EccubeConfig"/>
       </call>
@@ -8191,8 +8212,72 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument type="service" id=".service_locator.RLCgHJH.Customize\Controller\Admin\AdminMyTestController"/>
       </call>
     </service>
+    <service id="Customize\Event\adminRenewPassEvent" class="Customize\Event\adminRenewPassEvent">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <argument type="service" id="Eccube\Common\EccubeConfig"/>
+      <argument type="service" id="Customize\Service\MailService"/>
+    </service>
     <service id="Customize\Form\Type\Admin\ConverterType" class="Customize\Form\Type\Admin\ConverterType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
+    </service>
+    <service id="Customize\Form\Type\Admin\LoginType" class="Customize\Form\Type\Admin\LoginType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+      <argument type="service" id="Eccube\Common\EccubeConfig"/>
+      <argument type="service" id="Eccube\Session\Session"/>
+    </service>
+    <service id="Customize\Form\Type\Flont\RenewPassType" class="Customize\Form\Type\Flont\RenewPassType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+      <argument type="service" id="Eccube\Common\EccubeConfig"/>
+    </service>
+    <service id="Customize\Repository\Master\DouColorRepository" class="Customize\Repository\Master\DouColorRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\DouiHopeRepository" class="Customize\Repository\Master\DouiHopeRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\DouiTypeRepository" class="Customize\Repository\Master\DouiTypeRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\KoteColorRepository" class="Customize\Repository\Master\KoteColorRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\MenColorRepository" class="Customize\Repository\Master\MenColorRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\ShinaiLengthRepository" class="Customize\Repository\Master\ShinaiLengthRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\ShopStatusRepository" class="Customize\Repository\Master\ShopStatusRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\TagRepository" class="Customize\Repository\Master\TagRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\Master\ZekkenFontRepository" class="Customize\Repository\Master\ZekkenFontRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Repository\MemberRepository" class="Customize\Repository\MemberRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="Customize\Service\MailService" class="Customize\Service\MailService" autowire="true" autoconfigure="true">
+      <argument type="service" id="mailer.mailer"/>
+      <argument type="service" id="Eccube\Repository\MailTemplateRepository"/>
+      <argument type="service" id="Eccube\Repository\MailHistoryRepository"/>
+      <argument type="service" id="Eccube\Repository\BaseInfoRepository"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+      <argument type="service" id="twig"/>
+      <argument type="service" id="Eccube\Common\EccubeConfig"/>
     </service>
     <service id="Customize\Service\SqlService" class="Customize\Service\SqlService" autowire="true" autoconfigure="true"/>
     <service id="twig.extension.stringloader" class="Twig\Extension\StringLoaderExtension" autowire="true" autoconfigure="true">
@@ -9384,10 +9469,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         </argument>
       </call>
     </service>
-    <service id="Plugin\DataMigrationBackup30\composer.json" class="Plugin\DataMigrationBackup30\composer.json" abstract="true">
-      <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
-    </service>
-    <service id="Plugin\DataMigrationBackup30\ServiceProvider\DataMigrationBackup30ServiceProvider" class="Plugin\DataMigrationBackup30\ServiceProvider\DataMigrationBackup30ServiceProvider" autowire="true" autoconfigure="true"/>
     <service id="Plugin\MailMagazine42\Entity\AdminCustomerQueryCustomizer" class="Plugin\MailMagazine42\Entity\AdminCustomerQueryCustomizer"/>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">
@@ -9416,7 +9497,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.eEIKIKd"/>
+      <argument type="service" id=".service_locator.PsDQxRu"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -10087,12 +10168,10 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument>D:\htdocs82\kendo\www\vendor\symfony\validator/Resources/translations</argument>
         <argument>D:\htdocs82\kendo\www\vendor\symfony\form/Resources/translations</argument>
         <argument>D:\htdocs82\kendo\www\vendor\symfony\security-core/Resources/translations</argument>
-        <argument>D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/locale</argument>
         <argument>D:\htdocs82\kendo\www/src/Eccube/Resource/locale/</argument>
         <argument>D:\htdocs82\kendo\www/app/Customize/Resource/locale/</argument>
       </argument>
       <argument type="collection">
-        <argument>D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/template</argument>
         <argument>D:\htdocs82\kendo\www/app/template/%env(ECCUBE_TEMPLATE_CODE)%</argument>
         <argument>D:\htdocs82\kendo\www/src/Eccube/Resource/template/default</argument>
         <argument>D:\htdocs82\kendo\www/app/Plugin</argument>
@@ -10125,12 +10204,10 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument>D:\htdocs82\kendo\www\vendor\symfony\validator/Resources/translations</argument>
         <argument>D:\htdocs82\kendo\www\vendor\symfony\form/Resources/translations</argument>
         <argument>D:\htdocs82\kendo\www\vendor\symfony\security-core/Resources/translations</argument>
-        <argument>D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/locale</argument>
         <argument>D:\htdocs82\kendo\www/src/Eccube/Resource/locale/</argument>
         <argument>D:\htdocs82\kendo\www/app/Customize/Resource/locale/</argument>
       </argument>
       <argument type="collection">
-        <argument>D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/template</argument>
         <argument>D:\htdocs82\kendo\www/app/template/%env(ECCUBE_TEMPLATE_CODE)%</argument>
         <argument>D:\htdocs82\kendo\www/src/Eccube/Resource/template/default</argument>
         <argument>D:\htdocs82\kendo\www/app/Plugin</argument>
@@ -10235,6 +10312,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument>Eccube\Form\Type\Master</argument>
         <argument>Eccube\Form\Type\Shopping</argument>
         <argument>Customize\Form\Type\Admin</argument>
+        <argument>Customize\Form\Type\Flont</argument>
         <argument>Symfony\Bridge\Doctrine\Form\Type</argument>
       </argument>
       <argument type="collection">
@@ -10339,6 +10417,8 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument>Eccube\Form\Type\Shopping\ShippingType</argument>
         <argument>Eccube\Form\Type\ToggleSwitchType</argument>
         <argument>Customize\Form\Type\Admin\ConverterType</argument>
+        <argument>Customize\Form\Type\Admin\LoginType</argument>
+        <argument>Customize\Form\Type\Flont\RenewPassType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\ChoiceType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FileType</argument>
@@ -11011,9 +11091,9 @@ https://www.epsilon.jp/document_dl/index_pdf.html
             <argument>D:\htdocs82\kendo\www\vendor\symfony\form/Resources/translations\validators.ja.xlf</argument>
             <argument>D:\htdocs82\kendo\www\vendor\symfony\security-core/Resources/translations\security.ja.xlf</argument>
             <argument>D:\htdocs82\kendo\www\vendor\knplabs\knp-paginator-bundle/translations\KnpPaginatorBundle.ja.xliff</argument>
-            <argument>D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/locale\messages.ja.yaml</argument>
             <argument>D:\htdocs82\kendo\www/src/Eccube/Resource/locale\messages.ja.yaml</argument>
             <argument>D:\htdocs82\kendo\www/src/Eccube/Resource/locale\validators.ja.yaml</argument>
+            <argument>D:\htdocs82\kendo\www/app/Customize/Resource/locale\messages.ja.yaml</argument>
           </argument>
           <argument key="lb" type="collection">
             <argument>D:\htdocs82\kendo\www\vendor\symfony\validator/Resources/translations\validators.lb.xlf</argument>
@@ -11187,7 +11267,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
           <argument>D:\htdocs82\kendo\www\vendor\symfony\form/Resources/translations</argument>
           <argument>D:\htdocs82\kendo\www\vendor\symfony\security-core/Resources/translations</argument>
           <argument>D:\htdocs82\kendo\www\vendor\knplabs\knp-paginator-bundle/translations</argument>
-          <argument>D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/locale</argument>
           <argument>D:\htdocs82\kendo\www/src/Eccube/Resource/locale/</argument>
           <argument>D:\htdocs82\kendo\www/app/Customize/Resource/locale/</argument>
           <argument>D:\htdocs82\kendo\www\vendor\symfony\framework-bundle/translations</argument>
@@ -11214,7 +11293,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
             <argument>D:\htdocs82\kendo\www\vendor\symfony\form/Resources/translations</argument>
             <argument>D:\htdocs82\kendo\www\vendor\symfony\security-core/Resources/translations</argument>
             <argument>D:\htdocs82\kendo\www\vendor\knplabs\knp-paginator-bundle/translations</argument>
-            <argument>app/Plugin/DataMigrationBackup30/Resource/locale</argument>
             <argument>src/Eccube/Resource/locale/</argument>
             <argument>app/Customize/Resource/locale/</argument>
             <argument>D:\htdocs82\kendo\www\vendor\symfony\framework-bundle/translations</argument>
@@ -12068,6 +12146,14 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument>0</argument>
       </call>
       <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Customize\Event\adminRenewPassEvent"/>
+          <argument>onCheckPassport</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
         <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
         <argument type="collection">
           <argument type="service_closure" id="eccube.security.logout.success_handler"/>
@@ -12657,7 +12743,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.eEIKIKd"/>
+      <argument type="service" id=".service_locator.PsDQxRu"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -12767,7 +12853,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="router.default" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
       <tag name="monolog.logger" channel="router"/>
       <tag name="container.service_subscriber" id="routing.loader"/>
-      <argument type="service" id=".service_locator.i7B9_Ni.router.default"/>
+      <argument type="service" id=".service_locator.bN.V_Nq.router.default"/>
       <argument>kernel::loadRoutes</argument>
       <argument type="collection">
         <argument key="cache_dir">D:\htdocs82\kendo\www\var\cache\dev</argument>
@@ -13297,7 +13383,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.KkaVowz"/>
+      <argument type="service" id=".service_locator.VwAYZzY"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="Eccube\Form\Extension\DoctrineOrmExtension"/>
@@ -14076,7 +14162,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
       <argument type="iterator">
         <argument key="security.firewall.map.context.dev" type="service" id=".security.request_matcher.kLbKLHa"/>
         <argument key="security.firewall.map.context.api" type="service" id=".security.request_matcher.vhy2oy3"/>
-        <argument key="security.firewall.map.context.admin" type="service" id=".security.request_matcher.NyNnWHf"/>
+        <argument key="security.firewall.map.context.admin" type="service" id=".security.request_matcher.b.rj7E9"/>
         <argument key="security.firewall.map.context.customer" type="service" id=".security.request_matcher.yy_ZK6T"/>
       </argument>
     </service>
@@ -14245,14 +14331,14 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     </service>
     <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap">
       <call method="add">
-        <argument type="service" id=".security.request_matcher.KdFtogT"/>
+        <argument type="service" id=".security.request_matcher.zIIrtNu"/>
         <argument type="collection">
           <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
         </argument>
         <argument>null</argument>
       </call>
       <call method="add">
-        <argument type="service" id=".security.request_matcher.WD_gcla"/>
+        <argument type="service" id=".security.request_matcher.elOUrxy"/>
         <argument type="collection">
           <argument>ROLE_ADMIN</argument>
         </argument>
@@ -14722,7 +14808,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="security.firewall.map.config.admin" class="Symfony\Bundle\SecurityBundle\Security\FirewallConfig">
       <argument>admin</argument>
       <argument>security.user_checker</argument>
-      <argument>.security.request_matcher.NyNnWHf</argument>
+      <argument>.security.request_matcher.b.rj7E9</argument>
       <argument>true</argument>
       <argument>false</argument>
       <argument>Eccube\Security\Core\User\MemberProvider</argument>
@@ -14746,12 +14832,12 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument key="delete_cookies" type="collection"/>
       </argument>
     </service>
-    <service id=".security.request_matcher.Aph0gsd" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
+    <service id=".security.request_matcher.FJ4rUcd" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
       <argument>^/%env(ECCUBE_ADMIN_ROUTE)%/</argument>
     </service>
-    <service id=".security.request_matcher.NyNnWHf" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+    <service id=".security.request_matcher.b.rj7E9" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
       <argument type="collection">
-        <argument type="service" id=".security.request_matcher.Aph0gsd"/>
+        <argument type="service" id=".security.request_matcher.FJ4rUcd"/>
       </argument>
     </service>
     <service id="security.listener.admin.user_provider" class="Symfony\Component\Security\Http\EventListener\UserProviderListener">
@@ -15281,17 +15367,17 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument key="security.firewall.map.context.dev" type="service_closure" id="security.firewall.map.context.dev"/>
       </argument>
     </service>
-    <service id=".security.request_matcher.poYaawa" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
+    <service id=".security.request_matcher.UjKuY_0" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
       <argument>^/%env(ECCUBE_ADMIN_ROUTE)%/login</argument>
     </service>
-    <service id=".security.request_matcher.KdFtogT" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+    <service id=".security.request_matcher.zIIrtNu" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
       <argument type="collection">
-        <argument type="service" id=".security.request_matcher.poYaawa"/>
+        <argument type="service" id=".security.request_matcher.UjKuY_0"/>
       </argument>
     </service>
-    <service id=".security.request_matcher.WD_gcla" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+    <service id=".security.request_matcher.elOUrxy" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
       <argument type="collection">
-        <argument type="service" id=".security.request_matcher.Aph0gsd"/>
+        <argument type="service" id=".security.request_matcher.FJ4rUcd"/>
       </argument>
     </service>
     <service id=".security.request_matcher.E4iWMRF" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
@@ -15554,7 +15640,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.bvPwS9G"/>
+      <argument type="service" id=".service_locator._oXjyfE"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -16213,9 +16299,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument type="service" id="Eccube\Twig\Extension\TwigIncludeExtension"/>
       </call>
       <call method="addExtension">
-        <argument type="service" id="Plugin\DataMigrationBackup30\Twig\BootstrapHelperExtension"/>
-      </call>
-      <call method="addExtension">
         <argument type="service" id="twig.extension.stringloader"/>
       </call>
       <call method="addExtension">
@@ -16298,7 +16381,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="twig.template_iterator" class="Symfony\Bundle\TwigBundle\TemplateIterator">
       <argument type="service" id="kernel"/>
       <argument type="collection">
-        <argument key="D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/template">DataMigrationBackup30</argument>
         <argument key="D:\htdocs82\kendo\www/app/template/%env(ECCUBE_TEMPLATE_CODE)%">null</argument>
         <argument key="D:\htdocs82\kendo\www/src/Eccube/Resource/template/default">null</argument>
         <argument key="D:\htdocs82\kendo\www/app/Plugin">null</argument>
@@ -16323,10 +16405,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
       <tag name="twig.loader"/>
       <argument type="collection"/>
       <argument>D:\htdocs82\kendo\www</argument>
-      <call method="addPath">
-        <argument>D:\htdocs82\kendo\www/app/Plugin/DataMigrationBackup30/Resource/template</argument>
-        <argument>DataMigrationBackup30</argument>
-      </call>
       <call method="addPath">
         <argument>D:\htdocs82\kendo\www/app/template/%env(ECCUBE_TEMPLATE_CODE)%</argument>
       </call>
@@ -18323,11 +18401,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id=".instanceof.Eccube\Service\PurchaseFlow\ItemHolderValidator.0.Plugin\Coupon42\Service\PurchaseFlow\Processor\CouponStateProcessor" class="Plugin\Coupon42\Service\PurchaseFlow\Processor\CouponStateProcessor" autowire="true" abstract="true"/>
     <service id=".instanceof.Eccube\Service\PurchaseFlow\PurchaseProcessor.0.Plugin\Coupon42\Service\PurchaseFlow\Processor\CouponStateProcessor" class="Plugin\Coupon42\Service\PurchaseFlow\Processor\CouponStateProcessor" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.Plugin\Coupon42\Service\PurchaseFlow\Processor\CouponStateProcessor" class="Plugin\Coupon42\Service\PurchaseFlow\Processor\CouponStateProcessor" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.Plugin\DataMigrationBackup30\Controller\Admin\BackupController" class="Plugin\DataMigrationBackup30\Controller\Admin\BackupController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.Plugin\DataMigrationBackup30\Controller\Admin\BackupController" class="Plugin\DataMigrationBackup30\Controller\Admin\BackupController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.Plugin\DataMigrationBackup30\Controller\Admin\BackupController" class="Plugin\DataMigrationBackup30\Controller\Admin\BackupController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Twig\Extension\ExtensionInterface.0.Plugin\DataMigrationBackup30\Twig\BootstrapHelperExtension" class="Plugin\DataMigrationBackup30\Twig\BootstrapHelperExtension" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.Plugin\DataMigrationBackup30\Twig\BootstrapHelperExtension" class="Plugin\DataMigrationBackup30\Twig\BootstrapHelperExtension" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" class="Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" class="Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" class="Plugin\EccubePaymentLite42\Controller\Admin\Order\ChangePaymentStatusController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -18730,6 +18803,12 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id=".abstract.instanceof.Plugin\SiteKit42\Nav" class="Plugin\SiteKit42\Nav" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Plugin\SiteKit42\Repository\IdTokenRepository" class="Plugin\SiteKit42\Repository\IdTokenRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.Plugin\SiteKit42\Repository\IdTokenRepository" class="Plugin\SiteKit42\Repository\IdTokenRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.Customize\Controller\AdminRenewPass\RenewPassController" class="Customize\Controller\AdminRenewPass\RenewPassController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.Customize\Controller\AdminRenewPass\RenewPassController" class="Customize\Controller\AdminRenewPass\RenewPassController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Controller\AdminRenewPass\RenewPassController" class="Customize\Controller\AdminRenewPass\RenewPassController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.Customize\Controller\Admin\AdminController" class="Customize\Controller\Admin\AdminController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.Customize\Controller\Admin\AdminController" class="Customize\Controller\Admin\AdminController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Controller\Admin\AdminController" class="Customize\Controller\Admin\AdminController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.Customize\Controller\Admin\AdminConverterController" class="Customize\Controller\Admin\AdminConverterController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.Customize\Controller\Admin\AdminConverterController" class="Customize\Controller\Admin\AdminConverterController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.Customize\Controller\Admin\AdminConverterController" class="Customize\Controller\Admin\AdminConverterController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -18738,6 +18817,30 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id=".abstract.instanceof.Customize\Controller\Admin\AdminMyTestController" class="Customize\Controller\Admin\AdminMyTestController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.Customize\Form\Type\Admin\ConverterType" class="Customize\Form\Type\Admin\ConverterType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.Customize\Form\Type\Admin\ConverterType" class="Customize\Form\Type\Admin\ConverterType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.Customize\Form\Type\Admin\LoginType" class="Customize\Form\Type\Admin\LoginType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Form\Type\Admin\LoginType" class="Customize\Form\Type\Admin\LoginType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.Customize\Form\Type\Flont\RenewPassType" class="Customize\Form\Type\Flont\RenewPassType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Form\Type\Flont\RenewPassType" class="Customize\Form\Type\Flont\RenewPassType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\DouColorRepository" class="Customize\Repository\Master\DouColorRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\DouColorRepository" class="Customize\Repository\Master\DouColorRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\DouiHopeRepository" class="Customize\Repository\Master\DouiHopeRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\DouiHopeRepository" class="Customize\Repository\Master\DouiHopeRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\DouiTypeRepository" class="Customize\Repository\Master\DouiTypeRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\DouiTypeRepository" class="Customize\Repository\Master\DouiTypeRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\KoteColorRepository" class="Customize\Repository\Master\KoteColorRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\KoteColorRepository" class="Customize\Repository\Master\KoteColorRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\MenColorRepository" class="Customize\Repository\Master\MenColorRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\MenColorRepository" class="Customize\Repository\Master\MenColorRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\ShinaiLengthRepository" class="Customize\Repository\Master\ShinaiLengthRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\ShinaiLengthRepository" class="Customize\Repository\Master\ShinaiLengthRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\ShopStatusRepository" class="Customize\Repository\Master\ShopStatusRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\ShopStatusRepository" class="Customize\Repository\Master\ShopStatusRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\TagRepository" class="Customize\Repository\Master\TagRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\TagRepository" class="Customize\Repository\Master\TagRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\Master\ZekkenFontRepository" class="Customize\Repository\Master\ZekkenFontRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\Master\ZekkenFontRepository" class="Customize\Repository\Master\ZekkenFontRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.Customize\Repository\MemberRepository" class="Customize\Repository\MemberRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.Customize\Repository\MemberRepository" class="Customize\Repository\MemberRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Twig\Extension\ExtensionInterface.0.twig.extension.stringloader" class="Twig\Extension\StringLoaderExtension" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.twig.extension.stringloader" class="Twig\Extension\StringLoaderExtension" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface.0.eccube.collector.core" class="Eccube\DataCollector\EccubeDataCollector" autowire="true" abstract="true"/>
@@ -19457,160 +19560,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument key="authenticationUtils" type="service_closure" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".errored.dqdlOQR" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::index()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.aNuUZB0" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.dqdlOQR"/>
-      </argument>
-    </service>
-    <service id=".errored.xom6DE6" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::files()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.ZKqu3aE" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.xom6DE6"/>
-      </argument>
-    </service>
-    <service id=".errored.V9_wdz6" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::guide()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.SToWR2z" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.V9_wdz6"/>
-      </argument>
-    </service>
-    <service id=".errored.OsVxmMl" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scanner()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.1EqjwB2" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.OsVxmMl"/>
-      </argument>
-    </service>
-    <service id=".errored.ayMgwOV" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkInit()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.l4Pw9Y4" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.ayMgwOV"/>
-      </argument>
-    </service>
-    <service id=".errored.V7V.q5M" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkAppend()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.Ah3Qabi" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.V7V.q5M"/>
-      </argument>
-    </service>
-    <service id=".errored.suaTa0F" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkComplete()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.tvI3AWP" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.suaTa0F"/>
-      </argument>
-    </service>
-    <service id=".errored.kxCoTLY" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkCancel()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.Bz2YQ1q" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.kxCoTLY"/>
-      </argument>
-    </service>
-    <service id=".errored.di1Ipg9" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerScanConnectors()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.B7ZVIzj" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.di1Ipg9"/>
-      </argument>
-    </service>
-    <service id=".errored.ZdAuQ2P" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerScanTheme()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.b4NLZIo" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.ZdAuQ2P"/>
-      </argument>
-    </service>
-    <service id=".errored.47i1NBe" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::run()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.i6edyCu" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.47i1NBe"/>
-      </argument>
-    </service>
-    <service id=".errored.Qqf5h8c" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::precheck()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.JMRbivN" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.Qqf5h8c"/>
-      </argument>
-    </service>
-    <service id=".errored.acJtNE4" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::downloadByName()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.aBCruU_" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.acJtNE4"/>
-      </argument>
-    </service>
-    <service id=".errored._4xqdOW" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::downloadQuery()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.hLdFOV_" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored._4xqdOW"/>
-      </argument>
-    </service>
-    <service id=".errored.eZSFY7p" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::delete()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.QE2DUlC" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.eZSFY7p"/>
-      </argument>
-    </service>
-    <service id=".errored.m80l.HI" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::restore()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.Ia7pHDB" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.m80l.HI"/>
-      </argument>
-    </service>
-    <service id=".errored.m32PdeR" class="Eccube\Application">
-      <tag name="container.error" message="Cannot determine controller argument for &quot;Plugin\DataMigrationBackup30\Controller\Admin\BackupController::deleteAll()&quot;: the $app argument is type-hinted with the non-existent class or interface: &quot;Eccube\Application&quot;."/>
-    </service>
-    <service id=".service_locator.sIRl6Eh" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="app" type="service_closure" id=".errored.m32PdeR"/>
-      </argument>
-    </service>
-    <service id=".service_locator.eEIKIKd" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.PsDQxRu" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="Eccube\Controller\Admin\Content\BlockController::delete" type="service_closure" id=".service_locator.JwY9PZb"/>
@@ -19714,23 +19664,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument key="Eccube\Controller\ShoppingController::shippingEdit" type="service_closure" id=".service_locator.g3AGa5K"/>
         <argument key="Eccube\Controller\SitemapController::index" type="service_closure" id=".service_locator.ZUwwaRD"/>
         <argument key="Eccube\Controller\SitemapController::product" type="service_closure" id=".service_locator.ZUwwaRD"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::delete" type="service_closure" id=".service_locator.QE2DUlC"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::deleteAll" type="service_closure" id=".service_locator.sIRl6Eh"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::downloadByName" type="service_closure" id=".service_locator.aBCruU_"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::downloadQuery" type="service_closure" id=".service_locator.hLdFOV_"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::files" type="service_closure" id=".service_locator.ZKqu3aE"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::guide" type="service_closure" id=".service_locator.SToWR2z"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::index" type="service_closure" id=".service_locator.aNuUZB0"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::precheck" type="service_closure" id=".service_locator.JMRbivN"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::restore" type="service_closure" id=".service_locator.Ia7pHDB"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::run" type="service_closure" id=".service_locator.i6edyCu"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scanner" type="service_closure" id=".service_locator.1EqjwB2"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkAppend" type="service_closure" id=".service_locator.Ah3Qabi"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkCancel" type="service_closure" id=".service_locator.Bz2YQ1q"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkComplete" type="service_closure" id=".service_locator.tvI3AWP"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerChunkInit" type="service_closure" id=".service_locator.l4Pw9Y4"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerScanConnectors" type="service_closure" id=".service_locator.B7ZVIzj"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController::scannerScanTheme" type="service_closure" id=".service_locator.b4NLZIo"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="Eccube\Controller\Admin\Content\BlockController:delete" type="service_closure" id=".service_locator.JwY9PZb"/>
@@ -19834,23 +19767,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument key="Eccube\Controller\ShoppingController:shippingEdit" type="service_closure" id=".service_locator.g3AGa5K"/>
         <argument key="Eccube\Controller\SitemapController:index" type="service_closure" id=".service_locator.ZUwwaRD"/>
         <argument key="Eccube\Controller\SitemapController:product" type="service_closure" id=".service_locator.ZUwwaRD"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:delete" type="service_closure" id=".service_locator.QE2DUlC"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:deleteAll" type="service_closure" id=".service_locator.sIRl6Eh"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:downloadByName" type="service_closure" id=".service_locator.aBCruU_"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:downloadQuery" type="service_closure" id=".service_locator.hLdFOV_"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:files" type="service_closure" id=".service_locator.ZKqu3aE"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:guide" type="service_closure" id=".service_locator.SToWR2z"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:index" type="service_closure" id=".service_locator.aNuUZB0"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:precheck" type="service_closure" id=".service_locator.JMRbivN"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:restore" type="service_closure" id=".service_locator.Ia7pHDB"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:run" type="service_closure" id=".service_locator.i6edyCu"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:scanner" type="service_closure" id=".service_locator.1EqjwB2"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:scannerChunkAppend" type="service_closure" id=".service_locator.Ah3Qabi"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:scannerChunkCancel" type="service_closure" id=".service_locator.Bz2YQ1q"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:scannerChunkComplete" type="service_closure" id=".service_locator.tvI3AWP"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:scannerChunkInit" type="service_closure" id=".service_locator.l4Pw9Y4"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:scannerScanConnectors" type="service_closure" id=".service_locator.B7ZVIzj"/>
-        <argument key="Plugin\DataMigrationBackup30\Controller\Admin\BackupController:scannerScanTheme" type="service_closure" id=".service_locator.b4NLZIo"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
       </argument>
@@ -19936,10 +19852,12 @@ https://www.epsilon.jp/document_dl/index_pdf.html
       <argument type="service" id="argument_resolver.query_parameter_value_resolver"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.KkaVowz" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.VwAYZzY" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="Customize\Form\Type\Admin\ConverterType" type="service_closure" id="Customize\Form\Type\Admin\ConverterType"/>
+        <argument key="Customize\Form\Type\Admin\LoginType" type="service_closure" id="Customize\Form\Type\Admin\LoginType"/>
+        <argument key="Customize\Form\Type\Flont\RenewPassType" type="service_closure" id="Customize\Form\Type\Flont\RenewPassType"/>
         <argument key="Eccube\Form\Type\AddCartType" type="service_closure" id="Eccube\Form\Type\AddCartType"/>
         <argument key="Eccube\Form\Type\AddressType" type="service_closure" id="Eccube\Form\Type\AddressType"/>
         <argument key="Eccube\Form\Type\Admin\AuthenticationType" type="service_closure" id="Eccube\Form\Type\Admin\AuthenticationType"/>
@@ -20094,9 +20012,19 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument key="doctrine.orm.listeners.pdo_session_handler_schema_listener" type="service_closure" id="doctrine.orm.listeners.pdo_session_handler_schema_listener"/>
       </argument>
     </service>
-    <service id=".service_locator.bvPwS9G" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator._oXjyfE" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="Customize\Repository\Master\DouColorRepository" type="service_closure" id="Customize\Repository\Master\DouColorRepository"/>
+        <argument key="Customize\Repository\Master\DouiHopeRepository" type="service_closure" id="Customize\Repository\Master\DouiHopeRepository"/>
+        <argument key="Customize\Repository\Master\DouiTypeRepository" type="service_closure" id="Customize\Repository\Master\DouiTypeRepository"/>
+        <argument key="Customize\Repository\Master\KoteColorRepository" type="service_closure" id="Customize\Repository\Master\KoteColorRepository"/>
+        <argument key="Customize\Repository\Master\MenColorRepository" type="service_closure" id="Customize\Repository\Master\MenColorRepository"/>
+        <argument key="Customize\Repository\Master\ShinaiLengthRepository" type="service_closure" id="Customize\Repository\Master\ShinaiLengthRepository"/>
+        <argument key="Customize\Repository\Master\ShopStatusRepository" type="service_closure" id="Customize\Repository\Master\ShopStatusRepository"/>
+        <argument key="Customize\Repository\Master\TagRepository" type="service_closure" id="Customize\Repository\Master\TagRepository"/>
+        <argument key="Customize\Repository\Master\ZekkenFontRepository" type="service_closure" id="Customize\Repository\Master\ZekkenFontRepository"/>
+        <argument key="Customize\Repository\MemberRepository" type="service_closure" id="Customize\Repository\MemberRepository"/>
         <argument key="Eccube\Repository\AuthorityRoleRepository" type="service_closure" id="Eccube\Repository\AuthorityRoleRepository"/>
         <argument key="Eccube\Repository\BaseInfoRepository" type="service_closure" id="Eccube\Repository\BaseInfoRepository"/>
         <argument key="Eccube\Repository\BlockPositionRepository" type="service_closure" id="Eccube\Repository\BlockPositionRepository"/>
@@ -20746,6 +20674,14 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument>0</argument>
       </call>
       <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Customize\Event\adminRenewPassEvent"/>
+          <argument>onCheckPassport</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
         <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
         <argument type="collection">
           <argument type="service_closure" id="eccube.security.logout.success_handler"/>
@@ -20918,6 +20854,14 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument type="collection">
           <argument type="service_closure" id="Eccube\Security\Http\Authentication\EccubeLogoutSuccessHandler"/>
           <argument>onLogout</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Customize\Event\adminRenewPassEvent"/>
+          <argument>onCheckPassport</argument>
         </argument>
         <argument>0</argument>
       </call>
@@ -21134,6 +21078,14 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument type="collection">
           <argument type="service_closure" id="Eccube\Security\Http\Authentication\EccubeLogoutSuccessHandler"/>
           <argument>onLogout</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Customize\Event\adminRenewPassEvent"/>
+          <argument>onCheckPassport</argument>
         </argument>
         <argument>0</argument>
       </call>
@@ -21636,27 +21588,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.M2tV667" method="withContext"/>
     </service>
-    <service id=".service_locator.7U.Zm_z" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="form.factory" type="service_closure" id="form.factory" on-invalid="ignore"/>
-        <argument key="http_kernel" type="service_closure" id="http_kernel" on-invalid="ignore"/>
-        <argument key="parameter_bag" type="service_closure" id="parameter_bag" on-invalid="ignore"/>
-        <argument key="request_stack" type="service_closure" id="request_stack" on-invalid="ignore"/>
-        <argument key="router" type="service_closure" id="router.default" on-invalid="ignore"/>
-        <argument key="security.authorization_checker" type="service_closure" id="security.authorization_checker" on-invalid="ignore"/>
-        <argument key="security.csrf.token_manager" type="service_closure" id="security.csrf.token_manager" on-invalid="ignore"/>
-        <argument key="security.token_storage" type="service_closure" id="security.token_storage" on-invalid="ignore"/>
-        <argument key="serializer" type="service_closure" id="serializer" on-invalid="ignore"/>
-        <argument key="twig" type="service_closure" id="twig" on-invalid="ignore"/>
-      </argument>
-    </service>
-    <service id=".service_locator.7U.Zm_z.Plugin\DataMigrationBackup30\Controller\Admin\BackupController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="Plugin\DataMigrationBackup30\Controller\Admin\BackupController"/>
-      <argument>Plugin\DataMigrationBackup30\Controller\Admin\BackupController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.7U.Zm_z" method="withContext"/>
-    </service>
     <service id=".service_locator.RLCgHJH" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -21671,6 +21602,18 @@ https://www.epsilon.jp/document_dl/index_pdf.html
         <argument key="serializer" type="service_closure" id="serializer" on-invalid="ignore"/>
         <argument key="twig" type="service_closure" id="twig" on-invalid="ignore"/>
       </argument>
+    </service>
+    <service id=".service_locator.RLCgHJH.Customize\Controller\AdminRenewPass\RenewPassController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="Customize\Controller\AdminRenewPass\RenewPassController"/>
+      <argument>Customize\Controller\AdminRenewPass\RenewPassController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.RLCgHJH" method="withContext"/>
+    </service>
+    <service id=".service_locator.RLCgHJH.Customize\Controller\Admin\AdminController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="Customize\Controller\Admin\AdminController"/>
+      <argument>Customize\Controller\Admin\AdminController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.RLCgHJH" method="withContext"/>
     </service>
     <service id=".service_locator.RLCgHJH.Customize\Controller\Admin\AdminConverterController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="Customize\Controller\Admin\AdminConverterController"/>
@@ -21696,17 +21639,17 @@ https://www.epsilon.jp/document_dl/index_pdf.html
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.fuYM_Z." method="withContext"/>
     </service>
-    <service id=".service_locator.i7B9_Ni" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.bN.V_Nq" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="routing.loader" type="service_closure" id="routing.loader"/>
       </argument>
     </service>
-    <service id=".service_locator.i7B9_Ni.router.default" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.bN.V_Nq.router.default" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="router.default"/>
       <argument>router.default</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.i7B9_Ni" method="withContext"/>
+      <factory service=".service_locator.bN.V_Nq" method="withContext"/>
     </service>
     <service id=".service_locator.cUcW89y" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -22010,7 +21953,8 @@ https://www.epsilon.jp/document_dl/index_pdf.html
           <argument>Eccube\Controller\TopController</argument>
           <argument>Eccube\Controller\TradeLawController</argument>
           <argument>Eccube\Controller\UserDataController</argument>
-          <argument>Plugin\DataMigrationBackup30\Controller\Admin\BackupController</argument>
+          <argument>Customize\Controller\AdminRenewPass\RenewPassController</argument>
+          <argument>Customize\Controller\Admin\AdminController</argument>
           <argument>Customize\Controller\Admin\AdminConverterController</argument>
           <argument>Customize\Controller\Admin\AdminMyTestController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
@@ -23562,7 +23506,7 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id="League\Bundle\OAuth2ServerBundle\Service\CredentialsRevoker\DoctrineCredentialsRevoker" alias="league.oauth2_server.credentials_revoker.doctrine"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.eEIKIKd"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.PsDQxRu"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>
@@ -23592,15 +23536,15 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id=".service_locator.emIt54c" alias=".service_locator.nXhaRfw"/>
     <service id=".service_locator.C6gCul1" alias=".service_locator.HdlPwDf"/>
     <service id=".service_locator.2GWVmMV" alias=".service_locator.2J24TGz"/>
-    <service id=".service_locator.AVWwPOE" alias=".service_locator.eEIKIKd"/>
+    <service id=".service_locator.8OchhSq" alias=".service_locator.PsDQxRu"/>
     <service id=".service_locator.VdSBahQ" alias=".service_locator.7kHUCmk"/>
     <service id=".service_locator.RGe.Eww" alias=".service_locator.wmwio2R"/>
-    <service id=".service_locator._xeC6OV" alias=".service_locator.KkaVowz"/>
+    <service id=".service_locator.QQDb3Ph" alias=".service_locator.VwAYZzY"/>
     <service id=".service_locator.xsEevEr" alias=".service_locator.lVEU2BP"/>
+    <service id=".service_locator.b6OeVoI" alias=".service_locator._oXjyfE"/>
     <service id=".service_locator.O24_MAy" alias=".service_locator.yY.p4P7"/>
     <service id=".service_locator.WuzAuF." alias=".service_locator.M2tV667"/>
     <service id=".service_locator.Yc648cK" alias=".service_locator.SpuNiwx"/>
-    <service id=".service_locator.7xhVLO0" alias=".service_locator.7U.Zm_z"/>
     <service id=".service_locator.z4EloDg" alias=".service_locator.RLCgHJH"/>
     <service id="validator" alias="debug.validator"/>
     <service id="eccube.twig_sandbox.policy" alias="Eccube\Twig\Sandbox\SecurityPolicyDecorator"/>
@@ -23671,7 +23615,6 @@ https://www.epsilon.jp/document_dl/index_pdf.html
     <service id=".service_locator.7NIAq8D" alias=".service_locator.rSTd.nA"/>
     <service id=".service_locator.SiZd3fo" alias=".service_locator.M2tV667"/>
     <service id=".service_locator.IXsfP6Z" alias=".service_locator.SpuNiwx"/>
-    <service id=".service_locator.eerBriK" alias=".service_locator.7U.Zm_z"/>
     <service id=".service_locator.IxFNY0T" alias=".service_locator.RLCgHJH"/>
     <service id=".service_locator.dKSc70p" alias=".service_locator.Tu7J19Y"/>
     <service id=".service_locator.WnFk2PU" alias=".service_locator.U_JqgyF"/>

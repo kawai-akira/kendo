@@ -1,0 +1,11 @@
+parameters:
+    admin_renew_pass_count_max: 3
+
+services:
+    Customize\Event\adminRenewPassEvent:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Eccube\Common\EccubeConfig'
+            - '@Customize\Service\MailService'
+        tags:
+            - { name: kernel.event_subscriber }
