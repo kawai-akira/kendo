@@ -8,7 +8,7 @@
     *  app\Customize\Service\SqlService.php
     * 
     *
-    * SQL文を作成する
+    * SQL文を作成する サイトがデッキ田自伝で削除する
     *
     *
     *                                        ≡≡≡┏(＾o＾)┛
@@ -22,7 +22,7 @@
     const USER  = 'user';
     const PASS  = 'wZz77iWW';
     const HOST  = 'localhost';
-    const DBNAMES = ['kendo_db','kendo_old'];
+    public const DBNAMES = ['kendo_db','kendo_old'];
 
 
 
@@ -61,17 +61,15 @@
         }
 
     }
+    /**
+     * @param string $Dbname;
+     */
 
-    public function Find($Flg=false){
+    public function Find($Dbname = self::DBNAMES[1]){
         $this->MakeSelect();
-        if ($Flg){
-            echo $this->Sql;
-            print_r($this->Param);
-        }
-        if (2==$Flg){
-            exit;}
+  
 
-    return  $this->Fetch();
+    return  $this->Fetch($Dbname );
 
     }
 
@@ -86,7 +84,7 @@
         #Select の作成
         $this->MakeSelect();
         if ($Flg){
-            echo $this->Sql.B;
+            echo $this->Sql.'<br>';
             print_r($this->Param);
         }
         if (2==$Flg){
@@ -188,7 +186,7 @@ return $this->Exec();
     public function Delete($Flg=false){
 
         $this->Name='';
-        $this->Sql ='DELETE FROM '. $this->Table_  .SP;
+        $this->Sql ='DELETE FROM '. $this->Table_  .' ';
         $this->Sql.= $this->SetWhere();
 
          $this->ShowSql($Flg);
@@ -230,7 +228,7 @@ return $Re;
             if (!$Flg) {
                return;
             }else{
-                echo $this->Sql.B;
+                echo $this->Sql.'<br>';
                 print_r($this->Param);
             }
             if ($Flg==2){
@@ -258,7 +256,7 @@ return $Re;
 //        $this->Or_      = [];
         $this->Num      = 0;
         if (0==$this->ForeignKey_){
-            $this->FOREIGN_KEY(1);
+            $this->FOREIGN_KEY(self::DBNAMES[1]);
         }
 
 
@@ -274,6 +272,20 @@ return $Re;
         return $Re['version()'];
         //printf("<br>MySql Server version: %s\n", $mysqli->server_info);
     }
+
+
+    /**
+     * Undocumented function
+     *
+     * @param string $Sql;
+     * @return SqlService
+     */
+    public function setSql($Sql){
+
+        $this->Sql = $Sql;
+        return $this;
+    }
+
 
 
    /**
@@ -468,7 +480,7 @@ return $Re;
         }
 
 
-return $this;
+        return $this;
     }
    /**
     * SELECT SQL文の作成
@@ -478,7 +490,7 @@ return $this;
 
     protected function MakeSelect(){
 
-        $this->Sql ='SELECT ' . $this->Select_ . SP;
+        $this->Sql ='SELECT ' . $this->Select_ . ' ';
         $AS = $this->Name ? ' AS ' .$this->Name :'';
         $this->Sql.='FROM '  . $this->Table_   . $AS ;
         $this->Sql.= $this->SetJoin();
@@ -501,14 +513,14 @@ return $this;
    /**
     * 外部連結を作成する
     *
-    * @return Join sting
+    * @return string $joins
     *
     */
-    protected function SetJoin(){
+    private function SetJoin(){
 
         $Joins ='';
         foreach ($this->Join_ as $i =>$Join){
-            $Joins.= SP . $Join['Join'] .' JOIN ' . $Join['Table'] . ' AS ' . $this->Name. ($i+1) . ' ON ' .$Join['On'];
+            $Joins.= ' ' . $Join['Join'] .' JOIN ' . $Join['Table'] . ' AS ' . $this->Name. ($i+1) . ' ON ' .$Join['On'];
         }
         return $Joins;
     }
@@ -575,7 +587,7 @@ return $this;
    /**
     * WHERE句を作成する
     *
-    * @return Where sting
+    * @return string $where
     *
     */
     protected function SetWhere(){
@@ -697,26 +709,26 @@ return $this;
             break;
     }
 
-       return $Name.$Column.SP.$Math.SP.$Param.SP;
+       return $Name.$Column.' '.$Math.' '.$Param.' ';
 
 
     }
    /**
     * Order の設定
     *
-    * @return $Order string
+    * @return string 
     */
     protected function SetOrder(){
 
         $Orders = DEF;
         if ($this->OrderBy_){
-        $Orders = ' ORDER BY ' . $this->OrderBy_ . SP;
+        $Orders = ' ORDER BY ' . $this->OrderBy_ . ' ';
         }
 
         foreach ($this->Order_ as $Order) {
              $Orders .= $Orders ? C :' ORDER BY ';
              $Column = $this->SetName($Order['Column']);
-             $Orders .= $Column . SP . $Order['Asc']. SP;
+             $Orders .= $Column . ' ' . $Order['Asc']. ' ';
         }
 
         return $Orders;
@@ -776,7 +788,7 @@ $red = $sth->fetchAll();
 
         $Con=$this->Cons[$DbName];
 
-     //   echo $this->Sql.B;
+     //   echo $this->Sql.'<br>';
         $Re =[];
 
         if (count($this->Param)>0){
@@ -801,8 +813,7 @@ $red = $sth->fetchAll();
     /**
      * クエリを実行し、結果を1行取得
      *
-     * @param string $sql
-     * @param array $params
+     * @param string $DbName
      * @return array
      *
      * 空の戻り値がboolean =falseを返す FetchAllと統一
@@ -836,8 +847,13 @@ $red = $sth->fetchAll();
     }
 
 
+    /**
+     * @param string $DbName 
+     */
 
     protected function FOREIGN_KEY($DbName = self::DBNAMES[1] ,$Flg = 0){
+
+    //echo $DbName;
 
     $Con=$this->Cons[$DbName];
 
@@ -903,7 +919,7 @@ if (!is_null($this->ForeignKey_)){
 /**
  *
  * @param string $DbName
- * @return object $Cons
+ * @return object $Con
  */
 private function DbManager($DbName){
 

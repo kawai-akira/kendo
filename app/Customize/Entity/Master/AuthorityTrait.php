@@ -27,7 +27,7 @@
     Trait AuthorityTrait 
     {
 
-        public const SHOP = 1;
+        public const SHOP = 1 ;
 
 
     }

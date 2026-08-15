@@ -263,7 +263,7 @@ if (!class_exists('\Eccube\Entity\MailTemplate')) {
 
         /**
          * @param bool $deletable
-         * @return $this
+         * @return MailTemplate
          */
         public function setDeletable(bool $deletable): self
         {

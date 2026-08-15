@@ -1,0 +1,18 @@
+# すべてのファイルを一旦無視する
+/*
+
+# 例外として app フォルダと html フォルダは許可
+!/app/
+!/html/
+
+
+# app の中は Customize と template 以外すべて無視
+/app/*
+!/app/Customize/
+!/app/template/
+!/app/DoctrineMigrations
+
+# html の中も必要なカスタマイズ用フォルダ以外すべて無視
+/html/*
+!/html/user_data/
+!/html/template/

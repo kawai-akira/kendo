@@ -3,7 +3,7 @@
    * @version EC=CUBE4.3
    * @copyright 株式会社 翔 kakeru.co.jp
    * @author
-   * 2026年08月08日作成
+   * 2026年08月12日作成
    *
    * app\Customize\Repository\Master\DouiHopeRepository.php
    *

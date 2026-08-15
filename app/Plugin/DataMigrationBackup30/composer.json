@@ -1,1 +1,0 @@
-{"name":"ec-cube/datamigrationbackup30","version":"1.0.10","description":"データ移行向けバックアップ生成プラグイン for EC-CUBE","type":"eccube-plugin","require":{"ec-cube/plugin-installer":"~0.0.6"},"extra":{"code":"DataMigrationBackup30"}}

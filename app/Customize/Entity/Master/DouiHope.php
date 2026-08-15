@@ -19,7 +19,7 @@ namespace Customize\Entity\Master;
 use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * Authority
+     * DouiHope
      *
      * @ORM\Table(name="mtb_doui_hope")
      * @ORM\InheritanceType("SINGLE_TABLE")
