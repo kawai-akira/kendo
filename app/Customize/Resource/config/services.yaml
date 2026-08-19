@@ -2,7 +2,7 @@ parameters:
     admin_renew_pass_count_max: 3
 
 services:
-    Customize\Event\adminRenewPassEvent:
+    Customize\Event\AdminRenewPassEvent:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Eccube\Common\EccubeConfig'

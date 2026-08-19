@@ -151,33 +151,40 @@
     }
 
     public function ForeignKey($Flg=0){
-        $this->ForeignKey_=$Flg;
+        $this->ForeignKey_= $Flg;
         return $this;
     }
 
     /**
   * 2020/06/03
   * 有ればUP 無ければINSERT
-  * @param  array $ArrSql[]; 複数行
-  * @param  string $Duplicate 重複
-  */
-  public function Inserts($Flg=false){
- 
-    $this->Sql="INSERT INTO {$this->Table_} (" . implode(C,array_keys(reset($this->Sqls_))) .') VALUES ';
+    @param string $DbName
+  * @param  bool $Flg; 複数行
 
-foreach ($this->Sqls_ as $Sqls){
-    $Sqls=$this->SetValue($Sqls);
-    //echo $Sqls . B ;
-    $this->Sql.='(' .implode(C,$Sqls) .')'.C;
-}
-$this->Sql=trim($this->Sql,C);
-if($this->Duplicate_){
-    $this->Sql .=' ON DUPLICATE KEY UPDATE '.$this->Duplicate_;
-}
+  */
+  public function Inserts($DbName = self::DBNAMES[1] ,$Flg=false){
+ 
+ 
+    $this->Sql = "INSERT INTO {$this->Table_} (" . implode(',',array_keys($this->Sqls_[0])) .') VALUES ';
+    //$Sql = "";
+
+    foreach ($this->Sqls_ as $Data){
+        $Sql = '(';
+        foreach ($Data as $Column =>$Value){
+            $Sql .=  $this->SetValue($Value,$Column)  .",";
+        }
+        $this->Sql .= trim($Sql,',') . '),';
+    }
+        $this->Sql = trim($this->Sql,',');
+//echo $this->Sql;
+
+    if($this->Duplicate_){
+        $this->Sql .=' ON DUPLICATE KEY UPDATE '.$this->Duplicate_;
+    }
 
        $this->ShowSql($Flg);
 
-return $this->Exec();
+        return $this->Exec($DbName);
 }
 
 
@@ -255,7 +262,7 @@ return $Re;
         $this->Duplicate_ =DEF;
 //        $this->Or_      = [];
         $this->Num      = 0;
-        if (0==$this->ForeignKey_){
+        if (0 == $this->ForeignKey_){
             $this->FOREIGN_KEY(self::DBNAMES[1]);
         }
 
@@ -290,7 +297,7 @@ return $Re;
 
    /**
     * テーブルのの定義
-    * @param Table string
+    * @param string $Value
     * @param Name string
     *
     */
@@ -426,7 +433,7 @@ return $Re;
     return $this;
     }
 
-    public function Sqls($Sqls=DEF,$Value=DEF){
+    public function Sqls($Sqls = DEF,$Value=DEF){
         if (is_array($Sqls)){
             $this->Sqls_=array_merge($this->Sqls_,$Sqls);
         }else{
@@ -506,6 +513,7 @@ return $Re;
         if ($this->OffSet_){
             $this->Sql.= ' OFFSET ' .$this->OffSet_;
         }
+
         return $this;
 
         }
@@ -563,23 +571,52 @@ return $Re;
         return  rtrim($Sql,C);
 
     }
+    /**
+     * @param mixed $Value
+     * @param string $Column
+     * @return mixed $Val 
+     */
 
-    protected function SetValue($Sqls){
+    protected function SetValue($Value,$Column){
 
-        foreach ($Sqls as $Column =>$Value){
+           if($Column =='birth'){ 
+                if($Value == '0000-00-00 00:00:00'){
+                    $Value = null;
+                };
+
+           }
+
+            $Val = null;
             switch(true){
                 case 'NOW()'===$Value:
-                    $Sqls[$Column] ="'". date('Y-m-d H-i-s') ."'";
-                break;
-
-            default:
-                    $Sqls[$Column] = "'" . $Value ."'";
-            break;
+                    //$Sqls[$Column] ="'". date('Y-m-d H-i-s') ."'";
+                    break;
+                case iS_NULL($Value):
+                case 'NULL' == $Value:
+                        $Val = 'NULL';
+                    break;
+                case is_numeric($Value):
+                    
+                    if('phone_number' == $Column || 'fax_number' == $Column){
+                        $Val =   "'" . $Value ."'";
+                    }else{
+                        $Val = $Value;
+                    }
+                   
+                    break;
+                    
+                default:
+                    $Val  =   "'" . $Value ."'";
+                    break;
 
             }
-        }
 
-        return  $Sqls;
+       
+
+
+
+
+        return   $Val;
 
     }
 
@@ -726,7 +763,7 @@ return $Re;
         }
 
         foreach ($this->Order_ as $Order) {
-             $Orders .= $Orders ? C :' ORDER BY ';
+             $Orders .= $Orders ? ',' :' ORDER BY ';
              $Column = $this->SetName($Order['Column']);
              $Orders .= $Column . ' ' . $Order['Asc']. ' ';
         }
@@ -849,15 +886,16 @@ $red = $sth->fetchAll();
 
     /**
      * @param string $DbName 
+     * @param int $Flg
      */
 
-    protected function FOREIGN_KEY($DbName = self::DBNAMES[1] ,$Flg = 0){
+    public function FOREIGN_KEY($DbName = self::DBNAMES[1] ,$Flg = 0){
 
     //echo $DbName;
 
-    $Con=$this->Cons[$DbName];
-
-    $stmt = $Con->prepare("SET FOREIGN_KEY_CHECKS={$Flg};");
+    $Con = $this->Cons[$DbName];
+                           
+    $stmt = $Con->prepare("SET FOREIGN_KEY_CHECKS = {$Flg};");
     $stmt->execute();
 
     }
@@ -866,7 +904,7 @@ $red = $sth->fetchAll();
     public function Exec($DbName = self::DBNAMES[1]){
 
     if (!is_null($this->ForeignKey_)){
-        $this->FOREIGN_KEY($this->ForeignKey_);
+        $this->FOREIGN_KEY($DbName,$this->ForeignKey_);
     }
     $Con = $this->Cons[$DbName];
     $stmt = $Con->prepare($this->Sql, [\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY]);
@@ -888,7 +926,7 @@ $red = $sth->fetchAll();
         }
     }
 
-    $Num= $stmt->execute();
+    $Num = $stmt->execute();
 //    $stmt =$Con->prepare("SET FOREIGN_KEY_CHECKS=1;");
 //    $stmt->execute();
     $this->Initialize();
@@ -937,5 +975,60 @@ private function DbManager($DbName){
     
     return $Con;
     }   
+
+     /**
+      * @param string $DbName
+      */           
+
+    public function ShowColumn($DbName =self::DBNAMES[1]){
+
+     //   $this->Sql  = 'SELECT COLUMN_NAME, COLUMN_TYPE FROM information_schema.COLUMNS' ;
+    //    $this->Sql .= ' WHERE TABLE_SCHEMA = '.$DbName;
+    //    $this->Sql .= ' AND TABLE_NAME = ' .$this->Table_ .';';
+    $this->Sql = 'SHOW COLUMNS FROM ' . $this->Table_ .';';
+
+       return $this->FetchAll($DbName);
+
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $Table
+     * @param string $Sql
+     * @return array
+     */
+    public function Converter1($Table,$Sql =null){
+
+        $this->ForeignKey(0)
+                         ->Table($Table)
+                         ->TRUNCATE(self::DBNAMES[0]);
+
+        $this->Table($Table);
+
+
+        
+        return $this->FindAll();
+
+
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $Table
+     * @param array $Data
+     * @return void
+     */
+    public function Converter2($Table,$Data){
+
+      return   $this->ForeignKey(0)
+                     ->Table($Table)
+                     ->Sqls($Data)
+                     ->Inserts(self::DBNAMES[0]);
+
+
+    }
+
 
 }

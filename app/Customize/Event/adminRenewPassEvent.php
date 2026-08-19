@@ -27,7 +27,7 @@ use Customize\Service\MailService;
 
 
 
-class adminRenewPassEvent implements EventSubscriberInterface
+class AdminRenewPassEvent implements EventSubscriberInterface
 {
     
 

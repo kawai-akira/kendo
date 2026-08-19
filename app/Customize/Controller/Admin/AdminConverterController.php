@@ -34,10 +34,8 @@
     use Eccube\Repository\Master\PrefRepository;
     use Eccube\Entity\Master\DeviceType;
     use Carbon\Carbon;
-    
-    
-
-
+    use Customize\Service\Converter\CustomerComberter;
+use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
 
     class AdminConverterController extends AbstractController
     {
@@ -62,15 +60,22 @@
          /**
          * @param   SqlService  $SqlService
          */
+
+         /**
+          * @var CustomerComberter
+          */
+         private $CustomerComberter;
+
          public function __construct(
             SqlService $SqlService
             ,PrefRepository $PrefRepository
+            ,CustomerComberter $CustomerComberter
          )
         {
 
         $this->SqlService = $SqlService;
         $this->PrefRepository = $PrefRepository;
-    
+        $this->CustomerComberter = $CustomerComberter;
 
         }    
 
@@ -85,7 +90,7 @@
     public function index(Request $request)
     {
     // $this->CarenderSearvice->collCsv();
-          
+       $this->ShowColumn();
 
        return  [
         'message1' => self::Message1,
@@ -108,18 +113,20 @@
     {
 
         $form   = $this->createForm(ConverterType::class);
-
+            
 
    
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $this->CustomerComberter->Menu();
 
         }
 
        return  [
            'form' => $form->createView(),
            'message1' => self::Message1,
+
+          
 
         ];
 
@@ -136,7 +143,7 @@
     public function inAdvance(Request $request){
 
         $form   = $this->createForm(ConverterType::class);
-     
+        $this->Member();     
 
    
         $form->handleRequest($request);
@@ -155,6 +162,48 @@
            'message2' => self::Message2,
 
         ];
+
+    }
+
+    private function Member(){
+
+
+
+        $Members =$this->SqlService->Converter1('dtb_member');
+       // print_r($Customers);           
+                         
+                         ;
+        
+        $Re = [];
+        foreach ($Members as $Member){
+            $data = [];
+
+            $data['id']             = $Member['member_id'];
+            $data['work_id']        = $Member['work'];
+            $data['authority_id']   = $Member['authority'];
+            $data['creator_id']     = null;
+            $data['name']           = $Member['name'];
+            $data['department']     = $Member['department'];
+            $data['login_id']         = $Member['login_id'];
+            $data['password']       = '';
+            $data['salt']           = null;
+            $data['sort_no']        = $Member['rank'];
+            $data['two_factor_auth_key'] = null;
+            $data['two_factor_auth_enabled'] = 0;
+            $data['create_date']    = $Member['create_date'];
+            $data['update_date']    = $Member['update_date'];
+            $data['login_date']     = $Member['login_date'];
+            $data['discriminator_type'] = 'member';
+            $data['reset_key']      = null;
+            $data['reset_expire']   = null;
+
+
+            $Re[] = $data;
+        }
+
+        $this->SqlService->Converter2('dtb_member',$Re);
+
+
 
     }
 
@@ -462,6 +511,16 @@ private function MakeMtbSql(){
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;');
     }
 
+    private function ShowColumn(){  
+        $Columns = $this->SqlService->Table('dtb_member')
+                                    ->ShowColumn($this->SqlService::DBNAMES[1]);
+
+       // print_r($Columns);                            
+        foreach ($Columns as $Column){
+                //echo '<tr><td>'.$Column['Field'].'</td><td>' . $Column['Type'].'</td></tr>';
+                echo $Column['Field'].PHP_EOL;           
+        }    
+    }
 
 }
 

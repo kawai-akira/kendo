@@ -1,4 +1,4 @@
-# すべてのファイルを一旦無視する
+# すべてのファイルを一旦無視する.gitignore
 /*
 
 # 例外として app フォルダと html フォルダは許可
@@ -16,3 +16,5 @@
 /html/*
 !/html/user_data/
 !/html/template/
+
+/var/

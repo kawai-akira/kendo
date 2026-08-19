@@ -196,7 +196,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.1.0"
+            "php": "8.2.30"
         },
         "preferred-install": {
             "*": "dist"
@@ -216,7 +216,7 @@
             "url": "https://package-api-c2.ec-cube.net/v43",
             "options": {
                 "http": {
-                    "header": ["X-ECCUBE-KEY: KLPotRY00pg5YJQrzeD0vUkRVAFpxA5OvFTJU4gi"]
+                    "header": ["X-ECCUBE-KEY: "]
                 }
             }
         }

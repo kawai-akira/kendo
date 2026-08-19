@@ -90,8 +90,6 @@ const AdminForgotMail = 10;
             'expire' => $this->eccubeConfig['eccube_customer_reset_expire'],
         ]);
 
-
-
         $message = (new Email())
             ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
