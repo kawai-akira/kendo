@@ -1,3 +1,0 @@
-<?php //Eccube%255CEntity%255CPayment%2523getPaymentOptions
-
-return [PHP_INT_MAX, []];
