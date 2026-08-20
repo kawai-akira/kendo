@@ -4,4 +4,6 @@ admin_login_mail_message02: '既に変更メールは送信しています。も
 admin_login_mail_renew_title: 管理者用パスワード変更
 admin_login_mail_renew_login: ログインID
 admin_login_mail_renew_loginId: 管理画面用ログインEMAil
+customer_login_mail_message01: 'セュリティ強化のため、パスワードを変更してください。ログインID宛にメールを送信しました。'
+customer_login_mail_message02: '既に変更メールは送信しています。もう一度,30分後にやり直すか、管理者迄お問い合わせください。'
 

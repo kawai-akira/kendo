@@ -2,10 +2,16 @@ parameters:
     admin_renew_pass_count_max: 3
 
 services:
-    Customize\Event\AdminRenewPassEvent:
+    Customize\EventListener\RenewPassEventListener:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Eccube\Common\EccubeConfig'
             - '@Customize\Service\MailService'
+            - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
         tags:
-            - { name: kernel.event_subscriber }
+            #- { name: kernel.event_subscriber }
+            # 1. 管理画面用のルートに繋ぐ
+            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: onAdminCheckPassport, dispatcher: security.event_dispatcher.admin }
+            # 会員（customer）の認証時は、このクラスの onCustomerCheckPassport を動かす
+            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: onCustomerCheckPassport, dispatcher: security.event_dispatcher.customer }
+        
