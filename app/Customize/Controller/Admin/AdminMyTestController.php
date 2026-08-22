@@ -68,15 +68,15 @@
     public function index(Request $request)
     {
 
-     $Mrnber = $this->entityManager->getRepository(Member::class)->find(2);
-    $this->MailService->sendAdminRenuwMail( $Mrnber);
+    // $Mrnber = $this->entityManager->getRepository(Member::class)->find(2);
+    //$this->MailService->sendAdminRenuwMail( $Mrnber);
 
     //$Days = new Carbon('2026-05-29');
     //$Setting = $this->SettingRepository->find(2);
 
     
     //$this->HolidayRepository->getHolidyBySettingDays($Setting,$Days);
-   #print_r($_SESSION['data'] ?? []) ; unset($_SESSION['data']);
+   //print_r($_SESSION['data'] ?? []) ; unset($_SESSION['data']);
 
           
     

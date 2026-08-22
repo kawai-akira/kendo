@@ -25,7 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
      * @ORM\InheritanceType("SINGLE_TABLE")
      * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
      * @ORM\HasLifecycleCallbacks()
-     * @ORM\Entity(repositoryClass="Customize\Repository\MasterShopStatusRepository")
+     * @ORM\Entity(repositoryClass="Customize\Repository\Master\ShopStatusRepository")
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     class ShopStatus extends \Eccube\Entity\Master\AbstractMasterEntity

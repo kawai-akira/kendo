@@ -34,8 +34,10 @@
     use Eccube\Repository\Master\PrefRepository;
     use Eccube\Entity\Master\DeviceType;
     use Carbon\Carbon;
-    use Customize\Service\Converter\CustomerComberter;
-use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
+    use Customize\Service\Converter\CustomerConverter;
+    use Customize\Service\Converter\ProductConverter;
+    use Customize\Entity\Master\ShopStatus;
+   # use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
 
     class AdminConverterController extends AbstractController
     {
@@ -57,25 +59,28 @@ use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValue
          */
         private $PrefRepository;
 
+         
          /**
-         * @param   SqlService  $SqlService
-         */
-
-         /**
-          * @var CustomerComberter
+          * @var CustomerConverter
           */
-         private $CustomerComberter;
+         private $CustomerConverter;
+         /**
+          * @var ProductConverter
+          */
+         private $ProductConverter;
 
          public function __construct(
             SqlService $SqlService
             ,PrefRepository $PrefRepository
-            ,CustomerComberter $CustomerComberter
+            ,CustomerConverter $CustomerConverter
+            ,ProductConverter $ProductConverter
          )
         {
 
         $this->SqlService = $SqlService;
         $this->PrefRepository = $PrefRepository;
-        $this->CustomerComberter = $CustomerComberter;
+        $this->CustomerConverter = $CustomerConverter;
+        $this->ProductConverter = $ProductConverter;
 
         }    
 
@@ -113,12 +118,13 @@ use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValue
     {
 
         $form   = $this->createForm(ConverterType::class);
-            
+        $this->ProductConverter->Menu2();    
 
    
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->CustomerComberter->Menu();
+            $this->CustomerConverter->Menu();
+            $this->ProductConverter->Menu2();
 
         }
 
@@ -143,16 +149,20 @@ use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValue
     public function inAdvance(Request $request){
 
         $form   = $this->createForm(ConverterType::class);
-        $this->Member();     
+        $this->ProductConverter->Menu1();
 
-   
+
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->MakeMtbSql();
+            $this->ShopStatus();
             $this->setBaseInfo();
             $this->MailTemplate();
             $this->Page();
             $this->Layout();
+            $this->Member();
+            $this->ProductConverter->Menu1();
 
         }
 
@@ -164,6 +174,23 @@ use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValue
         ];
 
     }
+
+    private function ShopStatus(){
+   
+        if($this->entityManager->getRepository(ShopStatus::class)->find(9)){
+            return ;
+        }
+
+          $Status = new ShopStatus();
+          $Status->setId(9)
+                 ->setName('削除')
+                 ->setSortNo(2);
+        $this->entityManager->persist($Status);
+        $this->entityManager->flush();
+                            
+
+
+    } 
 
     private function Member(){
 
@@ -417,7 +444,6 @@ use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValue
 /**
  * 
  */
-
 private function MakeMtbSql(){
 
     $Sql = self::FOREIGN. '0;';
@@ -512,12 +538,12 @@ private function MakeMtbSql(){
     }
 
     private function ShowColumn(){  
-        $Columns = $this->SqlService->Table('dtb_member')
+        $Columns = $this->SqlService->Table('mtb_tag')
                                     ->ShowColumn($this->SqlService::DBNAMES[1]);
 
        // print_r($Columns);                            
         foreach ($Columns as $Column){
-                //echo '<tr><td>'.$Column['Field'].'</td><td>' . $Column['Type'].'</td></tr>';
+             //   echo $Column['Field'].':' . $Column['Type']. PHP_EOL;
                 echo $Column['Field'].PHP_EOL;           
         }    
     }

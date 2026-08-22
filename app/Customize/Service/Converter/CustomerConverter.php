@@ -6,7 +6,7 @@
     *
     * 2026年08月16日作成
     *
-    * app\Customize\Service\Converter\CustomerComberter.php
+    * app\Customize\Service\Converter\CustomerConverter.php
     * 
     *
     * SQL文を作成する サイトがデッキしだい削除する
@@ -21,7 +21,7 @@ use Customize\Service\SqlService;
     use Eccube\Repository\Master\CustomerStatusRepository;
 
 
-   class CustomerComberter{
+   class CustomerConverter{
 
 
         private const Customer = 'dtb_customer';

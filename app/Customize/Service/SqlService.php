@@ -184,6 +184,7 @@
 
        $this->ShowSql($Flg);
 
+       $_SESSION['data']['sql'] = $this->Sql;
         return $this->Exec($DbName);
 }
 
