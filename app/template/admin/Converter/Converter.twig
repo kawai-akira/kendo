@@ -18,11 +18,26 @@
 {% block title %}{{ 'Converter'|trans }}{% endblock %}
 {% block sub_title %}{% endblock %}
 {% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+{% block javascript %}
+    <script>
+    
+        function submit(mode){
+
+            $('#converter_mode').val(mode);
+
+            alert(mode + 'をコンバートします。');
+            //$('form01').submit();
+
+
+        }
+    
+    </script>
+{% endblock javascript %}
+
+
+
 {% block main %}
-
-
-
- <form name="member_form" role="form" id="member_form" method="post" action="" novalidate>
+<form name="form01" role="form" id="form01" method="post" action="" novalidate>
     {{ form_widget(form._token) }}
     {{ form_widget(form.mode) }}
     <div class="c-contentsArea__cols">
@@ -40,13 +55,31 @@
                     <div class="collapse show ec-cardCollapse" >
                         <div class="card-body">
                             <div class="row mb-2">
-                                <div class="col-3">
+                                <div class="col-6">
                                     {{ message1 }}
                                 </div>
                                 <div class="col">
                                     コンバーター
                                 </div>
                             </div>
+                            <div class="row mb-4">
+                                        <div class="col-1"></div>
+                                        <div class="col-6">
+                                            <h6 onclick="submit('customer')">会員群DATA</h6>
+                                        </div> 
+                            </div>
+                            <div class="row mb-4">
+                                        <div class="col-1"></div>
+                                        <div class="col-6">
+                                            <h6 onclick="submit('product')">商品群DATA</h6>
+                                        </div> 
+                            </div> 
+                            <div class="row mb-4">
+                                        <div class="col-1"></div>
+                                        <div class="col-6">
+                                            <h6 onclick="submit('order')">受注群DATA</h6>
+                                        </div> 
+                            </div>            
                         </div>
                     </div>
 

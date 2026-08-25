@@ -67,12 +67,6 @@ protected  function MakeSql(){
     $Sql .= 'SET FOREIGN_KEY_CHECKS = 1;';
     return $Sql;
 
-
-
-
-
-
-
 }
 
 /**

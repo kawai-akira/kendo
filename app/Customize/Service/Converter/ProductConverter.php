@@ -86,10 +86,15 @@ use Customize\Entity\Master\ShopStatu;
         private  function Product(){
 
 
+        list($T,$ProductTypes)= $this->Tuika();
+
+
         $Re= []; 
         foreach( $this->SqlService->Converter1(self::Product) as $o){
             if ($o['product_id']<= self::notConvert){continue;}
+                $Id = $o['product_id'];
                 $d['id']                = $o['product_id'];
+                 
                 $d['creator_id']        = $o['creator_id'];
                 $d['product_status_id'] = $o['del_flg'] == 0 ? $o['status'] : 3;
                 $d['name']              = $o['name'];
@@ -106,8 +111,23 @@ use Customize\Entity\Master\ShopStatu;
                 $d['free_input_name2']  = $o['free_input_name2'];
                 $d['free_input_name3']  = $o['free_input_name3'];
 
+                $d['item_features']     = $o['del_flg'] == 1 ? null: $T[$Id][1] ?? null;
+                $PTValue = $T[$Id][2] ?? null;
+                $d['product_type_id']   = $ProductTypes[$PTValue] ?? 12;
+               
+                $d['material']          = $T[$Id][3] ?? null;
+                $d['weight']            = $T[$Id][4] ?? null;
+                $d['stitch_type']       = $T[$Id][5] ?? null;
+                $d['stitch_width']      = $T[$Id][6] ?? null;
+                $d['men_base_size']     = $T[$Id][7] ?? null;
+                $d['kote_base_size']    = $T[$Id][8] ?? null;
+                $d['tare_base_size']    = $T[$Id][9] ?? null;
+                $d['utikomi']           = $T[$Id][10] ?? null;
+                $d['dou_base_size']     = $T[$Id][11] ?? null;
+
                 $Re[] = $d;
         }
+        //print_r($Re);
                 $this->SqlService->Converter2(self::Product,$Re);
 
         }
@@ -261,12 +281,9 @@ use Customize\Entity\Master\ShopStatu;
 
         private function Tag(){
 
-           $this->SqlService->ForeignKey(0)
-                         ->Table(self::Tag)
-                         ->TRUNCATE($this->SqlService::DBNAMES[0]);
            
             $Re = [];
-            foreach( $this->SqlService->Table('mtb_tag')->FindAll() as $o){
+            foreach( $this->SqlService->Converter1('mtb_tag') as $o){
 
                 $d['id']                 = $o['id'];
                 $d['name']               = $o['name'];
@@ -358,4 +375,22 @@ use Customize\Entity\Master\ShopStatu;
                 $this->SqlService->Converter2(self::ShopImage,$Re);
         }
    
+        private function Tuika(){
+
+
+            $Re = [];   
+            foreach( $this->SqlService->Converter1('plg_expand_product_columns_value') as $t){
+
+                $Re[$t['product_id']][$t['column_id']] = empty($t['value']) ? null : $t['value'] ;
+            }
+
+            $Type = [];
+            foreach($this->SqlService->Table('mtb_product_type')->FindAllBy($this->SqlService::DBNAMES[0]) as $TP){
+                $Type[$TP['name']] = $TP['id'];
+            }
+        
+          //  print_r($Re); exit;
+
+        return [$Re,$Type];
+        }
    }

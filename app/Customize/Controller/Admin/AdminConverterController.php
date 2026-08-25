@@ -36,7 +36,9 @@
     use Carbon\Carbon;
     use Customize\Service\Converter\CustomerConverter;
     use Customize\Service\Converter\ProductConverter;
+    use Customize\Service\Converter\OrderConverter;
     use Customize\Entity\Master\ShopStatus;
+
    # use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
 
     class AdminConverterController extends AbstractController
@@ -69,11 +71,17 @@
           */
          private $ProductConverter;
 
+         /**
+          * @var OrderConverter.
+          */
+        private $OrderConverter;
+
          public function __construct(
             SqlService $SqlService
             ,PrefRepository $PrefRepository
             ,CustomerConverter $CustomerConverter
             ,ProductConverter $ProductConverter
+            ,OrderConverter $OrderConverter
          )
         {
 
@@ -81,6 +89,7 @@
         $this->PrefRepository = $PrefRepository;
         $this->CustomerConverter = $CustomerConverter;
         $this->ProductConverter = $ProductConverter;
+        $this->OrderConverter = $OrderConverter;
 
         }    
 
@@ -118,14 +127,35 @@
     {
 
         $form   = $this->createForm(ConverterType::class);
-        $this->ProductConverter->Menu2();    
+  
 
    
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->CustomerConverter->Menu();
-            $this->ProductConverter->Menu2();
+            $Messege = null;
+            switch($form->get('mode')->getData()){
+                case 'customer':
+                    $this->CustomerConverter->Menu();
+                    $Messege = '会員群のコンバートに成功しました。';
+                    break;
+                case 'product':        
+                    $this->ProductConverter->Menu2();
+                    $Messege = '商用品群のコンバートに成功しました。';
+                    break;
+                case 'order':
+                    $this->OrderConverter->Menu();
+                    $Messege = '受注群のコンバートに成功しました。';
+                    break;
+            }
+            
+            if($Messege){
+                $this->addSuccess($Messege, 'admin');
+            }else{
+                $this->addError('コンバートに失敗しました', 'admin');
+            }
 
+            return $this->redirectToRoute('admin_Converter_Converter');
+ 
         }
 
        return  [
@@ -489,7 +519,7 @@ private function MakeMtbSql(){
                 'mtb_shinai_length',
                 'mtb_shop_status',
                 'mtb_zekken_font',
-                'mtb_tag'
+            //    'mtb_tag'
             ];
 
 
@@ -538,8 +568,8 @@ private function MakeMtbSql(){
     }
 
     private function ShowColumn(){  
-        $Columns = $this->SqlService->Table('mtb_tag')
-                                    ->ShowColumn($this->SqlService::DBNAMES[1]);
+        $Columns = $this->SqlService->Table('dtb_order_item')
+                                    ->ShowColumn($this->SqlService::DBNAMES[0]);
 
        // print_r($Columns);                            
         foreach ($Columns as $Column){

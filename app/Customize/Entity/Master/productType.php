@@ -5,7 +5,7 @@
    * @author
    * 2026年08月06日作成
    *
-   * app\Customize\Entity\Master\Tag.php
+   * app\Customize\Entity\Master\producttype.php
    *
    *
    * 
@@ -19,16 +19,16 @@ namespace Customize\Entity\Master;
 use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * Tag
+     * ProductType
      *
-     * @ORM\Table(name="mtb_tag")
+     * @ORM\Table(name="mtb_product_type")
      * @ORM\InheritanceType("SINGLE_TABLE")
      * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
      * @ORM\HasLifecycleCallbacks()
-     * @ORM\Entity(repositoryClass="Customize\Repository\Master\TagRepository")
+     * @ORM\Entity(repositoryClass="Customize\Repository\Master\ProductTypeRepository")
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
-    class Tag extends \Eccube\Entity\Master\AbstractMasterEntity
+    class ProductType extends \Eccube\Entity\Master\AbstractMasterEntity
     {
 
     }

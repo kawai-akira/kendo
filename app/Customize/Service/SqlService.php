@@ -95,6 +95,13 @@
 
     }
 
+    public function FindAllBy($DbName = self::DBNAMES[1]){
+
+        $this->MakeSelect();
+        return  $this->FetchAll($DbName);
+
+    }
+
     public function Field($Field){
         $this->Field_=$Field;
         return $this;
@@ -184,7 +191,8 @@
 
        $this->ShowSql($Flg);
 
-       $_SESSION['data']['sql'] = $this->Sql;
+       
+    //   $_SESSION['data']['sql'] = $this->Sql;
         return $this->Exec($DbName);
 }
 
@@ -236,12 +244,15 @@ return $Re;
             if (!$Flg) {
                return;
             }else{
-                echo $this->Sql.'<br>';
-                print_r($this->Param);
+                log_info('Sqlaaaa' ,['sql'=>$this->Sql,'param'=>$this->Param]);
+            //    echo $this->Sql.'<br>';
+
+            //    print_r($this->Param);
             }
             if ($Flg==2){
                 exit;
             }
+
     }
 
     protected function Initialize(){
@@ -908,8 +919,12 @@ $red = $sth->fetchAll();
         $this->FOREIGN_KEY($DbName,$this->ForeignKey_);
     }
     $Con = $this->Cons[$DbName];
+   // $Con->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
     $stmt = $Con->prepare($this->Sql, [\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY]);
+    //                                  [\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY]
 
+    
+    
     foreach ($this->Param as $Param=>$Value){
         switch (true) {
             case is_null($Value):
@@ -1001,9 +1016,7 @@ private function DbManager($DbName){
      */
     public function Converter1($Table,$Sql =null){
 
-        $this->ForeignKey(0)
-                         ->Table($Table)
-                         ->TRUNCATE(self::DBNAMES[0]);
+   
 
         $this->Table($Table);
 
@@ -1023,10 +1036,16 @@ private function DbManager($DbName){
      */
     public function Converter2($Table,$Data){
 
+        $this->ForeignKey(0)
+             ->Table($Table)
+             ->TRUNCATE(self::DBNAMES[0]);         
+
+
+
       return   $this->ForeignKey(0)
                      ->Table($Table)
                      ->Sqls($Data)
-                     ->Inserts(self::DBNAMES[0]);
+                     ->Inserts(self::DBNAMES[0],1);
 
 
     }
