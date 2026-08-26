@@ -19,6 +19,8 @@
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Customize\Service\MailService;
     use Eccube\Entity\Member;
+    use Customize\Entity\Master\ProductType;
+    use Customize\Repository\Master\ProductTypeRepository;
 
 
     class AdminMyTestController extends AbstractController
@@ -48,8 +50,10 @@
         )
         {
            
+        $a = $this->entityManager->getRepository(ProductType::class)->findAll(); 
 
-            $this->MailService = $MailService;
+        print_r($a);
+          //  $this->MailService = $MailService;
            // $this->CarenderSearvice = $CarenderSearvice;
     
 

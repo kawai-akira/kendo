@@ -5,7 +5,7 @@
    * @author
    * 2026年08月06日作成
    *
-   * app\Customize\Entity\Master\producttype.php
+   * app\Customize\Entity\Master\ProductType.php
    *
    *
    * 

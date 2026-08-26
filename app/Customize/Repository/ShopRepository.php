@@ -19,6 +19,7 @@
     use Eccube\Repository\AbstractRepository;
     use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
     use Customize\Entity\Shop;
+	use Customize\Repository\Master\ShopStatusRepository;
 
    	/**
 	 * ShopRepository
@@ -28,8 +29,29 @@
 	 */
     class ShopRepository extends AbstractRepository
     {
-        public function __construct(RegistryInterface $registry)
+		/**
+		 * @var ShopStatusRepository
+	    */
+        private $ShopStatusRepository;
+
+        public function __construct(RegistryInterface $registry
+					,ShopStatusRepository $ShopStatusRepository
+		)
         {
             parent::__construct($registry, Shop::class);
+			$this->ShopStatusRepository = $ShopStatusRepository;
         }
+
+		public function select(){
+
+        $Status =$this->ShopStatusRepository->find(9);
+   		$qb = $this->createQueryBuilder('s')				
+	 		->orderBy('s.id', 'ASC')			
+      		->where('s.status < :status')				
+      		->setParameter('status', $Status);				
+				
+      	return $qb->getQuery()->getResult();
+
+		}
+
     }

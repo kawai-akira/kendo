@@ -61,18 +61,18 @@ protected  function MakeSql(){
     private function mtb_csv_type(){
 
 
-$Value[] = "(1,'セット(面、小手、胴、垂)',0,'ProductType');";
-$Value[] = "(2,'面',1,'ProductType');";
-$Value[] = "(3,'小手',2,'ProductType');";
-$Value[] = "(4,'胴',3,'ProductType');";
-$Value[] = "(5,'垂',4,'ProductType');";
-$Value[] = "(6,'胴着',5,'ProductType');";
-$Value[] = "(7,'袴',6,'ProductType');";
-$Value[] = "(8,'竹刀',7,'ProductType');";
-$Value[] = "(9,'竹刀袋',8,'ProductType');";
-$Value[] = "(10,'防具袋',9,'ProductType');";
-$Value[] = "(11,'ゼッケン',10,'ProductType');";
-$Value[] = "(12,'その他',11,'ProductType');";
+$Value[] = "(1,'セット(面、小手、胴、垂)',0,'producttype');";
+$Value[] = "(2,'面',1,'producttype');";
+$Value[] = "(3,'小手',2,'producttype');";
+$Value[] = "(4,'胴',3,'producttype');";
+$Value[] = "(5,'垂',4,'producttype');";
+$Value[] = "(6,'胴着',5,'producttype');";
+$Value[] = "(7,'袴',6,'producttype');";
+$Value[] = "(8,'竹刀',7,'producttype');";
+$Value[] = "(9,'竹刀袋',8,'producttype');";
+$Value[] = "(10,'防具袋',9,'producttype');";
+$Value[] = "(11,'ゼッケン',10,'producttype');";
+$Value[] = "(12,'その他',11,'producttype');";
 
 
 

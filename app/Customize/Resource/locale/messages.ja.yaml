@@ -6,4 +6,21 @@ admin_login_mail_renew_login: ログインID
 admin_login_mail_renew_loginId: 管理画面用ログインEMAil
 customer_login_mail_message01: 'セュリティ強化のため、パスワードを変更してください。ログインID宛にメールを送信しました。'
 customer_login_mail_message02: '既に変更メールは送信しています。もう一度,30分後にやり直すか、管理者迄お問い合わせください。'
-
+shop_name: 店舗
+product_freeInputName1: フリー入力項目名1
+product_freeInputName2: フリー入力項目名2
+product_freeInputName3: フリー入力項目名3
+product_MetaDescription: メタディスクリプション
+product_MetaKeyword: メタキーワード
+product_Extended_Field: 拡張項目
+product_ItemFeatures: アイテム説明
+product_ProductType: 商品種類
+product_Material: 素材
+product_Weight: 重さ(g)
+product_StitchType: 刺の種類
+product_StitchWidth: 刺(ピッチ)の間隔(mm)
+product_MenBaseSize: 面のベース寸法
+product_KoteBaseSize: 小手のベース寸法
+product_TareBaseSize: 垂のベース寸法
+product_Utikomi: 打ち込み
+product_DouBaseSize: 胴のベース寸法

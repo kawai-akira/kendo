@@ -27,7 +27,7 @@
     /**
      * @ORM\Table(name="dtb_shop")
      * @ORM\InheritanceType("SINGLE_TABLE")
-     * @ORM\Entity(repositoryClass="Eccube\Repository\ShopRepository")
+     * @ORM\Entity(repositoryClass="Customize\Repository\ShopRepository")
      * @ORM\HasLifecycleCallbacks()
      * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
      */
@@ -134,7 +134,7 @@
          * @ORM\ManyToOne(targetEntity="\Eccube\Entity\Member")
          * @ORM\JoinColumn(name="creator_id", referencedColumnName="id", nullable=true)
          */
-        private $Creator;
+        private $creator;
 
         /**
          * @var \DateTime
@@ -285,6 +285,17 @@
             return $this->shopImages;
         }
 
+
+        public function setCreator(?Member $Creator): self
+        {
+            $this->creator = $Creator;
+            return $this;
+        }
+
+        public function getCreator(): ?Member
+        {
+            return $this->creator;
+        }
 
         public function setCreateDate(?\DateTimeInterface $createDate): self
         {

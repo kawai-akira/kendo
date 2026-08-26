@@ -32,7 +32,8 @@ use Customize\Entity\Master\ShopStatu;
         private const ProductClass= 'dtb_product_class';
         private const ClassName   = 'dtb_class_name'; 
         private const ClassCategory  = 'dtb_class_category'; 
-        private const Category  = 'dtb_category'; 
+        private const Category  = 'dtb_category';
+        private const ProductCategory  = 'dtb_product_category'; 
         private const ProductImage = 'dtb_product_image';
         private const ProductStock = 'dtb_product_stock';
         private const ProductTag = 'dtb_product_tag';
@@ -77,6 +78,7 @@ use Customize\Entity\Master\ShopStatu;
             $this->className();
             $this->ClassCutegory();
             $this->Category();
+            $this->ProductCategory();
             $this->ProductImage();
             $this->ProductStock();
             $this->Tag();
@@ -86,8 +88,9 @@ use Customize\Entity\Master\ShopStatu;
         private  function Product(){
 
 
-        list($T,$ProductTypes)= $this->Tuika();
+        list($T,$ProductTypes,$Meta)= $this->Tuika();
 
+  
 
         $Re= []; 
         foreach( $this->SqlService->Converter1(self::Product) as $o){
@@ -124,6 +127,9 @@ use Customize\Entity\Master\ShopStatu;
                 $d['tare_base_size']    = $T[$Id][9] ?? null;
                 $d['utikomi']           = $T[$Id][10] ?? null;
                 $d['dou_base_size']     = $T[$Id][11] ?? null;
+
+                $d['meta_description']  = $Meta[$Id]['meta_description'] ?? null;
+                $d['meta_keyword']      = $Meta[$Id]['meta_keyword'] ?? null;
 
                 $Re[] = $d;
         }
@@ -237,6 +243,23 @@ use Customize\Entity\Master\ShopStatu;
             $this->SqlService->Converter2(self::Category,$Re);
 
         }
+        private function ProductCategory(){
+
+
+            $Re= []; 
+            foreach( $this->SqlService->Converter1(self::ProductCategory) as $o){
+                $d['product_id']         = $o['product_id'];
+                $d['category_id']        = $o['category_id'];
+                $d['discriminator_type'] = 'productcategory';
+                $Re[] = $d;
+            }
+
+            $this->SqlService->Converter2(self::ProductCategory,$Re);
+
+
+        }
+
+
 
         public function ProductImage(){
                 	
@@ -388,9 +411,13 @@ use Customize\Entity\Master\ShopStatu;
             foreach($this->SqlService->Table('mtb_product_type')->FindAllBy($this->SqlService::DBNAMES[0]) as $TP){
                 $Type[$TP['name']] = $TP['id'];
             }
-        
-          //  print_r($Re); exit;
+     
+            $Meta = [];
+            foreach ($this->SqlService->Table('plg_product_header')->FindAllBy($this->SqlService::DBNAMES[1]) as $M){
+                 $Meta[$M['product_id']] = $M;
+            };
 
-        return [$Re,$Type];
+
+        return [$Re,$Type,$Meta];
         }
    }

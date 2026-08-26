@@ -83,7 +83,6 @@
         private $Weight;
 
 
-
         /**
          * @var string
          * @ORM\Column(name="stitch_type", length=255, nullable=true)
@@ -122,6 +121,18 @@
          * @ORM\Column(name="dou_base_size", length=255, nullable=true)
          */
         private $DouBaseSize;
+
+        /**
+         * @var string
+         * @ORM\Column(name="meta_description", type="text", nullable=true)
+         */
+        private $MetaDescription;
+       
+        /**
+         * @var string
+         * @ORM\Column(name="meta_keyword", type="text", nullable=true)
+         */
+        private $MetaKeyword;
 
 
        /**
@@ -296,6 +307,29 @@
         public function getDouBaseSize(): ?string
         {
             return $this->DouBaseSize;
+        }
+
+            
+        public function setMetaDescription(?string $MetaDescription): self
+        {
+            $this->MetaDescription = $MetaDescription;
+            return $this;
+        }
+
+        public function getMetaDescription(): ?string
+        {
+            return $this->MetaDescription;
+        }
+            
+        public function setMetaKeyword(?string $MetaKeyword): self
+        {
+            $this->MetaKeyword = $MetaKeyword;
+            return $this;
+        }
+
+        public function getMetaKeyword(): ?string
+        {
+            return $this->MetaKeyword;
         }
 
     }
