@@ -31,4 +31,10 @@ use Doctrine\ORM\Mapping as ORM;
     class ShopStatus extends \Eccube\Entity\Master\AbstractMasterEntity
     {
 
+        const ACTIVE = 1;
+        const STOP   = 0;
+        const REMOVE = 9;
+
+
+
     }

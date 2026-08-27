@@ -1,1 +1,19 @@
 /* カスタマイズ用CSS */
+body{
+    font-family: "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif;
+}
+   .ec-layoutRole .ec-layoutRole__contents{
+   max-width: 1400px;
+}
+.ec-productRole{
+    max-width: 1400px;
+}
+
+.mb-12{
+margin-bottom: 12px;;
+}
+a{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

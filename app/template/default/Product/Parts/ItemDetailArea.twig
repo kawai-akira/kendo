@@ -1,0 +1,69 @@
+
+<style>
+.item_detai_area {
+    padding: 16px 0;
+	font-size:1.2rem;
+	font-size:12px;
+}
+.item_size_area {
+    background: #f8f8f8;
+    padding: 10px;
+}
+dl.item_size_area dt{
+    width: 146px;
+    float: left;
+    padding: 6px 10px 6px 0;
+}
+.item_size_area dd {
+    padding: 6px 0 6px 146px;
+}
+</style>
+
+<div class="item_detai_area pc >
+	<h2 style="font-size: 1.17em;">{{title[1] }}</h2>
+		<div class="mb-12">{{ Product.ItemFeatures|raw|nl2br }}</div>
+
+		<dl class="item_size_area ec-font-size-1"">
+			{% if Product.ProductType %}
+				<dt>{{ title[2] }}</dt>
+				<dd>{{ Product.ProductType }}</dd>
+			{% endif %}
+			{% if Product.Material %}
+				<dt>{{ title[3] }}</dt>
+				<dd>{{ Product.Material }}</dd>
+			{% endif %}
+			{% if Product.Weight %}
+				<dt>{{ title[4]  }}</dt>
+				<dd>{{ Product.Weight }}</dd>
+			{% endif %}
+			{% if Product.StitchType %}
+				<dt>{{ title[5]  }}</dt>
+				<dd>{{ Product.StitchType }}</dd>
+			{% endif %}
+			{% if Product.StitchWidth %}
+				<dt>{{ title[6]  }}</dt>
+				<dd>{{ ProductStitchWidth }}</dd>
+			{% endif %}
+			{% if Product.MenBaseSize %}
+				<dt>{{ title[7]  }}</dt>
+				<dd>{{ Product.MenBaseSize }}</dd>
+			{% endif %}
+			{% if Product.KoteBaseSize %}
+				<dt>{{ title[8]  }}</dt>
+				<dd>{{ Product.KoteBaseSize }}</dd>
+			{% endif %}
+			{% if Product.TareBaseSize %}
+				<dt>{{ Ptitle[9]  }}</dt>
+				<dd>{{ Product.TareBaseSize }}</dd>
+			{% endif %}
+			{% if Product.Utikomi %}
+				<dt>{{ title[10]  }}</dt>
+				<dd>{{ Product.Utikomi }}</dd>
+			{% endif %}
+			{% if Product.DouBaseSize %}
+				<dt>{{ title[11]  }}</dt>
+				<dd>{{ Product.DouBaseSize }}</dd>
+			{% endif %}
+
+		</dl>
+</div>
