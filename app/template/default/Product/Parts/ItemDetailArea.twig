@@ -1,7 +1,7 @@
 
 <style>
 .item_detai_area {
-    padding: 16px 0;
+    padding: 16px 10px 0 0 ;
 	font-size:1.2rem;
 	font-size:12px;
 }
@@ -42,7 +42,7 @@ dl.item_size_area dt{
 			{% endif %}
 			{% if Product.StitchWidth %}
 				<dt>{{ title[6]  }}</dt>
-				<dd>{{ ProductStitchWidth }}</dd>
+				<dd>{{ Product.StitchWidth }}</dd>
 			{% endif %}
 			{% if Product.MenBaseSize %}
 				<dt>{{ title[7]  }}</dt>

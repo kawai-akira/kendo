@@ -5,14 +5,14 @@
 	 * @author
 	 * 2026年08月14日作成
 	 *
-	 * app\Customize\Form\Type\Flont\RenewPassType.php
+	 * app\Customize\Form\Type\Front\RenewPassType.php
      *
      *
 	 * 
 	 *
 	 * 							   C= C= C= ┌(;･_･)┘ﾄｺﾄｺ
 	 ******************************************************/
-namespace Customize\Form\Type\Flont;
+namespace Customize\Form\Type\Front;
 
 use Eccube\Common\EccubeConfig;
 use Symfony\Component\Form\AbstractType;

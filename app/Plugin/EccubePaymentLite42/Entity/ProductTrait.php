@@ -102,4 +102,96 @@ trait ProductTrait
     {
         return $this->free_description_of_payment_delivery;
     }
+
+    
+    public function hasCategorySet()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::SET) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryMen()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::MEN) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryKote()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::KOTE) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryDou()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::DOU) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryTare()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::TARE) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryDoui()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::DOUI) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryHakama()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::HAKAMA) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryShinai()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::SHINAI) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasCategoryZekken()
+    {
+        foreach ($this->ProductCategories as $productCategory) {
+            if ($productCategory->getCategoryId() === \Eccube\Entity\Category::ZEKKEN) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

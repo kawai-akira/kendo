@@ -24,7 +24,7 @@
     use Symfony\Component\Validator\Validator\ValidatorInterface;
     use Eccube\Entity\Member;
     use Customize\Repository\MemberRepository;
-    use Customize\Form\Type\Flont\RenewPassType;
+    use Customize\Form\Type\Front\RenewPassType;
 
 
 
@@ -92,6 +92,7 @@ class RenewPassController extends \Eccube\Controller\AbstractController
             ]
         );
 
+
         if (count($errors) > 0) {
             // リセットキーに異常がある場合
             throw $this->createNotFoundException();
@@ -109,8 +110,6 @@ class RenewPassController extends \Eccube\Controller\AbstractController
         $expire = $Member->getResetExpire(); // DateTime
         $now = Carbon::now();
         $expireFlg = false;
-
-
 
        
         if ($now->greaterThan($expire)) {

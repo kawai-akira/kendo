@@ -16,11 +16,9 @@
 namespace Customize\Form\Extension\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
-
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+#use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Form;
@@ -80,19 +78,21 @@ class ProductTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
      
-
-
+        /** @var Product */
+        $Product = $options['data'];
+        $Placeholder = $Product->getId() ? false : 'common.select';
         $builder
             ->add('Shop', EntityType::class, [
                 'label' => '店舗',				
                 'required' => true,				
                 'class' => Shop::class,				
-                'choices' => $this->em->getRepository(shop::class)->select(),				
+                'choices' => $this->em->getRepository(shop::class)->select($Product),				
                 'choice_label' => 'shopName',      				
                 'choice_value' => 'id',      				
                 'constraints' => [				
                     new Assert\NotBlank(),				
-                ],				
+                ],
+                'placeholder' => $Placeholder,
             ])
             ->add('freeInputName1', TextType::class,[
                  'label' => 'フリー入力項目名1',

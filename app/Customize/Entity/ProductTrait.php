@@ -160,7 +160,7 @@
             return $this;
         }
 
-        public function getFreeInputName1(): ?string
+        public function getFreeInputName1(): ?string 
         {
             return $this->freeInputName1;
         }
@@ -205,7 +205,7 @@
             return $this;
         }
 
-        public function getProductType() :ProductType
+        public function getProductType() :ProductType|null
         {
             return $this->ProductType;
         }
@@ -332,4 +332,77 @@
             return $this->MetaKeyword;
         }
 
+        /**
+         * @return boolean
+         */
+        public function hasCategoryMen()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::MEN)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+        /**
+         * @return boolean
+         */
+        public function hasCategoryKote()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::KOTE)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+        /**
+         * @return boolean
+         */
+        public function hasCategoryDou()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::DOU)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+        /**
+         * @return boolean
+         */
+        public function hasCategoryTare()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::TARE)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+        /**
+         * @return boolean
+         */
+        public function hasCategorySex()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::SEX)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+
+        /**
+         * @return boolean
+         */
+        public function hasCategoryHeight()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::HEIGHT)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
     }

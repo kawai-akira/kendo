@@ -19,6 +19,7 @@
     use Eccube\Repository\AbstractRepository;
     use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
     use Customize\Entity\Shop;
+	use Eccube\Entity\Product;
 	use Customize\Repository\Master\ShopStatusRepository;
 
    	/**
@@ -42,13 +43,19 @@
 			$this->ShopStatusRepository = $ShopStatusRepository;
         }
 
-		public function select(){
+		public function select(Product $Product ){
 
-        $Status =$this->ShopStatusRepository->find(9);
+		if ($Product->getId()){
+			return [$Product->getShop()];
+		}	
+
+
+        $Status = $this->ShopStatusRepository->find(9);
    		$qb = $this->createQueryBuilder('s')				
 	 		->orderBy('s.id', 'ASC')			
       		->where('s.status < :status')				
-      		->setParameter('status', $Status);				
+      		->setParameter('status', $Status);
+	
 				
       	return $qb->getQuery()->getResult();
 

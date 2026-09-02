@@ -93,7 +93,7 @@ class CommonService{
        $this->entityManager =  $EntityManager ;
        $this->Request   = $RequestStack->getCurrentRequest();
        $this->Config    = $EccubeConfig;
-       $this->YamlPath  = $this->getConfig('Booking_Customize_Yaml_dir');
+       $this->YamlPath  = $this->getConfig('Customize_Yaml_dir');
        $this->BaseInfoRepository = $BaseInfoRepository;
        $this->Context = $Context;
        // $this->ConfigRepository = $ConfigRepository;

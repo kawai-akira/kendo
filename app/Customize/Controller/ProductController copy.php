@@ -73,7 +73,7 @@ class ProductController extends \Eccube\Controller\ProductController
     /**
      * 商品詳細画面.
      *
-     * @Route("/products/detail/{id}", name="product_detail", methods={"GET","POST"}, requirements={"id" = "\d+"})
+     * @Route("/products/detail/{id}", name="product_detail", methods={"GET"}, requirements={"id" = "\d+"})
      * @Template("Product/detail.twig")
      * @ParamConverter("Product", options={"repository_method" = "findWithSortedClassCategories"})
      *
@@ -88,7 +88,6 @@ class ProductController extends \Eccube\Controller\ProductController
             throw new NotFoundHttpException();
         }
 
-        
         $builder = $this->formFactory->createNamedBuilder(
             '',
             AddCartType::class,
@@ -113,29 +112,12 @@ class ProductController extends \Eccube\Controller\ProductController
        
         $form->handleRequest($request);
 
-        //print_r($_REQUEST);
-     //   print_r($form->getData());
-
-/*        $Error=[];    
-foreach ($form->getErrors(true) as $key => $error) {    
-$Name ='';    
-preg_match_all('/\[.*?\]/',(string)$error->getCause(),$Datas);    
-$Data = $Datas[0][1] ?? $Datas[0][0];    
-$Name = preg_replace('/\[|\]/','',$Data);    
-$Error[$Name] = $error->getMessage();//->getName();          
-}
-//print_r($Error);*/
-//dump($form->isSubmitted()); 
-//dump($form->isValid());
-//dump((string) $form->getErrors(true, false)); // エラー内容を具体的に出力
-//exit;
-/*foreach ($form as $child){
-    echo $child->getName() . "\n";
-
-    }*/
-
         if ($form->isSubmitted() && $form->isValid()) {
-            echo '!AAAAAAAAAAAAAAAAAAA';
+
+
+
+
+
         }
 
         $is_favorite = false;
@@ -143,6 +125,9 @@ $Error[$Name] = $error->getMessage();//->getName();
             $Customer = $this->getUser();
             $is_favorite = $this->customerFavoriteProductRepository->isFavorite($Customer, $Product);
         }
+
+
+
 
         return [
             'title' => $this->title,
@@ -152,11 +137,8 @@ $Error[$Name] = $error->getMessage();//->getName();
             'is_favorite' => $is_favorite,
         ];
     }
-    
-   #カート追加処理
-    protected function addCartCz(Product $Product,$FromData){
-        
-    }
+
+
 
 
     /**
@@ -166,7 +148,6 @@ $Error[$Name] = $error->getMessage();//->getName();
      */
     public function addCart(Request $request, Product $Product)
     {
-  
         // エラーメッセージの配列
         $errorMessages = [];
         if (!$this->checkVisibility($Product)) {

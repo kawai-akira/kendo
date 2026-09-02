@@ -1,6 +1,6 @@
 parameters:
     admin_renew_pass_count_max: 3
-    Booking_Customize_Yaml_dir: '%kernel.project_dir%/app/Customize/Resource/Yaml/'
+    Customize_Yaml_dir: '%kernel.project_dir%/app/Customize/Resource/Yaml/'
 services:
     Customize\EventListener\RenewPassEventListener:
         arguments:

@@ -33,11 +33,13 @@
     use Eccube\Entity\BlockPosition;
     use Eccube\Repository\Master\PrefRepository;
     use Eccube\Entity\Master\DeviceType;
+    use Eccube\Entity\Master\Authority;
     use Carbon\Carbon;
     use Customize\Service\Converter\CustomerConverter;
     use Customize\Service\Converter\ProductConverter;
     use Customize\Service\Converter\OrderConverter;
     use Customize\Entity\Master\ShopStatus;
+
 
    # use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
 
@@ -104,8 +106,9 @@
     public function index(Request $request)
     {
     // $this->CarenderSearvice->collCsv();
-       $this->ShowColumn();
+       //$this->ShowColumn();
 
+   
        return  [
         'message1' => self::Message1,
         'message2' => self::Message2,
@@ -128,7 +131,7 @@
 
         $form   = $this->createForm(ConverterType::class);
   
-
+$this->ProductConverter->Menu3();
    
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -146,6 +149,11 @@
                     $this->OrderConverter->Menu();
                     $Messege = '受注群のコンバートに成功しました。';
                     break;
+                case 'member':
+                    $this->Member();
+                    $Messege = '管理者のコンバートに成功しました。';
+                    break;    
+                
             }
             
             if($Messege){
@@ -179,20 +187,22 @@
     public function inAdvance(Request $request){
 
         $form   = $this->createForm(ConverterType::class);
-        $this->ProductConverter->Menu1();
-
-
+ 
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->MakeMtbSql();
-            $this->ShopStatus();
+            $this->setMtb();
             $this->setBaseInfo();
             $this->MailTemplate();
             $this->Page();
             $this->Layout();
-            $this->Member();
+            
             $this->ProductConverter->Menu1();
+
+            $this->addSuccess('コンバートに成功しました。', 'admin');
+            return $this->redirectToRoute('admin_Converter_inAdvance');
 
         }
 
@@ -205,8 +215,17 @@
 
     }
 
-    private function ShopStatus(){
+    private function setMtb(){
    
+        /** @var Authority */            
+        $Authority = $this->entityManager->getRepository(Authority::class)->find(1);
+
+        $Authority->setName('店舗オーナー');
+        
+        $this->entityManager->persist($Authority);
+        $this->entityManager->flush();
+
+
         if($this->entityManager->getRepository(ShopStatus::class)->find(9)){
             return ;
         }
@@ -241,7 +260,7 @@
             $data['creator_id']     = null;
             $data['name']           = $Member['name'];
             $data['department']     = $Member['department'];
-            $data['login_id']         = $Member['login_id'];
+            $data['login_id']       = $Member['login_id'];
             $data['password']       = '';
             $data['salt']           = null;
             $data['sort_no']        = $Member['rank'];
@@ -266,13 +285,15 @@
 
     private function Layout(){
 
-        $Datas[] = ['name' => 'ヘッターロゴ フッターのみ',];
+        $Datas[] = ['name' => 'ヘッターロゴ フッターのみ'];
+        $Datas[] = ['name' => '商品詳細'];
 
   
                     
         $DeviceType = $this->entityManager->getRepository(DeviceType::class)->find(10);
 
         foreach ($Datas as $Data){
+            if(count($this->entityManager->getRepository(Layout::class)->findBy(['name'=>$Data['name']])) >0 ){continue;}
 
             $layout = new Layout();
             $layout->setName($Data['name'])
@@ -281,25 +302,32 @@
             $this->entityManager->persist($layout);		
             $this->entityManager->flush();
 
-            $this->PageLayout1($layout);
+            $this->PageLayout($layout);
             $this->BlockPosition1($layout);
         }
     }
 
 
-    private function PageLayout1(Layout $layout){
+    private function PageLayout(Layout $layout){
 
-        $Pages = $this->entityManager->getRepository(Page::class)->findBy(['id'=>[49,50]]) ;
-        $sortNo =[45,46] ;
+       
+
+        $Pages = $this->entityManager->getRepository(Page::class)->findBy(['url'=>['admin_renew_pass_index','admin_renew_pass_complet']]) ;
+
+
+        $sortNos = $this->SqlService->Table('dtb_page_layout')->Select('Max(sort_no)')->Find($this->SqlService::DBNAMES[0]);
+        $sortNo =$sortNos['sortMax'];
         
         foreach ($Pages as $i => $Page){
 
+            if($Page->getPageLayouts()>0){continue;}     
+            $sortNo++;   
             $PageLayout = new PageLayout();
             
             $PageLayout          #->setPageId($page)
                     ->setLayoutId($layout->getId())
                     ->setPageId($Page->getId())
-                    ->setSortNo($sortNo[$i])
+                    ->setSortNo($sortNo)
                     ->setPage($Page)
                     ->setLayout($layout);
 
@@ -343,7 +371,6 @@
     } 
 
 
-
     private function Page(){
 
     $date =  Carbon::now()->format('Y-m-d h-i-s');
@@ -365,26 +392,31 @@
         'meta_robots' => 'noindex'
     ];
 
-    foreach( $Datas as $Data){
-            if( 'admin_renew_pass_complete' ==$Data['url']){
-                $Data['master_page_id'] = $Page;
-            }
+    
+        foreach( $Datas as $Data){
 
-            $Page = new Page();
-            $Page->setMasterPage($Data['master_page_id'])
-                 ->setName($Data['page_name'])
-              ->setUrl($Data['url'])
-              ->setFileName($Data['file_name'])
-              ->setEditType(2)
-              ->setCreateDate($date)
-              ->setUpdateDate($date)
-              ->setMetaRobots($Data['meta_robots']);
-            $this->entityManager->persist($Page);		
-            $this->entityManager->flush();	
+            if(count($this->entityManager->getRepository(Page::class)->findBy(['url'=>$Data['url']]))>0){continue;}  
+
+                if( 'admin_renew_pass_complete' == $Data['url']){
+                    $Data['master_page_id'] = $Page->getId();
+                }
+
+                $Page = new Page();
+                $Page->setMasterPage($Data['master_page_id'])
+                    ->setName($Data['page_name'])
+                ->setUrl($Data['url'])
+                ->setFileName($Data['file_name'])
+                ->setEditType(2)
+                ->setCreateDate($date)
+                ->setUpdateDate($date)
+                ->setMetaRobots($Data['meta_robots']);
+                $this->entityManager->persist($Page);		
+                $this->entityManager->flush();	
+        }
+
+
     }
 
-
-    }
 
 
    private function MailTemplate(){
@@ -447,7 +479,7 @@
                 //  ->setOptionMailNotifier(false)
                 //  ->setAuthenticationKey(null)
                 //  ->setCountry(null)
-                    ->setOptionPoint(1)
+                    ->setOptionPoint(0)
                 //    ->setPointConversionRate(1)
                 //    ->setBasicPointRate(1)
                 ;

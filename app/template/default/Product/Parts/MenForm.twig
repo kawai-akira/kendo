@@ -1,0 +1,48 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月27日作成
+ #
+ # app\template\default\Product\Parts\MenFrom.twig
+ #
+ #
+ # 
+ #
+ # 面
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div class="size-area row">
+
+    <div class="size-box col-7">
+        <h2>{{'product_men_title'|trans}}</h2>
+        <dl class="men_size">
+            <dt>{{'product_men_size_a'|trans}}</dt>
+            <dd class="input">
+                {{ form_widget(form.men.men_size_a) }}cm
+                {{ form_errors(form.men.men_size_a) }}
+            </dd>
+             <dt>{{'product_men_size_b'|trans}}</dt>
+            <dd class="input">
+                {{ form_widget(form.men.men_size_b) }}cm
+                {{ form_errors(form.men.men_size_b) }}
+            </dd>
+            <dt>{{'product_men_size_c'|trans}}</dt>
+            <dd class="input">
+                {{ form_widget(form.men.men_size_c) }}cm
+                {{ form_errors(form.men.men_size_c) }}
+            </dd>
+            <dt>{{'product_men_etc'|trans}}</dt>
+            <dd>
+                {{ form_widget(form.men.men_etc) }}
+                {{ form_errors(form.men.men_etc) }}
+            </dd>
+        </dl>    
+    </div>
+
+    <div class="col-5">
+        <img src="{{ asset('assets/img/product/men.png') }}">
+
+    </div>
+ </div>

@@ -97,25 +97,6 @@
         .ec-sliderItemRole .slideThumb {
             width: 20%
         }
-        .size-area h2{
-            font-size: 1.2rem;
-        }
-        .size-area dt{
-            font-size: 0.8rem;
-        }
-        .size-area dd{
-            margin-bottom:8px;
-        }
-        .size-area dd.input input{
-            width:90%;
-            display:inline-block;
-        }
-        .invalid-feedback {
-            color: #FFF;
-            background: #ff4f4f;
-            width: 90%;
-        }
-
         @media only screen and (min-width: 768px) {
             .ec-headingTitle
             {
@@ -211,7 +192,6 @@
     </script>
     <script>
         $(function() {
-{#
             $('.add-cart').on('click', function(event) {
                 {% if form.classcategory_id1 is defined %}
                 // 規格1フォームの必須チェック
@@ -231,14 +211,14 @@
                 } else {
                     $('#classcategory_id2')[0].setCustomValidity('');
                 }
-                {% endif %#}
+                {% endif %}
 
                 // 個数フォームのチェック
                 if ($('#quantity').val() < 1) {
                     $('#quantity')[0].setCustomValidity('{{ '1以上で入力してください。'|trans }}');
                     return true;
                 } else {
-                    //$('#quantity')[0].setCustomValidity('');
+                    $('#quantity')[0].setCustomValidity('');
                 }
 
                 event.preventDefault();
@@ -275,9 +255,8 @@
                     $('.add-cart').prop('disabled', false);
                 });
             });
-#}
         });
-{#
+
         $('.ec-modal-wrap').on('click', function(e) {
             // モーダル内の処理は外側にバブリングさせない
             e.stopPropagation();
@@ -285,7 +264,6 @@
         $('.ec-modal-overlay, .ec-modal, .ec-modal-close, .ec-inlineBtn--cancel').on('click', function() {
             $('.ec-modal').hide()
         });
-#}
     </script>
     <script type="application/ld+json">
     {
@@ -437,19 +415,18 @@
         </div>
         <div class="ec-grid2">
             <div class="ec-grid2__cell">
-                {# Product/Parts/ItemDetailArea.twig #}
+                {#Product/Parts/ItemDetailArea.twig#}
                 {{ ItemDetail(Product)|raw}}
-
             </div>
             <div class="ec-grid2__cell">
-                <form action="{{ url('product_detail', {id:Product.id}) }}" method="post" id="form1" name="form1">
+                <form action="{{ url('product_add_cart', {id:Product.id}) }}" method="post" id="form1" name="form1">
                 
+
+
+ 
+
                     {% if Product.stock_find %}
                             <div class="ec-productRole__actions">
-                                <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
-                                    {{ form_widget(form.quantity) }}
-                                    {{ form_errors(form.quantity) }}
-                                </div>
                                 {% if form.classcategory_id1 is defined %}
                                     <div class="ec-select">
                                         {{ form_row(form.classcategory_id1) }}
@@ -462,29 +439,16 @@
                                         </div>
                                     {% endif %}
                                 {% endif %}
+                                <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
+                                    {{ form_widget(form.quantity) }}
+                                    {{ form_errors(form.quantity) }}
+                                </div>
                             </div>
-                   
-                    {# 性別#}
-                    {{ SexForm(Product,form)|raw }} 
-                    {# 身長 #}
-                    {{ HeightForm(Product,form)|raw }}     
-                    {#　面 #}
-                    {{ MenForm(Product,form)|raw }}
-                    {#　小手 #}
-                    {{ KoteForm(Product,form)|raw }}
-                    {#　胴 #}
-                    {{ DouForm(Product,form)|raw }}
-                    {#　垂　#}
-                    {{ TareForm(Product,form)|raw }}
-                    {#　フリーインプット1　#}
-                    {{ FreeInput1Form(Product,form)|raw }}
-                    {#　フリーインプット2　#}
-                    {{ FreeInput2Form(Product,form)|raw }}
-                    {#　フリーインプット3　#}
-                    {{ FreeInput3Form(Product,form)|raw }}
+                    {% endif %}        
+                   {# 面 #}
+                   {{include('Product/Parts/MenFrom.twig')}} 
 
                    {{ form_rest(form) }}
-                    {% endif %}
                    {% if Product.stock_find %}
                             <div class="ec-productRole__btn">
                                 <button type="submit" class="ec-blockBtn--action add-cart">
@@ -499,7 +463,7 @@
                             </div>
                     {% endif %}
 
-{#
+
                     <div class="ec-modal">
                         <div class="ec-modal-overlay">
                             <div class="ec-modal-wrap">
@@ -514,7 +478,6 @@
                             </div>
                         </div>
                     </div>
-#}
                 </from>
             </div>
         </div>

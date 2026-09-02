@@ -1,0 +1,53 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月27日作成
+ #
+ # app\template\default\Product\Parts\DouFrom.twig
+ #
+ #
+ # 
+ #
+ # 小手
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div class="size-area row">
+
+    <div class="size-box col-7">
+        <h2>{{'product_dou_title'|trans}}</h2>
+        <dl class="dou_size">
+            <dt>{{'product_dou_size_bust'|trans}}</dt>
+            <dd class="input">
+                {{ form_widget(form.dou.dou_size_bust) }}cm
+                {{ form_errors(form.dou.dou_size_bust) }}
+            </dd>
+            <dt>{{'product_dou_size_waist'|trans}}
+            <dd class="input">
+                {{ form_widget(form.dou.dou_size_waist) }}cm
+                {{ form_errors(form.dou.dou_size_waist) }}
+            </dd>
+            <dt>{{'product_dou_size_g'|trans}}</dt>
+            <dd class="input">
+                {{ form_widget(form.dou.dou_size_g) }}cm
+                {{ form_errors(form.dou.dou_size_g) }}
+            </dd>
+
+            <dt>{{'product_dou_etc'|trans}}</dt>
+            <dd>
+                {{ form_widget(form.dou.dou_etc) }}
+                {{ form_errors(form.dou.dou_etc) }}
+            </dd>
+        </dl>    
+    </div>
+
+    <div class="col-5">
+        <img src="{{ asset('assets/img/product/dou_g.png') }}">
+
+    </div>
+
+
+ </div>
+
+

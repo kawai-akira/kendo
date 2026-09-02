@@ -24,3 +24,28 @@ product_KoteBaseSize: 小手のベース寸法
 product_TareBaseSize: 垂のベース寸法
 product_Utikomi: 打ち込み
 product_DouBaseSize: 胴のベース寸法
+product_common_sex: 性別
+product_common_height: 身長
+product_men_title: 面サイズ
+
+product_men_size_a: 面サイズA (あご先〜耳前〜つむじの周囲)
+product_men_size_b: 面サイズB (まゆ上ハチマキの位置の周囲)
+product_men_size_c: 面サイズC (あご先〜目の物見高さ)
+product_men_height: 身長
+product_men_etc: 面その他希望
+product_kote_title: 小手サイズ
+product_kote_size_left_d: 小手サイズ左D(親指以外の指付け根の周囲)
+product_kote_size_left_e: 小手サイズ左E (親指付け根の周囲)
+product_kote_size_left_f: 小手サイズ左F (中指先〜手の平付け根の長さ)
+product_kote_size_right_d: 小手サイズ右D (親指以外の指付け根の周囲)
+product_kote_size_right_e: 小手サイズ右E (親指付け根の周囲)
+product_kote_size_right_f: 小手サイズ右F (中指先〜手の平付け根の長さ)
+product_kote_etc: 小手のその他希望
+product_dou_title: 胴サイズ
+product_dou_size_bust: 胸囲
+product_dou_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_dou_size_g: 胴サイズG (胴台の幅)
+product_dou_etc: 胴その他希望
+product_tare_title: 垂サイズ
+product_tare_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_tare_etc: 垂その他希望

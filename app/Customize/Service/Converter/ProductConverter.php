@@ -20,7 +20,9 @@ use AddressInfo;
 use Carbon\Carbon;
 use Customize\Service\SqlService;
 use Customize\Entity\Master\ShopStatu;
-    use Eccube\Repository\Master\CustomerStatusRepository;
+use Eccube\Entity\ProductCategory;
+use Eccube\Repository\ProductCategoryRepository;
+use Eccube\Repository\Master\CustomerStatusRepository;
 
 
    class ProductConverter
@@ -49,16 +51,22 @@ use Customize\Entity\Master\ShopStatu;
          * @var CustomerStatusRepository
          */
         private $CustomerStatusRepository;
+        /**
+         * @var ProductCategoryRepository
+         */
 
+        private $ProductCategoryRepository;
 
         public function __construct(
             SqlService $SqlService
             ,CustomerStatusRepository $CustomerStatusRepository
+            ,ProductCategoryRepository $ProductCategoryRepository
 
         )
         {
             $this->SqlService = $SqlService;
             $this->CustomerStatusRepository = $CustomerStatusRepository;
+            $this->ProductCategoryRepository = $ProductCategoryRepository;
 
         }
 
@@ -84,7 +92,11 @@ use Customize\Entity\Master\ShopStatu;
             $this->Tag();
             $this->ProductTag();
         }
+        public function Menu3(){
+            $this->Category();
+            $this->ProductCategory();
 
+        }
         private  function Product(){
 
 
@@ -145,7 +157,9 @@ use Customize\Entity\Master\ShopStatu;
 
         foreach( $this->SqlService->Converter1(self::ProductClass) as $o){
 	
+            if ($o['del_flg'] == 1 ){continue;}
             if ($o['product_id']<= self::notConvert){continue;}
+
             $d['id']                    = $o['product_class_id'];
             $d['product_id']            = $o['product_id'];
             $d['sale_type_id']          = 1;
@@ -229,6 +243,7 @@ use Customize\Entity\Master\ShopStatu;
                 if(1 == $o['del_flg']){continue;}	
 
                 $d['id']                    = $o['category_id'];
+                $d['parent_category_id']    = $o['parent_category_id'];
                 $d['creator_id']            = $o['creator_id'];
                 $d['category_name']         = $o['category_name'];
                 $d['hierarchy']             = $o['level'];
@@ -240,6 +255,29 @@ use Customize\Entity\Master\ShopStatu;
 
             $Re[] = $d;
             }
+            
+
+                $d['id']                    = 81;
+                $d['parent_category_id']    = 2;
+                $d['creator_id']            = null;
+                $d['category_name']         = '剣道防具セット（胴なし）'
+;               $d['hierarchy']             = 2;
+                $d['sort_no']               = 28;
+                $d['create_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['update_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['discriminator_type']    = 'category';
+                $Re[] = $d;
+                $d['id']                    = 82;
+                $d['parent_category_id']    = 81;
+                $d['creator_id']            = null;
+                $d['category_name']         = '稽古用の剣道防具セット（胴なし）';
+                $d['hierarchy']             = 3;
+                $d['sort_no']               = 27;
+                $d['create_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['update_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['discriminator_type']    = 'category';
+                $Re[] = $d;
+
             $this->SqlService->Converter2(self::Category,$Re);
 
         }
@@ -248,13 +286,26 @@ use Customize\Entity\Master\ShopStatu;
 
             $Re= []; 
             foreach( $this->SqlService->Converter1(self::ProductCategory) as $o){
+                if (2532 ==$o['product_id']){continue;}
+
                 $d['product_id']         = $o['product_id'];
                 $d['category_id']        = $o['category_id'];
                 $d['discriminator_type'] = 'productcategory';
                 $Re[] = $d;
             }
 
-            $this->SqlService->Converter2(self::ProductCategory,$Re);
+           
+
+
+            foreach ([2,81,82] as $CategoryId){
+                $d['product_id']         = 2532;
+                $d['category_id']        = $CategoryId;
+                $d['discriminator_type'] = 'productcategory';
+                $Re[] = $d;
+
+            }
+
+        $this->SqlService->Converter2(self::ProductCategory,$Re);
 
 
         }
