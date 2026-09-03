@@ -1,0 +1,46 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月03日作成
+ #
+ # app\template\default\Product\Parts\DouiFofm.twig
+ #
+ #
+ # 
+ #
+ # 道衣
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div class="size-area row">
+
+    <div class="size-box col-7">
+        <h2>{{'product_doui_title'|trans}}</h2>
+        <dl class="doui_size">
+            <dt>{{'product_doui_type'|trans}}
+            <dd class="input">
+                {{ form_widget(form.doui.doui_type) }}
+                {{ form_errors(form.doui.doui_type) }}
+            </dd>
+            <dt>{{'product_doui_hope'|trans}}</dt>
+            <dd class="input">
+                {{ form_widget(form.doui.doui_hope) }}
+                {{ form_errors(form.doui.doui_hope) }}
+            </dd>
+                   prpduct_doui_etc
+            <dt>{{'product_doui_etc'|trans}}</dt>
+            <dd>
+                {{ form_widget(form.doui.doui_etc) }}
+                {{ form_errors(form.doui.doui_etc) }}
+            </dd>
+        </dl>    
+    </div>
+
+    <div class="col-5">
+    </div>
+
+
+ </div>
+
+

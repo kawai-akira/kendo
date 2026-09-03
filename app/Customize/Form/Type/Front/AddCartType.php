@@ -39,11 +39,16 @@ use Customize\Form\Type\MenType;
 use Customize\Form\Type\KoteType;
 use Customize\Form\Type\DouType;
 use Customize\Form\Type\TareType;
+use Customize\Form\Type\DouiType;
+use Customize\Form\Type\HakamaType;
 use Customize\Form\Type\SexType;
 use Customize\Form\Type\HeightType;
+use Customize\Form\Type\ShinaiType;
+use Customize\Form\Type\ZekkenType;
 use Customize\Form\Type\FreeInput1Type;
 use Customize\Form\Type\FreeInput2Type;
 use Customize\Form\Type\FreeInput3Type;
+
 #class AddCartType extends \Eccube\Form\Type\AddCartType
 class AddCartType extends AbstractType
 {
@@ -130,7 +135,26 @@ class AddCartType extends AbstractType
             $builder
                 ->add('tare', TareType::class, [
             ]) ;
-
+        }
+        if($Product->hasCategoryDoui()){
+            $builder
+                ->add('doui', DouiType::class, [
+            ]) ;
+        }
+        if($Product->hasCategoryHakama()){
+            $builder
+                ->add('hakama', HakamaType::class, [
+            ]) ;
+        }
+        if($Product->hasCategoryShinai()){
+            $builder
+                ->add('shinai', ShinaiType::class, [
+            ]) ;
+        }
+        if($Product->hasCategoryZekken()){
+            $builder
+                ->add('zekken', ZekkenType::class, [
+            ]) ;
         }
         if($Product->getfreeInputName1()){
             $builder

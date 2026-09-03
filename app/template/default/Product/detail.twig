@@ -445,25 +445,21 @@
                 <form action="{{ url('product_detail', {id:Product.id}) }}" method="post" id="form1" name="form1">
                 
                     {% if Product.stock_find %}
-                            <div class="ec-productRole__actions">
-                                <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
-                                    {{ form_widget(form.quantity) }}
-                                    {{ form_errors(form.quantity) }}
+                        <div class="ec-productRole__actions">
+                            {% if form.classcategory_id1 is defined %}
+                                <div class="ec-select">
+                                    {{ form_row(form.classcategory_id1) }}
+                                    {{ form_errors(form.classcategory_id1) }}
                                 </div>
-                                {% if form.classcategory_id1 is defined %}
+                                {% if form.classcategory_id2 is defined %}
                                     <div class="ec-select">
-                                        {{ form_row(form.classcategory_id1) }}
-                                        {{ form_errors(form.classcategory_id1) }}
+                                        {{ form_row(form.classcategory_id2) }}
+                                        {{ form_errors(form.classcategory_id2) }}
                                     </div>
-                                    {% if form.classcategory_id2 is defined %}
-                                        <div class="ec-select">
-                                            {{ form_row(form.classcategory_id2) }}
-                                            {{ form_errors(form.classcategory_id2) }}
-                                        </div>
-                                    {% endif %}
                                 {% endif %}
-                            </div>
-                   
+                            {% endif %}
+                        </div>
+                
                     {# 性別#}
                     {{ SexForm(Product,form)|raw }} 
                     {# 身長 #}
@@ -476,13 +472,29 @@
                     {{ DouForm(Product,form)|raw }}
                     {#　垂　#}
                     {{ TareForm(Product,form)|raw }}
+                    {#　道衣 #}
+                    {{ DouiForm(Product,form)|raw }}
+                    {#　袴 #}
+                    {{ HakamaForm(Product,form)|raw }}
+
+
                     {#　フリーインプット1　#}
                     {{ FreeInput1Form(Product,form)|raw }}
                     {#　フリーインプット2　#}
                     {{ FreeInput2Form(Product,form)|raw }}
                     {#　フリーインプット3　#}
                     {{ FreeInput3Form(Product,form)|raw }}
+                    {#　竹刀 #}
+                    {{ ShinaiForm(Product,form)|raw }}
+                     {# ゼッケン #}
+                    {{ ZekkenForm(Product,form)|raw }}
 
+                    <div class="ec-productRole__actions">
+                        <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
+                            {{ form_widget(form.quantity) }}
+                            {{ form_errors(form.quantity) }}
+                        </div>
+                    </div>
                    {{ form_rest(form) }}
                     {% endif %}
                    {% if Product.stock_find %}

@@ -40,7 +40,7 @@ product_kote_size_left_f: 小手サイズ左F (中指先〜手の平付け根の
 product_kote_size_right_d: 小手サイズ右D (親指以外の指付け根の周囲)
 product_kote_size_right_e: 小手サイズ右E (親指付け根の周囲)
 product_kote_size_right_f: 小手サイズ右F (中指先〜手の平付け根の長さ)
-product_kote_etc: 小手のその他希望
+product_kote_etc: 小手その他希望
 product_dou_title: 胴サイズ
 product_dou_size_bust: 胸囲
 product_dou_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
@@ -49,3 +49,13 @@ product_dou_etc: 胴その他希望
 product_tare_title: 垂サイズ
 product_tare_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
 product_tare_etc: 垂その他希望
+product_doui_title: 道衣サイズ
+product_doui_type: 体型
+product_doui_hope: サイズ希望
+product_doui_etc: 道衣その他希望
+product_hakama_title: 袴サイズ
+product_hakama_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_hakama_size_length: 袴サイズH ( =前紐下丈 / 不明の場合「0」と記入)
+product_hakama_etc: 袴その他希望 (サイズ指定等)
+product_shinai_etc: 竹刀その他希望
+product_zekken_etc: ゼッケンその他希望

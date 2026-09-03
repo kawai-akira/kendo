@@ -94,17 +94,10 @@ class MenType extends AbstractType
 
          //2021/05/18 kakeru
             ->add('men_etc', TextareaType::class, [
-                'label' => 'その他希望',
+                'label' => '面その他希望',
      		    'required' => false,
             ]);
-            /*
-            ->add('men_color', 'men_color', [
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(),
-                ),
-            ));
-            */
+
             }
 
 }

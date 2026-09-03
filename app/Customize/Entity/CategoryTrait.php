@@ -31,13 +31,14 @@
         const KOTE = [11,9,81];
         const DOU  = [12,9];
         const TARE = [13,9,81];
-        const HEIGHT =[10,9,12,13,81,13];
-        const SEX    =[10,11,12,9,81];
-        const DOUI   = 4;
-        const HAKAMA = 3;
-        const SHINAI = 6;
-        const ZEKKEN = 16;
-        const SHINAIBUKURO = 14;
-        const BOUGUBUKURO = 15;
-        const SONOTA = 17;
+        const HEIGHT =[10,9,12,13,81,4,3];
+        const SEX    =[10,11,12,13,9,81,4,3];
+        const DOUI   =[4];
+        const HAKAMA = [3];
+        const DOUISEt =[3,4];
+        const SHINAI = [6];
+        const ZEKKEN = [16];
+        const SHINAIBUKURO = 14; # 未使用
+        const BOUGUBUKURO = 15; #未使用
+        const SONOTA = 17; #未使用
     }

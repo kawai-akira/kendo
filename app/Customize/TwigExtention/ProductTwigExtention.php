@@ -37,6 +37,10 @@ class ProductTwigExtention extends AbstractExtension
     private const KoteTwig      = 'Product/Parts/KoteForm.twig';
     private const DouTwig       = 'Product/Parts/DouForm.twig';
     private const TareTwig      = 'Product/Parts/TareForm.twig';
+    private const DouiTwig      = 'Product/Parts/DouiForm.twig';
+    private const HakamaTwig    = 'Product/Parts/HakamaForm.twig';
+    private const ShinaiTwig    = 'Product/Parts/ShinaiForm.twig';
+    private const ZekkenTwig    = 'Product/Parts/ZekkenForm.twig';
     private const FreeInput1    = 'Product/Parts/FreeInput1Form.twig';
     private const FreeInput2    = 'Product/Parts/FreeInput2Form.twig';
     private const FreeInput3    = 'Product/Parts/FreeInput3Form.twig';
@@ -81,6 +85,10 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('DouForm', [$this, 'setDouForm']),
             new TwigFunction('TareForm', [$this, 'setTareForm']),
             new TwigFunction('TareForm', [$this, 'setTareForm']),
+            new TwigFunction('DouiForm', [$this, 'setDouiForm']),
+            new TwigFunction('HakamaForm', [$this, 'setHakamaForm']),
+            new TwigFunction('ShinaiForm', [$this, 'setShinaiForm']),
+            new TwigFunction('ZekkenForm', [$this, 'setZekkenForm']),
             new TwigFunction('FreeInput1Form', [$this, 'setfreeInput1']),
             new TwigFunction('FreeInput2Form', [$this, 'setfreeInput2']),
             new TwigFunction('FreeInput3Form', [$this, 'setfreeInput3']),
@@ -164,7 +172,7 @@ class ProductTwigExtention extends AbstractExtension
                 
     ]);
 
-}
+    }
     public function setTareForm(Product $Product, FormView $form){
 
     if(!$Product->hasCategoryTare()){return;}
@@ -204,17 +212,65 @@ class ProductTwigExtention extends AbstractExtension
 
     public function setFreeInput3(Product $Product, FormView $form){
 
-    if(!$Product->getFreeInputName3()){return;}
+        if(!$Product->getFreeInputName3()){return;}
 
 
-    return $this->Twig->render(self::FreeInput3, [
-        'form' =>   $form,             
-        'Product' =>  $Product,
-                
-    ]);
+        return $this->Twig->render(self::FreeInput3, [
+            'form' =>   $form,             
+            'Product' =>  $Product,
+                    
+        ]);
     
-}
+    }
+    public function setDouiForm(Product $Product, FormView $form){
 
+        if(!$Product->hasCategoryDoui()){return;}
+
+
+        return $this->Twig->render(self::DouiTwig, [
+            'form' =>   $form,             
+            'Product' =>  $Product,
+                    
+        ]);
+
+    }
+
+    public function setHakamaForm(Product $Product, FormView $form){
+
+        if(!$Product->hasCategoryHakama()){return;}
+
+
+        return $this->Twig->render(self::HakamaTwig, [
+            'form' =>   $form,             
+            'Product' =>  $Product,
+                    
+        ]);
+
+    }
+    public function setShinaiForm(Product $Product, FormView $form){
+
+        if(!$Product->hasCategoryShinai()){return;}
+
+
+        return $this->Twig->render(self::ShinaiTwig, [
+            'form' =>   $form,             
+            'Product' =>  $Product,
+                    
+        ]);
+
+    }
+        public function setZekkenForm(Product $Product, FormView $form){
+
+        if(!$Product->hasCategoryZekken()){return;}
+
+
+        return $this->Twig->render(self::ZekkenTwig, [
+            'form' =>   $form,             
+            'Product' =>  $Product,
+                    
+        ]);
+
+    }
 }         
 
 

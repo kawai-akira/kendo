@@ -116,7 +116,7 @@ class KoteType extends AbstractType
                     */
 
                     ->add('kote_etc', TextareaType::class, [
-                        'label' => ',小手のその他希望',
+                        'label' => ',小手その他希望',
                         'required' => false,
                     ]);
 

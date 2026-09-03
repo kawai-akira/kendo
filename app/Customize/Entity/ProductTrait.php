@@ -405,4 +405,52 @@
             }
             return false;
         }
+        /**
+         * @return boolean
+         */
+        public function hasCategoryDoui()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::DOUI)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+        /**
+         * @return boolean
+         */
+        public function hasCategoryHakama()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::HAKAMA)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+        /**
+         * @return boolean
+         */
+        public function hasCategoryShinai()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::SHINAI)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
+        /**
+         * @return boolean
+         */
+        public function hasCategoryZekken()
+        {
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::ZEKKEN)){
+                    return  true ;
+                } 
+            }
+            return false;
+        }
     }
