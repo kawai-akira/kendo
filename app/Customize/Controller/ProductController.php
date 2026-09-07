@@ -213,7 +213,7 @@ private $OptionService;
      *
      * @ Route("/products/add_cart/{id}", name="product_add_cart", methods={"POST"}, requirements={"id" = "\d+"})
      */
-    public function addCart(Request $request, Product $Product)
+   /*  public function addCart(Request $request, Product $Product)
     {
   
         // エラーメッセージの配列
@@ -241,7 +241,7 @@ private $OptionService;
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_CART_ADD_INITIALIZE);
 
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /** @var \Symfony\Component\Form\FormInterface $form * /
         $form = $builder->getForm();
         $form->handleRequest($request);
 
@@ -328,7 +328,7 @@ private $OptionService;
 
             return $this->redirectToRoute('cart');
         }
-    }
+    }*/
 
 
 

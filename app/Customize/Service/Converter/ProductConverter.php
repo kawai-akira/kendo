@@ -41,10 +41,14 @@ use Eccube\Repository\Master\CustomerStatusRepository;
         private const ProductTag = 'dtb_product_tag';
         private const Tag = 'dtb_tag';
         private const SaleType = 'mtb_sale_type';
-        
+        public  const Delivery = 'dtb_delivery';
+        private const DeliveryFee ='dtb_delivery_fee';
+        private const DeliveryTime ='dtb_delivery_time';
+
         private const notConvert= 1;
 
 
+        private $Deliverys = [];
   
         /**
          * @var SqlService
@@ -75,13 +79,14 @@ use Eccube\Repository\Master\CustomerStatusRepository;
         }
 
         public function Menu1(){
-
+            $this->Shop();
+            $this->ShopImage();
+            $this->Delivery();
+            $this->DeliveryFee();
+            $this->DeliveryTime();
             
      
-          //  $this->Shop();
-          //  $this->ShopImage();
-   
-            //$this->favorite();
+
 
         }
         public function Menu2(){
@@ -96,13 +101,13 @@ use Eccube\Repository\Master\CustomerStatusRepository;
             $this->Tag();
             $this->ProductTag();
 
-            $this->Shop();
-            $this->ShopImage();
         }
         public function Menu3(){
-            $this->ClassCutegory();
+
 
         }
+
+
         private  function Product(){
 
 
@@ -523,5 +528,94 @@ use Eccube\Repository\Master\CustomerStatusRepository;
             return $Re;
         }
    
+        private function Delivery(){
+
+
+        $Delivery = $this->SqlService->Converter1(self::Delivery);
+        $sortNo = count($Delivery);
+
+            $Re= []; 
+            foreach( $Delivery as $o){ 
+            if( 1== $o['del_flg']){continue;}
+
+            $this->Deliverys[$o['delivery_id']] = $o['service_name'];
+
+            $sortNo -- ;
+            $d['id']                    = $o['delivery_id'];
+            $d['creator_id']            = null;
+            $d['sale_type_id']          = $o['shop_id'];
+            $d['name']                  = $o['name'];
+            $d['service_name']          = $o['service_name'];
+            $d['description']           = $o['description'];
+            $d['confirm_url']           = $o['confirm_url'];
+            $d['sort_no']               = $sortNo ;
+            $d['visible']               = 1;
+            $d['create_date']           = $o['create_date'];
+            $d['update_date']           = $o['update_date'];
+            $d['discriminator_type']    =  'delivery';
+            $d['delivery_company_id']   = null ;
+
+            $Re[] = $d;
+        }
+
+                $this->SqlService->Converter2(self::Delivery,$Re);
+
+        }
    
+    private function DeliveryFee(){
+        
+        $Re= []; 
+        foreach( $this->SqlService->Converter1(self::DeliveryFee) as $o){ 
+
+        if (!isset($this->Deliverys[$o['delivery_id']])){continue;}
+
+
+        $d['id']                    = $o['fee_id'];
+        $d['delivery_id']           = $o['delivery_id'];
+        $d['pref_id']               = $o['pref'];
+        $d['fee']                   = $o['fee'];
+        $d['discriminator_type']    = 'deliveryfee';
+
+        $Re[] = $d;
+        }
+
+            $this->SqlService->Converter2(self::DeliveryFee,$Re);
+    
+    }
+    private function DeliveryTime(){
+        
+        $Re= []; 
+        $DeliveryTimes = $this->SqlService->Table(self::DeliveryTime)
+                                         ->Order('delivery_id','ASC')
+                                         ->Order('time_id','DESC')
+                                         ->FindAll();
+        $SortNo =1; 
+        $DeliveryId = 0;
+
+        foreach( $DeliveryTimes as $o){
+
+            if (!isset($this->Deliverys[$o['delivery_id']])){continue;}
+            if ($DeliveryId != $o['delivery_id'] ){ $SortNo = 1;}
+
+
+                $d['id']                    = $o['time_id'];	
+                $d['delivery_id']           = $o['delivery_id'];
+                $d['delivery_time']         = $o['delivery_time'];
+                $d['sort_no']               = $SortNo;
+                $d['visible']               = 1;
+                $d['create_date'] =Carbon::now()->format('Y-m-d h-i-s');
+                $d['update_date'] =Carbon::now()->format('Y-m-d h-i-s');
+                $d['discriminator_type'] = 'deliverytime';
+                
+                $DeliveryId = $o['delivery_id'];
+                $SortNo ++ ;
+
+                $Re[] = $d;
+        }
+
+            $this->SqlService->Converter2(self::DeliveryTime,$Re);
+
+    }
+
+
     }
