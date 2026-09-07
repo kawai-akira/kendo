@@ -40,8 +40,12 @@ use Eccube\Repository\Master\CustomerStatusRepository;
         private const ProductStock = 'dtb_product_stock';
         private const ProductTag = 'dtb_product_tag';
         private const Tag = 'dtb_tag';
+        private const SaleType = 'mtb_sale_type';
         
         private const notConvert= 1;
+
+
+  
         /**
          * @var SqlService
          */
@@ -74,9 +78,9 @@ use Eccube\Repository\Master\CustomerStatusRepository;
 
             
      
-            $this->Shop();
-            $this->ShopImage();
-            //$this->setAddress();
+          //  $this->Shop();
+          //  $this->ShopImage();
+   
             //$this->favorite();
 
         }
@@ -91,10 +95,12 @@ use Eccube\Repository\Master\CustomerStatusRepository;
             $this->ProductStock();
             $this->Tag();
             $this->ProductTag();
+
+            $this->Shop();
+            $this->ShopImage();
         }
         public function Menu3(){
-            $this->Category();
-            $this->ProductCategory();
+            $this->ClassCutegory();
 
         }
         private  function Product(){
@@ -155,14 +161,19 @@ use Eccube\Repository\Master\CustomerStatusRepository;
 
 	    $Re= []; 
 
+        $Products =  $this->getProducts();
+
+
         foreach( $this->SqlService->Converter1(self::ProductClass) as $o){
 	
             if ($o['del_flg'] == 1 ){continue;}
             if ($o['product_id']<= self::notConvert){continue;}
 
+            $Product = $Products[$o['product_id']];
+
             $d['id']                    = $o['product_class_id'];
             $d['product_id']            = $o['product_id'];
-            $d['sale_type_id']          = 1;
+            $d['sale_type_id']          = $Product['shop_id'] ;
             $d['class_category_id1']    = $o['class_category_id1'];
             $d['class_category_id2']    = $o['class_category_id2'];
             $d['delivery_duration_id']  = $o['delivery_date_id'];
@@ -216,18 +227,34 @@ use Eccube\Repository\Master\CustomerStatusRepository;
 
 
             $Re= []; 
-            foreach( $this->SqlService->Converter1(self::ClassCategory) as $o){
+
+            $ClassCategory = $this->SqlService->Table(self::ClassCategory)
+                             ->Order('class_name_id','ASC')
+                             ->Order('rank','DESC')
+                             ->FindAll();
+
+                            // print_r($ClassCategory );
+                            // exit;
+            $rank =1; 
+            $ClassNameId = 0;
+            foreach( $ClassCategory as $o){
+           // foreach( $this->SqlService->Converter1(self::ClassCategory) as $o){    
+                if ($ClassNameId != $o['class_name_id'] ){ $rank = 1;}
+
                 $d['id']                    = $o['class_category_id'];
                 $d['class_name_id']         = $o['class_name_id'];
                 $d['creator_id']            = $o['creator_id'];
                 $d['backend_name']          = $o['name'];
                 $d['name']                  = $o['name'];
-                $d['sort_no']               = $o['rank'];
+                $d['sort_no']               = $rank ;
+                //$d['sort_no']               = $o['rank'];
                 $d['visible']               = $o['del_flg'] == 0 ? 1 : 0;
                 $d['create_date']           = $o['create_date'];
                 $d['update_date']           = $o['update_date'];
                 $d['discriminator_type']    = 'classcategory';
 
+                $ClassNameId = $o['class_name_id'];
+                $rank++;
                 $Re[] = $d;
             }
             $this->SqlService->Converter2(self::ClassCategory,$Re);
@@ -399,8 +426,13 @@ use Eccube\Repository\Master\CustomerStatusRepository;
 
         private function Shop(){
             
-           $Re= []; 
-           foreach( $this->SqlService->Converter1(self::Shop) as $o){
+           $Re  = []; 
+           $sRe = [];
+
+           $Shops = $this->SqlService->Converter1(self::Shop);
+
+           $S_sortNo = count($Shops);
+           foreach( $Shops as $o){
                 
 
                 $d['id']                = $o['shop_id'];
@@ -424,9 +456,19 @@ use Eccube\Repository\Master\CustomerStatusRepository;
                 $d['discriminator_type']    = 'shop';
 
                 $Re[] = $d;
-        }
+
+                $S_sortNo--;
+                $s['id'] = $o['shop_id'];
+                $s['name'] = $o['shop_name'];
+                $s['sort_no'] = $S_sortNo ;
+                $s['discriminator_type']  = 'saletype';
+                $sRe[] = $s;
+                
+            }
 
                 $this->SqlService->Converter2(self::Shop,$Re);
+
+                $this->SqlService->Converter2(self::SaleType,$sRe);
         }
    
             private function ShopImage(){
@@ -471,4 +513,15 @@ use Eccube\Repository\Master\CustomerStatusRepository;
 
         return [$Re,$Type,$Meta];
         }
-   }
+        private function getProducts(){
+
+            $Re =[];
+            foreach ($this->SqlService->Table(self::Product)->FindAllBy($this->SqlService::DBNAMES[0])as $Data){
+                $Re[$Data['id']] = $Data;
+            }
+
+            return $Re;
+        }
+   
+   
+    }

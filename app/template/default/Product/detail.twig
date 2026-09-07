@@ -19,7 +19,6 @@
 
 {% block stylesheet %}
     <style>
-
         .slick-slider {
             margin-bottom: 30px;
         }
@@ -129,6 +128,7 @@
 {% endblock %}
 
 {% block javascript %}
+
     <script>
         eccube.classCategories = {{ class_categories_as_json(Product)|raw }};
 
@@ -146,6 +146,7 @@
             $('#form1'), {{ form.classcategory_id2.vars.value|json_encode|raw }}
         );
         {% elseif form.classcategory_id1 is defined %}
+
         eccube.checkStock($('#form1'), {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);
         {% endif %}
     </script>
@@ -231,7 +232,7 @@
                 } else {
                     $('#classcategory_id2')[0].setCustomValidity('');
                 }
-                {% endif %#}
+                {% endif %}
 
                 // 個数フォームのチェック
                 if ($('#quantity').val() < 1) {
@@ -410,11 +411,10 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                
-                        
-                
-
-
+                    <div class="sns_button_area">
+						<p id="detail_social_button" class="sns_area">{#{include('Product/Parts/SocalBtn.twig')|raw}#}</p>
+					</div>
+ 
                     {% if BaseInfo.option_favorite_product %}
                         <form action="{{ url('product_add_favorite', {id:Product.id}) }}" method="post">
                             <div class="ec-productRole__btn">
@@ -442,25 +442,65 @@
 
             </div>
             <div class="ec-grid2__cell">
+                {% if not form.vars.valid %}
+                    <div class="alert alert-danger" role="alert">
+                        <p><strong>入力内容にエラーがあります。修正してください。</strong></p>
+                    </div>
+                {% endif %}
+
+                
+                {% if errorMessages|length > 0 %}
+                    <div>
+                        <div class="alert alert-danger" role="alert">
+                            <p><strong>内容にエラーがあります。剣道パークまでお問い合わせください。</strong></p>
+                        </div>
+                        {% for errorMessage in errorMessages %}
+                            <p class="mb-5">{{ errorMessage }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}     
                 <form action="{{ url('product_detail', {id:Product.id}) }}" method="post" id="form1" name="form1">
                 
                     {% if Product.stock_find %}
                         <div class="ec-productRole__actions">
                             {% if form.classcategory_id1 is defined %}
                                 <div class="ec-select">
-                                    {{ form_row(form.classcategory_id1) }}
-                                    {{ form_errors(form.classcategory_id1) }}
+                                    <dl>
+                                        <dt>
+                                            {{ Product.getClassName1}}
+                                            
+                                        </dt>
+                                        <dd> 
+                                            {{ form_widget(form.classcategory_id1) }}
+                                            {{ form_errors(form.classcategory_id1) }}
+                                        </dd>
                                 </div>
                                 {% if form.classcategory_id2 is defined %}
                                     <div class="ec-select">
-                                        {{ form_row(form.classcategory_id2) }}
-                                        {{ form_errors(form.classcategory_id2) }}
+                                        <dl>
+                                            <dt>    
+                                               {{ Product.getClassName2}}
+                                            </dt>    
+                                            <dd>
+                                                {{ form_widget(form.classcategory_id2) }}
+                                                {{ form_errors(form.classcategory_id2) }}
+                                            </dd>
+                                        </dl>
+
                                     </div>
                                 {% endif %}
                             {% endif %}
                         </div>
-                
-                    {# 性別#}
+
+                        {# フリーエリア #}
+                        {% if Product.freearea %}
+                            <div class="ec-productRole__description">
+                                {{ include(template_from_string(Product.freearea|raw|nl2br), sandboxed = true) }}
+                            </div>
+                        {% endif %}
+
+
+                    {# 性別 #}
                     {{ SexForm(Product,form)|raw }} 
                     {# 身長 #}
                     {{ HeightForm(Product,form)|raw }}     
@@ -477,7 +517,6 @@
                     {#　袴 #}
                     {{ HakamaForm(Product,form)|raw }}
 
-
                     {#　フリーインプット1　#}
                     {{ FreeInput1Form(Product,form)|raw }}
                     {#　フリーインプット2　#}
@@ -486,7 +525,7 @@
                     {{ FreeInput3Form(Product,form)|raw }}
                     {#　竹刀 #}
                     {{ ShinaiForm(Product,form)|raw }}
-                     {# ゼッケン #}
+                    {# ゼッケン #}
                     {{ ZekkenForm(Product,form)|raw }}
 
                     <div class="ec-productRole__actions">
@@ -531,10 +570,6 @@
             </div>
         </div>
                 
-        {% if Product.freearea %}
-             <div class="ec-productRole__description">
-                 {{ include(template_from_string(Product.freearea), sandboxed = true) }}
-            </div>
-        {% endif %}
+
     </div>
 {% endblock %}

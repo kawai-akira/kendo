@@ -19,6 +19,7 @@ namespace Customize\Controller;
 #use Eccube\Entity\BaseInfo;
 use Eccube\Entity\Master\ProductStatus;
 use Eccube\Entity\Product;
+use Eccube\Entity\ProductClass;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Customize\Form\Type\Front\AddCartType;
@@ -27,7 +28,7 @@ use Eccube\Repository\BaseInfoRepository;
 use Eccube\Repository\CustomerFavoriteProductRepository;
 use Eccube\Repository\Master\ProductListMaxRepository;
 use Eccube\Repository\ProductRepository;
-use Eccube\Service\CartService;
+use Customize\Service\CartService;
 use Eccube\Service\PurchaseFlow\PurchaseContext;
 use Eccube\Service\PurchaseFlow\PurchaseFlow;
 #use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
@@ -39,12 +40,26 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 #use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Customize\Service\OptionService;
+
+
 
 class ProductController extends \Eccube\Controller\ProductController
 {
   
 
+/**
+ * @var cartService
+ */
+protected $cartService;
+
+/**
+ * @var OptionService
+ */
+private $OptionService;
+
     private $title = '';
+
 
     /**
      * ProductController constructor.
@@ -56,6 +71,7 @@ class ProductController extends \Eccube\Controller\ProductController
      * @param BaseInfoRepository $baseInfoRepository
      * @param AuthenticationUtils $helper
      * @param ProductListMaxRepository $productListMaxRepository
+     * @param OptionService $OptionService
      */
     public function __construct(
         PurchaseFlow $cartPurchaseFlow,
@@ -65,10 +81,14 @@ class ProductController extends \Eccube\Controller\ProductController
         BaseInfoRepository $baseInfoRepository,
         AuthenticationUtils $helper,
         ProductListMaxRepository $productListMaxRepository
+        ,OptionService $OptionService
     ) {
 
         parent::__construct($cartPurchaseFlow, $customerFavoriteProductRepository, $cartService, $productRepository, $baseInfoRepository,$helper,$productListMaxRepository);
-    }
+        //$this->cartService $cartService;
+        $this->OptionService = $OptionService;
+    
+        }
 
     /**
      * 商品詳細画面.
@@ -95,7 +115,7 @@ class ProductController extends \Eccube\Controller\ProductController
             null,
             [
                 'product' => $Product,
-                'id_add_product_id' => false,
+                //'id_add_product_id' => false,
             ]
         );
 
@@ -113,30 +133,28 @@ class ProductController extends \Eccube\Controller\ProductController
        
         $form->handleRequest($request);
 
-        //print_r($_REQUEST);
-     //   print_r($form->getData());
-
-/*        $Error=[];    
-foreach ($form->getErrors(true) as $key => $error) {    
-$Name ='';    
-preg_match_all('/\[.*?\]/',(string)$error->getCause(),$Datas);    
-$Data = $Datas[0][1] ?? $Datas[0][0];    
-$Name = preg_replace('/\[|\]/','',$Data);    
-$Error[$Name] = $error->getMessage();//->getName();          
-}
-//print_r($Error);*/
-//dump($form->isSubmitted()); 
-//dump($form->isValid());
-//dump((string) $form->getErrors(true, false)); // エラー内容を具体的に出力
-//exit;
-/*foreach ($form as $child){
-    echo $child->getName() . "\n";
-
-    }*/
+        $errorMessages = [];
 
         if ($form->isSubmitted() && $form->isValid()) {
-            echo '!AAAAAAAAAAAAAAAAAAA';
-        }
+            
+            $ForrmData= $form->getData();
+             
+            if(!$ProductClass = $ForrmData['ProductClass']){
+                 throw new NotFoundHttpException();
+            }
+
+
+            $Options = $this->OptionService->setOption($Product,$ForrmData);
+
+
+            $errorMessages = $this->addCartCz($ProductClass,$ForrmData,$Options);
+
+            if (count($errorMessages)<1 ){
+                return $this->redirectToRoute('cart');
+            }
+
+
+            }
 
         $is_favorite = false;
         if ($this->isGranted('ROLE_USER')) {
@@ -150,19 +168,50 @@ $Error[$Name] = $error->getMessage();//->getName();
             'form' => $form->createView(),
             'Product' => $Product,
             'is_favorite' => $is_favorite,
+            'errorMessages' => $errorMessages,
         ];
     }
     
-   #カート追加処理
-    protected function addCartCz(Product $Product,$FromData){
+
+   /**
+    * カート追加処理 カスタマイズ
+    *
+    * @param ProductClass $ProductClass
+    * @param array $ForrmData
+    * @param array $Options
+    * @return array
+    */
+    protected function addCartCz(ProductClass $ProductClass, $ForrmData,$Options){
         
+        $this->cartService->addProduct($ProductClass, $ForrmData['quantity'],$Options);
+
+        $errorMessages = [];
+
+        // 明細の正規化
+        $Carts = $this->cartService->getCarts();
+        foreach ($Carts as $Cart) {
+            $result = $this->purchaseFlow->validate($Cart, new PurchaseContext($Cart, $this->getUser()));
+            // 復旧不可のエラーが発生した場合は追加した明細を削除.
+            if ($result->hasError()) {
+                $this->cartService->removeProduct($ProductClass);
+                foreach ($result->getErrors() as $error) {
+                    $errorMessages[] = $error->getMessage();
+                }
+            }
+            foreach ($result->getWarning() as $warning) {
+                $errorMessages[] = $warning->getMessage();
+            }
+        }
+    
+        $this->cartService->save();
+        return $errorMessages;
     }
 
 
     /**
      * カートに追加.
      *
-     * @Route("/products/add_cart/{id}", name="product_add_cart", methods={"POST"}, requirements={"id" = "\d+"})
+     * @ Route("/products/add_cart/{id}", name="product_add_cart", methods={"POST"}, requirements={"id" = "\d+"})
      */
     public function addCart(Request $request, Product $Product)
     {
@@ -281,49 +330,7 @@ $Error[$Name] = $error->getMessage();//->getName();
         }
     }
 
-    /**
-     * ページタイトルの設定
-     *
-     * @param  array|null $searchData
-     *
-     * @return str
-     */
-    protected function getPageTitle($searchData)
-    {
-        if (isset($searchData['name']) && !empty($searchData['name'])) {
-            return trans('front.product.search_result');
-        } elseif (isset($searchData['category_id']) && $searchData['category_id']) {
-            return $searchData['category_id']->getName();
-        } else {
-            return trans('front.product.all_products');
-        }
-    }
 
-    /**
-     * 閲覧可能な商品かどうかを判定
-     *
-     * @param Product $Product
-     *
-     * @return boolean 閲覧可能な場合はtrue
-     */
-    protected function checkVisibility(Product $Product)
-    {
-        $is_admin = $this->session->has('_security_admin');
 
-        // 管理ユーザの場合はステータスやオプションにかかわらず閲覧可能.
-        if (!$is_admin) {
-            // 在庫なし商品の非表示オプションが有効な場合.
-            // if ($this->BaseInfo->isOptionNostockHidden()) {
-            //     if (!$Product->getStockFind()) {
-            //         return false;
-            //     }
-            // }
-            // 公開ステータスでない商品は表示しない.
-            if ($Product->getStatus()->getId() !== ProductStatus::DISPLAY_SHOW) {
-                return false;
-            }
-        }
 
-        return true;
-    }
 }

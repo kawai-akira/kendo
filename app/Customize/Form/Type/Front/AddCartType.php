@@ -93,13 +93,21 @@ class AddCartType extends AbstractType
         $builder
             ->add('product_id', HiddenType::class, [
                 'data' => $Product->getId(),
-                'mapped' => false,
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Regex(['pattern' => '/^\d+$/']),
-                ], ]);
-
-
+                ], ])
+             ->add(
+                $builder
+                    ->create('ProductClass', HiddenType::class, [
+                        'data_class' => null,
+                        'data' => $Product->hasProductClass() ? null : $ProductClasses->first(),
+                        'constraints' => [
+                            new Assert\NotBlank(),
+                        ],
+                    ])
+                    ->addModelTransformer(new EntityToIdTransformer($this->doctrine->getManager(), ProductClass::class))
+            );
 
         if($Product->hasCategorySex()){
             $builder
@@ -130,7 +138,6 @@ class AddCartType extends AbstractType
             ]) ;
 
         }
-
         if($Product->hasCategoryTare()){
             $builder
                 ->add('tare', TareType::class, [
@@ -172,17 +179,7 @@ class AddCartType extends AbstractType
             ]) ;
         }
 
-        
 
-                $builder
-                    ->create('ProductClass', HiddenType::class, [
-                        'data_class' => null,
-                        'data' => $Product->hasProductClass() ? null : $ProductClasses->first(),
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                        ],
-                    ])
-                    ->addModelTransformer(new EntityToIdTransformer($this->doctrine->getManager(), ProductClass::class));
 
         if ($Product->getStockFind()) {
             $builder
@@ -205,7 +202,6 @@ class AddCartType extends AbstractType
                     $builder->add('classcategory_id1', ChoiceType::class, [
                         'label' => $Product->getClassName1(),
                         'choices' => ['common.select' => '__unselected'] + $Product->getClassCategories1AsFlip(),
-                        'mapped' => false,
                         'constraints' => [
                             new Assert\NotBlank(),
                             new Assert\NotEqualTo([
@@ -216,25 +212,26 @@ class AddCartType extends AbstractType
                     ]);
         
                 }
+         
                 if (!is_null($Product->getClassName2())) {
                     $builder->add('classcategory_id2', ChoiceType::class, [
                         'label' => $Product->getClassName2(),
                         'choices' => ['common.select' => '__unselected'],
-                        'mapped' => false,
                         'constraints' => [
                             new Assert\NotBlank(),
                             new Assert\NotEqualTo([
                             'value' => '__unselected',
-                             'message' => 'form_error.not_selected',
+                            'message' => 'form_error.not_selected',
                         ])
                         ]
 
                     ]);
+                  
                 }
             }
         }    
 
- /*           $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($Product) {
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($Product) {
                 $data = $event->getData();
                 $form = $event->getForm();
                 if (isset($data['classcategory_id1']) && !is_null($Product->getClassName2())) {
@@ -242,12 +239,12 @@ class AddCartType extends AbstractType
                         $form->add('classcategory_id2', ChoiceType::class, [
                             'label' => $Product->getClassName2(),
                             'choices' => ['common.select' => '__unselected'] + $Product->getClassCategories2AsFlip($data['classcategory_id1']),
-                            'mapped' => false,
+                            /*'mapped' => false,*/
                         ]);
                     }
                 }
             });
-*/;
+
 
 //            $dispatcher = $builder->getEventDispatcher();
 //            foreach ($dispatcher->getListeners(FormEvents::POST_SUBMIT) as $listener) {
@@ -278,13 +275,25 @@ class AddCartType extends AbstractType
         $resolver->setRequired('product');
         $resolver->setDefaults([
    //       'data_class' => CartItem::class,
-            'id_add_product_id' => true,
+    //        'id_add_product_id' => false,
             //'constraints' => [
             //    new Assert\Callback([$this, 'validate']),
                 // FIXME new Assert\Callback(array($this, 'validate')),
             //],
         ]);
     }
+
+    /*
+     * {@inheritdoc}
+     */
+    /*public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($options['id_add_product_id']) {
+            foreach ($view->vars['form']->children as $child) {
+                $child->vars['id'] .= $options['product']->getId();
+            }
+        }
+    }*/
 
     /**
      * {@inheritdoc}

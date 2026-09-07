@@ -34,7 +34,7 @@ class TareType extends AbstractType
 
         $builder
             ->add('tare_size_waist', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Regex([

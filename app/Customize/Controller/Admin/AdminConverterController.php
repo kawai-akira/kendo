@@ -199,8 +199,7 @@ $this->ProductConverter->Menu3();
             $this->Page();
             $this->Layout();
             
-            $this->ProductConverter->Menu1();
-
+            
             $this->addSuccess('コンバートに成功しました。', 'admin');
             return $this->redirectToRoute('admin_Converter_inAdvance');
 
