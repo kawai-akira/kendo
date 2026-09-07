@@ -53,7 +53,10 @@
 
         const IINSERT2 = "INSERT INTO TableName (id,display_order_count, name, sort_no, discriminator_type) VALUES ";
         const TRUNCATE = "TRUNCATE TABLE ";
-        Const FOREIGN  = 'SET FOREIGN_KEY_CHECKS = ';
+        const FOREIGN  = 'SET FOREIGN_KEY_CHECKS = ';
+      
+        private const PaymentOption = 'dtb_payment_option';
+        private const News          = 'dtb_news';
         /**
          * @var SqlService. $SqlService
          */
@@ -106,7 +109,7 @@
     public function index(Request $request)
     {
     // $this->CarenderSearvice->collCsv();
-       //$this->ShowColumn();
+       $this->ShowColumn();
 
    
        return  [
@@ -152,7 +155,15 @@ $this->ProductConverter->Menu3();
                 case 'member':
                     $this->Member();
                     $Messege = '管理者のコンバートに成功しました。';
-                    break;    
+                    break;
+                case 'shop':
+                    $this->ProductConverter->Menu1();
+                    $Messege = '店舗・配送のコンバートに成功しました。';
+                    break;
+                case 'PaymentOption':
+                    $this->PaymentOption();
+                    $Messege = '支払い方法のコンバートに成功しました。';
+                    break;  
                 
             }
             
@@ -187,7 +198,7 @@ $this->ProductConverter->Menu3();
     public function inAdvance(Request $request){
 
         $form   = $this->createForm(ConverterType::class);
- 
+        $this->News();
 
         $form->handleRequest($request);
 
@@ -198,6 +209,7 @@ $this->ProductConverter->Menu3();
             $this->MailTemplate();
             $this->Page();
             $this->Layout();
+            $this->News();
             
             
             $this->addSuccess('コンバートに成功しました。', 'admin');
@@ -491,8 +503,46 @@ $this->ProductConverter->Menu3();
     }
 
 
+    private function PaymentOption(){
 
+        $Deliverys = $this->SqlService->Table($this->ProductConverter::Delivery)->FindAllBy( $this->SqlService::DBNAMES[0]); 
+      
+        $Re = [];
+        foreach ($Deliverys as  $Delivery){
+                $d['delivery_id']           = $Delivery['id'];
+                $d['payment_id']            = 3; //便宜的に
+                $d['discriminator_type']    = 'paymentoption';
+                $Re[] = $d;
+            }
+  
+            $this->SqlService->Converter2(self::PaymentOption,$Re);
+    }  
 
+    private function News(){                
+
+        $Re= [];
+                                               
+        foreach( $this->SqlService->Converter1(self::News) as $o){
+
+        
+            $d['id']                    = $o['news_id'];
+            $d['creator_id']            = null;
+            $d['publish_date']          = $o['news_date'];
+            $d['title']                 = $o['news_title'];
+            $d['description']           = $o['news_comment'];
+            $d['url']                   = $o['news_url'];
+            $d['link_method']           = $o['link_method'];
+            $d['create_date']           = $o['create_date'];
+            $d['update_date']           = $o['update_date'];
+            $d['visible']               = $o['del_flg'] == 1 ? 0 : 1;
+            $d['discriminator_type']     ='news';
+            $Re[] = $d;
+
+            }
+  
+            $this->SqlService->Converter2(self::News,$Re);
+
+    }
 
 
 
@@ -598,8 +648,12 @@ private function MakeMtbSql(){
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;');
     }
 
+              
+
+
+
     private function ShowColumn(){  
-        $Columns = $this->SqlService->Table('dtb_order_item')
+        $Columns = $this->SqlService->Table('dtb_news')
                                     ->ShowColumn($this->SqlService::DBNAMES[0]);
 
        // print_r($Columns);                            
