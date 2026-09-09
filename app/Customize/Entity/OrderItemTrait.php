@@ -3,9 +3,9 @@
    * @version EC=CUBE4.3
    * @copyright 株式会社 翔 kakeru.co.jp
    * @author
-   * 2026年09月03日作成
+   * 2026年09月08日作成
    *
-   * app\Customize\Entity\CategoryTrait.php
+   * app\Customize\Entity\OrderItemTrait.php
    *
    * 
    *
@@ -20,9 +20,9 @@
 
 
     /**
-     * @EntityExtension("Eccube\Entity\CartItem")
+     * @EntityExtension("Eccube\Entity\OrderItem")
      */
-    Trait CartItemTrait 
+    Trait OrderItemTrait 
     {
        /**
          * @var string|null

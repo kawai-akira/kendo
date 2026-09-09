@@ -609,7 +609,7 @@ return $Re;
                     break;
                 case is_numeric($Value):
                     
-                    if('phone_number' == $Column || 'fax_number' == $Column){
+                    if('phone_number' == $Column || 'fax_number' == $Column || 'postal_code' == $Column ){
                         $Val =   "'" . $Value ."'";
                     }else{
                         $Val = $Value;

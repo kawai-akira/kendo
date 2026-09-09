@@ -25,6 +25,7 @@
     use Customize\Form\Type\Front\AddCartType;
     use Customize\Form\Type\Mentype;
     use Eccube\Entity\Product;
+    use Eccube\Entity\CartItem;
 
 
     class AdminMyTestController extends AbstractController
@@ -85,9 +86,10 @@
     
     //$this->HolidayRepository->getHolidyBySettingDays($Setting,$Days);
    //print_r($_SESSION['data'] ?? []) ; unset($_SESSION['data']);
+    $Item = $this->entityManager->getRepository(CartItem::class)->find(1) ;         
+    $Option = $Item->getOptions();
 
-          
-    
+    print_r($Option);
 
        return  [
             'message' => 'MYTEST　DA～Yo^^～Yo^^～' ,

@@ -111,7 +111,8 @@
     // $this->CarenderSearvice->collCsv();
        $this->ShowColumn();
 
-   
+       echo 'Current Memory: ' . (memory_get_usage() / 1024 / 1024) . " MB\n";
+   //memory_get_usage()
        return  [
         'message1' => self::Message1,
         'message2' => self::Message2,
@@ -149,7 +150,7 @@ $this->ProductConverter->Menu3();
                     $Messege = '商用品群のコンバートに成功しました。';
                     break;
                 case 'order':
-                    $this->OrderConverter->Menu();
+                    $this->OrderConverter->Menu1();
                     $Messege = '受注群のコンバートに成功しました。';
                     break;
                 case 'member':
@@ -653,7 +654,7 @@ private function MakeMtbSql(){
 
 
     private function ShowColumn(){  
-        $Columns = $this->SqlService->Table('dtb_news')
+        $Columns = $this->SqlService->Table('dtb_shipping')
                                     ->ShowColumn($this->SqlService::DBNAMES[0]);
 
        // print_r($Columns);                            
