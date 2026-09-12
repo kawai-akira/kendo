@@ -30,7 +30,7 @@ class SexType extends AbstractType
     /**
      * @var EntityManagerInterface $em
      */
-    protected $em;
+    private $em;
 
 
     public function __construct(

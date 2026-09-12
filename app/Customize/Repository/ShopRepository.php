@@ -19,8 +19,13 @@
     use Eccube\Repository\AbstractRepository;
     use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
     use Customize\Entity\Shop;
+    use Customize\Entity\Master\ShopStatus;
+    use Eccube\Doctrine\Query\Queries;
 	use Eccube\Entity\Product;
+    use Eccube\Entity\Master\Pref;
+    use Eccube\Util\StringUtil;
 	use Customize\Repository\Master\ShopStatusRepository;
+
 
    	/**
 	 * ShopRepository
@@ -30,17 +35,41 @@
 	 */
     class ShopRepository extends AbstractRepository
     {
-		/**
+		
+
+        public const COLUMNS = [
+        'id' => 's.id', 'name' => 's.shopName','member'=>'s.member'
+    ];
+        /**
+         * @var Queries
+         */
+        protected $queries;
+    
+    
+        /**
 		 * @var ShopStatusRepository
 	    */
         private $ShopStatusRepository;
 
         public function __construct(RegistryInterface $registry
+                    ,Queries $queries
 					,ShopStatusRepository $ShopStatusRepository
 		)
         {
             parent::__construct($registry, Shop::class);
+            $this->queries = $queries;
 			$this->ShopStatusRepository = $ShopStatusRepository;
+        }
+
+        /**
+         * @param int|null $ShopId
+         */
+        public function New($ShopId){
+            if(is_null($ShopId)){
+
+                return new Shop();
+            }
+            return $this->find($ShopId);
         }
 
 		public function select(Product $Product ){
@@ -49,16 +78,98 @@
 			return [$Product->getShop()];
 		}	
 
-
-        $Status = $this->ShopStatusRepository->find(9);
+        $Status = $this->ShopStatusRepository->find(ShopStatus::REMOVE);
    		$qb = $this->createQueryBuilder('s')				
 	 		->orderBy('s.id', 'ASC')			
-      		->where('s.status < :status')				
+      		->where('s.ShopStatus < :status')				
       		->setParameter('status', $Status);
 	
-				
-      	return $qb->getQuery()->getResult();
+		return $qb->getQuery()->getResult();
 
 		}
+
+	 /** @param array{
+     *         id?: int,
+     *         shopName: string,
+     *         pref?:Pref,
+     *         SAhopStatuse?:ShopStatus,
+     *         PhonNumber?:string|int,
+     *         create_date_start?:\DateTime,
+     *         create_date_end?:\DateTime,
+     *     } $searchData
+     * @return QueryBuilder
+     */
+    public function getQueryBuilderBySearchData($searchData)
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->select('s');
+
+        if (isset($searchData['id']) && StringUtil::isNotBlank($searchData['id'])) {
+            $qb
+                ->andWhere("s.id = :id ")
+                ->setParameter('id', $searchData['id']);
+        }
+        if (isset($searchData['shopName']) && StringUtil::isNotBlank($searchData['shopName'])) {
+            $qb
+                ->andWhere("s.shopName LIKE  :shopName")
+                ->setParameter('shopName', '%'. $searchData['shopName'] .'%');
+        }
+  
+        // Pref
+        if (!empty($searchData['pref']) && $searchData['pref']) {
+            $qb
+                ->andWhere('s.pref = :pref')
+                ->setParameter('pref', $searchData['pref']);
+        }
+        // ShopStatus
+       if (!empty($searchData['ShopStatus']) && count($searchData['ShopStatus']) > 0) {
+            $qb
+                ->andWhere($qb->expr()->in('s.ShopStatus', ':ShopStatuses'))
+                ->setParameter('ShopStatuses', $searchData['ShopStatus']);
+        }
+        // tel
+        if (isset($searchData['phoneNumber']) && StringUtil::isNotBlank($searchData['phoneNumber'])) {
+            $tel = preg_replace('/[^0-9]/', '', $searchData['phoneNumber']);
+            $qb
+                ->andWhere('s.phoneNumber LIKE :phoneNumber')
+                ->setParameter('phoneNumber', '%'.$tel.'%');
+        }
+        // create_date
+       if (!empty($searchData['create_date_start']) && $searchData['create_date_start']) {
+
+           $qb
+                ->andWhere('s.createDate >= :create_date_start')
+                ->setParameter('create_date_start', $searchData['create_date_start']);
+        }
+
+       if (!empty($searchData['create_date_end']) && $searchData['create_date_end']) {
+            $date = clone $searchData['create_date_end'];
+            $date->modify('+1 days');
+           
+            $qb
+                ->andWhere('s.createDate <= :create_date_end')
+                ->setParameter('create_date_end', $date);
+                 echo $date->format('Y-m-d H:i:s ');
+        }
+
+
+
+        // Order By
+        if (isset($searchData['sortkey']) && !empty($searchData['sortkey'])) {
+            $sortOrder = (isset($searchData['sorttype']) && $searchData['sorttype'] == 'a') ? 'ASC' : 'DESC';
+            $qb->orderBy(self::COLUMNS[$searchData['sortkey']], $sortOrder);
+            $qb->addOrderBy('s.updateDate', 'DESC');
+            $qb->addOrderBy('s.id', 'DESC');
+        } else {
+            $qb->orderBy('s.updateDate', 'DESC');
+            $qb->addOrderBy('s.id', 'DESC');
+        }
+
+
+
+
+
+       return $this->queries->customize(QueryKey::SHOP_SEARCH, $qb, $searchData);
+	}
 
     }

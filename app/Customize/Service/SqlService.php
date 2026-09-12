@@ -171,7 +171,7 @@
   */
   public function Inserts($DbName = self::DBNAMES[1] ,$Flg=false){
  
- 
+    //$this->Sql = "SET time_zone = '+00:00';";
     $this->Sql = "INSERT INTO {$this->Table_} (" . implode(',',array_keys($this->Sqls_[0])) .') VALUES ';
     //$Sql = "";
 
@@ -903,12 +903,21 @@ $red = $sth->fetchAll();
 
     public function FOREIGN_KEY($DbName = self::DBNAMES[1] ,$Flg = 0){
 
-    //echo $DbName;
-
-    $Con = $this->Cons[$DbName];
+      $Con = $this->Cons[$DbName];
                            
     $stmt = $Con->prepare("SET FOREIGN_KEY_CHECKS = {$Flg};");
     $stmt->execute();
+    return $this;
+
+    }
+     /**
+     * @param string $DbName 
+     */       
+    public function setTimeSoon($DbName = self::DBNAMES[1]){
+        $Con = $this->Cons[$DbName];
+        $stmt = $Con->prepare("SET time_zone = '+00:00';");
+        $stmt->execute();
+        return $this;
 
     }
 
@@ -1036,13 +1045,14 @@ private function DbManager($DbName){
      */
     public function Converter2($Table,$Data){
 
-        $this->ForeignKey(0)
+        $this->FOREIGN_KEY(self::DBNAMES[0])
              ->Table($Table)
              ->TRUNCATE(self::DBNAMES[0]);         
 
 
 
-      return   $this->ForeignKey(0)
+      return   $this->FOREIGN_KEY(self::DBNAMES[0])
+                   // ->setTimeSoon(self::DBNAMES[0])
                      ->Table($Table)
                      ->Sqls($Data)
                      ->Inserts(self::DBNAMES[0],1);

@@ -18,3 +18,4 @@
 !/html/template/
 
 /var/
+.env

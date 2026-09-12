@@ -80,7 +80,7 @@ use Eccube\Repository\Master\CustomerStatusRepository;
 
         public function Menu1(){
             $this->Shop();
-            $this->ShopImage();
+            //$this->ShopImage();
             $this->Delivery();
             $this->DeliveryFee();
             $this->DeliveryTime();
@@ -104,7 +104,7 @@ use Eccube\Repository\Master\CustomerStatusRepository;
         }
         public function Menu3(){
 
-
+                $this->Member();
         }
 
 
@@ -434,6 +434,7 @@ use Eccube\Repository\Master\CustomerStatusRepository;
            $Re  = []; 
            $sRe = [];
 
+           $ShopImage = $this->ShopImage();
            $Shops = $this->SqlService->Converter1(self::Shop);
 
            $S_sortNo = count($Shops);
@@ -458,7 +459,10 @@ use Eccube\Repository\Master\CustomerStatusRepository;
                 $d['delivery_free_amount']  = $o['delivery_free_amount'];
                 $d['shop_url']              = $o['shop_url'];
                 $d['product_detail_memo']   = $o['product_detail_memo'];
+
+                $d['shop_image']            = $ShopImage[$o['shop_id']] ?? null;
                 $d['discriminator_type']    = 'shop';
+
 
                 $Re[] = $d;
 
@@ -481,19 +485,12 @@ use Eccube\Repository\Master\CustomerStatusRepository;
                 $Re= []; 
                 foreach( $this->SqlService->Converter1(self::ShopImage) as $o){
 
-                    $d['id']                = $o['shop_image_id'];
-                    $d['shop_id']           = $o['shop_id'];
-                    $d['creator_id']        = null;
-                    $d['file_name']         = $o['file_name'];
-                    $d['sort_no']           = $o['rank'];
-                    $d['create_date']       = $o['create_date'];
-                    $d['update_date']       = Carbon::now()->format('Y-m-d h-i-s');
-                    $d['discriminator_type']= 'shopname';
 
-                    $Re[] = $d;
+
+                    $Re[$o['shop_id']] = $o['file_name'];
         }
 
-                $this->SqlService->Converter2(self::ShopImage,$Re);
+                return $Re;
         }
    
         private function Tuika(){
@@ -616,6 +613,49 @@ use Eccube\Repository\Master\CustomerStatusRepository;
             $this->SqlService->Converter2(self::DeliveryTime,$Re);
 
     }
+ private function Member(){
 
+        $Shops =[];
+        foreach($this->SqlService->Converter1(self::Shop) as $Shop){
+            $Shops[$Shop['member_id']] = $Shop['shop_id'];
+        };
+
+        $Members =$this->SqlService->Converter1('dtb_member');
+       // print_r($Customers);           
+                         
+                         ;
+        
+        $Re = [];
+        foreach ($Members as $Member){
+            $data = [];
+
+            $data['id']             = $Member['member_id'];
+            $data['work_id']        = $Member['work'];
+            $data['authority_id']   = $Member['authority'];
+            $data['creator_id']     = null;
+            $data['name']           = $Member['name'];
+            $data['department']     = $Member['department'];
+            $data['login_id']       = $Member['login_id'];
+            $data['password']       = '';
+            $data['salt']           = null;
+            $data['sort_no']        = $Member['rank'];
+            $data['two_factor_auth_key'] = null;
+            $data['two_factor_auth_enabled'] = 0;
+            $data['create_date']    = $Member['create_date'];
+            $data['update_date']    = $Member['update_date'];
+            $data['login_date']     = $Member['login_date'];
+            $data['discriminator_type'] = 'member';
+            $data['reset_key']      = null;
+            $data['reset_expire']   = null;
+            $data['shop_id']        = $Shops[$Member['member_id']] ?? null;
+
+            $Re[] = $data;
+        }
+
+        $this->SqlService->Converter2('dtb_member',$Re);
+
+
+
+    }
 
     }

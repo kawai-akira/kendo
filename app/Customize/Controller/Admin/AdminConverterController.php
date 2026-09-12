@@ -154,7 +154,7 @@ $this->ProductConverter->Menu3();
                     $Messege = '受注群のコンバートに成功しました。';
                     break;
                 case 'member':
-                    $this->Member();
+                    $this->ProductConverter->Menu3();
                     $Messege = '管理者のコンバートに成功しました。';
                     break;
                 case 'shop':
@@ -253,47 +253,7 @@ $this->ProductConverter->Menu3();
 
     } 
 
-    private function Member(){
-
-
-
-        $Members =$this->SqlService->Converter1('dtb_member');
-       // print_r($Customers);           
-                         
-                         ;
-        
-        $Re = [];
-        foreach ($Members as $Member){
-            $data = [];
-
-            $data['id']             = $Member['member_id'];
-            $data['work_id']        = $Member['work'];
-            $data['authority_id']   = $Member['authority'];
-            $data['creator_id']     = null;
-            $data['name']           = $Member['name'];
-            $data['department']     = $Member['department'];
-            $data['login_id']       = $Member['login_id'];
-            $data['password']       = '';
-            $data['salt']           = null;
-            $data['sort_no']        = $Member['rank'];
-            $data['two_factor_auth_key'] = null;
-            $data['two_factor_auth_enabled'] = 0;
-            $data['create_date']    = $Member['create_date'];
-            $data['update_date']    = $Member['update_date'];
-            $data['login_date']     = $Member['login_date'];
-            $data['discriminator_type'] = 'member';
-            $data['reset_key']      = null;
-            $data['reset_expire']   = null;
-
-
-            $Re[] = $data;
-        }
-
-        $this->SqlService->Converter2('dtb_member',$Re);
-
-
-
-    }
+   
 
     private function Layout(){
 

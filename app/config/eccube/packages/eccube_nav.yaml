@@ -54,6 +54,16 @@ parameters:
                 customer_edit:
                     name: admin.customer.customer_registration
                     url: admin_customer_new
+        shop:
+            name: admin.shop.shop_managemen
+            icon: fa-store-alt
+            children:
+                shop_index:
+                    name: admin.shop.shop_list
+                    url: admin_shop_index
+                shop_edit:
+                    name: admin.shop.shop_registration
+                    url: admin_shop_new
         content:
             name: admin.content.contents_management
             icon: fa-file-text-o

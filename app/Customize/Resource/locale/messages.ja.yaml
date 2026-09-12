@@ -59,3 +59,19 @@ product_hakama_size_length: 袴サイズH ( =前紐下丈 / 不明の場合「0�
 product_hakama_etc: 袴その他希望 (サイズ指定等)
 product_shinai_etc: 竹刀その他希望
 product_zekken_etc: ゼッケンその他希望
+admin.shop.shop_managemen: 店舗管理
+admin.shop.shop_list: 店舗一覧
+admin.shop.shop_title: 店舗名
+admin.shop.shop_registration: 店舗登録
+admin.shop.image: 店舗の画像（1枚）
+admin.shop.image_title: 店舗の画像を１枚入れてください。
+admin.shop.image_size: "推奨サイズ : 620px以上"
+admin.shop.shop_info: 店舗情報
+admin.shop.shop_id: 店舗ID
+admin.shop.member.info: 管理メンバー
+admin.shop.member.title: 店舗責任者
+admin.shop.appeal.title: アピール欄
+admin.shop.detail.title: 商品詳細
+admin.shop.url.title: 店舗リンクURL
+admin.shop.fee.amount: 送料無料条件
+admin.shop.note.tooltip: 店店舗用の備考欄です。フロント側には表示されません。

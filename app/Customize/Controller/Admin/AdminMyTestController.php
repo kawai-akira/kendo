@@ -85,11 +85,11 @@
 
     
     //$this->HolidayRepository->getHolidyBySettingDays($Setting,$Days);
-   //print_r($_SESSION['data'] ?? []) ; unset($_SESSION['data']);
-    $Item = $this->entityManager->getRepository(CartItem::class)->find(1) ;         
-    $Option = $Item->getOptions();
+    print_r($_SESSION['data'] ?? []) ; unset($_SESSION['data']);
+    //$Item = $this->entityManager->getRepository(CartItem::class)->find(1) ;         
+    //$Option = $Item->getOptions();
 
-    print_r($Option);
+   // print_r($Option);
 
        return  [
             'message' => 'MYTEST　DA～Yo^^～Yo^^～' ,

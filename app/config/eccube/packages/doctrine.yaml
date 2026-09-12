@@ -22,8 +22,8 @@ doctrine:
         url: '%env(DATABASE_URL)%'
 
         # types
-        types:
-            datetime: 'Eccube\Doctrine\DBAL\Types\UTCDateTimeType'
+        #types:
+            #datetime: 'Eccube\Doctrine\DBAL\Types\UTCDateTimeType'
             #datetimetz: 'Eccube\Doctrine\DBAL\Types\UTCDateTimeTzType'
         default_connection: 'default'
     orm:

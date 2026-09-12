@@ -21,7 +21,6 @@
     use Eccube\Entity\AbstractEntity;
     use Eccube\Entity\Member;
     use Eccube\Entity\Master\Pref;
-    use Customize\Entity\ShopImage;
     use Customize\Entity\Master\ShopStatus;
 
     /**
@@ -54,7 +53,7 @@
          * @ORM\ManyToOne(targetEntity="\Customize\Entity\Master\ShopStatus")
          * @ORM\JoinColumn(name="shop_status_id", referencedColumnName="id", nullable=true)
          */
-        private $status;
+        private $ShopStatus;
 
         /**
          * @var Pref
@@ -73,17 +72,17 @@
          * @var string
          * @ORM\Column(name="postal_code", type="string", length=8, nullable=true)
          */
-        private $postalCode;
+        private $postal_code;
 
         /**
          * @var string
-         * @ORM\Column(type="string", length=255, nullable=true)
+         * @ORM\Column(name="addr01", type="string", length=255, nullable=true)
          */
         private $addr01;
 
         /**
          * @var string
-         * @ORM\Column(type="string", length=255, nullable=true)
+         * @ORM\Column(name="addr02" ,type="string", length=255, nullable=true)
          */
         private $addr02;
 
@@ -95,22 +94,21 @@
 
         /**
          * @var string
-         * @ORM\Column(type="text", nullable=true)
+         * @ORM\Column(name="memo", type="text", nullable=true)
          */
         private $memo;
 
         /**
          * @var string
-         * @ORM\Column(type="text", nullable=true)
+         * @ORM\Column(name="appeal" , type="text", nullable=true)
          */
         private $appeal;
 
         /**
-         * @var ShopImage
-         * @ORM\OneToMany(targetEntity="Customize\Entity\ShopImage", mappedBy="Shop", cascade={"remove"})
-         * @ORM\OrderBy({"sort_no"="ASC"})
+         * @var string
+         * @ORM\Column(name="shop_image",  type="text", nullable=true)
          */
-        private $shopImages;
+        private $shopImage;
         /**
          * @var string
          * @ORM\Column(name="delivery_free_amount", type="decimal", precision=10, scale=0, nullable=true)
@@ -150,11 +148,6 @@
 
 
 
-        public function __construct()
-        {
-            $this->shopImages = new ArrayCollection();
-        }
-
         public function getId(): ?int
         {
             return $this->id;
@@ -171,15 +164,15 @@
             return $this->member;
         }
 
-        public function setStatus(?ShopStatus $status): self
+        public function setShopStatus(?ShopStatus $ShopStatus): self
         {
-            $this->status = $status;
+            $this->ShopStatus = $ShopStatus;
             return $this;
         }
 
-        public function getStatus(): ?ShopStatus
+        public function getShopStatus(): ?ShopStatus
         {
-            return $this->status;
+            return $this->ShopStatus;
         }
 
         public function setPref(?Pref $pref): self
@@ -204,15 +197,15 @@
             return $this->shopName;
         }
 
-        public function setPostalCode(?string $postalCode): self
+        public function setPostalCode(?string $postal_code): self
         {
-            $this->postalCode = $postalCode;
+            $this->postal_code = $postal_code;
             return $this;
         }
 
         public function getPostalCode(): ?string
         {
-            return $this->postalCode;
+            return $this->postal_code;
         }
 
         public function setAddr01(?string $addr01): self
@@ -237,13 +230,13 @@
             return $this->addr02;
         }
 
-        public function setPhonNumber(?string $phoneNumber): self
+        public function setPhoneNumber(?string $phoneNumber): self
         {
             $this->phoneNumber = $phoneNumber;
             return $this;
         }
 
-        public function getPhonNumber(): ?string
+        public function getPhoneNumber(): ?string
         {
             return $this->phoneNumber;
         }
@@ -270,21 +263,16 @@
             return $this->appeal;
         }
 
-        public function addShopImage(ShopImage $ShopImage): self
+        public function setShopImage(?string $ShopImage): self
         {
-            $this->shopImages[] = $ShopImage;
+            $this->shopImage = $ShopImage;
             return $this;
         }
 
-        public function removeShopImage(ShopImage $ShopImage): bool
-        {
-            return $this->shopImages->removeElement($ShopImage);
-        }
         public function getShopImage()
         {
-            return $this->shopImages;
+            return $this->shopImage;
         }
-
 
         public function setCreator(?Member $Creator): self
         {

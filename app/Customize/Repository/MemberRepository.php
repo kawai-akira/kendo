@@ -19,6 +19,8 @@ use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\NoResultException;
 use Eccube\Entity\Member;
+use Eccube\Entity\Master\Authority;
+use Eccube\Entity\Master\Work;
 
 /**
  * MemberRepository
@@ -53,7 +55,26 @@ class MemberRepository extends \Eccube\Repository\MemberRepository
         } catch (NoResultException $e) {				
             return false;				
         }				
-				
+    }
+
+    public function findNewMembers(){
+
+    $em = $this->getEntityManager();
+    /** @var Authority */
+    $Authority = $em->getRepository(Authority::class)->find(Authority::SHOP);
+    /** @var Work */
+    $Work = $em->getRepository(Work::class)->find(Work::ACTIVE);
+
+    $qb = $this->createQueryBuilder('m')
+            //->innerJoin('m.Shop','p')
+            ->where('m.Authority = :Authority')
+            ->setParameter('Authority', $Authority)
+            ->andWhere('m.Work = :Work')
+            ->setParameter('Work',$Work)
+            ->andWhere('m.Shop is null');
+            
+            return $qb->getQuery()->getResult();
+
 
     }
 

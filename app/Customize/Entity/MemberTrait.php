@@ -26,6 +26,13 @@
     {
 
         /**
+         * @var Shop
+         * @ORM\ManyToOne(targetEntity="Customize\Entity\Shop")
+         * @ORM\JoinColumn(name="shop_id", referencedColumnName="id", nullable=true)
+         */
+        private $Shop = null;
+
+        /**
          * @var string|null
          *
          * @ORM\Column(name="reset_key", type="string", length=255, nullable=true)
@@ -38,6 +45,21 @@
          * @ORM\Column(name="reset_expire", type="datetimetz", nullable=true)
          */
         private $reset_expire;
+
+        /**
+         * @param Shop|null $Shop
+         * @return self
+         */
+        public function setShop(Shop $Shop = null): self
+        {
+            $this->Shop = $Shop;
+            return $this;
+        }
+
+        public function getShop() :Shop|null
+        {
+            return $this->Shop;
+        }
 
           /**
          * Set resetKey.
