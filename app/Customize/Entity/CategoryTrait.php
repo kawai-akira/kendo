@@ -41,4 +41,6 @@
         const SHINAIBUKURO = 14; # 未使用
         const BOUGUBUKURO = 15; #未使用
         const SONOTA = 17; #未使用
+        const ONLYWOMEN = [74];
+
     }

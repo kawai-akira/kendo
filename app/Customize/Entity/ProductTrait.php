@@ -385,9 +385,17 @@
          */
         public function hasCategorySex()
         {
+
+            #女性専用か
+            foreach ($this->ProductCategories as $productCategory) {
+                if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::ONLYWOMEN)){
+                    return false;
+                }
+            }    
+
             foreach ($this->ProductCategories as $productCategory) {
                 if(in_array($productCategory->getCategoryId(), \Eccube\Entity\Category::SEX)){
-                    return  true ;
+                     return  true ;
                 } 
             }
             return false;
