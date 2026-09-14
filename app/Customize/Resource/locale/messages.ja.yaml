@@ -1,0 +1,77 @@
+#locale\messages.ja.yaml
+admin_login_mail_message01: 'セュリティ強化のため、パスワードを変更してください。ログインID宛にメールを送信しました。'
+admin_login_mail_message02: '既に変更メールは送信しています。もう一度{Minutes}分後にやり直すか、管理者迄お問い合わせください。'
+admin_login_mail_renew_title: 管理者用パスワード変更
+admin_login_mail_renew_login: ログインID
+admin_login_mail_renew_loginId: 管理画面用ログインEMAil
+customer_login_mail_message01: 'セュリティ強化のため、パスワードを変更してください。ログインID宛にメールを送信しました。'
+customer_login_mail_message02: '既に変更メールは送信しています。もう一度,30分後にやり直すか、管理者迄お問い合わせください。'
+shop_name: 店舗
+product_freeInputName1: フリー入力項目名1
+product_freeInputName2: フリー入力項目名2
+product_freeInputName3: フリー入力項目名3
+product_MetaDescription: メタディスクリプション
+product_MetaKeyword: メタキーワード
+product_Extended_Field: 拡張項目
+product_ItemFeatures: アイテム説明
+product_ProductType: 商品種類
+product_Material: 素材
+product_Weight: 重さ(g)
+product_StitchType: 刺の種類
+product_StitchWidth: 刺(ピッチ)の間隔(mm)
+product_MenBaseSize: 面のベース寸法
+product_KoteBaseSize: 小手のベース寸法
+product_TareBaseSize: 垂のベース寸法
+product_Utikomi: 打ち込み
+product_DouBaseSize: 胴のベース寸法
+product_common_sex: 性別
+product_common_height: 身長
+product_men_title: 面サイズ
+
+product_men_size_a: 面サイズA (あご先〜耳前〜つむじの周囲)
+product_men_size_b: 面サイズB (まゆ上ハチマキの位置の周囲)
+product_men_size_c: 面サイズC (あご先〜目の物見高さ)
+product_men_height: 身長
+product_men_etc: 面その他希望
+product_kote_title: 小手サイズ
+product_kote_size_left_d: 小手サイズ左D(親指以外の指付け根の周囲)
+product_kote_size_left_e: 小手サイズ左E (親指付け根の周囲)
+product_kote_size_left_f: 小手サイズ左F (中指先〜手の平付け根の長さ)
+product_kote_size_right_d: 小手サイズ右D (親指以外の指付け根の周囲)
+product_kote_size_right_e: 小手サイズ右E (親指付け根の周囲)
+product_kote_size_right_f: 小手サイズ右F (中指先〜手の平付け根の長さ)
+product_kote_etc: 小手その他希望
+product_dou_title: 胴サイズ
+product_dou_size_bust: 胸囲
+product_dou_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_dou_size_g: 胴サイズG (胴台の幅)
+product_dou_etc: 胴その他希望
+product_tare_title: 垂サイズ
+product_tare_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_tare_etc: 垂その他希望
+product_doui_title: 道衣サイズ
+product_doui_type: 体型
+product_doui_hope: サイズ希望
+product_doui_etc: 道衣その他希望
+product_hakama_title: 袴サイズ
+product_hakama_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_hakama_size_length: 袴サイズH ( =前紐下丈 / 不明の場合「0」と記入)
+product_hakama_etc: 袴その他希望 (サイズ指定等)
+product_shinai_etc: 竹刀その他希望
+product_zekken_etc: ゼッケンその他希望
+admin.shop.shop_managemen: 店舗管理
+admin.shop.shop_list: 店舗一覧
+admin.shop.shop_title: 店舗名
+admin.shop.shop_registration: 店舗登録
+admin.shop.image: 店舗の画像（1枚）
+admin.shop.image_title: 店舗の画像を１枚入れてください。
+admin.shop.image_size: "推奨サイズ : 620px以上"
+admin.shop.shop_info: 店舗情報
+admin.shop.shop_id: 店舗ID
+admin.shop.member.info: 管理メンバー
+admin.shop.member.title: 店舗責任者
+admin.shop.appeal.title: アピール欄
+admin.shop.detail.title: 商品詳細
+admin.shop.url.title: 店舗リンクURL
+admin.shop.fee.amount: 送料無料条件
+admin.shop.note.tooltip: 店店舗用の備考欄です。フロント側には表示されません。

@@ -1,0 +1,661 @@
+<?php
+
+   /**
+    * @version EC-CUBE4.3
+    * @copyright 株式会社 翔 kakeru.co.jp
+    *
+    * 2026年08月16日作成
+    *
+    * app\Customize\Service\Converter\ProductConverter.php
+    * 
+    *
+    * SQL文を作成する サイトがデッキしだい削除する
+    *
+    *
+    *                                        ≡≡≡┏(＾o＾)┛
+    *****************************************************/
+   namespace Customize\Service\Converter;
+
+use AddressInfo;
+use Carbon\Carbon;
+use Customize\Service\SqlService;
+use Customize\Entity\Master\ShopStatu;
+use Eccube\Entity\ProductCategory;
+use Eccube\Repository\ProductCategoryRepository;
+use Eccube\Repository\Master\CustomerStatusRepository;
+
+
+   class ProductConverter
+   {
+
+        private const Shop = 'dtb_shop';
+        private const ShopImage = 'dtb_shop_image';
+        private const Product  = 'dtb_product';
+        private const ProductClass= 'dtb_product_class';
+        private const ClassName   = 'dtb_class_name'; 
+        private const ClassCategory  = 'dtb_class_category'; 
+        private const Category  = 'dtb_category';
+        private const ProductCategory  = 'dtb_product_category'; 
+        private const ProductImage = 'dtb_product_image';
+        private const ProductStock = 'dtb_product_stock';
+        private const ProductTag = 'dtb_product_tag';
+        private const Tag = 'dtb_tag';
+        private const SaleType = 'mtb_sale_type';
+        public  const Delivery = 'dtb_delivery';
+        private const DeliveryFee ='dtb_delivery_fee';
+        private const DeliveryTime ='dtb_delivery_time';
+
+        private const notConvert= 1;
+
+
+        private $Deliverys = [];
+  
+        /**
+         * @var SqlService
+         */
+        private $SqlService;
+
+        /**
+         * @var CustomerStatusRepository
+         */
+        private $CustomerStatusRepository;
+        /**
+         * @var ProductCategoryRepository
+         */
+
+        private $ProductCategoryRepository;
+
+        public function __construct(
+            SqlService $SqlService
+            ,CustomerStatusRepository $CustomerStatusRepository
+            ,ProductCategoryRepository $ProductCategoryRepository
+
+        )
+        {
+            $this->SqlService = $SqlService;
+            $this->CustomerStatusRepository = $CustomerStatusRepository;
+            $this->ProductCategoryRepository = $ProductCategoryRepository;
+
+        }
+
+        public function Menu1(){
+            $this->Shop();
+            //$this->ShopImage();
+            $this->Delivery();
+            $this->DeliveryFee();
+            $this->DeliveryTime();
+            
+     
+
+
+        }
+        public function Menu2(){
+            $this->Product();
+            $this->productClass();
+            $this->className();
+            $this->ClassCutegory();
+            $this->Category();
+            $this->ProductCategory();
+            $this->ProductImage();
+            $this->ProductStock();
+            $this->Tag();
+            $this->ProductTag();
+
+        }
+        public function Menu3(){
+
+                $this->Member();
+        }
+
+
+        private  function Product(){
+
+
+        list($T,$ProductTypes,$Meta)= $this->Tuika();
+
+  
+
+        $Re= []; 
+        foreach( $this->SqlService->Converter1(self::Product) as $o){
+            if ($o['product_id']<= self::notConvert){continue;}
+                $Id = $o['product_id'];
+                $d['id']                = $o['product_id'];
+                 
+                $d['creator_id']        = $o['creator_id'];
+                $d['product_status_id'] = $o['del_flg'] == 0 ? $o['status'] : 3;
+                $d['name']              = $o['name'];
+                $d['note']              = $o['note'];
+                $d['description_list']  = $o['description_list'];
+                $d['description_detail']= $o['description_detail'];
+                $d['search_word']       = $o['search_word'];
+                $d['free_area']         = $o['free_area'];
+                $d['create_date']       = $o['create_date'];
+                $d['update_date']       = $o['update_date'];
+                $d['shop_id']           = $o['shop_id'];
+                $d['discriminator_type']= 'product';
+                $d['free_input_name1']  = $o['free_input_name1'];
+                $d['free_input_name2']  = $o['free_input_name2'];
+                $d['free_input_name3']  = $o['free_input_name3'];
+
+                $d['item_features']     = $o['del_flg'] == 1 ? null: $T[$Id][1] ?? null;
+                $PTValue = $T[$Id][2] ?? null;
+                $d['product_type_id']   = $ProductTypes[$PTValue] ?? 12;
+               
+                $d['material']          = $T[$Id][3] ?? null;
+                $d['weight']            = $T[$Id][4] ?? null;
+                $d['stitch_type']       = $T[$Id][5] ?? null;
+                $d['stitch_width']      = $T[$Id][6] ?? null;
+                $d['men_base_size']     = $T[$Id][7] ?? null;
+                $d['kote_base_size']    = $T[$Id][8] ?? null;
+                $d['tare_base_size']    = $T[$Id][9] ?? null;
+                $d['utikomi']           = $T[$Id][10] ?? null;
+                $d['dou_base_size']     = $T[$Id][11] ?? null;
+
+                $d['meta_description']  = $Meta[$Id]['meta_description'] ?? null;
+                $d['meta_keyword']      = $Meta[$Id]['meta_keyword'] ?? null;
+
+                $Re[] = $d;
+        }
+        //print_r($Re);
+                $this->SqlService->Converter2(self::Product,$Re);
+
+        }
+
+        private function productClass(){
+
+
+	    $Re= []; 
+
+        $Products =  $this->getProducts();
+
+
+        foreach( $this->SqlService->Converter1(self::ProductClass) as $o){
+	
+            if ($o['del_flg'] == 1 ){continue;}
+            if ($o['product_id']<= self::notConvert){continue;}
+
+            $Product = $Products[$o['product_id']];
+
+            $d['id']                    = $o['product_class_id'];
+            $d['product_id']            = $o['product_id'];
+            $d['sale_type_id']          = $Product['shop_id'] ;
+            $d['class_category_id1']    = $o['class_category_id1'];
+            $d['class_category_id2']    = $o['class_category_id2'];
+            $d['delivery_duration_id']  = $o['delivery_date_id'];
+            $d['creator_id']            = null;
+            $d['product_code']          = $o['product_code'];
+            $d['stock']                 = $o['stock'];
+            $d['stock_unlimited']       = $o['stock_unlimited'];
+            $d['sale_limit']            = $o['sale_limit'];
+            $d['price01']               = $o['price01'];
+            $d['price02']               = $o['price02'];
+            $d['delivery_fee']          = $o['delivery_fee'];
+            $d['visible']               = 1 ;
+            $d['create_date']           = $o['create_date'];
+            $d['update_date']           = $o['update_date'];
+            $d['currency_code']         = 'JPY';
+            $d['point_rate']            = null;
+            $d['discriminator_type']    = 'productclass';
+            $d['regular_discount_id']   = null;
+            $Re[] = $d;
+        }
+            $this->SqlService->Converter2(self::ProductClass,$Re);
+   
+
+        }
+
+
+        private function className(){
+
+            $Re = [];
+            foreach( $this->SqlService->Converter1(self::ClassName) as $o){
+	
+                if ( 1 == $o['del_flg']){continue;}
+
+                    $d['id']                    = $o['class_name_id'];
+                    $d['creator_id']            = $o['creator_id'];
+                    $d['backend_name']          = $o['name'];
+                    $d['name']                  = $o['name'];
+                    $d['sort_no']               = $o['rank'];
+                    $d['create_date']           = $o['create_date'];
+                    $d['update_date']           = $o['update_date'];
+                    $d['discriminator_type']    = 'classname';
+                
+                $Re[] = $d;
+            }
+            $this->SqlService->Converter2(self::ClassName,$Re);
+   
+
+        }
+
+       public function ClassCutegory(){
+
+
+            $Re= []; 
+
+            $ClassCategory = $this->SqlService->Table(self::ClassCategory)
+                             ->Order('class_name_id','ASC')
+                             ->Order('rank','DESC')
+                             ->FindAll();
+
+                            // print_r($ClassCategory );
+                            // exit;
+            $rank =1; 
+            $ClassNameId = 0;
+            foreach( $ClassCategory as $o){
+           // foreach( $this->SqlService->Converter1(self::ClassCategory) as $o){    
+                if ($ClassNameId != $o['class_name_id'] ){ $rank = 1;}
+
+                $d['id']                    = $o['class_category_id'];
+                $d['class_name_id']         = $o['class_name_id'];
+                $d['creator_id']            = $o['creator_id'];
+                $d['backend_name']          = $o['name'];
+                $d['name']                  = $o['name'];
+                $d['sort_no']               = $rank ;
+                //$d['sort_no']               = $o['rank'];
+                $d['visible']               = $o['del_flg'] == 0 ? 1 : 0;
+                $d['create_date']           = $o['create_date'];
+                $d['update_date']           = $o['update_date'];
+                $d['discriminator_type']    = 'classcategory';
+
+                $ClassNameId = $o['class_name_id'];
+                $rank++;
+                $Re[] = $d;
+            }
+            $this->SqlService->Converter2(self::ClassCategory,$Re);
+   
+       }
+
+        public function Category(){
+
+
+            $Re= []; 
+            foreach( $this->SqlService->Converter1(self::Category) as $o){
+
+                if(1 == $o['del_flg']){continue;}	
+
+                $d['id']                    = $o['category_id'];
+                $d['parent_category_id']    = $o['parent_category_id'];
+                $d['creator_id']            = $o['creator_id'];
+                $d['category_name']         = $o['category_name'];
+                $d['hierarchy']             = $o['level'];
+                $d['sort_no']               = $o['rank'];
+                $d['create_date']           = $o['create_date'];
+                $d['update_date']           = $o['update_date'];
+                $d['discriminator_type']    = 'category';
+
+
+            $Re[] = $d;
+            }
+            
+
+                $d['id']                    = 81;
+                $d['parent_category_id']    = 2;
+                $d['creator_id']            = null;
+                $d['category_name']         = '剣道防具セット（胴なし）'
+;               $d['hierarchy']             = 2;
+                $d['sort_no']               = 28;
+                $d['create_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['update_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['discriminator_type']    = 'category';
+                $Re[] = $d;
+                $d['id']                    = 82;
+                $d['parent_category_id']    = 81;
+                $d['creator_id']            = null;
+                $d['category_name']         = '稽古用の剣道防具セット（胴なし）';
+                $d['hierarchy']             = 3;
+                $d['sort_no']               = 27;
+                $d['create_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['update_date']           =  Carbon::now()->format('Y-m-d h-i-s');
+                $d['discriminator_type']    = 'category';
+                $Re[] = $d;
+
+            $this->SqlService->Converter2(self::Category,$Re);
+
+        }
+        private function ProductCategory(){
+
+
+            $Re= []; 
+            foreach( $this->SqlService->Converter1(self::ProductCategory) as $o){
+                if (2532 ==$o['product_id']){continue;}
+
+                $d['product_id']         = $o['product_id'];
+                $d['category_id']        = $o['category_id'];
+                $d['discriminator_type'] = 'productcategory';
+                $Re[] = $d;
+            }
+
+           
+
+
+            foreach ([2,81,82] as $CategoryId){
+                $d['product_id']         = 2532;
+                $d['category_id']        = $CategoryId;
+                $d['discriminator_type'] = 'productcategory';
+                $Re[] = $d;
+
+            }
+
+        $this->SqlService->Converter2(self::ProductCategory,$Re);
+
+
+        }
+
+
+
+        public function ProductImage(){
+                	
+            $Re= [];
+            $i =1;                                       
+            foreach( $this->SqlService->Converter1(self::ProductImage) as $o){
+
+                $d['id']                    = $i;
+                $d['product_id']            = $o['product_id'];
+                $d['creator_id']            = $o['creator_id'];
+                $d['file_name']             = $o['file_name'];
+                $d['sort_no']               = $o['rank'];
+                $d['create_date']           = $o['create_date'];
+                $d['discriminator_type']    = 'productimage';
+                $Re[] = $d;
+                $i++;
+            }
+            $this->SqlService->Converter2(self::ProductImage,$Re);
+
+         }
+
+        private function ProductStock(){
+
+            $Re= [];
+            $i =1;                                       
+            foreach( $this->SqlService->Converter1(self::ProductStock) as $o){
+
+                $d['id']                    = $i;
+                $d['product_class_id']      = $o['product_class_id'];
+                $d['creator_id']            = $o['creator_id'];
+                $d['stock']                 = $o['stock'];
+                $d['create_date']           = $o['create_date'];
+                $d['update_date']           = $o['update_date'];
+                $d['discriminator_type']    ='productstock';
+
+                $Re[] = $d;
+                $i++;
+            }
+            $this->SqlService->Converter2(self::ProductStock,$Re);
+        }
+
+
+        private function Tag(){
+
+           
+            $Re = [];
+            foreach( $this->SqlService->Converter1('mtb_tag') as $o){
+
+                $d['id']                 = $o['id'];
+                $d['name']               = $o['name'];
+                $d['sort_no']            = $o['rank'];
+                $d['discriminator_type'] = 'tag';
+
+                $Re[] = $d;
+         
+            }
+            $this->SqlService->Converter2(self::Tag,$Re);
+
+        }
+
+
+
+        private function ProductTag(){
+
+            $Re= [];
+            $i =1;                                       
+            foreach( $this->SqlService->Converter1(self::ProductTag) as $o){
+
+
+                $d['id']                 = $i;
+                $d['product_id']         = $o['product_id'];
+                $d['tag_id']             = $o['tag'];
+                $d['creator_id']         = $o['creator_id'];
+                $d['create_date']        = $o['create_date'];
+                $d['discriminator_type'] =  'producttag';
+
+                $Re[] = $d;
+                $i++;
+            }
+            $this->SqlService->Converter2(self::ProductTag,$Re);
+        }
+
+        
+
+
+
+        private function Shop(){
+            
+           $Re  = []; 
+           $sRe = [];
+
+           $ShopImage = $this->ShopImage();
+           $Shops = $this->SqlService->Converter1(self::Shop);
+
+           $S_sortNo = count($Shops);
+           foreach( $Shops as $o){
+                
+
+                $d['id']                = $o['shop_id'];
+                $d['member_id']         = $o['member_id'];
+                $d['shop_status_id']    = $o['del_flg'] == 0 ? $o['status']: 9;
+                $d['pref_id']           = $o['pref'];
+                $d['shop_name']         = $o['shop_name'];
+                $d['postal_code']       = $o['zip01'] . $o['zip02'];
+                $d['addr01']            = $o['addr01'];
+                $d['addr02']            = $o['addr02'];
+                $d['phone_number']      = str_replace('-','',$o['tel']);
+                $d['memo']              = $o['memo'];
+                $d['appeal']            = $o['appeal'];
+
+                $d['creator_id']        = null;
+                $d['create_date']           = $o['create_date'];
+                $d['update_date']           = $o['update_date'];
+                $d['delivery_free_amount']  = $o['delivery_free_amount'];
+                $d['shop_url']              = $o['shop_url'];
+                $d['product_detail_memo']   = $o['product_detail_memo'];
+
+                $d['shop_image']            = $ShopImage[$o['shop_id']] ?? null;
+                $d['discriminator_type']    = 'shop';
+
+
+                $Re[] = $d;
+
+                $S_sortNo--;
+                $s['id'] = $o['shop_id'];
+                $s['name'] = $o['shop_name'];
+                $s['sort_no'] = $S_sortNo ;
+                $s['discriminator_type']  = 'saletype';
+                $sRe[] = $s;
+                
+            }
+
+                $this->SqlService->Converter2(self::Shop,$Re);
+
+                $this->SqlService->Converter2(self::SaleType,$sRe);
+        }
+   
+            private function ShopImage(){
+
+                $Re= []; 
+                foreach( $this->SqlService->Converter1(self::ShopImage) as $o){
+
+
+
+                    $Re[$o['shop_id']] = $o['file_name'];
+        }
+
+                return $Re;
+        }
+   
+        private function Tuika(){
+
+
+            $Re = [];   
+            foreach( $this->SqlService->Converter1('plg_expand_product_columns_value') as $t){
+
+                $Re[$t['product_id']][$t['column_id']] = empty($t['value']) ? null : $t['value'] ;
+            }
+
+            $Type = [];
+            foreach($this->SqlService->Table('mtb_product_type')->FindAllBy($this->SqlService::DBNAMES[0]) as $TP){
+                $Type[$TP['name']] = $TP['id'];
+            }
+     
+            $Meta = [];
+            foreach ($this->SqlService->Table('plg_product_header')->FindAllBy($this->SqlService::DBNAMES[1]) as $M){
+                 $Meta[$M['product_id']] = $M;
+            };
+
+
+        return [$Re,$Type,$Meta];
+        }
+        private function getProducts(){
+
+            $Re =[];
+            foreach ($this->SqlService->Table(self::Product)->FindAllBy($this->SqlService::DBNAMES[0])as $Data){
+                $Re[$Data['id']] = $Data;
+            }
+
+            return $Re;
+        }
+   
+        private function Delivery(){
+
+
+        $Delivery = $this->SqlService->Converter1(self::Delivery);
+        $sortNo = count($Delivery);
+
+            $Re= []; 
+            foreach( $Delivery as $o){ 
+            if( 1== $o['del_flg']){continue;}
+
+            $this->Deliverys[$o['delivery_id']] = $o['service_name'];
+
+            $sortNo -- ;
+            $d['id']                    = $o['delivery_id'];
+            $d['creator_id']            = null;
+            $d['sale_type_id']          = $o['shop_id'];
+            $d['name']                  = $o['name'];
+            $d['service_name']          = $o['service_name'];
+            $d['description']           = $o['description'];
+            $d['confirm_url']           = $o['confirm_url'];
+            $d['sort_no']               = $sortNo ;
+            $d['visible']               = 1;
+            $d['create_date']           = $o['create_date'];
+            $d['update_date']           = $o['update_date'];
+            $d['discriminator_type']    =  'delivery';
+            $d['delivery_company_id']   = null ;
+
+            $Re[] = $d;
+        }
+
+                $this->SqlService->Converter2(self::Delivery,$Re);
+
+        }
+   
+    private function DeliveryFee(){
+        
+        $Re= []; 
+        foreach( $this->SqlService->Converter1(self::DeliveryFee) as $o){ 
+
+        if (!isset($this->Deliverys[$o['delivery_id']])){continue;}
+
+
+        $d['id']                    = $o['fee_id'];
+        $d['delivery_id']           = $o['delivery_id'];
+        $d['pref_id']               = $o['pref'];
+        $d['fee']                   = $o['fee'];
+        $d['discriminator_type']    = 'deliveryfee';
+
+        $Re[] = $d;
+        }
+
+            $this->SqlService->Converter2(self::DeliveryFee,$Re);
+    
+    }
+    private function DeliveryTime(){
+        
+        $Re= []; 
+        $DeliveryTimes = $this->SqlService->Table(self::DeliveryTime)
+                                         ->Order('delivery_id','ASC')
+                                         ->Order('time_id','DESC')
+                                         ->FindAll();
+        $SortNo =1; 
+        $DeliveryId = 0;
+
+        foreach( $DeliveryTimes as $o){
+
+            if (!isset($this->Deliverys[$o['delivery_id']])){continue;}
+            if ($DeliveryId != $o['delivery_id'] ){ $SortNo = 1;}
+
+
+                $d['id']                    = $o['time_id'];	
+                $d['delivery_id']           = $o['delivery_id'];
+                $d['delivery_time']         = $o['delivery_time'];
+                $d['sort_no']               = $SortNo;
+                $d['visible']               = 1;
+                $d['create_date'] =Carbon::now()->format('Y-m-d h-i-s');
+                $d['update_date'] =Carbon::now()->format('Y-m-d h-i-s');
+                $d['discriminator_type'] = 'deliverytime';
+                
+                $DeliveryId = $o['delivery_id'];
+                $SortNo ++ ;
+
+                $Re[] = $d;
+        }
+
+            $this->SqlService->Converter2(self::DeliveryTime,$Re);
+
+    }
+ private function Member(){
+
+        $Shops =[];
+        foreach($this->SqlService->Converter1(self::Shop) as $Shop){
+            $Shops[$Shop['member_id']] = $Shop['shop_id'];
+        };
+
+        $Members =$this->SqlService->Converter1('dtb_member');
+       // print_r($Customers);           
+                         
+                         ;
+        
+        $Re = [];
+        foreach ($Members as $Member){
+            $data = [];
+
+            $data['id']             = $Member['member_id'];
+            $data['work_id']        = $Member['work'];
+            $data['authority_id']   = $Member['authority'];
+            $data['creator_id']     = null;
+            $data['name']           = $Member['name'];
+            $data['department']     = $Member['department'];
+            $data['login_id']       = $Member['login_id'];
+            $data['password']       = '';
+            $data['salt']           = null;
+            $data['sort_no']        = $Member['rank'];
+            $data['two_factor_auth_key'] = null;
+            $data['two_factor_auth_enabled'] = 0;
+            $data['create_date']    = $Member['create_date'];
+            $data['update_date']    = $Member['update_date'];
+            $data['login_date']     = $Member['login_date'];
+            $data['discriminator_type'] = 'member';
+            $data['reset_key']      = null;
+            $data['reset_expire']   = null;
+            $data['shop_id']        = $Shops[$Member['member_id']] ?? null;
+
+            $Re[] = $data;
+        }
+
+        $this->SqlService->Converter2('dtb_member',$Re);
+
+
+
+    }
+
+    }

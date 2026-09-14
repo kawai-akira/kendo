@@ -1,0 +1,628 @@
+<?php
+    /**
+	 * @version EC=CUBE4.3
+	 * @copyright 株式会社 翔 kakeru.co.jp
+	 * @author
+	 * 2026年08月06日作成
+	 *
+	 * app\Controller\Admin\AdminConverterController.php
+     *
+     *
+	 * 
+	 *
+	 * 							   C= C= C= ┌(;･_･)┘ﾄｺﾄｺ
+	 ******************************************************/
+    namespace Customize\Controller\Admin;
+
+    use Eccube\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    
+    use Customize\Service\SqlService;
+    
+    use Customize\Form\Type\Admin\ConverterType;
+    use Eccube\Entity\Master\CsvType;
+    use Eccube\Entity\BaseInfo;
+    use Eccube\Entity\Member;
+    use Eccube\Entity\MailTemplate;
+    use Eccube\Entity\Page;
+    use Eccube\Entity\PageLayout;
+    use Eccube\Entity\Layout;
+    use Eccube\Entity\Block;
+    use Eccube\Entity\BlockPosition;
+    use Eccube\Repository\Master\PrefRepository;
+    use Eccube\Entity\Master\DeviceType;
+    use Eccube\Entity\Master\Authority;
+    use Carbon\Carbon;
+    use Customize\Service\Converter\CustomerConverter;
+    use Customize\Service\Converter\ProductConverter;
+    use Customize\Service\Converter\OrderConverter;
+    use Customize\Entity\Master\ShopStatus;
+
+
+   # use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
+
+    class AdminConverterController extends AbstractController
+    {
+
+        const Message1 = '顧客・売上・商品';
+        const Message2 = 'ベーズ・カテゴリー';
+        const IINSERT1  = "INSERT INTO TableName (id, name, sort_no, discriminator_type) VALUES ('rid','rname,','rsort_no','rtype');";
+        const VALUES   = ['TableName','rid','rname,','rsort_no','rtype'];
+
+        const IINSERT2 = "INSERT INTO TableName (id,display_order_count, name, sort_no, discriminator_type) VALUES ";
+        const TRUNCATE = "TRUNCATE TABLE ";
+        const FOREIGN  = 'SET FOREIGN_KEY_CHECKS = ';
+      
+        private const PaymentOption = 'dtb_payment_option';
+        private const News          = 'dtb_news';
+        /**
+         * @var SqlService. $SqlService
+         */
+        private $SqlService;
+        /**
+         * @var PrefRepository. $PrefRepository
+         */
+        private $PrefRepository;
+
+         
+         /**
+          * @var CustomerConverter
+          */
+         private $CustomerConverter;
+         /**
+          * @var ProductConverter
+          */
+         private $ProductConverter;
+
+         /**
+          * @var OrderConverter.
+          */
+        private $OrderConverter;
+
+         public function __construct(
+            SqlService $SqlService
+            ,PrefRepository $PrefRepository
+            ,CustomerConverter $CustomerConverter
+            ,ProductConverter $ProductConverter
+            ,OrderConverter $OrderConverter
+         )
+        {
+
+        $this->SqlService = $SqlService;
+        $this->PrefRepository = $PrefRepository;
+        $this->CustomerConverter = $CustomerConverter;
+        $this->ProductConverter = $ProductConverter;
+        $this->OrderConverter = $OrderConverter;
+
+        }    
+
+    /**
+     * MyText
+     * @param Request $request
+     * @return array
+     *
+     * @Route("/%eccube_admin_route%/Converter", name="admin_Converter" , methods={"GET", "POST"})
+     * @Template("@admin/Converter/index.twig")
+     */
+    public function index(Request $request)
+    {
+    // $this->CarenderSearvice->collCsv();
+       $this->ShowColumn();
+
+       echo 'Current Memory: ' . (memory_get_usage() / 1024 / 1024) . " MB\n";
+   //memory_get_usage()
+       return  [
+        'message1' => self::Message1,
+        'message2' => self::Message2,
+
+        ];
+
+     
+
+    }
+    /**
+     * MyText
+     * @param Request $request
+     * @return array
+     *
+     * @Route("/%eccube_admin_route%/Converter/Converter", name="admin_Converter_Converter" , methods={"GET", "POST"})
+     * @Template("@admin/Converter/Converter.twig")
+     */
+    public function Converter(Request $request)
+    {
+
+        $form   = $this->createForm(ConverterType::class);
+  
+$this->ProductConverter->Menu3();
+   
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $Messege = null;
+            switch($form->get('mode')->getData()){
+                case 'customer':
+                    $this->CustomerConverter->Menu();
+                    $Messege = '会員群のコンバートに成功しました。';
+                    break;
+                case 'product':        
+                    $this->ProductConverter->Menu2();
+                    $Messege = '商用品群のコンバートに成功しました。';
+                    break;
+                case 'order':
+                    $this->OrderConverter->Menu1();
+                    $Messege = '受注群のコンバートに成功しました。';
+                    break;
+                case 'member':
+                    $this->ProductConverter->Menu3();
+                    $Messege = '管理者のコンバートに成功しました。';
+                    break;
+                case 'shop':
+                    $this->ProductConverter->Menu1();
+                    $Messege = '店舗・配送のコンバートに成功しました。';
+                    break;
+                case 'PaymentOption':
+                    $this->PaymentOption();
+                    $Messege = '支払い方法のコンバートに成功しました。';
+                    break;  
+                
+            }
+            
+            if($Messege){
+                $this->addSuccess($Messege, 'admin');
+            }else{
+                $this->addError('コンバートに失敗しました', 'admin');
+            }
+
+            return $this->redirectToRoute('admin_Converter_Converter');
+ 
+        }
+
+       return  [
+           'form' => $form->createView(),
+           'message1' => self::Message1,
+
+          
+
+        ];
+
+     }
+   
+    /**
+     * MyText
+     * @param Request $request
+     * @return array
+     *
+     * @Route("/%eccube_admin_route%/Converter/inAdvance", name="admin_Converter_inAdvance" , methods={"GET", "POST"})
+     * @Template("@admin/Converter/inAdvance.twig")
+     */
+    public function inAdvance(Request $request){
+
+        $form   = $this->createForm(ConverterType::class);
+        $this->News();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->MakeMtbSql();
+            $this->setMtb();
+            $this->setBaseInfo();
+            $this->MailTemplate();
+            $this->Page();
+            $this->Layout();
+            $this->News();
+            
+            
+            $this->addSuccess('コンバートに成功しました。', 'admin');
+            return $this->redirectToRoute('admin_Converter_inAdvance');
+
+        }
+
+   
+       return  [
+           'form' => $form->createView(),
+           'message2' => self::Message2,
+
+        ];
+
+    }
+
+    private function setMtb(){
+   
+        /** @var Authority */            
+        $Authority = $this->entityManager->getRepository(Authority::class)->find(1);
+
+        $Authority->setName('店舗オーナー');
+        
+        $this->entityManager->persist($Authority);
+        $this->entityManager->flush();
+
+
+        if($this->entityManager->getRepository(ShopStatus::class)->find(9)){
+            return ;
+        }
+
+          $Status = new ShopStatus();
+          $Status->setId(9)
+                 ->setName('削除')
+                 ->setSortNo(2);
+        $this->entityManager->persist($Status);
+        $this->entityManager->flush();
+                            
+
+
+    } 
+
+   
+
+    private function Layout(){
+
+        $Datas[] = ['name' => 'ヘッターロゴ フッターのみ'];
+        $Datas[] = ['name' => '商品詳細'];
+
+  
+                    
+        $DeviceType = $this->entityManager->getRepository(DeviceType::class)->find(10);
+
+        foreach ($Datas as $Data){
+            if(count($this->entityManager->getRepository(Layout::class)->findBy(['name'=>$Data['name']])) >0 ){continue;}
+
+            $layout = new Layout();
+            $layout->setName($Data['name'])
+                   ->setDeviceType($DeviceType);
+
+            $this->entityManager->persist($layout);		
+            $this->entityManager->flush();
+
+            $this->PageLayout($layout);
+            $this->BlockPosition1($layout);
+        }
+    }
+
+
+    private function PageLayout(Layout $layout){
+
+       
+
+        $Pages = $this->entityManager->getRepository(Page::class)->findBy(['url'=>['admin_renew_pass_index','admin_renew_pass_complet']]) ;
+
+
+        $sortNos = $this->SqlService->Table('dtb_page_layout')->Select('Max(sort_no)')->Find($this->SqlService::DBNAMES[0]);
+        $sortNo =$sortNos['sortMax'];
+        
+        foreach ($Pages as $i => $Page){
+
+            if($Page->getPageLayouts()>0){continue;}     
+            $sortNo++;   
+            $PageLayout = new PageLayout();
+            
+            $PageLayout          #->setPageId($page)
+                    ->setLayoutId($layout->getId())
+                    ->setPageId($Page->getId())
+                    ->setSortNo($sortNo)
+                    ->setPage($Page)
+                    ->setLayout($layout);
+
+            $this->entityManager->persist($PageLayout);		
+            $this->entityManager->flush();
+            
+            
+
+        }
+
+    }  
+    private function BlockPosition1(Layout $layout){
+
+        $Datas[]= [
+            'setion' => 3,    
+            'block'  => $this->entityManager->getRepository(Block::class)->find(10),
+            'row'    => 1,
+        ];
+
+        $Datas[]= [
+            'setion' => 10,    
+            'block'  => $this->entityManager->getRepository(Block::class)->find(6),
+            'row'    => 1,
+        ];
+
+        
+        foreach($Datas as $Data){
+            $Position = new BlockPosition();
+            $Position->setSection($Data['setion'])
+                     ->setBlockId($Data['block']->getId())
+                     ->setBlock($Data['block'])
+                     ->setLayoutId($layout->getId())
+                     ->setLayout($layout)
+                     ->setBlockRow($Data['row']);
+            $this->entityManager->persist($Position);		
+            $this->entityManager->flush();
+
+        }
+
+
+    } 
+
+
+    private function Page(){
+
+    $date =  Carbon::now()->format('Y-m-d h-i-s');
+
+  
+    $Datas[] = [
+        
+        'master_page_id' => null,
+        'page_name' => '管理者用パうワード変更',
+        'url' => 'admin_renew_pass_index',
+        'file_name' => 'AdminRenewPass/index', 
+        'meta_robots' => 'noindex'
+    ];
+    $Datas[] = [
+        'master_page_id' => null,
+        'page_name' => '管理者用パうワード変更終了',
+        'url' => 'admin_renew_pass_complete',
+        'file_name' => 'AdminRenewPass/complete', 
+        'meta_robots' => 'noindex'
+    ];
+
+    
+        foreach( $Datas as $Data){
+
+            if(count($this->entityManager->getRepository(Page::class)->findBy(['url'=>$Data['url']]))>0){continue;}  
+
+                if( 'admin_renew_pass_complete' == $Data['url']){
+                    $Data['master_page_id'] = $Page->getId();
+                }
+
+                $Page = new Page();
+                $Page->setMasterPage($Data['master_page_id'])
+                    ->setName($Data['page_name'])
+                ->setUrl($Data['url'])
+                ->setFileName($Data['file_name'])
+                ->setEditType(2)
+                ->setCreateDate($date)
+                ->setUpdateDate($date)
+                ->setMetaRobots($Data['meta_robots']);
+                $this->entityManager->persist($Page);		
+                $this->entityManager->flush();	
+        }
+
+
+    }
+
+
+
+   private function MailTemplate(){
+
+
+    $Temp = new MailTemplate(); 
+        $Temp->setName('管理画面用パスワード再セットメール')
+             ->setFileName('Mail/admin_renew_mail.twig')
+             ->setMailSubject('パスワード再セット');
+            $this->entityManager->persist($Temp);		
+            $this->entityManager->flush();		
+
+   } 
+
+
+    /**
+     * 
+     */
+    private function setBaseInfo(){
+
+
+        $Info = $this->SqlService->Table('dtb_base_info')
+                                 ->Find();
+
+
+        $baseInfo = $this->entityManager->getRepository(BaseInfo::class)->find(1);
+
+
+
+           $pref =  $this->PrefRepository->find($Info['pref']);
+
+           $baseInfo->setPref($pref)
+                    ->setCompanyName($Info['company_name'])
+                    ->setCompanyKana($Info['company_kana'])
+                    ->setPostalCode($Info['zip01'].$Info['zip02'])
+                    ->setAddr01($Info['addr01'])
+                    ->setAddr02($Info['addr02'])
+                    ->setPhoneNumber($Info['tel01'].$Info['tel02'].$Info['tel03'])
+                    ->setBusinessHour(null)
+                    ->setEmail01($Info['email01'])
+                    ->setEmail02($Info['email02'])
+                    ->setEmail03($Info['email03'])
+                    ->setEmail04($Info['email04'])
+                    ->setShopName($Info['shop_name'])
+                    ->setShopKana($Info['shop_kana']) 
+                    ->setShopNameEng($Info['shop_name_eng'])
+                //  ->setUpdateDate($updateDate)
+                    ->setGoodTraded($Info['good_traded'])
+                    ->setMessage($Info['message'])
+                    ->setDeliveryFreeAmount($Info['delivery_free_amount'])
+                    ->setDeliveryFreeQuantity($Info['delivery_free_quantity'])
+                    ->setOptionMypageOrderStatusDisplay($Info['option_mypage_order_status_display'])
+                    ->setOptionNostockHidden($Info['nostock_hidden'])
+                    ->setOptionFavoriteProduct($Info['option_favorite_product'])
+                    ->setOptionProductDeliveryFee($Info['option_product_delivery_fee'])
+                    ->setInvoiceRegistrationNumber(null)
+                //   ->setOptionProductTaxRule(false)
+                    ->setOptionCustomerActivate($Info['option_customer_activate'])
+                    ->setOptionRememberMe($Info['option_remember_me'])
+                //  ->setOptionMailNotifier(false)
+                //  ->setAuthenticationKey(null)
+                //  ->setCountry(null)
+                    ->setOptionPoint(0)
+                //    ->setPointConversionRate(1)
+                //    ->setBasicPointRate(1)
+                ;
+
+
+
+            $this->entityManager->persist($baseInfo);		
+            $this->entityManager->flush();		
+
+    }
+
+
+    private function PaymentOption(){
+
+        $Deliverys = $this->SqlService->Table($this->ProductConverter::Delivery)->FindAllBy( $this->SqlService::DBNAMES[0]); 
+      
+        $Re = [];
+        foreach ($Deliverys as  $Delivery){
+                $d['delivery_id']           = $Delivery['id'];
+                $d['payment_id']            = 3; //便宜的に
+                $d['discriminator_type']    = 'paymentoption';
+                $Re[] = $d;
+            }
+  
+            $this->SqlService->Converter2(self::PaymentOption,$Re);
+    }  
+
+    private function News(){                
+
+        $Re= [];
+                                               
+        foreach( $this->SqlService->Converter1(self::News) as $o){
+
+        
+            $d['id']                    = $o['news_id'];
+            $d['creator_id']            = null;
+            $d['publish_date']          = $o['news_date'];
+            $d['title']                 = $o['news_title'];
+            $d['description']           = $o['news_comment'];
+            $d['url']                   = $o['news_url'];
+            $d['link_method']           = $o['link_method'];
+            $d['create_date']           = $o['create_date'];
+            $d['update_date']           = $o['update_date'];
+            $d['visible']               = $o['del_flg'] == 1 ? 0 : 1;
+            $d['discriminator_type']     ='news';
+            $Re[] = $d;
+
+            }
+  
+            $this->SqlService->Converter2(self::News,$Re);
+
+    }
+
+
+
+/**
+ * MTBはマイグレーションで一元管理をする
+ * 
+ * Version2026080823281
+ */
+
+/**
+ * 
+ */
+private function MakeMtbSql(){
+
+    $Sql = self::FOREIGN. '0;';
+
+    foreach ($this->mtbLists() as $mtbName){
+
+    $Sql .= self::TRUNCATE . $mtbName .';';
+
+        $Mtbs = $this->SqlService->Table($mtbName)
+                                 ->FindAll();
+
+        foreach ($Mtbs as $mtb){
+
+            $Sql .= $this->setMtbSql($mtbName,$mtb);
+
+
+        }                         
+
+    }
+    $Sql .= self::FOREIGN. '1;';
+    $this->SqlService->setSql($Sql)
+                     ->Exec($this->SqlService::DBNAMES[0]);
+
+
+
+
+}
+
+
+
+    /**
+     * @return array
+     */
+    private function mtbLists(){
+
+            $Mtbs = [
+
+                'mtb_dou_color',
+                'mtb_doui_hope',
+                'mtb_doui_type',
+                'mtb_kote_color',
+                'mtb_men_color',
+                'mtb_shinai_length',
+                'mtb_shop_status',
+                'mtb_zekken_font',
+            //    'mtb_tag'
+            ];
+
+
+
+
+
+    return $Mtbs;
+
+    }
+    /**
+     * @param string $mtbName
+     * @param array  $mtb
+     * @return string $Sql
+     */
+    private function setMtbSql($mtbName,$mtb){
+
+        $Sql = self::IINSERT1;
+
+
+        $setDiscriminatorType = function($mtbName){
+
+           $name =  str_replace(['mtb','_'],['',''],$mtbName);
+           return [$name];
+        };
+
+        $Arr = array_merge([$mtbName],$mtb,$setDiscriminatorType($mtbName));
+
+       
+        return  str_replace(self::VALUES,$Arr, $Sql);
+
+
+    }
+
+    public function truncateTable( $TableNmae)
+    {
+        $connection = $this->entityManager->getConnection();
+    
+    // 外部キー制約を一時的に無効化
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0;');
+    
+    // 対象テーブルをTRUNCATE（例: plg_your_entity_table）
+        $connection->executeStatement('TRUNCATE TABLE '. $TableNmae . ' ;');
+    
+    // 外部キー制約を元に戻す
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;');
+    }
+
+              
+
+
+
+    private function ShowColumn(){  
+        $Columns = $this->SqlService->Table('dtb_shipping')
+                                    ->ShowColumn($this->SqlService::DBNAMES[0]);
+
+       // print_r($Columns);                            
+        foreach ($Columns as $Column){
+             //   echo $Column['Field'].':' . $Column['Type']. PHP_EOL;
+                echo $Column['Field'].PHP_EOL;           
+        }    
+    }
+
+}
+
