@@ -196,7 +196,7 @@ use Eccube\Repository\Master\CustomerStatusRepository;
             $d['currency_code']         = 'JPY';
             $d['point_rate']            = null;
             $d['discriminator_type']    = 'productclass';
-            $d['regular_discount_id']   = null;
+       //     $d['regular_discount_id']   = null;
             $Re[] = $d;
         }
             $this->SqlService->Converter2(self::ProductClass,$Re);
@@ -550,7 +550,7 @@ use Eccube\Repository\Master\CustomerStatusRepository;
             $d['create_date']           = $o['create_date'];
             $d['update_date']           = $o['update_date'];
             $d['discriminator_type']    =  'delivery';
-            $d['delivery_company_id']   = null ;
+        #    $d['delivery_company_id']   = null ;
 
             $Re[] = $d;
         }

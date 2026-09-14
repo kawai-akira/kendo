@@ -1,0 +1,389 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月15作成
+ #
+ # app\template\admin\Shop\edit.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ {% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['shop', 'shop_edit'] %}
+
+{% block title %}{{ 'admin.shop.shop_registration'|trans }}{% endblock %}
+{% block sub_title %}{{ 'admin.shop.shop_managemen'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+    <script>
+        $(document).on('drop dragover', function(e) {
+            e.preventDefault();
+        });
+
+        $(function() {
+            // ファイルアップロード
+            // see https://pqina.nl/filepond/
+            var inputFileElement = document.querySelector('input[type=file]');
+            {% if eccube_config.locale == 'ja' or eccube_config.locale == 'en' %}
+            FilePond.setOptions(FilePondLocale_{{ eccube_config.locale }});
+            {% endif %}
+            FilePond.setOptions({
+                server: {
+                    process: {
+                        url: '{{ path('admin_shop_image_process') }}',
+                        headers: {
+                            'ECCUBE-CSRF-TOKEN': $('meta[name="eccube-csrf-token"]').attr('content'),
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    },
+                    load: {
+                        url: '{{ path('admin_shop_image_load') }}?source=',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    },
+                    revert: {
+                        url: '{{ path('admin_shop_image_revert') }}',
+                        headers: {
+                            'ECCUBE-CSRF-TOKEN': $('meta[name="eccube-csrf-token"]').attr('content'),
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    }
+                }
+            });
+            var pond = FilePond.create(inputFileElement, {
+                allowFileTypeValidation: true,
+                acceptedFileTypes: [
+                    'image/gif',
+                    'image/png',
+                    'image/jpeg'
+                ],
+                allowFileSizeValidation: true,
+                maxFileSize: 10000000,
+                maxFiles: 1,
+                allowBrowse: true,
+                labelIdle: '<i class="fa fa-cloud-upload fa-3x text-ec-lightGray mx-3 align-middle" aria-hidden="true" style="font-size: 40px"></i>{{ 'admin.common.drag_and_drop_image_description'|trans }}<span class="filepond--label-action">{{ 'admin.common.file_select'|trans }}</span>',
+                // 保存されている画像のロード
+                files: [
+                    {% if form.shop_image.vars.value is not empty %}
+                    {
+                        source: '{{ form.shop_image.vars.value }}',
+                        options: {
+                            type: 'local'
+                        }
+                    },
+                    {% endif %}
+                ]
+            });
+            pond.on('initfile', function() {
+                $('#product_image_error').hide();
+            });
+            pond.on('error', function(error, file) {
+                var message = '{{ 'admin.common.upload_error'|trans }}';
+                if (error.main !== undefined) {
+                    message = `${error.main}: ${error.sub}`;
+                }
+                $('#shop_image_error')
+                    .show()
+                    .find('.form-error-message').text(message);
+
+                // エラーメッセージが表示されてからプレビューエリアのエラーメッセージを非表示にする
+                setTimeout(function() {
+                    $('.filepond--file-status').hide();
+                }, 300);
+            });
+
+            // 画像が追加されたら shop_image にファイル名を追加する
+            pond.on('processfile', function(error, file) {
+                if (error) {
+                  console.log(error);
+                } else {
+                    $('#{{ form.shop_image.vars.id }}').val(file.serverId);
+                }
+            });
+            // 画像が削除されたら shop_image のファイル名を削除する
+            pond.on('removefile', function(error, file) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    $('#{{ form.shop_image.vars.id }}').val('');
+                }
+            });
+
+        });
+        {% if Shop.id is null %}
+        $(function() {
+            $('#admin_shop_Member').change(function(){
+                var member =$(this).val();
+                if('' == member){
+                    $('p.member').text('');
+                    return ;
+                }
+
+                const formData = new FormData($('#form01').get(0));
+                $.ajax({					
+                    url: '{{ path('admin_shop_ajax_member_search') }}',					
+                    type: 'POST',					
+                    dataType: 'json',					
+                    data: formData,	
+                    processData: false, 
+                    contentType: false, 				
+                    }).done(function(data) {					
+                    if('succes' == data.status){					
+                        $('p#member_name').text(data.name);					
+                        $('p#member_email').text(data.email);		
+                
+                    }
+	
+                }).fail(function(data) {					
+                    alert('メンバーの取得に失敗しました');					
+                });					
+        
+                });
+        });
+        {% endif %}
+    </script>
+{% endblock javascript %}
+
+{% block main %}
+    <form name="form01" role="form" id="form01" method="post" class="h-adr" enctype="multipart/form-data"
+          action="{%- if Shop.id %}{{ url('admin_shop_edit', { id : Shop.id }) }}{% else %}{{ url('admin_shop_new') }}{% endif -%}" novalidate>
+        <span class="p-country-name" style="display:none;">Japan</span>
+           {{ form_widget(form._token) }}
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-body">
+                            {% if Shop.id %}
+                                {{ form_widget(form.Member) }}
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        <div>
+                                            <span>{{ 'admin.shop.shop_id'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <p>{{ Shop.id }}<p>
+                                    </div>
+
+                                </div>
+                            {% else %}
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        <span>{{ 'admin.shop.member.info'|trans }}</span>
+                                    </div>
+                                    <div class="col-3">
+                                        {{ form_widget(form.Member) }}
+                                        {{ form_errors(form.Member) }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>{{ 'admin.shop.shop_title'|trans }}</span>
+                                    <span class="badge bg-primary ms-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ form_widget(form.shopName) }}
+                                            {{ form_errors(form.shopName) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'admin.shop.image_title'|trans }}">
+                                        <span>{{ 'admin.shop.image'|trans }}</span><i class="fa fa-question-circle fa-lg ms-1"></i>
+                                        <br>{{ 'admin.shop.image_size'|trans }}
+                                    </div>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    {{ form_widget(form.shop_image, { attr : { style : 'display:none;' } }) }}
+                                    <div id="upload-zone" class="media py-3">
+                                        <div class="media-body">
+                                            {{ form_widget(form.shop_image_file, { attr : { style : 'display:none;' } }) }}
+                                            {{ form_errors(form.shop_image) }}
+                                        </div><!-- /.media-body -->
+                                        <span class="invalid-feedback" id="shop_image_error" style="display: none">
+                                            <span class="d-block">
+                                                <span class="form-error-icon badge bg-danger text-uppercase">{{ 'Error'|trans({}, 'validators') }}</span>
+                                                <span class="form-error-message"></span>
+                                            </span>
+                                        </span>
+                                    </div><!-- /.media -->
+                            </div>
+                    
+                            <div class="row mb-2">
+                                <div class="col-2"><span>{{ 'admin.common.address'|trans }}</span><span
+                                            class="badge bg-primary ms-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <div class="row justify-content-start">
+                                            <div class="col-auto pe-0 align-self-center"><span>{{ 'admin.common.postal_symbol'|trans }}</span></div>
+                                            <div class="col-2">
+                                                {{ form_widget(form.postal_code) }}
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                {{ form_errors(form.postal_code) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="row justify-content-start">
+                                            <div class="col-auto">
+                                                {{ form_widget(form.address.pref) }}
+                                                {{ form_errors(form.address.pref) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_widget(form.address.addr01, { attr : { placeholder : 'admin.common.address_sample_01' }} ) }}
+                                        {{ form_errors(form.address.addr01) }}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_widget(form.address.addr02, { attr : { placeholder : 'admin.common.address_sample_02' }}) }}
+                                        {{ form_errors(form.address.addr02) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>{{ 'admin.shop.member.title'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                        
+                                    <p id="member_name" class="member">{% if Shop.Member is not null %}{{Shop.Member.name}}{% endif %}</p>            
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>{{ 'admin.common.mail_address'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    <p id="member_email" class="member">{% if Shop.Member is not null %}{{Shop.Member.login_id}}{% endif %}</p>  
+                                </div>
+                            </div>
+                            <div class="row mb-5W">
+                                <div class="col-2">
+                                    <span>{{ 'admin.common.phone_number'|trans }}</span>
+                                    <span class="badge bg-primary ms-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.phoneNumber) }}
+                                    {{ form_errors(form.phoneNumber) }}
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>{{ 'admin.shop.appeal.title'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.appeal,{ attr : { rows : "8"} }) }}
+                                    {{ form_errors(form.appeal) }}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>{{ 'admin.shop.detail.title'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.productDetailMemo,{ attr : { rows : "8"} }) }}
+                                    {{ form_errors(form.productDetailMemo) }}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>{{ 'admin.shop.url.title'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.shopUrl) }}
+                                    {{ form_errors(form.shopUrl) }}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>{{ 'admin.shop.fee.amount'|trans }}</span>
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.deliveryFreeAmount) }}
+                                    {{ form_errors(form.deliveryFreeAmount) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="{{ 'tooltip.customer.shop_memo'|trans }}">
+                                        <span class="card-title">{{ 'admin.common.shop_memo'|trans }}</span>
+                                        <i class="fa fa-question-circle fa-lg ms-1"></i>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <a data-bs-toggle="collapse" href="#shopMemo" aria-expanded="false"
+                                    aria-controls="shopMemo">
+                                        <i class="fa fa-angle-up fa-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse ec-cardCollapse" id="shopMemo">
+                            <div class="card-body">
+                                {{ form_widget(form.memo, { 'attr': { 'row': 12 }}) }}
+                                {{ form_errors(form.memo) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink"
+                               href="{{ url('admin_shop_index_page', { page_no : app.session.get('eccube.admin.shop.search.page_no')|default('1') } ) }}?resume=1">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                <span>{{ 'admin.shop.shop_list'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div id="ex-conversion-action" class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                {{ form_widget(form.shopStatus) }}
+                                {{ form_errors(form.shopStatus) }}
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5"
+                                        type="submit">{{ 'admin.common.registration'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

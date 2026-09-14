@@ -22,6 +22,7 @@ final class Version20260825025629 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        return ;
         $Sql = $this->MakeSql();
         $this->addSql($Sql);
 
@@ -45,7 +46,7 @@ protected  function MakeSql(){
 
         $Instert = self::INSERT;
 
-        foreach ($this->mtb_csv_type() as $Value){
+        foreach ($this->mtb_product_type() as $Value){
              $Sql .= $Instert . $Value;
 
         };
@@ -58,7 +59,7 @@ protected  function MakeSql(){
 
 
     
-    private function mtb_csv_type(){
+    private function mtb_product_type(){
 
 
 $Value[] = "(1,'セット(面、小手、胴、垂)',0,'producttype');";

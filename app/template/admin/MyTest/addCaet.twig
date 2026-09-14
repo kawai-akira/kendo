@@ -1,0 +1,33 @@
+
+{#
+ # EC=CUBE4.2 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月31作成
+ #
+ # app\template\admin\MyTest\addCaet.twig
+ #
+ #
+ # MYTEST
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends '@admin/default_frame.twig' %}
+{% block title %}{{ 'MyTest'|trans }}{% endblock %}
+{% block sub_title %}{% endblock %}
+
+{% block main %}
+<form action="{{ url('admin_my_addCart', {id:Product.id}) }}" method="post" id="form1" name="form1">
+        {{ form_widget(form.men_size_a) }}
+        {{ form_errors(form.men_size_a) }}
+
+        {{ form_widget(form.men_size_b) }} cm
+        {{ form_errors(form.men_size_b) }}
+
+<button type="submit">ＳＵＢＭＩＴ</button<
+
+</form>
+
+{% endblock %}

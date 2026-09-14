@@ -107,9 +107,9 @@ use Customize\Service\SqlService;
             $data['create_date']        = $Customer['create_date'];
             $data['update_date']        = $Customer['update_date'];
             $data['discriminator_type'] = 'customer';
-            $data['v2_amazon_user_id']  = null;
-            $data['gmo_epsilon_credit_card_expiration_date'] = null;
-            $data['card_change_request_mail_send_date'] = null;
+        //    $data['v2_amazon_user_id']  = null;
+        //    $data['gmo_epsilon_credit_card_expiration_date'] = null;
+        //    $data['card_change_request_mail_send_date'] = null;
 
             $data['plg_mailmagazine_flg'] = $mg[$Customer['customer_id']] ?? 0;
 

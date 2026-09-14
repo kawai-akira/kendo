@@ -1,0 +1,70 @@
+
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月06作成
+ #
+ # app\template\admin\Converter\index.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends '@admin/default_frame.twig' %}
+{% block title %}{{ 'Converter'|trans }}{% endblock %}
+{% block sub_title %}{% endblock %}
+
+{% block main %}
+
+ <div class="c-contentsArea__cols">
+    <div class="c-contentsArea__primaryCol">
+        <div class="c-primaryCol">
+            <div class="card rounded border-0 mb-4">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                                <h2>コンバーター</h2>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <h5>サイトを移行するときにコンバートします<h5>
+                            
+                        </div>
+                        <div class="col">
+                            {{ message1 }}
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <h3>
+                            <a href="{{url('admin_Converter_Converter')}}">コンバーター</a>
+                        </h3>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <h5>前もってDATAをコンバートします<h5>
+                            
+                        </div>
+                        <div class="col">
+                            {{ message2 }}
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <h3>
+                            <a href="{{url('admin_Converter_inAdvance')}}">前処理</a>
+                        </h3>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月03日作成
+ #
+ # app\template\default\Product\Parts\hakamaFofm.twig
+ #
+ #
+ # 
+ #
+ # 袴
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div class="size-area row">
+
+    <div class="size-box col-7">
+        <h2>{{'product_hakama_title'|trans}}</h2>
+        <dl class="hakama_size">
+            <dt>{{'product_hakama_size_waist'|trans}}
+            <dd class="input">
+                {{ form_widget(form.hakama.hakama_size_waist) }}cm
+                {{ form_errors(form.hakama.hakama_size_waist) }}
+            </dd>
+            <dt>{{'product_hakama_size_length'|trans}}</dt>
+            <dd class="input">
+                {{ form_widget(form.hakama.hakama_size_length) }}cm
+                {{ form_errors(form.hakama.hakama_size_length) }}
+            </dd>
+            <dt>{{'product_hakama_etc'|trans}}</dt>
+            <dd>
+                {{ form_widget(form.hakama.hakama_etc) }}
+                {{ form_errors(form.hakama.hakama_etc) }}
+            </dd>
+        </dl>    
+    </div>
+
+    <div class="col-5">
+        <img src="{{ asset('assets/img/product/hakama.png') }}">
+    </div>
+
+
+ </div>
+
+

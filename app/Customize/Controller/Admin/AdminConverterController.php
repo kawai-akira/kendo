@@ -54,6 +54,7 @@
         const IINSERT2 = "INSERT INTO TableName (id,display_order_count, name, sort_no, discriminator_type) VALUES ";
         const TRUNCATE = "TRUNCATE TABLE ";
         const FOREIGN  = 'SET FOREIGN_KEY_CHECKS = ';
+        const productType  = "INSERT INTO mtb_product_type (id, name, sort_no, discriminator_type) VALUES ";
       
         private const PaymentOption = 'dtb_payment_option';
         private const News          = 'dtb_news';
@@ -199,7 +200,6 @@ $this->ProductConverter->Menu3();
     public function inAdvance(Request $request){
 
         $form   = $this->createForm(ConverterType::class);
-        $this->News();
 
         $form->handleRequest($request);
 
@@ -211,6 +211,7 @@ $this->ProductConverter->Menu3();
             $this->Page();
             $this->Layout();
             $this->News();
+            $this->ProductType();
             
             
             $this->addSuccess('コンバートに成功しました。', 'admin');
@@ -287,26 +288,25 @@ $this->ProductConverter->Menu3();
         $Pages = $this->entityManager->getRepository(Page::class)->findBy(['url'=>['admin_renew_pass_index','admin_renew_pass_complet']]) ;
 
 
-        $sortNos = $this->SqlService->Table('dtb_page_layout')->Select('Max(sort_no)')->Find($this->SqlService::DBNAMES[0]);
+        $sortNos = $this->SqlService->Table('dtb_page_layout')->Select('Max(sort_no) as sortMax')->Find($this->SqlService::DBNAMES[0]);
         $sortNo =$sortNos['sortMax'];
         
         foreach ($Pages as $i => $Page){
 
-            if($Page->getPageLayouts()>0){continue;}     
-            $sortNo++;   
-            $PageLayout = new PageLayout();
-            
-            $PageLayout          #->setPageId($page)
-                    ->setLayoutId($layout->getId())
-                    ->setPageId($Page->getId())
-                    ->setSortNo($sortNo)
-                    ->setPage($Page)
-                    ->setLayout($layout);
+            if(count($Page->getPageLayouts())>0){continue;}     
+                $sortNo++;   
+                $PageLayout = new PageLayout();
+                
+                $PageLayout          #->setPageId($page)
+                        ->setLayoutId($layout->getId())
+                        ->setPageId($Page->getId())
+                        ->setSortNo($sortNo)
+                        ->setPage($Page)
+                        ->setLayout($layout);
 
-            $this->entityManager->persist($PageLayout);		
-            $this->entityManager->flush();
-            
-            
+                $this->entityManager->persist($PageLayout);		
+                $this->entityManager->flush();
+           
 
         }
 
@@ -368,13 +368,14 @@ $this->ProductConverter->Menu3();
         foreach( $Datas as $Data){
 
             if(count($this->entityManager->getRepository(Page::class)->findBy(['url'=>$Data['url']]))>0){continue;}  
-
+                   $MasterPage  = null;             
                 if( 'admin_renew_pass_complete' == $Data['url']){
-                    $Data['master_page_id'] = $Page->getId();
+                    $MasterPages = $this->entityManager->getRepository(Page::class)->findBy(['url'=>'admin_renew_pass_index']);
+                    $MasterPage = $MasterPages[0]; 
                 }
 
                 $Page = new Page();
-                $Page->setMasterPage($Data['master_page_id'])
+                $Page->setMasterPage($MasterPage)
                     ->setName($Data['page_name'])
                 ->setUrl($Data['url'])
                 ->setFileName($Data['file_name'])
@@ -622,6 +623,34 @@ private function MakeMtbSql(){
              //   echo $Column['Field'].':' . $Column['Type']. PHP_EOL;
                 echo $Column['Field'].PHP_EOL;           
         }    
+    }
+    protected function ProductType(){
+
+
+        $Value[] = "(1,'セット(面、小手、胴、垂)',0,'producttype');";
+        $Value[] = "(2,'面',1,'producttype');";
+        $Value[] = "(3,'小手',2,'producttype');";
+        $Value[] = "(4,'胴',3,'producttype');";
+        $Value[] = "(5,'垂',4,'producttype');";
+        $Value[] = "(6,'胴着',5,'producttype');";
+        $Value[] = "(7,'袴',6,'producttype');";
+        $Value[] = "(8,'竹刀',7,'producttype');";
+        $Value[] = "(9,'竹刀袋',8,'producttype');";
+        $Value[] = "(10,'防具袋',9,'producttype');";
+        $Value[] = "(11,'ゼッケン',10,'producttype');";
+        $Value[] = "(12,'その他',11,'producttype');";
+
+        foreach ($Value as $Val){
+
+       $Sql = self::productType .   $Val;
+
+    $this->SqlService->FOREIGN_KEY(SqlService::DBNAMES[0])
+                     ->setSql($Sql)
+                     ->Exec($this->SqlService::DBNAMES[0]);
+
+
+        }            
+
     }
 
 }
