@@ -90,6 +90,7 @@ const AdminForgotMail = 10;
             'expire' => $this->eccubeConfig['eccube_customer_reset_expire'],
         ]);
 
+
         $message = (new Email())
             ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
@@ -98,22 +99,8 @@ const AdminForgotMail = 10;
             ->replyTo($this->BaseInfo->getEmail03())
             ->returnPath($this->BaseInfo->getEmail04());
 
-        // HTMLテンプレートが存在する場合
-        $htmlFileName = $this->getHtmlTemplate($MailTemplate->getFileName());
-        if (!is_null($htmlFileName)) {
-            $htmlBody = $this->twig->render($htmlFileName, [
-                'BaseInfo' => $this->BaseInfo,
-                'Member' => $Member,
-                'expire' => $this->eccubeConfig['eccube_customer_reset_expire'],
-            ]);
 
-            $message
-                ->text($body)
-                ->html($htmlBody);
-        } else {
-            $message->text($body);
-        }
-
+        $message->text($body);
 
         try {
             $this->mailer->send($message);

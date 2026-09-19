@@ -4,7 +4,7 @@
  #
  # 2026年08月27日作成
  #
- # app\template\default\Product\Parts\KoteFrom.twig
+ # app\template\default\Product\Parts\KoteForm.twig
  #
  #
  # 
@@ -17,11 +17,6 @@
     <div class="size-box col-7">
         <h2>{{'product_kote_title'|trans}}</h2>
         <dl class="men_size">
-           {# <dt>{{'product_men_sex'|trans}}</dt>
-            <dd class="radio">
-                {{ form_widget(form.kote.sex ,{'label_attr': {'class': 'radio-inline'}}) }}
-                {{ form_errors(form.kote.sex) }}
-            </dd>#}
             <dt>{{'product_kote_size_left_d'|trans}}</dt>
             <dd class="input">
                 {{ form_widget(form.kote.kote_size_left_d) }}cm
@@ -59,6 +54,7 @@
             </dd>
         </dl>
     </div>
+
     <div class="col-5">
         <img src="{{ asset('assets/img/product/kote.png') }}">
 

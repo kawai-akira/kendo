@@ -18,7 +18,7 @@ namespace Customize\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,6 +50,13 @@ class DouiType extends AbstractType
     {
 
 
+        $itemOption = $options['itemOptions'];
+        $Values =  $itemOption['doui'] ?? null ;
+
+        $doui_type = $this->em->getRepository(dType::class)->find($Values['doui_type'] ?? null);
+        $doui_hope = $this->em->getRepository(DouiHope::class)->find($Values['doui_hope'] ?? null);
+
+
 
         $builder
             ->add('doui_type', EntityType::class,[
@@ -63,6 +70,7 @@ class DouiType extends AbstractType
                 'constraints' =>[
                     new Assert\NotBlank(),
                 ],
+                'data' => $doui_type,
             ])
             ->add('doui_hope', EntityType::class,[
                 'required' => false,
@@ -74,13 +82,25 @@ class DouiType extends AbstractType
                 'constraints' =>[
                     new Assert\NotBlank(),
                 ],
+                'data' => $doui_hope,
             ])
             ->add('doui_etc', TextareaType::class,[
                 'label' => '道衣その他希望',
                 'required' => false,
+                'data' => $Values['doui_etc'] ?? null,
             ]);
     }
 
+     /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'itemOptions' => null,
+
+        ]);
+    }
 
 
 }

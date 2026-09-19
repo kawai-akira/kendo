@@ -4,7 +4,8 @@
  #
  # 2026年08月27日作成
  #
- # app\template\default\Product\Parts\TareForm.twig
+ # app\template\admin\Order\Parts\TareForm.twig
+ #
  #
  # 
  #
@@ -14,23 +15,26 @@
  ##############################################################}
 <div class="size-area row">
     <div class="size-box col-12">
-        <h2>{{'product_tare_title'|trans}}</h2>
+        <p>{{'product_tare_title'|trans}}</p>
+    </div>
+    <div class="size-box col-4"> 
         <dl class="tare_size">
             <dt>{{'product_tare_size_waist'|trans}}</dt>
             <dd class="input">
                 {{ form_widget(form.tare.tare_size_waist) }}cm
                 {{ form_errors(form.tare.tare_size_waist) }}
             </dd>
-            <dt>{{'product_tare_etc'|trans}}</dt>
+        </dl>    
+    </div>
+    <div class="size-box col-4">
+        <dl>
+            <dt>
+                {{'product_tare_etc'|trans}}
+            </dt>
             <dd>
                 {{ form_widget(form.tare.tare_etc) }}
                 {{ form_errors(form.tare.tare_etc) }}
             </dd>
         </dl>    
     </div>
-    <div class="col-5">
-    </div>
 </div>
-
-
-

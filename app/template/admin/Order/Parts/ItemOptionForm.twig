@@ -1,0 +1,61 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月15作成
+ #
+ # app\template\admin\Order\Parts\ItemOptionForm.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<style>
+
+.ItemOption .size-area .input input{
+    width:92%;
+    display:inline-block;
+}
+.ItemOption .size-area dt{
+    font-size:11px;
+}
+</style>
+<tr id="ItemOption_{{Item.id}}" class="ItemOption">
+{{ form_widget(form._token) }}
+    <td colspan ="7">
+        <div class="size-area row">
+            {# 性別　#}
+            {{SexForm(Product,form,true)|raw}}
+            {# 身長#}
+            {{HeightForm(Product,form,true)|raw}}
+        </div>
+
+            {{MenForm(Product,form,true)|raw}}
+   
+            {{KoteForm(Product,form,true)|raw}}
+
+            {{DouForm(Product,form,true)|raw}}
+
+            {{TareForm(Product,form,true)|raw}}
+ 
+            {{DouiForm(Product,form,true)|raw}}
+            {# 袴 #}
+            {{HakamaForm(Product,form,true)|raw}}
+        <div class="size-area row">    
+            {{ShinaiForm(Product,form,true)|raw}}
+
+            {{ZekkenForm(Product,form,true)|raw}}
+        </div>
+        <div class="size-area row">
+            {{FreeInput1Form(Product,form,true)|raw}}
+
+            {{FreeInput2Form(Product,form,true)|raw}}
+
+            {{FreeInput3Form(Product,form,true)|raw}}
+        </div>    
+    </div>
+    </td>
+</tr>

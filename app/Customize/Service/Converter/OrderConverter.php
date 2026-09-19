@@ -52,6 +52,9 @@ use Customize\Service\OptionService;
             $this->Shipping();
         
         }
+        public function Menu2(){
+            #$this->setProductCategorys();
+        }
    
         private function Oreder(){
 
@@ -121,7 +124,7 @@ use Customize\Service\OptionService;
 
 
 //$item = $this->SqlService->Table('dtb_order_detail')->Set('order_detail_id',7000,'>')->FindAll();
-
+        $pc =  $this->setProductCategorys();
         $ShiItem = $this->getShippingItem();
         $Re =[];
         $TaxRate = [];
@@ -153,7 +156,7 @@ use Customize\Service\OptionService;
             $d['processor_name']            = null;
             $d['point_rate']                = 0 ;
             $d['discriminator_type']        = 'orderitem';
-            $d['options']                   = $this->setOprions($o) ;
+            $d['options']                   = $this->setOprions($o,$pc) ;
             $Re[] = $d;
             $TaxRate[$o['order_id']]        = $o['tax_rate'];
           }
@@ -178,7 +181,7 @@ use Customize\Service\OptionService;
                     $d['rounding_type_id']          = 2 ; # 切り捨て
                     $d['tax_type_id']               = 1 ; # 課税
                     $d['tax_display_type_id']       = 2 ; # 税込み
-                    $d['order_item_type_id']        = 0  == $key   ? 2:4;
+                    $d['order_item_type_id']        = 0 == $key   ? 2:4;
                     $d['product_name']              = 0 == $key   ? '送料':'割引';
                     $d['product_code']              = null;
                     $d['class_name1']               = null;
@@ -196,7 +199,7 @@ use Customize\Service\OptionService;
                     $d['processor_name']            = 0 == $key ? 'Eccube\Service\PurchaseFlow\Processor\DeliveryFeePreprocessor':null;
                     $d['point_rate']                = 0 ;
                     $d['discriminator_type']        = 'orderitem';
-                    $d['options']                   = $this->setOprions($o) ;
+                    $d['options']                   = null;//$this->setOprions($o) ;
                     $i ++;
                     $Re[] = $d;
 
@@ -248,33 +251,36 @@ use Customize\Service\OptionService;
         $this->SqlService->Converter2(self::Shipping,$Re);
     }
 
-    private function setOprions($o){
+    private function setOprions($o,$pc){
 
         $Re =[];
+
 
         foreach(OptionService::Options as $key){
 
             $Options = constant(OptionService::class.'::'.$key);
-            if(!empty($o[$Options[0]])){
+            
+            if((is_null($o[$Options[0]]) || '' == $o[$Options[0]]) && !isset($pc[$o['product_id']]) ){continue;}
 
-                foreach ($Options as $Option){
-                    $Re[$key][$Option] = $o[$Option];
-                }
-
+           
+            foreach ($Options as $Option){
+                $Re[$key][$Option] = $o[$Option];
             }
+
+            
         }
 
         foreach (['tare_size_height','doui_size_height','hakama_size_height','men_height','dou_height'] as $height){
 
             if(!empty($o[$height])){
 
-                if(isset($Re['hright'])){
-                    if($o[$height] > $Re['hright']){
-                        $Re['hright']['hright'] = $o[$height];
+                if(isset($Re['height'])){
+                    if($o[$height] > $Re['height']){
+                        $Re['height']['height'] = $o[$height];
                     }
                 }else{
      
-                    $Re['hright']['hright'] = $o[$height];
+                    $Re['height']['height'] = $o[$height];
                 }
             }
         }
@@ -293,78 +299,7 @@ use Customize\Service\OptionService;
        return json_encode($Re, JSON_UNESCAPED_UNICODE);
 
 
-          
-        
-
-        
-
-
-/*
-    'sex'
-    'men_size_a'
-'men_size_b'
-'men_size_c'
-'men_etc'
-//'men_color
-'kote_size_left_d'
-'kote_size_left_e'
-'kote_size_right_d'
-'kote_size_right_e'
-'kote_size_left_f'
-'kote_size_right_f'
-
-'kote_etc'
-
-//kote_color
-'dou_size_bust'
-'dou_size_waist'
-'dou_size_g'
-'dou_etc'
-
-'tare_size_height'
-'tare_size_waist'
-'tare_etc'
-//dou_color
-zekken_font
-zekken_text
-zekken_etc
-
-option_id
-doui_type
-doui_hope
-shinai_length
-
-
-doui_size_height
-doui_etc
-
-
-hakama_size_waist
-hakama_size_length
-hakama_etc
-
-
-'free_input_name1'
-'free_input_name2'
-'free_input_name3'
-'free_input_value1'
-'free_input_value2'
-'free_input_value3'
-
-
-
-
-
-hakama_size_height
-shinai_etc
-
-
-men_height
-dou_height*/
-
-
-   
-   
+ 
    
         }
 
@@ -379,7 +314,19 @@ dou_height*/
         }
         return $Re;
         
-        } 
+        }
+
+        private function setProductCategorys(){
+
+            $Re= [];
+            foreach( $this->SqlService->Table('dtb_product_category')->Where('category_id in (6,16)')->FindAll() as $Pc){
+
+                $Re[ $Pc['product_id']] = $Pc['category_id'];
+            }
 
 
+        return $Re;
+
+
+   }
    }

@@ -4,7 +4,7 @@
  #
  # 2026年08月27日作成
  #
- # app\template\default\Product\Parts\MenForm.twig
+ # app\template\common\ItemOption\MenForm.twig
  #
  #
  # 
@@ -14,33 +14,43 @@
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
 <div class="size-area row">
-    <div class="size-box col-7">
-        <h2>{{'product_men_title'|trans}}</h2>
-        <dl class="men_size">
+    <div class="size-box col-12">
+        <p>{{'product_men_title'|trans}}</p>
+    </div>
+    <div class="size-box col-3">
+        <dl>
             <dt>{{'product_men_size_a'|trans}}</dt>
             <dd class="input">
                 {{ form_widget(form.men.men_size_a) }}cm
                 {{ form_errors(form.men.men_size_a) }}
             </dd>
         </dl>
+    </div>    
+    <div class="size-box col-3">
+        <dl>
             <dt>{{'product_men_size_b'|trans}}</dt>
             <dd class="input">
                 {{ form_widget(form.men.men_size_b) }}cm
                 {{ form_errors(form.men.men_size_b) }}
             </dd>
+            </dl>
+    </div>  
+    <div class="size-box col-3">
+        <dl>
             <dt>{{'product_men_size_c'|trans}}</dt>
             <dd class="input">
                 {{ form_widget(form.men.men_size_c) }}cm
                 {{ form_errors(form.men.men_size_c) }}
             </dd>
+        </dl>
+    </div>
+    <div class="size-box col-3">
+        <dl>
             <dt>{{'product_men_etc'|trans}}</dt>
             <dd>
                 {{ form_widget(form.men.men_etc) }}
                 {{ form_errors(form.men.men_etc) }}
             </dd>
         </dl>    
-    </div>
-    <div class="col-5">
-        <img src="{{ asset('assets/img/product/men.png') }}">
     </div>
 </div>

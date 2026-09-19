@@ -135,8 +135,7 @@
     {
 
         $form   = $this->createForm(ConverterType::class);
-  
-$this->ProductConverter->Menu3();
+            #$this->OrderConverter->Menu2();
    
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -394,6 +393,10 @@ $this->ProductConverter->Menu3();
 
    private function MailTemplate(){
 
+   if($this->entityManager->getRepository(MailTemplate::class)->find(10)){return ;}
+
+
+
 
     $Temp = new MailTemplate(); 
         $Temp->setName('管理画面用パスワード再セットメール')
@@ -467,15 +470,21 @@ $this->ProductConverter->Menu3();
 
     private function PaymentOption(){
 
-        $Deliverys = $this->SqlService->Table($this->ProductConverter::Delivery)->FindAllBy( $this->SqlService::DBNAMES[0]); 
+       // $Deliverys = [];            
+        //foreach($this->SqlService->Table($this->ProductConverter::Delivery)->Findall() as $Dv){
+        //    $Deliverys[$Dv['shop_id']] = $Dv;  
+        //}
       
+
+
         $Re = [];
-        foreach ($Deliverys as  $Delivery){
-                $d['delivery_id']           = $Delivery['id'];
-                $d['payment_id']            = 3; //便宜的に
+        foreach ($this->SqlService->Converter1(self::PaymentOption) as  $o){
+                $d['delivery_id']           = $o['delivery_id'];//$Delivery['id'];
+                $d['payment_id']            = $o['payment_id'];//5; //便宜的に
                 $d['discriminator_type']    = 'paymentoption';
                 $Re[] = $d;
             }
+            #UPDATE `dtb_payment` SET `id` = '5' WHERE `dtb_payment`.`id` = 2
   
             $this->SqlService->Converter2(self::PaymentOption,$Re);
     }  

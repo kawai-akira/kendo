@@ -17,6 +17,7 @@
 namespace Customize\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,6 +32,10 @@ class TareType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $itemOption = $options['itemOptions'];
+
+        $Values =  $itemOption['tare'] ?? null ;
+
 
         $builder
             ->add('tare_size_waist', TextType::class, [
@@ -40,13 +45,26 @@ class TareType extends AbstractType
                     new Assert\Regex([
                         'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
                         'message' => '数値を入力してください'])
-            ],
+                ],
+                'data' => $Values['tare_size_waist'] ?? null,
             ])
 
             ->add('tare_etc', TextareaType::class, [
                 'label' => '垂のその他希望',
                 'required' => false,
+                'data' => $Values['tare_etc'] ?? null,
             ]);
+    }
+    
+     /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'itemOptions' => null,
+
+        ]);
     }
 
         

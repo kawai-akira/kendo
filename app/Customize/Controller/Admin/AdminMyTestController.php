@@ -58,7 +58,7 @@
 
 
   
-          //  $this->MailService = $MailService;
+          $this->MailService = $MailService;
            // $this->CarenderSearvice = $CarenderSearvice;
     
 
@@ -77,7 +77,7 @@
     public function index(Request $request)
     {
 
-    // $Mrnber = $this->entityManager->getRepository(Member::class)->find(2);
+    //$Mrnber = $this->entityManager->getRepository(Member::class)->find(62);
     //$this->MailService->sendAdminRenuwMail( $Mrnber);
 
     //$Days = new Carbon('2026-05-29');
@@ -85,7 +85,7 @@
 
     
     //$this->HolidayRepository->getHolidyBySettingDays($Setting,$Days);
-    print_r($_SESSION['data'] ?? []) ; unset($_SESSION['data']);
+   // print_r($_SESSION['data'] ?? []) ; unset($_SESSION['data']);
     //$Item = $this->entityManager->getRepository(CartItem::class)->find(1) ;         
     //$Option = $Item->getOptions();
 

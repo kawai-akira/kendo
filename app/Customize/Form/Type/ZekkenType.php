@@ -17,12 +17,9 @@
 namespace Customize\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 class ZekkenType extends AbstractType
@@ -37,14 +34,27 @@ class ZekkenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
+        $itemOption = $options['itemOptions'];
 
+        $Values =  $itemOption['zekken'] ?? null ;
 
         $builder
                 ->add('zekken_etc', TextareaType::class, [
                     'label' => 'その他希望',
                     'required' => false,
+                    'data' => $Values['zekken_etc'] ?? null,
                 ]);
         }
-           
+     /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'itemOptions' => null,
+
+        ]);
+    }
+
 
 }

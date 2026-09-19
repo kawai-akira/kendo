@@ -46,11 +46,8 @@
          */
         private $reset_expire;
 
-        /**
-         * @param Shop|null $Shop
-         * @return self
-         */
-        public function setShop(Shop $Shop = null): self
+
+        public function setShop(Shop|null $Shop = null): self
         {
             $this->Shop = $Shop;
             return $this;

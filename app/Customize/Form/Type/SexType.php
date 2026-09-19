@@ -18,6 +18,7 @@ namespace Customize\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -46,11 +47,12 @@ class SexType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
+        $Value = null;
+        if($itemOption = $options['itemOptions']){
+            $Value = $this->em->getRepository(sex::class)->find($itemOption['sex']['sex'] ?? null);
+        }	
 
         $builder
-
             
             ->add('sex', EntityType::class, [
                 'required' => false,
@@ -64,8 +66,20 @@ class SexType extends AbstractType
         	    'constraints' => [
                     new Assert\NotBlank(),
                 ],
+                'data'=> $Value,
             ]);
 
             }
+
+     /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'itemOptions' => null,
+
+        ]);
+    }
 
 }

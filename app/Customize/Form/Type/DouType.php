@@ -17,6 +17,7 @@
 namespace Customize\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,6 +35,9 @@ class DouType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
+        $itemOption = $options['itemOptions'];
+
+        $Values =  $itemOption['dou'] ?? null ;
 
 
         $builder
@@ -45,6 +49,7 @@ class DouType extends AbstractType
                         'pattern' => '/^[0-9]+(\.?[0-9]+|)$/',
                         'message' => '数値を入力してください'])
                 ],
+                'data' => $Values['dou_size_bust'] ?? null,
             ])
             ->add('dou_size_waist', TextType::class, [
                 'required' => false,
@@ -54,6 +59,7 @@ class DouType extends AbstractType
                         'pattern' => '/^[0-9]+(\.?[0-9]+|)$/',
                         'message' => '数値を入力してください'])
                 ],
+                'data' => $Values['dou_size_waist'] ?? null,
             ])
             ->add('dou_size_g', TextType::class, [
                 'required' =>false,
@@ -63,25 +69,26 @@ class DouType extends AbstractType
                         'pattern' => '/^[0-9]+(\.?[0-9]+|)$/',
                         'message' => '数値を入力してください'])
                 ],
+                'data' => $Values['dou_size_g'] ?? null,
             ])
-
-            /*
-            ->add('dou_color', 'dou_color', [
-                'required' =>false,
-                'constraints' => [
-                    new Assert\NotBlank(),
-                ),
-            ])
-            */
-
-
             ->add('dou_etc', TextareaType::class, [
                 'label' => '胴のその他希望',
                 'required' => false,
+                'data' => $Values['dou_etc'] ?? null,
             ]);
             }
             
 
+     /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'itemOptions' => null,
+
+        ]);
+    }
 
 
 

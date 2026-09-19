@@ -16,35 +16,25 @@
 namespace Customize\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Eccube\Entity\Master\Sex;
 
 
 class HeightType extends AbstractType
 {
 
     /**
-     * @var EntityManagerInterface $em
-     */
-    protected $em;
-
-
-    public function __construct(
-        EntityManagerInterface $em
-        ){
-            $this->em = $em;
-        }
-
-
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $itemOption = $options['itemOptions'];
+
+        
+        $Values =  $itemOption['height'] ?? null ;
 
         $builder
             ->add('height', TextType::class, [
@@ -55,8 +45,21 @@ class HeightType extends AbstractType
                         'pattern' => '/^[0-9]+(\.?[0-9]+|)$/',
                         'message' => '数値を入力してください'])
                 ],
+                'data'=>$Values['height'] ?? null, 
             ]);
 
      }
+
+     
+     /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'itemOptions' => null,
+
+        ]);
+    }
 
 }

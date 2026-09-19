@@ -4,29 +4,26 @@
  #
  # 2026年08月27日作成
  #
- # app\template\default\Product\Parts\FreeInput2Form.twig
+ # app\template\common\ItemOption\FreeInput2Form.twig
  #
  #
  # 
  #
- # フリーインプット1
+ # フリーインプット2
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-7">
+<div class="size-box col-4">
         <dl class="sex_size">
             <dt>
-                {{Product.freeInputName2}}
-                <span>必須</span>
+                {{ form_label(form.FreeInput2.value) }}
             </dt>
             <dd class="radio">
                 {{ form_widget(form.FreeInput2.value) }}
                 {{ form_errors(form.FreeInput2.value) }}
+                {{ form_widget(form.FreeInput2.name) }}
             </dd>
-         </dl>    
-    </div>
-    <div class="col-5">
-    </div>
- </div>
+        </dl>    
+
+</div>
 

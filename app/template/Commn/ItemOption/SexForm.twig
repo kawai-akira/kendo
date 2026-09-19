@@ -4,29 +4,25 @@
  #
  # 2026年08月27日作成
  #
- # app\template\default\Product\Parts\FreeInput2Form.twig
+ # app\template\default\Product\Parts\MenFrom.twig
  #
  #
  # 
  #
- # フリーインプット1
+ # 面
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
 <div class="size-area row">
     <div class="size-box col-7">
         <dl class="sex_size">
-            <dt>
-                {{Product.freeInputName2}}
-                <span>必須</span>
-            </dt>
+            <dt>{{'product_common_sex'|trans}}</dt>
             <dd class="radio">
-                {{ form_widget(form.FreeInput2.value) }}
-                {{ form_errors(form.FreeInput2.value) }}
+                {{ form_widget(form.sex.sex ,{'label_attr': {'class': 'radio-inline'}}) }}
+                {{ form_errors(form.sex.sex) }}
             </dd>
          </dl>    
     </div>
     <div class="col-5">
     </div>
  </div>
-

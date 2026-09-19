@@ -17,31 +17,15 @@
 namespace Customize\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Eccube\Entity\Master\Sex;
 
 
 class KoteType extends AbstractType
 {
-
-    /**
-     * @var EntityManagerInterface $em
-     */
-    protected $em;
-
-
-    public function __construct(
-        EntityManagerInterface $em
-        ){
-            $this->em = $em;
-        }
-
-
 
     /**
      * {@inheritdoc}
@@ -49,6 +33,9 @@ class KoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
+        $itemOption = $options['itemOptions'];
+
+        $Values =  $itemOption['kote'] ?? null ;
 
 
         $builder
@@ -60,66 +47,76 @@ class KoteType extends AbstractType
                                 'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
                                 'message' => '数値を入力してください'])
                         ],
-                    ])
-            ->add('kote_size_left_e', TextType::class, [
-                        'required' => false,
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                            new Assert\Regex([
-                                'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
-                                'message' => '数値を入力してください'])
-                        ],
-                    ])
-                    ->add('kote_size_left_f', TextType::class, [
-                        'required' => false,
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                            new Assert\Regex([
-                                'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
-                                'message' => '数値を入力してください'])
-                        ],
-                    ])
-                    ->add('kote_size_right_d', TextType::class, [
-                        'required' => false,
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                            new Assert\Regex([
-                                'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
-                                'message' => '数値を入力してください'])
-                        ],
-                    ])
-                    ->add('kote_size_right_e', TextType::class, [
-                        'required' => false,
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                            new Assert\Regex([
-                                'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
-                                'message' => '数値を入力してください'])
-                        ],
-                    ])
-                    ->add('kote_size_right_f', TextType::class, [
-                        'required' => false,
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                            new Assert\Regex([
-                                'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
-                                'message' => '数値を入力してください'])
-                        ],
-                    ])
-                    /*
-                    ->add('kote_color', 'kote_color', [
-                        'required' => false,
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                        ],
-                    ])
-                    */
 
-                    ->add('kote_etc', TextareaType::class, [
-                        'label' => ',小手その他希望',
-                        'required' => false,
-                    ]);
+                'data' => $Values['kote_size_left_d'] ?? null,
+            ])
+            ->add('kote_size_left_e', TextType::class, [
+                    'required' => false,
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new Assert\Regex([
+                            'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
+                            'message' => '数値を入力してください'])
+                    ],
+                    'data' => $Values['kote_size_left_e'] ?? null,
+                ])
+            ->add('kote_size_left_f', TextType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Regex([
+                        'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
+                        'message' => '数値を入力してください'])
+                ],
+                'data' => $Values['kote_size_left_f'] ?? null,
+                ])
+            ->add('kote_size_right_d', TextType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Regex([
+                        'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
+                        'message' => '数値を入力してください'])
+                ],
+                'data' => $Values['kote_size_right_d'] ?? null,
+            ])
+            ->add('kote_size_right_e', TextType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Regex([
+                        'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
+                        'message' => '数値を入力してください'])
+                ],
+                'data' => $Values['kote_size_right_e'] ?? null,
+            ])
+            ->add('kote_size_right_f', TextType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Regex([
+                        'pattern' => '/^[0-9]+(\.[0-9]+)?$/',
+                        'message' => '数値を入力してください'])
+                ],
+                'data' => $Values['kote_size_right_f'] ?? null,
+            ])
+            ->add('kote_etc', TextareaType::class, [
+                'label' => ',小手その他希望',
+                'required' => false,
+                    'data' => $Values['kote_etc'] ?? null,
+            ]);
 
             }
+
+     /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'itemOptions' => null,
+
+        ]);
+    }
 
 }

@@ -4,7 +4,7 @@
  #
  # 2026年08月27日作成
  #
- # app\template\admin\Order\Parts\ZekkenForm.twig
+ # app\template\common\ItemOption\HeightForm.twig
  #
  #
  # 
@@ -14,13 +14,11 @@
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
 <div class="size-box col-6">
-    <dl class="zekken_size">
-        <dt>{{'product_zekken_etc'|trans}}</dt>
-        <dd class="radio">
-            {{ form_widget(form.zekken.zekken_etc) }}
-            {{ form_errors(form.zekken.zekken_etc) }}
+    <dl class="sex_size">
+        <dt>{{'product_common_height'|trans}}</dt>
+        <dd class="input">
+            {{ form_widget(form.height.height ) }}cm
+            {{ form_errors(form.height.height ) }}
         </dd>
-    </dl>    
+        </dl>    
 </div>
-
-

@@ -4,7 +4,7 @@
  #
  # 2026年09月03日作成
  #
- # app\template\default\Product\Parts\DouiForm.twig
+ # app\template\admin\Order\Parts\DouiForm.twig
  #
  #
  # 
@@ -13,28 +13,36 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-7">
-        <h2>{{'product_doui_title'|trans}}</h2>
-        <dl class="doui_size">
+<div class="size-area row" id="doui_area">
+    <div class="size-box col-12">
+        <p>{{'product_doui_title'|trans}}</p>
+    </div>
+    <div class="size-box col-4">
+        <dl>
             <dt>{{'product_doui_type'|trans}}
             <dd class="input">
                 {{ form_widget(form.doui.doui_type) }}
                 {{ form_errors(form.doui.doui_type) }}
             </dd>
+        </dl>
+    </div>
+    <div class="size-box col-4">
+        <dl>
             <dt>{{'product_doui_hope'|trans}}</dt>
             <dd class="input">
                 {{ form_widget(form.doui.doui_hope) }}
                 {{ form_errors(form.doui.doui_hope) }}
             </dd>
+        </dl>
+    </div>
+    <div class="size-box col-4">
+        <dl>
             <dt>{{'product_doui_etc'|trans}}</dt>
             <dd>
                 {{ form_widget(form.doui.doui_etc) }}
                 {{ form_errors(form.doui.doui_etc) }}
             </dd>
         </dl>    
-    </div>
-    <div class="col-5">
     </div>
 </div>
 

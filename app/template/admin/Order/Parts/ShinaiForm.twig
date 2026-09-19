@@ -4,7 +4,7 @@
  #
  # 2026年08月27日作成
  #
- # app\template\admin\Order\Parts\ZekkenForm.twig
+ # app\template\default\Product\Parts\ShinaiForm.twig
  #
  #
  # 
@@ -14,13 +14,11 @@
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
 <div class="size-box col-6">
-    <dl class="zekken_size">
-        <dt>{{'product_zekken_etc'|trans}}</dt>
+    <dl class="shinai_size">
+        <dt>{{'product_shinai_etc'|trans}}</dt>
         <dd class="radio">
-            {{ form_widget(form.zekken.zekken_etc) }}
-            {{ form_errors(form.zekken.zekken_etc) }}
+            {{ form_widget(form.shinai.shinai_etc) }}
+            {{ form_errors(form.shinai.shinai_etc) }}
         </dd>
     </dl>    
 </div>
-
-
