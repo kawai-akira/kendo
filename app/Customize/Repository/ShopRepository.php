@@ -149,7 +149,6 @@
             $qb
                 ->andWhere('s.createDate <= :create_date_end')
                 ->setParameter('create_date_end', $date);
-                 echo $date->format('Y-m-d H:i:s ');
         }
 
 
@@ -164,10 +163,6 @@
             $qb->orderBy('s.updateDate', 'DESC');
             $qb->addOrderBy('s.id', 'DESC');
         }
-
-
-
-
 
        return $this->queries->customize(QueryKey::SHOP_SEARCH, $qb, $searchData);
 	}

@@ -128,16 +128,16 @@
     }
 
 
-    public function Update($Flg=false,$Sqls=DEF){
+    public function Update($DbName = self::DBNAMES[0],$Flg=false){
 
-        $this->Sqls($Sqls);
+        //$this->Sqls($Sqls);
         $this->Sql ='UPDATE '. $this->Table_  . ' AS ' . $this->Name . ' SET ';
         $this->Sql.= $this->SetColumn();
         $this->Sql.= $this->SetWhere();
 
          $this->ShowSql($Flg);
 
-        return $this->Exec();
+        return $this->Exec($DbName);
     }
 
     public function Insert($Flg=false,$Sqls=DEF){
@@ -445,7 +445,7 @@ return $Re;
     return $this;
     }
 
-    public function Sqls($Sqls = DEF,$Value=DEF){
+    public function Sqls($Sqls = '',$Value=''){
         if (is_array($Sqls)){
             $this->Sqls_=array_merge($this->Sqls_,$Sqls);
         }else{
@@ -575,12 +575,12 @@ return $Re;
 
         }
 
-         $Sql.=$this->Name.$KIgo."{$Column} = {$Param} ".C;
+         $Sql.=$this->Name.$KIgo."{$Column} = {$Param} ".'.';
          $this->Param[$Param]=$Value;
 
         }
 
-        return  rtrim($Sql,C);
+        return  rtrim($Sql,'.');
 
     }
     /**

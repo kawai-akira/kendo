@@ -38,6 +38,7 @@
     use Customize\Service\Converter\CustomerConverter;
     use Customize\Service\Converter\ProductConverter;
     use Customize\Service\Converter\OrderConverter;
+    use Customize\Service\Converter\PluginConverter;
     use Customize\Entity\Master\ShopStatus;
 
 
@@ -82,12 +83,19 @@
           */
         private $OrderConverter;
 
+        /**
+         * @var PluginConverter;
+         */
+        private $PluginConverter;
+
+
          public function __construct(
             SqlService $SqlService
             ,PrefRepository $PrefRepository
             ,CustomerConverter $CustomerConverter
             ,ProductConverter $ProductConverter
             ,OrderConverter $OrderConverter
+            ,PluginConverter $PluginConverter
          )
         {
 
@@ -96,6 +104,7 @@
         $this->CustomerConverter = $CustomerConverter;
         $this->ProductConverter = $ProductConverter;
         $this->OrderConverter = $OrderConverter;
+        $this->PluginConverter = $PluginConverter;
 
         }    
 
@@ -109,10 +118,10 @@
      */
     public function index(Request $request)
     {
-    // $this->CarenderSearvice->collCsv();
+    /// $this->CarenderSearvice->collCsv();
        $this->ShowColumn();
 
-       echo 'Current Memory: ' . (memory_get_usage() / 1024 / 1024) . " MB\n";
+    //   echo 'Current Memory: ' . (memory_get_usage() / 1024 / 1024) . " MB\n";
    //memory_get_usage()
        return  [
         'message1' => self::Message1,
@@ -164,6 +173,10 @@
                 case 'PaymentOption':
                     $this->PaymentOption();
                     $Messege = '支払い方法のコンバートに成功しました。';
+                    break; 
+                case 'Plugin':
+                    $this->PluginConverter->Menu1();
+                    $Messege = 'プラグインのコンバートに成功しました。';
                     break;  
                 
             }
@@ -624,7 +637,7 @@ private function MakeMtbSql(){
 
 
     private function ShowColumn(){  
-        $Columns = $this->SqlService->Table('dtb_shipping')
+        $Columns = $this->SqlService->Table('plg_recommend_product')
                                     ->ShowColumn($this->SqlService::DBNAMES[0]);
 
        // print_r($Columns);                            
