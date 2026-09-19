@@ -38,10 +38,12 @@ class FreeInput2Type extends AbstractType
 
         /** @var product */
         $Product = $options['Product'];
+        $name =$Values ? $Values['name'] : $Product->getFreeInputName2();
+
 
         $builder
             ->add('value', TextType::class, [
-                'label' => $Values['name'] ?? 'フリーインプト2',
+                'label' => $name,# 'フリーインプト2',
                 'required' => false,
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -50,7 +52,7 @@ class FreeInput2Type extends AbstractType
                 
             ])
             ->add('name', HiddenType::class, [
-                'data' => $Values['name'] ?? $Product->getFreeInputName2(),
+                'data' => $name ,
             ]);
 
             }

@@ -144,7 +144,10 @@ private $OptionService;
             }
 
 
-            $Options = $this->OptionService->setOption($Product,$ForrmData);
+            $Options = $this->OptionService->setOption($ForrmData);
+
+            $Options = $this->OptionService->serializer($Options);
+
 
 
             $errorMessages = $this->addCartCz($ProductClass,$ForrmData,$Options);

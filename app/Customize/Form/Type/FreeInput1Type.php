@@ -33,16 +33,17 @@ class FreeInput1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        
         $itemOption = $options['itemOptions'];
         $Values =  $itemOption['FreeInput1'] ?? null ;
-
+        
         /** @var product */
         $Product = $options['Product'];
+        $name =$Values ? $Values['name'] : $Product->getFreeInputName1();
+
 
         $builder
             ->add('value', TextType::class, [
-                'label' => $Values['name'] ?? 'フリーインプト1',
+                'label' => $name,# 'フリーインプト1',
                 'required' => false,
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -51,7 +52,7 @@ class FreeInput1Type extends AbstractType
                 
             ])
             ->add('name', HiddenType::class, [
-                'data' => $Values['name'] ?? $Product->getFreeInputName1(),
+                'data' => $name ,
             ]);
 
             }

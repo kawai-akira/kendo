@@ -40,13 +40,12 @@ class OptionService{
 
 
     /**
-     * Undocumented function
+     * カートに入れる
      *
-     * @param Product $Product
      * @param array $FormData
      * @return array|null
      */
-    public function setOption(Product $Product,array $FormData){
+    public function setOption($FormData){
 
         foreach(self::UnSetOption as $Column){
             unset($FormData[$Column]);
@@ -54,16 +53,6 @@ class OptionService{
         
         if(Count($FormData)<1){return null;}
 
-
-        for($i =1 ;$i<3 ; $i++){
-
-            if(isset($FormData['freeInput' . $i])){
-
-                $Free = 'getfreeInputName'.$i;
-                $FormData['freeInput' . $i]['name'] = $Product->$Free();
-            }
-      
-        }
    
         return $FormData;
 

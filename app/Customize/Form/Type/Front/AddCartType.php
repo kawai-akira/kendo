@@ -16,25 +16,25 @@
 namespace Customize\Form\Type\Front;
 
 use Symfony\Component\Form\AbstractType;
-use Doctrine\ORM\EntityManager;
+#use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Eccube\Common\EccubeConfig;
-use Eccube\Entity\CartItem;
+#use Eccube\Entity\CartItem;
 use Eccube\Entity\ProductClass;
 use Eccube\Form\DataTransformer\EntityToIdTransformer;
-use Eccube\Repository\ProductClassRepository;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+#use Eccube\Repository\ProductClassRepository;
+#use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
+#use Symfony\Component\Form\FormInterface;
+#use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContext;
+#use Symfony\Component\Validator\Context\ExecutionContext;
 use Customize\Form\Type\MenType;
 use Customize\Form\Type\KoteType;
 use Customize\Form\Type\DouType;
@@ -50,7 +50,7 @@ use Customize\Form\Type\FreeInput2Type;
 use Customize\Form\Type\FreeInput3Type;
 
 #class AddCartType extends \Eccube\Form\Type\AddCartType
-class AddCartType extends AbstractType
+class AddCartType extends \Customize\Form\Type\ItemOptionType
 {
 
     /**
@@ -83,7 +83,8 @@ class AddCartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        //parent::buildForm($builder,$options);
+        parent::buildForm($builder, $options);
+
         /** @var \Eccube\Entity\Product $Product */
         $Product = $options['product'];
         $this->Product = $Product;
@@ -109,7 +110,7 @@ class AddCartType extends AbstractType
                     ->addModelTransformer(new EntityToIdTransformer($this->doctrine->getManager(), ProductClass::class))
             );
 
-        if($Product->hasCategorySex()){
+/*        if($Product->hasCategorySex()){
             $builder
                 ->add('sex', SexType::class, [
             ]) ;
@@ -177,7 +178,7 @@ class AddCartType extends AbstractType
             $builder
                 ->add('FreeInput3', FreeInput3Type::class, [
             ]) ;
-        }
+        }*/
 
 
 
@@ -274,6 +275,7 @@ class AddCartType extends AbstractType
     {
         $resolver->setRequired('product');
         $resolver->setDefaults([
+            'itemOptions' => null,
    //       'data_class' => CartItem::class,
     //        'id_add_product_id' => false,
             //'constraints' => [

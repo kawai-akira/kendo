@@ -51,11 +51,13 @@ class DouiType extends AbstractType
 
 
         $itemOption = $options['itemOptions'];
-        $Values =  $itemOption['doui'] ?? null ;
-
-        $doui_type = $this->em->getRepository(dType::class)->find($Values['doui_type'] ?? null);
-        $doui_hope = $this->em->getRepository(DouiHope::class)->find($Values['doui_hope'] ?? null);
-
+        
+        $doui_type = null;
+        $doui_hope = null;
+        if( $Values =  $itemOption['doui'] ?? null){
+            $doui_type = $this->em->getRepository(dType::class)->find($Values['doui_type'] ?? null);
+            $doui_hope = $this->em->getRepository(DouiHope::class)->find($Values['doui_hope'] ?? null);
+        }
 
 
         $builder

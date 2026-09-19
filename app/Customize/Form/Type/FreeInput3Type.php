@@ -38,10 +38,12 @@ class FreeInput3Type extends AbstractType
         $Values =  $itemOption['FreeInput3'] ?? null ;
         /** @var product */
         $Product = $options['Product'];
+        $name =$Values ? $Values['name'] : $Product->getFreeInputName3();
+
 
         $builder
             ->add('value', TextType::class, [
-                'label' => $Values['name'] ?? 'フリーインプト3',
+                'label' =>$name,# 'フリーインプト3',
                 'required' => false,
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -50,7 +52,7 @@ class FreeInput3Type extends AbstractType
                 
             ]) 
             ->add('name', HiddenType::class, [
-                'data' => $Values['name'] ?? $Product->getFreeInputName3(),
+                'data' => $name ,
             ]);
 
             }
