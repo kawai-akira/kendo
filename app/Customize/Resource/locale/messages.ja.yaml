@@ -75,3 +75,4 @@ admin.shop.detail.title: 商品詳細
 admin.shop.url.title: 店舗リンクURL
 admin.shop.fee.amount: 送料無料条件
 admin.shop.note.tooltip: 店店舗用の備考欄です。フロント側には表示されません。
+tooltip.product.description_detail: 商品ページに表示される説明文です。metaタグにも使用 HTMLタグを書かないでください。
