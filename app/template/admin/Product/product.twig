@@ -752,38 +752,38 @@
                             <div class="row">
                                 <div class="col-8">
                                     <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top"
-                                         title="商品詳細メタタグ">
-                                        <span class="card-title">{{ '商品詳細メタタグ'|trans }}</span>
+                                         title="旧メタタグ">
+                                        <span class="card-title">{{ '旧メタタグ未使用'|trans }}</span>
                                         
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
-                                    <a data-bs-toggle="collapse" href="#MetaTagArea" aria-expanded="false"
-                                       aria-controls="MetaTagArea">
+                                    <a data-bs-toggle="collapse" href="#LegacyTagArea" aria-expanded="false"
+                                       aria-controls="LegacyTagArea">
                                         <i class="fa fa-angle-up fa-lg"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="collapse ec-cardCollapse" id="MetaTagArea">
+                        <div class="collapse ec-cardCollapse" id="LegacyTagArea">
                             <div class="card-body">
                                 <div class="row mb-2">
                                     <div class="col-3">
-                                        <span>{{ 'product_MetaDescription'|trans }}</span>
+                                        <span>{{ 'product_LegacyDescription'|trans }}</span>
                                     </div>
                                     <div class="col-9">
                                         <div>
-                                            {{ form_widget(form.MetaDescription ,{ attr : { rows : "2"} }) }}
-                                            {{ form_errors(form.MetaDescription) }}
+                                            {{ form_widget(form.LegacyDescription ,{ attr : { rows : "2"} }) }}
+                                            {{ form_errors(form.LegacyDescription) }}
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <span>{{ 'product_MetaKeyword'|trans }}</span>
+                                        <span>{{ 'product_LegacyKeyword'|trans }}</span>
                                     </div>
                                     <div class="col-9">
                                         <div>
-                                            {{ form_widget(form.MetaKeyword ,{ attr : { rows : "2"} }) }}
-                                            {{ form_errors(form.MetaKeyword) }}
+                                            {{ form_widget(form.LegacyKeyword ,{ attr : { rows : "2"} }) }}
+                                            {{ form_errors(form.LegacyKeyword) }}
                                         </div>
                                     </div>
                                 </div>

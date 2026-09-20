@@ -123,16 +123,18 @@
         private $DouBaseSize;
 
         /**
+         * 旧description　を格納　未使用
          * @var string
-         * @ORM\Column(name="meta_description", type="text", nullable=true)
+         * @ORM\Column(name="legacy_description", type="text", nullable=true)
          */
-        private $MetaDescription;
+        private $LegacyDescription;
        
         /**
+         * 旧　未使用
          * @var string
-         * @ORM\Column(name="meta_keyword", type="text", nullable=true)
+         * @ORM\Column(name="legacy_keyword", type="text", nullable=true)
          */
-        private $MetaKeyword;
+        private $LegacyKeyword;
 
 
        /**
@@ -310,26 +312,26 @@
         }
 
             
-        public function setMetaDescription(?string $MetaDescription): self
+        public function setLegacyDescription(?string $LegacyDescription): self
         {
-            $this->MetaDescription = $MetaDescription;
+            $this->LegacyDescription = $LegacyDescription;
             return $this;
         }
 
-        public function getMetaDescription(): ?string
+        public function getLegacyDescription(): ?string
         {
-            return $this->MetaDescription;
+            return $this->LegacyDescription;
         }
             
-        public function setMetaKeyword(?string $MetaKeyword): self
+        public function setLegacyKeyword(?string $LegacyKeyword): self
         {
-            $this->MetaKeyword = $MetaKeyword;
+            $this->LegacyKeyword = $LegacyKeyword;
             return $this;
         }
 
-        public function getMetaKeyword(): ?string
+        public function getLegacyKeyword(): ?string
         {
-            return $this->MetaKeyword;
+            return $this->LegacyKeyword;
         }
 
         /**

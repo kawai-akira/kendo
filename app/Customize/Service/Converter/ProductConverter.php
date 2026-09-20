@@ -126,7 +126,7 @@ use Eccube\Repository\Master\CustomerStatusRepository;
                 $d['name']              = $o['name'];
                 $d['note']              = $o['note'];
                 $d['description_list']  = $o['description_list'];
-                $d['description_detail']= $o['description_detail'];
+                $d['description_detail']= $Meta[$Id]['meta_description'] ?? null;
                 $d['search_word']       = $o['search_word'];
                 $d['free_area']         = $o['free_area'];
                 $d['create_date']       = $o['create_date'];
@@ -151,8 +151,8 @@ use Eccube\Repository\Master\CustomerStatusRepository;
                 $d['utikomi']           = $T[$Id][10] ?? null;
                 $d['dou_base_size']     = $T[$Id][11] ?? null;
 
-                $d['meta_description']  = $Meta[$Id]['meta_description'] ?? null;
-                $d['meta_keyword']      = $Meta[$Id]['meta_keyword'] ?? null;
+                $d['legacy_description']  = $o['description_detail'];
+                $d['legacy_keyword']      = $Meta[$Id]['meta_keyword'] ?? null;
 
                 $Re[] = $d;
         }

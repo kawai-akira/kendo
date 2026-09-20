@@ -109,13 +109,13 @@ class ProductTypeExtension extends AbstractTypeExtension
                  'required' => true,		
 
             ])
-            ->add('MetaDescription', TextareaType::class,[
-                 'label' => 'フリー入力項目名2',
+            ->add('LegacyDescription', TextareaType::class,[
+                 'label' => '旧Description',
                  'required' => true,		
 
             ])
-            ->add('MetaKeyword', TextareaType::class,[
-                 'label' => 'フリー入力項目名3',
+            ->add('LegacyKeyword', TextareaType::class,[
+                 'label' => '旧Metaキーワード',
                  'required' => true,		
 
             ])

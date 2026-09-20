@@ -10,8 +10,8 @@ shop_name: 店舗
 product_freeInputName1: フリー入力項目名1
 product_freeInputName2: フリー入力項目名2
 product_freeInputName3: フリー入力項目名3
-product_MetaDescription: メタディスクリプション
-product_MetaKeyword: メタキーワード
+product_LegacyDescription: 旧ディスクリプション（未使用）
+product_LegacyKeyword: 旧メタキーワード（未使用）
 product_Extended_Field: 拡張項目
 product_ItemFeatures: アイテム説明
 product_ProductType: 商品種類
