@@ -76,3 +76,8 @@ admin.shop.url.title: 店舗リンクURL
 admin.shop.fee.amount: 送料無料条件
 admin.shop.note.tooltip: 店店舗用の備考欄です。フロント側には表示されません。
 tooltip.product.description_detail: 商品ページに表示される説明文です。metaタグにも使用 HTMLタグを書かないでください。
+plugin_coupon.admin.select: 店舗限定のクーポンの場合選択してください。
+plugin_coupon.admin.label.Shop: 対象店舗
+plugin_coupon.admin.tooltip_shop:  クーポンに対象店舗がある場合は、選択してください。未選択の場合は全店対象となります。
+plugin_recommend.admin.tipe_title1: カテゴリー
+plugin_recommend.admin.tipe_title2: 区分

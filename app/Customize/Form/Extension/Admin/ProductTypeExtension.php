@@ -21,11 +21,11 @@ use Symfony\Component\Form\AbstractTypeExtension;
 #use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Form;
+#use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+#use Symfony\Component\Form\FormError;
+#use Symfony\Component\Form\FormEvent;
+#use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -93,6 +93,8 @@ class ProductTypeExtension extends AbstractTypeExtension
                     new Assert\NotBlank(),				
                 ],
                 'placeholder' => $Placeholder,
+                'data' => $Product->getShop(),
+
             ])
             ->add('freeInputName1', TextType::class,[
                  'label' => 'フリー入力項目名1',

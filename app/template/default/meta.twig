@@ -1,6 +1,6 @@
 {% if app.request.get('_route') == 'product_detail' %}
     {% set meta_og_type = "og:product" %}
-    {% set meta_description = Product.description_detail_list | default(Product.description_list) | default(Page.description) %}
+    {% set meta_description = Product.description_detail | default(Product.description_list) | default(Page.description) %}
     {% set meta_canonical = url('product_detail', {'id': Product.id}) %}
     <meta property="og:title" content="{{ Product.name }}" />
     <meta property="og:image" content="{{ absolute_url(asset(Product.main_list_image|no_image_product, 'save_image')) }}" />

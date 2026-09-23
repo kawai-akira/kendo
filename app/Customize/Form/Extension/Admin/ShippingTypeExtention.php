@@ -60,7 +60,7 @@ class ShippingTypeExtention extends AbstractTypeExtension
             ])
             ;
     }
-        /**
+   /**
      * Return the class of the type being extended.
      */
     public static function getExtendedTypes(): iterable

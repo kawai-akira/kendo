@@ -25,7 +25,7 @@
     use Eccube\Entity\Master\Pref;
     use Eccube\Util\StringUtil;
 	use Customize\Repository\Master\ShopStatusRepository;
-
+use Symfony\Component\Cache\Adapter\NullAdapter;
 
    	/**
 	 * ShopRepository
@@ -72,17 +72,22 @@
             return $this->find($ShopId);
         }
 
-		public function select(Product $Product ){
-
-		if ($Product->getId()){
-			return [$Product->getShop()];
-		}	
+		public function select(?Product $Product = Null){
+	
 
         $Status = $this->ShopStatusRepository->find(ShopStatus::REMOVE);
    		$qb = $this->createQueryBuilder('s')				
 	 		->orderBy('s.id', 'ASC')			
       		->where('s.ShopStatus < :status')				
       		->setParameter('status', $Status);
+
+        if($Product){
+                if($Shop = $Product->getShop()){
+                $qb->andWhere('s.id = :ID' )
+                    ->setParameter('ID',$Shop->getId());
+            }
+        }
+
 	
 		return $qb->getQuery()->getResult();
 

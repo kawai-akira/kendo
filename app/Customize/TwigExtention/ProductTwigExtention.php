@@ -108,6 +108,7 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('FreeInput2Form', [$this, 'setfreeInput2']),
             new TwigFunction('FreeInput3Form', [$this, 'setfreeInput3']),
             new TwigFunction('AdminItemOption', [$this, 'setAdminItemOption']),
+            new TwigFunction('categoryFormat1', [$this, 'setcategoryFormat1']),
 
         ];
     }
@@ -326,5 +327,11 @@ class ProductTwigExtention extends AbstractExtension
         ]);     
     }
        
+    public function setcategoryFormat1($Category){
+
+   
+        return str_repeat("_ ", $Category->getHierarchy() -1 ) .$Category->getName()."({$Category->getId()})";
+    }
+
 
 }

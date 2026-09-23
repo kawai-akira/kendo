@@ -40,7 +40,7 @@
     use Customize\Service\Converter\OrderConverter;
     use Customize\Service\Converter\PluginConverter;
     use Customize\Entity\Master\ShopStatus;
-
+    use Customize\Entity\Master\RecommendType;
 
    # use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
 
@@ -224,6 +224,7 @@
             $this->Layout();
             $this->News();
             $this->ProductType();
+            $this->RecommendType();
             
             
             $this->addSuccess('コンバートに成功しました。', 'admin');
@@ -529,16 +530,6 @@
     }
 
 
-
-/**
- * MTBはマイグレーションで一元管理をする
- * 
- * Version2026080823281
- */
-
-/**
- * 
- */
 private function MakeMtbSql(){
 
     $Sql = self::FOREIGN. '0;';
@@ -561,10 +552,6 @@ private function MakeMtbSql(){
     $Sql .= self::FOREIGN. '1;';
     $this->SqlService->setSql($Sql)
                      ->Exec($this->SqlService::DBNAMES[0]);
-
-
-
-
 }
 
 
@@ -632,20 +619,6 @@ private function MakeMtbSql(){
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;');
     }
 
-              
-
-
-
-    private function ShowColumn(){  
-        $Columns = $this->SqlService->Table('plg_recommend_product')
-                                    ->ShowColumn($this->SqlService::DBNAMES[0]);
-
-       // print_r($Columns);                            
-        foreach ($Columns as $Column){
-             //   echo $Column['Field'].':' . $Column['Type']. PHP_EOL;
-                echo $Column['Field'].PHP_EOL;           
-        }    
-    }
     protected function ProductType(){
 
 
@@ -674,6 +647,32 @@ private function MakeMtbSql(){
         }            
 
     }
+    private function RecommendType(){
 
+            $d['id']                    = 1;
+            $d['name']                  = 'カテゴリー';
+            $d['sort_no']               = 2;
+            $d['discriminator_type']    = 'recommendtype';
+            $Re[] = $d;
+            
+            
+            $d['id']                    = 2;
+            $d['name']                  = '区分';
+            $d['sort_no']               = 1;
+            $d['discriminator_type']    = 'recommendtype';
+            $Re[] = $d;
+
+            $this->SqlService->Converter2('mtb_recommend_type',$Re);
+    }
+    private function ShowColumn(){  
+        $Columns = $this->SqlService->Table('plg_recommend_product')
+                                    ->ShowColumn($this->SqlService::DBNAMES[0]);
+
+       // print_r($Columns);                            
+        foreach ($Columns as $Column){
+             //   echo $Column['Field'].':' . $Column['Type']. PHP_EOL;
+                echo $Column['Field'].PHP_EOL;           
+        }    
+    }
 }
 
