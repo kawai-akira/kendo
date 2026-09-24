@@ -1,0 +1,46 @@
+
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月06作成
+ #
+ # app\template\default\Mail\coupon_birthday_mail.twig
+ a                           
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{{Customer.name01}} {{Customer.name02}} 様
+
+☆お誕生日おめでとうございます！☆
+
+{{Coupon.available_from_date|date('m')}}月に、お誕生日を迎えられたお客様へ、KENDO PARKからお祝いの気持ちを込めた「特別クーポン」をプレゼントしております！
+”全商品10%OFF”です。この機会に是非お買い求め下さい！
+
+◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇
+【お誕生日クーポン】
+
+クーポンコード： {{Coupon.coupon_cd}}
+対象：全商品
+割引率：10%
+利用期限：{{Coupon.available_from_date|date('Y年m月d日')}}～{{Coupon.available_to_date|date('Y年m月d日')}}迄
+利用方法：上記のクーポンコードを購入決済時にご入力下さい
+◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇
+
+
+{{Customer.name01}} {{Customer.name02}} 様にとって、素敵な一年になりますよう、スタッフ一同心より祈念しております。
+
+引き続き、KENDO PARKをご愛顧のほど何卒よろしくお願いいたします。
+■─────────────────────────────■
+剣道具専門通販セレクトショップ KENDO PARK
+MAIL：info@kendopark.jp
+HP：https://kendopark.jp/
+
+※配信停止希望の場合は、その旨をこちらまでお送りください。
+info@kendopark.jp
+■─────────────────────────────■

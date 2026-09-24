@@ -1,6 +1,7 @@
 parameters:
     admin_renew_pass_count_max: 3
     Customize_Yaml_dir: '%kernel.project_dir%/app/Customize/Resource/Yaml/'
+    coupon_birthday_discountRate: 10
 services:
     Customize\EventListener\RenewPassEventListener:
         arguments:

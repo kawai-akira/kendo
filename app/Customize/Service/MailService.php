@@ -16,6 +16,7 @@
     *****************************************************/
 namespace Customize\Service;
 
+
 use Doctrine\ORM\NonUniqueResultException;
 use Eccube\Common\EccubeConfig;
 use Eccube\Entity\BaseInfo;
@@ -40,11 +41,13 @@ use Symfony\Component\Mime\Email;
 #use Twig\Error\RuntimeError;
 #use Twig\Error\SyntaxError;
 use Eccube\Entity\Member;
+use Plugin\Coupon42\Entity\Coupon;
 
 class MailService extends \Eccube\Service\MailService
 {
 
 const AdminForgotMail = 10;
+const BirthdayMail    = 11;
     /**
      * MailService constructor.
      *
@@ -111,6 +114,43 @@ const AdminForgotMail = 10;
     }
 
 
+    /**
+     * 誕生日メール送信 
+     * 
+     */
+    public function sendBirthdayMail(Customer $Customer,Coupon $Coupon)
+    {
+
+
+        $MailTemplate = $this->mailTemplateRepository->find(self::BirthdayMail);
+
+        $body = $this->twig->render($MailTemplate->getFileName(), [
+            'Customer' => $Customer,
+            'Coupon' =>$Coupon,
+
+        ]);
+
+        $Subject = '['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject();
+
+        $message = (new Email())
+            ->subject($Subject)
+            ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
+            ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
+            ->bcc($this->BaseInfo->getEmail01())
+            ->replyTo($this->BaseInfo->getEmail03())
+            ->returnPath($this->BaseInfo->getEmail04());
+
+
+        $message->text($body);
+
+        try {
+            $this->mailer->send($message);
+            return [$Subject,$body];
+        } catch (TransportExceptionInterface $e) {
+            log_critical($e->getMessage());
+            return[null,null];
+        }
+    }
 
 
 
