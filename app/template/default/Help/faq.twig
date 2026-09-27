@@ -1,0 +1,144 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月25作成
+ #
+ # D:\htdocs82\kendo\www\app\template\default\Help\faq.twig
+ a                           
+ #
+ #
+ # 
+ #　-----------------	剣道具について -----------------
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+    <style>
+        .faq_area {border-bottom: 1px dotted #ccc; margin-bottom: 30px;}
+
+        .faq_area .question{
+            color: #525263;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .faq_area .question:before {
+            font-family:  "ＭＳ Ｐ明朝","細明朝体","ヒラギノ明朝 Pro W3","HiraMinProN-W3", monospace;
+            content: "Ｑ．";
+            color: #525263;
+            font-size: 20px;
+        }
+
+        .faq_area .ansewr {
+            color: #525263;
+            margin-bottom: 10px;
+            margin-left: 3.3em;
+            text-indent: -3.3em;
+            }
+        .faq_area .ansewr:before {
+            font-family: "ＭＳ Ｐ明朝","細明朝体","ヒラギノ明朝 Pro W3","HiraMinProN-W3", monospace;
+            content: "Ａ．";
+            color: #525263;
+            font-size: 20px;
+        }
+
+        .faq_area .hardness{
+            background: #f8f8f8;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="ec-role">
+    <div class="ec-pageHeader">
+        <h1>{{ '当サイトについて'|trans }}</h1>
+    </div>
+    <div class="ec-off1Grid">
+        <div class="ec-off1Grid__cell">
+            <div class="ec-borderedDefs">
+                <div class="faq_area">
+                    <div class="question">新規会員登録、ご注文、メールマガジン登録をしたが、メールが届かない。</div>
+						<div class="ansewr">メール受信設定をご確認ください。
+                            <br>
+                            <br>
+【                          確認方法１】迷惑メールフォルダをご確認ください。
+                            <br>
+                            <br>
+                            KENDO PARKからのメールが、迷惑メールフォルダに振り分けられていることがございます。
+                            <br>
+                            メールを受信できるよう、フィルター設定をしてください。
+                            <br>
+                            <br>
+                            【確認方法２】「info@kendopark.jp」からの受信を設定ください。
+                            <br>
+                            <br>
+                            特に携帯メールアドレス（~ezweb,~docomo,~softbank）をご登録の場合、弊社からのメールを受信しないことがございます。
+                            <br>
+                            「〜@kendopark.jp」のドメイン、及び「info@kendopark.jp」のメールアドレスからのメール受信を設定ください。
+                            <br>
+                            <br>
+                            </a><a href="https://www.nttdocomo.co.jp/info/spam_mail/spmode/domain/">・docomo(~@docomo)の設定方法はこちら</a>
+                            <br>
+                            <br>
+                            </a><a href="https://www.au.com/support/service/mobile/trouble/mail/email/filter/detail/domain/">・au(~@ezweb)の設定方法はこちら</a>
+                            <br>
+                            <br>
+                            </a><a href="https://www.softbank.jp/mobile/support/iphone/antispam/email_i/white/">・softbank(~@i.softbank)の設定方法はこちら</a>
+                            <br>
+                        </div>
+                    </div>
+	                        <div class="faq_area">
+								<div class="question">出品商品はどのように選定しているのですか？</div>
+								<div class="ansewr">KENDO PARK運営局スタッフが、各武道具店様と直接相談の上選定しております。</div>
+							</div>
+	                        <div class="faq_area">
+								<div class="question">防具は身につけるものなので、ネット上だけでの購入は不安なのですが。</div>
+								<div class="ansewr">KENDO PARKでは、通常よりも細かい採寸データをいただいております。<br>
+								追加でのご質問やご相談がございましたら、事前にお問い合わせ頂ければ幸いです。<br>また、手刺防具等一部商品に関しましては、ご注文後に各店舗の職人より直接確認のご連絡を差し上げております。</div>
+							</div>
+	                        <div class="faq_area">
+								<div class="question">クレジットカード決済以外での、支払い方法はありますか？</div>
+								<div class="ansewr">銀行振込でのご注文決済も、お受けしております。<br>その場合、別送の注文書にてご注文内容をいただき、事前入金をもって正式発注する形とさせていただきます。<br>ご希望の場合は、以下メールアドレスへご意向をお申し付けください。<br><br>info@kendopark.jp</div>
+							</div>
+	                        <div class="faq_area">
+								<div class="question">刺繍の指定はどのようにすればよろしいですか？</div>
+								<div class="ansewr">注文画面に刺繍記入欄を設けておりますので、そちらに記入文字と希望の色等をご記入ください。<br>
+								尚、店舗によって適応色や字体が異なりますので、カスタマイズが必要な場合は<br>
+								武道具店からの直接連絡をお待ちいただければと存じます。</div>
+							</div>
+	                        <div class="faq_area">
+								<div class="question">配送日程や配送料はどのようになっていますか？</div>
+								<div class="ansewr">配送日程や配送料は各店舗によって異なります。お届け日程に関しましては、各商品欄に記載しております。<br>
+								配送料に関しましてはご決済時に加算させていただいておりますので、ご確認ください。</div>
+	                        </div>
+	                        <div class="faq_area">
+								<div class="question">返品やサイズ再調整は可能ですか？</div>
+								<div class="ansewr">返品やサイズの再調整に関しましては、各武道具店様とお客様との間で行っていただきますようお願いいたします。<br>
+								リクエストに関しましては、KENDO PARK運営局でもお取次ぎいたしますので、<a href="{{path('contact')}}">お問い合わせフォーム</a>よりご連絡ください。</div>
+							</div>
+	                        <div class="faq_area">
+								<div class="question">ショア硬さとはなんですか？</div>
+								<div class="ansewr">先端にダイヤモンド半球を取り付けたハンマーを落とした時の、跳ね返り高さを元の高さで割って算出する<br>
+								硬さ指数のことです。</div>
+								<div class="hardness">KENDO PARKでは、剣道具分析の際に定量データとして硬さデータを収集しております。<br>
+								今後これらのデータを生かして、耐久性等より正確な情報をお客様に提供する予定でございます。</div>
+							</div>
+							<p>その他ご利用に関しましてのご質問は、<a href="{{path('help_agreement')}}">利用規約</a>をご覧いただきますようお願いいたします。</p>
+
+                        
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

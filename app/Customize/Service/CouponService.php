@@ -29,6 +29,12 @@ use Customize\Service\MailService;
 
 class CouponService{
 
+const couponType   = 3; #対象商品
+const couponMember = true; #会員のみ
+const couponDiscountType = 2; #割引
+const couponRelease = 1; #発酵枚数
+const availableDate = 30; #有効期間
+
     /**
      * @var EntityManagerInterface;
      */
@@ -93,10 +99,10 @@ class CouponService{
 
             $Coupon = new Coupon();
             $Coupon->setCouponCd($couponCd)
-                   ->setCouponType(3) #全商品
+                   ->setCouponType(self::couponType) #全商品
                    ->setCouponName($couponName)
-                   ->setCouponMember(false) #会員のみ
-                   ->setDiscountType(2) #値引き
+                   ->setCouponMember(self::couponMember) #会員のみ
+                   ->setDiscountType(self::couponDiscountType) #値引き
                    ->setCouponUseTime(1)
                    ->setDiscountPrice(null)
                    ->setDiscountRate($this->EccubeConfig['coupon_birthday_discountRate'])
@@ -106,7 +112,7 @@ class CouponService{
                    ->setVisible(1)
                    ->setCouponMember(0)
                    ->setCouponLowerLimit(null)
-                   ->setCouponRelease(1) #発行枚数
+                   ->setCouponRelease(self::couponRelease) #発行枚数
                    ->setShop(null);
 
             $this->em->persist($Coupon);
@@ -146,6 +152,42 @@ class CouponService{
             $this->em->flush();
               
         log_info('バースデイクーポン作成 完了');
+    }
+
+    public function getEntryCoupon(Customer $Customer){
+
+        $Coupon     = new Coupon();
+        
+        $couponCd   = $this->plCouponService->generateCouponCd();
+        $couponName =  trans('front_entry_coupon_nuw_customer').' | '. $Customer->getName01() .' ' .$Customer->getName02() .'様'  ;
+ 
+              
+        $startDate   = Carbon::now();
+        $todDay      = Carbon::now()->addDays(self::availableDate);
+
+        $Coupon
+              ->setCouponCd($couponCd)
+                   ->setCouponType(self::couponType) #全商品
+                   ->setCouponName($couponName)
+                   ->setCouponMember(self::couponMember) #会員のみ
+                   ->setDiscountType(self::couponDiscountType) #値引き
+                   ->setCouponUseTime(1)
+                   ->setDiscountPrice(null)
+                   ->setDiscountRate($this->EccubeConfig['coupon_entry_discountRate']) #5$
+                   ->setEnableFlag(1)
+                   ->setAvailableFromDate($startDate)
+                   ->setAvailableToDate($todDay)
+                   ->setVisible(1)
+                   ->setCouponMember(0)
+                   ->setCouponLowerLimit(null)
+                   ->setCouponRelease(self::couponRelease) #発行枚数
+                   ->setShop(null);
+
+            $this->em->persist($Coupon);
+            $this->em->flush();
+
+            return $Coupon;
+
     }
 }
 

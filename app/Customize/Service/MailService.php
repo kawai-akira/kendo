@@ -74,7 +74,63 @@ const BirthdayMail    = 11;
         );
     }
 
+    /**
+     * Send customer complete mail.
+     *
+     * @param $Customer 会員情報
+     */
+    public function sendCustomerCompleteMail(Customer $Customer,?Coupon $Coupon =null)
+    {
+        log_info('会員登録完了メール送信開始');
 
+        $MailTemplate = $this->mailTemplateRepository->find($this->eccubeConfig['eccube_entry_complete_mail_template_id']);
+
+        $body = $this->twig->render($MailTemplate->getFileName(), [
+            'Customer' => $Customer,
+            'BaseInfo' => $this->BaseInfo,
+            'Coupon' => $Coupon
+        ]);
+
+        $message = (new Email())
+            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
+            ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
+            ->bcc($this->BaseInfo->getEmail01())
+            ->replyTo($this->BaseInfo->getEmail03())
+            ->returnPath($this->BaseInfo->getEmail04());
+
+        // HTMLテンプレートが存在する場合
+        $htmlFileName = $this->getHtmlTemplate($MailTemplate->getFileName());
+        if (!is_null($htmlFileName)) {
+            $htmlBody = $this->twig->render($htmlFileName, [
+                'Customer' => $Customer,
+                'BaseInfo' => $this->BaseInfo,
+            ]);
+
+            $message
+                ->text($body)
+                ->html($htmlBody);
+        } else {
+            $message->text($body);
+        }
+
+        $event = new EventArgs(
+            [
+                'message' => $message,
+                'Customer' => $Customer,
+                'BaseInfo' => $this->BaseInfo,
+            ],
+            null
+        );
+        $this->eventDispatcher->dispatch($event, EccubeEvents::MAIL_CUSTOMER_COMPLETE);
+
+        try {
+            $this->mailer->send($message);
+            log_info('会員登録完了メール送信完了');
+        } catch (TransportExceptionInterface $e) {
+            log_critical($e->getMessage());
+        }
+    }
 
     /**
      * Send password reset admin mail.

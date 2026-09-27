@@ -1,0 +1,154 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) 2000-2015 LOCKON CO.,LTD. All Rights Reserved.
+
+http://www.lockon.co.jp/
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#}
+{{ Order.name01 }} {{ Order.name02 }} 様
+
+{{ header }}
+
+************************************************
+　ご請求金額
+************************************************
+
+ご注文番号：{{ Order.id }}
+お支払い合計：{{ Order.payment_total|price}}
+お支払い方法：{{ Order.payment_method }}
+
+メッセージ：{{ Order.message }}
+
+
+************************************************
+　ご注文商品明細
+************************************************
+店舗名： {{ Order.Shop.shop_name }}
+{% for OrderDetail in Order.OrderDetails %}
+商品コード: {{ OrderDetail.product_code }}
+商品名: {{ OrderDetail.product_name }}  {{ OrderDetail.classcategory_name1 }}  {{ OrderDetail.classcategory_name2 }}
+{% if OrderDetail.Product.hasCategorySet or OrderDetail.Product.hasCategoryMen %}【面】A:{{ OrderDetail.men_size_a }} B:{{ OrderDetail.men_size_b }} C:{{ OrderDetail.men_size_c }} 身長:{{ OrderDetail.men_height }} 性別:{{ OrderDetail.sex }}用 その他希望:{{ OrderDetail.men_etc }}
+{% endif %}
+{% if OrderDetail.Product.hasCategorySet or OrderDetail.Product.hasCategoryKote %}【小手】左D:{{ OrderDetail.kote_size_left_d }} 左E:{{ OrderDetail.kote_size_left_e }} 左F:{{ OrderDetail.kote_size_left_f }} 右D:{{ OrderDetail.kote_size_right_d }} 右E:{{ OrderDetail.kote_size_right_e }} 右F:{{ OrderDetail.kote_size_right_f }} 性別:{{ OrderDetail.sex }}用 その他希望:{{ OrderDetail.kote_etc }}
+{% endif %}
+{% if OrderDetail.Product.hasCategorySet or OrderDetail.Product.hasCategoryDou %}【胴】胸囲:{{ OrderDetail.dou_size_bust }} 胴周り:{{ OrderDetail.dou_size_waist }} G:{{ OrderDetail.dou_size_g }} 身長:{{ OrderDetail.dou_height }} 性別:{{ OrderDetail.sex }}用 その他希望:{{ OrderDetail.dou_etc }}
+{% endif %}
+{% if OrderDetail.Product.hasCategorySet or OrderDetail.Product.hasCategoryTare %}【垂】身長:{{ OrderDetail.tare_size_height }} ウエスト:{{ OrderDetail.tare_size_waist }} 性別:{{ OrderDetail.sex }}用 その他希望:{{ OrderDetail.tare_etc }}
+{% endif %}
+{% if OrderDetail.Product.hasCategoryDoui %}【道衣】身長:{{ OrderDetail.doui_size_height }} 体型:{{ OrderDetail.DouiType.name }} 希望:{{ OrderDetail.DouiHope.name }} 性別:{{ OrderDetail.sex }}用 その他希望:{{ OrderDetail.doui_etc }}
+{% endif %}
+{% if OrderDetail.Product.hasCategoryHakama %}【袴】身長:{{ OrderDetail.hakama_size_height }} ウエスト:{{ OrderDetail.hakama_size_waist }} 丈:{{ OrderDetail.hakama_size_length }} 性別:{{ OrderDetail.sex }}用 その他希望:{{ OrderDetail.hakama_etc }}
+{% endif %}
+{% if OrderDetail.Product.hasCategoryShinai %}【竹刀】その他希望:{{ OrderDetail.shinai_etc }}{% endif %}
+{% if OrderDetail.Product.hasCategoryZekken %}【ゼッケン】その他希望:{{ OrderDetail.zekken_etc }}
+{% endif %}
+{% if OrderDetail.free_input_name1 %}【{{ OrderDetail.free_input_name1 }}】{{ OrderDetail.free_input_value1 }}
+{% endif %}
+{% if OrderDetail.free_input_name2 %}【{{ OrderDetail.free_input_name2 }}】{{ OrderDetail.free_input_value2 }}
+{% endif %}
+{% if OrderDetail.free_input_name3 %}【{{ OrderDetail.free_input_name3 }}】{{ OrderDetail.free_input_value3 }}
+{% endif %}
+
+単価： {{ calc_inc_tax(OrderDetail.price, OrderDetail.tax_rate, OrderDetail.tax_rule)|price }}
+数量： {{ OrderDetail.quantity|number_format }}
+
+{% endfor %}
+
+-------------------------------------------------
+小　計 {{ Order.subtotal|price }}{% if Order.tax > 0 %}(うち消費税 {{ Order.tax|price }}){% endif %}
+
+手数料 {{ Order.charge|price }}
+送　料 {{ Order.delivery_fee_total|price}}
+{% if Order.discount > 0 %}
+値引き {{ (0 - Order.discount)|price}}
+{% endif %}
+============================================
+合　計 {{ Order.payment_total|price }}
+
+************************************************
+　ご注文者情報
+************************************************
+お名前　：{{ Order.name01 }}{{ Order.name02 }}　様
+{% if Order.company_name %}
+会社名　：{{ Order.company_name }}
+{% endif %}
+{% if app.config.form_country_enable %}
+国　　　：{{ Order.Country }}
+ZIPCODE ：{{ Order.zip_code }}
+{% endif %}
+郵便番号：〒{{ Order.zip01 }}-{{ Order.zip02 }}
+住所　　：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}
+電話番号：{{ Order.tel01 }}-{{ Order.tel02 }}-{{ Order.tel03 }}
+FAX番号 ：{{ Order.fax01 }}-{{ Order.fax02 }}-{{ Order.fax03 }}
+
+メールアドレス：{{ Order.email }}
+
+************************************************
+　配送情報
+************************************************
+
+{%  for Shipping in Order.Shippings %}
+◎お届け先{% if Order.multiple %}{{ loop.index }}{% endif %}
+
+お名前　：{{ Shipping.name01 }}{{ Shipping.name02 }}　様
+{% if Shipping.company_name %}
+会社名　：{{ Shipping.company_name }}
+{% endif %}
+{% if app.config.form_country_enable %}
+    　国　　　：{{ Shipping.Country.name }}
+    　ZIPCODE ：{{ Shipping.zip_code }}
+{% endif %}
+郵便番号：〒{{ Shipping.zip01 }}-{{ Shipping.zip02 }}
+住所　　：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}
+電話番号：{{ Shipping.tel01 }}-{{ Shipping.tel02 }}-{{ Shipping.tel03 }}
+FAX番号 ：{{ Shipping.fax01 }}-{{ Shipping.fax02 }}-{{ Shipping.fax03 }}
+
+お届け日：{{ Shipping.shipping_delivery_date is empty ? '指定なし' : Shipping.shipping_delivery_date|date_format }}
+お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}
+
+
+{%  for ShipmentItem in Shipping.ShipmentItems %}
+商品コード: {{ ShipmentItem.product_code }}
+商品名: {{ ShipmentItem.product_name }}  {{ ShipmentItem.classcategory_name1 }}  {{ ShipmentItem.classcategory_name2 }}
+{% if ShipmentItem.Product.hasCategorySet or ShipmentItem.Product.hasCategoryMen %}【面】A:{{ ShipmentItem.men_size_a }} B:{{ ShipmentItem.men_size_b }} C:{{ ShipmentItem.men_size_c }} C:{{ ShipmentItem.men_height }} その他希望:{{ ShipmentItem.men_etc }}
+{% endif %}
+{% if ShipmentItem.Product.hasCategorySet or ShipmentItem.Product.hasCategoryKote %}【小手】左D:{{ ShipmentItem.kote_size_left_d }} 左E:{{ ShipmentItem.kote_size_left_e }} 左F:{{ ShipmentItem.kote_size_left_f }} 右D:{{ ShipmentItem.kote_size_right_d }} 右E:{{ ShipmentItem.kote_size_right_e }} 右F:{{ ShipmentItem.kote_size_right_f }} その他希望:{{ ShipmentItem.kote_etc }}
+{% endif %}
+{% if ShipmentItem.Product.hasCategorySet or ShipmentItem.Product.hasCategoryDou %}【胴】胸囲:{{ ShipmentItem.dou_size_bust }} 胴周り:{{ ShipmentItem.dou_size_waist }} G:{{ ShipmentItem.dou_size_g }} その他希望:{{ ShipmentItem.dou_etc }}
+{% endif %}
+{% if ShipmentItem.Product.hasCategorySet or ShipmentItem.Product.hasCategoryTare %}【垂】身長:{{ ShipmentItem.tare_size_height }} ウエスト:{{ ShipmentItem.tare_size_waist }} その他希望:{{ ShipmentItem.tare_etc }}
+{% endif %}
+{% if ShipmentItem.Product.hasCategoryDoui %}【道衣】身長:{{ ShipmentItem.doui_size_height }} 体型:{{ ShipmentItem.DouiType.name }} 希望:{{ ShipmentItem.DouiHope.name }} その他希望:{{ ShipmentItem.doui_etc }}
+{% endif %}
+{% if ShipmentItem.Product.hasCategoryHakama %}【袴】身長:{{ ShipmentItem.hakama_size_height }} ウエスト:{{ ShipmentItem.hakama_size_waist }} 丈:{{ ShipmentItem.hakama_size_length }} その他希望:{{ ShipmentItem.hakama_etc }}
+{% endif %}
+{% if ShipmentItem.Product.hasCategoryShinai %}【竹刀】その他希望:{{ ShipmentItem.shinai_etc }}{% endif %}
+{% if ShipmentItem.Product.hasCategoryZekken %}【ゼッケン】その他希望:{{ ShipmentItem.zekken_etc }}
+{% endif %}
+{% if ShipmentItem.free_input_name1 %}【{{ ShipmentItem.free_input_name1 }}】{{ ShipmentItem.free_input_value1 }}
+{% endif %}
+{% if ShipmentItem.free_input_name2 %}【{{ ShipmentItem.free_input_name2 }}】{{ ShipmentItem.free_input_value2 }}
+{% endif %}
+{% if ShipmentItem.free_input_name3 %}【{{ ShipmentItem.free_input_name3 }}】{{ ShipmentItem.free_input_value3 }}
+{% endif %}
+
+数量：{{ ShipmentItem.quantity|number_format }}
+
+{% endfor %}
+{% endfor %}
+
+{{ footer }}

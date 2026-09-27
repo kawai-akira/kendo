@@ -81,3 +81,4 @@ plugin_coupon.admin.label.Shop: 対象店舗
 plugin_coupon.admin.tooltip_shop:  クーポンに対象店舗がある場合は、選択してください。未選択の場合は全店対象となります。
 plugin_recommend.admin.tipe_title1: カテゴリー
 plugin_recommend.admin.tipe_title2: 区分
+front_entry_coupon_nuw_customer: 新規会員登録クーポン
