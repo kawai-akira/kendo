@@ -17,14 +17,14 @@
 namespace Customize\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
+#use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+#use Symfony\Component\Console\Style\SymfonyStyle;
 use Customize\Service\CouponService;
 
 
-class CRONCommand extends Command {
+class CouponCommand extends Command {
 
     /* cronで実行したい名前を指定します */
     protected static $defaultName = 'eccube:assetrouge.ColeectionFee';
@@ -45,7 +45,7 @@ class CRONCommand extends Command {
      ) {
         parent::__construct();
         $this->CouponService = $CouponService;
-     //   $this->BimWebApiOrderService = $BimWebApiOrderService;
+       
 
     }
 
@@ -56,7 +56,8 @@ class CRONCommand extends Command {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->CouponService->BirthdayCoupon();
-      //  $this->BimWebApiOrderService->setOrder();
+        $this->CouponService->couponRemove();
+
    
 
     }

@@ -3,6 +3,7 @@ parameters:
     Customize_Yaml_dir: '%kernel.project_dir%/app/Customize/Resource/Yaml/'
     coupon_birthday_discountRate: 10
     coupon_entry_discountRate: 5
+    coupon_remove_date: 60 #クーポン終了日から非表示にする
 services:
     Customize\EventListener\RenewPassEventListener:
         arguments:

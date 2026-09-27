@@ -18,13 +18,14 @@ namespace Customize\Service;
 
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Eccube\Common\EccubeConfig;
 use Eccube\Entity\Customer;
 use Customize\Repository\CustomerRepository;
+use Customize\Repository\Plugin\CouponRepository;
 //use Doctrine\ORM\EntityManagerInterface;
 use Plugin\Coupon42\Entity\Coupon;
 use Plugin\MailMagazine42\Entity\MailMagazineSendHistory;
 use Plugin\Coupon42\Service\CouponService as plCouponService;
-use Eccube\Common\EccubeConfig;
 use Customize\Service\MailService;
 
 class CouponService{
@@ -53,26 +54,32 @@ const availableDate = 30; #有効期間
     /**
      * @var EccubeConfig
      */
-     private $EccubeConfig;
- 
+    private $EccubeConfig;
+
+     /**
+      * @var CouponRepository
+      */
+    private $CouponRepository;
     /**
      * @var MailService
      */ 
     private $MailService;
 
     public function __construct(
-         EntityManagerInterface $EntityManager   
-        ,CustomerRepository $CustomerRepository
+         EntityManagerInterface $EntityManager
+         ,CustomerRepository $CustomerRepository
         ,plCouponService $plCouponService
         ,EccubeConfig $EccubeConfig
         ,MailService $MailService
+        ,CouponRepository $CouponRepository
         )
     {
         $this->em = $EntityManager;
         $this->CustomerRepository = $CustomerRepository;
         $this->plCouponService =$plCouponService;
-        $this->EccubeConfig =$EccubeConfig;
-        $this->MailService = $MailService; 
+        $this->EccubeConfig = $EccubeConfig;
+        $this->MailService = $MailService;
+        $this->CouponRepository = $CouponRepository;
         }   
 
     public function BirthdayCoupon(){
@@ -189,6 +196,24 @@ const availableDate = 30; #有効期間
             return $Coupon;
 
     }
+    /**
+     * 　クーポンを終了日からconfig coupon_remove_date で非表示にする
+     *
+     * 
+     * @return void
+     */
+    public function couponRemove(){
+
+        log_info('クーポン削除定期処理開始'); 
+        $date = Carbon::now()->subDays($this->EccubeConfig['coupon_remove_date']);
+        $numRemove = $this->CouponRepository->couponRemove($date);
+        log_info('クーポン削除定期処理終了',['件数'=>$numRemove]); 
+
+
+    }
+
+
+
 }
 
 
