@@ -1,2 +1,47 @@
 /* カスタマイズ用CSS */
+.ec-headerRole,
+.ec-headerNaviRole{
+    max-width: 1400px;
+}
+.ec-categoryNaviRole{
+    max-width: 1400px;
+    font-size: 14px;
+}
 
+
+.ec-itemNav{
+    max-width: 1400px;
+    width:100;
+    background-color:#b80000;
+}
+.ec-itemNav__nav{
+    margin: 0 auto;
+}
+
+.ec-itemNav__nav li a{
+    background-color:#b80000;
+    color:#fff;
+    border-bottom: 1px solid #333;
+    font-size: 14px;
+}
+.ec-itemNav__nav > li:hover >a{
+    color:#fff;
+    background-color:#b80000;
+}
+
+.ec-itemNav__nav > li:hover li:hover > a {
+    background: #fff
+}
+.ec-itemNav__nav li ul li a {
+    background: #fff;
+    color:#333;
+    border-bottom: 1px solid #333;
+}
+.ec-itemNav__nav li ul li ul li a{
+    background: #fff;
+    color:#333;
+    border-bottom: 1px solid #333;
+}
+.ec-layoutRole .ec-layoutRole__contents{
+    max-width: 1400px;
+}

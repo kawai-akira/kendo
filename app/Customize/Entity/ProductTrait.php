@@ -136,6 +136,13 @@
          */
         private $LegacyKeyword;
 
+        /**
+         * @var int
+         *
+         * @ORM\Column(name="total", type="integer", options={"unsigned": true, "default": 0})
+         */
+        private $Total = 0;
+
 
        /**
          * @param \Customize\Entity\Shop|null $Shop
@@ -462,5 +469,16 @@
                 } 
             }
             return false;
+        }
+
+        public function setTotal(int $Total = 0): self
+        {
+            $this->Total = $Total;
+
+            return $this;
+        }
+        public function getTotal(): int
+        {
+            return $this->Total;
         }
     }

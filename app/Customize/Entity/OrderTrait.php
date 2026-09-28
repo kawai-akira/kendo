@@ -16,7 +16,7 @@
 
     use Doctrine\ORM\Mapping as ORM;
     use Eccube\Annotation\EntityExtension;
-    use Eccube\Entity\Shop;
+    use Customize\Entity\Shop;
     
 
 
@@ -42,21 +42,14 @@
          */
         private $fax_number;
 
-               /**
-         * @param \Customize\Entity\Shop|null $Shop
-         * @return Order
-         */
-        public function setShop(Shop $Shop = null)
+ 
+        public function setShop(?Shop $Shop = null): self
         {
             $this->Shop = $Shop;
 
             return $this;
         }
-
-        /**
-         * @return \Customize\Entity\Shop|null
-         */
-        public function getShop()
+        public function getShop(): Shop
         {
             return $this->Shop;
         }
