@@ -22,15 +22,17 @@ use Twig\TwigFunction;
 use Symfony\Component\Form\FormView;
 #use Twig\TwigFilter;
 #use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment as Twig;
 use Eccube\Entity\Product;
 use Customize\Service\CommonService;
 #use Google\Service\GKEOnPrem\BareMetalNetworkConfig;
 use Eccube\Entity\OrderItem;
+use Eccube\Entity\Category;
+
 
 class ProductTwigExtention extends AbstractExtension
 {
-
     private const ItemDetail      = 'Product/Parts/ItemDetailArea.twig';
     private const SexTwig         = 'Product/Parts/SexForm.twig';
     private const HeightTwig      = 'Product/Parts/HeightForm.twig';
@@ -59,12 +61,20 @@ class ProductTwigExtention extends AbstractExtension
     private const FreeInput1Admin = '@admin/Order/Parts/FreeInput1Form.twig';
     private const FreeInput2Admin = '@admin/Order/Parts/FreeInput2Form.twig';
     private const FreeInput3Admin = '@admin/Order/Parts/FreeInput3Form.twig';
+    private const categoryImgTwig = 'Product/Parts/CategoryImage.twig';
+    private Const categoryImgDir  = '/assets/img/categoryImg/';
+
    /**
      * Twig\Environment Twig;
      * @var Twig; 
      */
     private $Twig;
 
+    /**
+     * @var ContainerInterface
+     *
+     * @var [type]
+     */
     /**
      * @var CommonService.
      */
@@ -109,13 +119,29 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('FreeInput3Form', [$this, 'setfreeInput3']),
             new TwigFunction('AdminItemOption', [$this, 'setAdminItemOption']),
             new TwigFunction('categoryFormat1', [$this, 'setcategoryFormat1']),
-
+            new TwigFunction('categoryImg', [$this, 'setcategoryImg']),
+            new TwigFunction('Recomand', [$this, 'setcategoryImg']),
         ];
     }
 
-    /**
-     * @param Product $Product
-     */
+    public function setcategoryImg(?Category $Category){
+
+        if( is_null($Category)){return ;}
+
+            $Image = self::categoryImgDir.$Category->getId().'.jpg';
+            $Path = $this->CommonService->getConfig('html_user_data_dir'). $Image;
+
+        if(!file_exists($Path)){return ;}
+
+        return $this->Twig->render(self::categoryImgTwig, [
+           'image' => $this->CommonService->getConfig('html_user_data_root') .$Image,
+           'name'  => $Category->getName(),                           
+        ]);
+
+    }
+
+
+
     public function setItemDetail(Product $Product ){
 
   

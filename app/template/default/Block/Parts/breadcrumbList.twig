@@ -1,0 +1,55 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月28日作成
+ #
+ # app\template\default\Block\Parts\breadcrumbList.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div id="breadcrumb_area" >  
+    <nav aria-label="breadcrumb" >
+        <ol class="breadcrumb">
+            {# 1. ホーム（固定） #}
+            <li class="breadcrumb-item">
+                <a href="{{ url('homepage') }}">ホーム</a>
+            </li>
+            {% if Category is not null%}
+                {% for ancestor in Category.path %}
+                    {# ループの最後（＝現在表示しているカテゴリ自身）はリンクにしない #}
+                    {% if loop.last %}
+                        {% if Name is null %}
+                            <li class="breadcrumb-item active" aria-current="page">
+                            {{ ancestor.name }} 
+                        {% else %}
+                            <li class="breadcrumb-item">
+                                <a href="{{ url('product_list') }}?category_id={{ ancestor.id }}">
+                                    {{ ancestor.name }}
+                                </a>
+                        {% endif %}
+                        
+                        </li>
+                    {% else %}
+                        <li class="breadcrumb-item">
+                            {# EC-CUBE標準の商品一覧ルート（product_list）にcategory_idを渡す #}
+                            <a href="{{ url('product_list') }}?category_id={{ ancestor.id }}">
+                                {{ ancestor.name }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}   
+            {% if Name is not null %}
+                <li class="breadcrumb-item">
+                    {{ Name }}
+                </li>
+            {% endif %}
+        </ol>
+    <nax>
+</div>    

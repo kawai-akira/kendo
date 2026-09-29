@@ -1,0 +1,23 @@
+
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月29日作成
+ #
+ # app\template\default\Block\breadcrumblistBlock.twig
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% if app.request.get('_route') == 'product_detail' %}
+    {{ breadcrumbList(Product)|raw }}
+{% elseif app.request.get('_route') == 'product_list' %}
+    {{ breadcrumbList(Category)|raw }}
+{% else %}
+    {{ breadcrumbList()|raw }}
+{% endif %}    

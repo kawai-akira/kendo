@@ -110,6 +110,12 @@
         </div>
     {% else %}
         <div class="ec-searchnavRole">
+
+            {{ categoryImg(Category)|raw}}
+
+
+
+
             <form name="form1" id="form1" method="get" action="?">
                 {% for item in search_form %}
                     <input type="hidden" id="{{ item.vars.id }}"
@@ -219,6 +225,7 @@
                     {% endfor %}
                 </ul>
             </div>
+{#
             <div class="ec-modal">
                 <div class="ec-modal-overlay">
                     <div class="ec-modal-wrap">
@@ -233,6 +240,7 @@
                     </div>
                 </div>
             </div>
+#}
             <div class="ec-pagerRole">
                 {% include "pager.twig" with {'pages': pagination.paginationData} %}
             </div>
