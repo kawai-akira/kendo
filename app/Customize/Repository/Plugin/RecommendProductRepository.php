@@ -16,11 +16,13 @@
 
 namespace Customize\Repository\Plugin;
 
+
 use Eccube\Entity\Master\ProductStatus;
 use Eccube\Repository\AbstractRepository;
 use Plugin\Recommend42\Entity\RecommendProduct;
 use Doctrine\Persistence\ManagerRegistry; 
 use Customize\Entity\Master\RecommendType;
+use Eccube\Entity\Category;
 
 /**
  * RecommendProductRepository.
@@ -30,12 +32,15 @@ use Customize\Entity\Master\RecommendType;
  */
 class RecommendProductRepository extends \Plugin\Recommend42\Repository\RecommendProductRepository
 {
+
     /**
      * CouponRepository constructor.
      *
      * @param ManagerRegistry $registry
      */
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry
+
+    )
     {
         parent::__construct($registry);
     }
@@ -51,11 +56,10 @@ class RecommendProductRepository extends \Plugin\Recommend42\Repository\Recommen
         if(is_null($FormDAta)){return [];}
         
 
-
         $qb = $this->createQueryBuilder('rp')
             ->innerJoin('rp.Product', 'p');
-        $qb->where('rp.visible = true');
-        $qb->addOrderBy('rp.sort_no', 'DESC');
+        $qb->where('rp.visible = true')
+            ->addOrderBy('rp.sort_no', 'DESC');
 
         if(RecommendType::CATEGORY == $FormDAta['type']->getId()){
             $qb->andwhere('rp.Category = :Category')
@@ -65,9 +69,22 @@ class RecommendProductRepository extends \Plugin\Recommend42\Repository\Recommen
                ->setParameter('RecommendKbn',$FormDAta['RecommendKbn']);
         }
 
-
-
         return $qb->getQuery()->getResult();
     }
+
+    public function getRecommendByCategory(Category $Category){
+     
+    
+        $qb = $this->createQueryBuilder('rp');
+            
+        $qb->where('rp.visible = true')
+           ->andWhere('rp.Category = :Category')
+           ->setParameter('Category' , $Category)
+           ->addOrderBy('rp.sort_no', 'DESC');
+
+        return $qb->getQuery()->getResult();
+
+    }
+
 
 }

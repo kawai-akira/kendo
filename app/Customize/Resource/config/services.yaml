@@ -5,7 +5,7 @@ parameters:
     coupon_entry_discountRate: 5
     coupon_remove_date: 60 #クーポン終了日から非表示にする
     html_user_data_dir: '%eccube_html_dir%/user_data'
-    html_user_data_root: '%env(ECCUBE_COOKIE_PATH)%/html/user_data'
+    html_user_data_root: '%env(ECCUBE_COOKIE_PATH)%html/user_data'
 services:
     Customize\EventListener\RenewPassEventListener:
         arguments:

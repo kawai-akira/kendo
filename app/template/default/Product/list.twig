@@ -141,6 +141,7 @@
                     {% endif %}
                 </ol>
             </div>
+            {{CategoryBestItem(Category)|raw}}
             <div class="ec-searchnavRole__infos">
                 <div class="ec-searchnavRole__counter">
                     {% if pagination.totalItemCount > 0 %}
@@ -173,6 +174,7 @@
                                     <p>{{ Product.description_list|raw|nl2br }}</p>
                                 {% endif %}
                                 <p class="price02-default">
+                                    {{Product|SALE|raw}}
                                     {% if Product.hasProductClass %}
                                         {% if Product.getPrice02Min == Product.getPrice02Max %}
                                             {{ Product.getPrice02IncTaxMin|price }}
@@ -184,63 +186,14 @@
                                     {% endif %}
                                 </p>
                             </a>
-{#
-                            {% if Product.stock_find %}
-                                {% set form = forms[Product.id] %}
-                                <form name="form{{ Product.id }}" id="productForm{{ Product.id }}" action="{{ url('product_add_cart', {id:Product.id}) }}" method="post">
-                                    <div class="ec-productRole__actions">
-                                        {% if form.classcategory_id1 is defined %}
-                                            <div class="ec-select">
-                                                {{ form_widget(form.classcategory_id1) }}
-                                                {{ form_errors(form.classcategory_id1) }}
-                                            </div>
-                                            {% if form.classcategory_id2 is defined %}
-                                                <div class="ec-select">
-                                                    {{ form_widget(form.classcategory_id2) }}
-                                                    {{ form_errors(form.classcategory_id2) }}
-                                                </div>
-                                            {% endif %}
-                                        {% endif %}
-                                        <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
-                                            {{ form_widget(form.quantity, {'attr': {'class': 'quantity'}}) }}
-                                            {{ form_errors(form.quantity) }}
-                                        </div>
-                                    </div>
-                                    {{ form_rest(form) }}
-                                </form>
-                                <div class="ec-productRole__btn">
-                                    <button type="submit" class="ec-blockBtn--action add-cart" data-cartid="{{ Product.id }}" form="productForm{{ Product.id }}">
-                                        {{ 'カートに入れる'|trans }}
-                                    </button>
-                                </div>
-                            {% else %}
-                                <div class="ec-productRole__btn">
-                                    <button type="button" class="ec-blockBtn--action" disabled="disabled">
-                                        {{ 'ただいま品切れ中です。'|trans }}
-                                    </button>
-                                </div>
-                            {% endif %}
-#}
+                            <div class="product_list__free_area" style="font-size:11px"> 
+                                {{ Product.FreeArea}}
+                            </div>    
                         </li>
                     {% endfor %}
                 </ul>
             </div>
-{#
-            <div class="ec-modal">
-                <div class="ec-modal-overlay">
-                    <div class="ec-modal-wrap">
-                        <span class="ec-modal-close"><span class="ec-icon"><img src="{{ asset('assets/icon/cross-dark.svg') }}" alt=""/></span></span>
-                        <div id="ec-modal-header" class="text-center">{{ 'カートに追加しました。'|trans }}</div>
-                        <div class="ec-modal-box">
-                            <div class="ec-role">
-                                <span class="ec-inlineBtn--cancel">{{ 'お買い物を続ける'|trans }}</span>
-                                <a href="{{ url('cart') }}" class="ec-inlineBtn--action">{{ 'カートへ進む'|trans }}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-#}
+
             <div class="ec-pagerRole">
                 {% include "pager.twig" with {'pages': pagination.paginationData} %}
             </div>

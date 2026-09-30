@@ -19,11 +19,11 @@ dl.item_size_area dt{
 }
 </style>
 
-<div class="item_detai_area pc >
+<div class="item_detai_area pc" >
 	<h2 style="font-size: 1.17em;">{{title[1] }}</h2>
 		<div class="mb-12">{{ Product.ItemFeatures|raw|nl2br }}</div>
 
-		<dl class="item_size_area ec-font-size-1"">
+		<dl class="item_size_area ec-font-size-1">
 			{% if Product.ProductType %}
 				<dt>{{ title[2] }}</dt>
 				<dd>{{ Product.ProductType }}</dd>

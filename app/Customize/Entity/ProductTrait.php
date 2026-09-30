@@ -481,4 +481,20 @@
         {
             return $this->Total;
         }
+    public function priceDownRate()
+    {
+ 
+        $rate = null;
+        //通常価格がセットされているか判定
+        if ($this->getPrice01IncTaxMin() > 0) {
+            $priceDownValue = floor(100 - (($this->getPrice02IncTaxMin() / $this->getPrice01IncTaxMin()) * 100));
+            if ($priceDownValue > 0) {
+                $rate = $priceDownValue;
+            } else {
+                $rate = null;
+            }
+        }
+
+        return $rate;
+    }
     }

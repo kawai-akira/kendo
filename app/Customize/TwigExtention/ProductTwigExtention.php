@@ -20,7 +20,7 @@ use Carbon\Carbon;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Component\Form\FormView;
-#use Twig\TwigFilter;
+use Twig\TwigFilter;
 #use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment as Twig;
@@ -29,6 +29,7 @@ use Customize\Service\CommonService;
 #use Google\Service\GKEOnPrem\BareMetalNetworkConfig;
 use Eccube\Entity\OrderItem;
 use Eccube\Entity\Category;
+use Customize\Repository\Plugin\RecommendProductRepository;
 
 
 class ProductTwigExtention extends AbstractExtension
@@ -63,26 +64,25 @@ class ProductTwigExtention extends AbstractExtension
     private const FreeInput3Admin = '@admin/Order/Parts/FreeInput3Form.twig';
     private const categoryImgTwig = 'Product/Parts/CategoryImage.twig';
     private Const categoryImgDir  = '/assets/img/categoryImg/';
+    private Const BestItemTwig    = 'Product/Parts/bestItem.twig';
+ 
 
    /**
      * Twig\Environment Twig;
      * @var Twig; 
      */
     private $Twig;
-
-    /**
-     * @var ContainerInterface
-     *
-     * @var [type]
-     */
+    
     /**
      * @var CommonService.
      */
     private $CommonService;
 
-    private $Weeks;
     /**
-     * ServiceExtension 
+     * @var RecommendProductRepository
+     */
+    private $RecommendRepository;
+    /**
      *
      * @param Twig $Twig
      * @param CommonService $CommonService
@@ -91,10 +91,12 @@ class ProductTwigExtention extends AbstractExtension
     public function __construct(
             Twig $Twig
             ,CommonService $CommonService
+            ,RecommendProductRepository $RecommendProductRepository
 
     ) {
         $this->Twig = $Twig;
         $this->CommonService = $CommonService;
+        $this->RecommendRepository = $RecommendProductRepository;
 
     }
 
@@ -120,8 +122,23 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('AdminItemOption', [$this, 'setAdminItemOption']),
             new TwigFunction('categoryFormat1', [$this, 'setcategoryFormat1']),
             new TwigFunction('categoryImg', [$this, 'setcategoryImg']),
-            new TwigFunction('Recomand', [$this, 'setcategoryImg']),
+            new TwigFunction('CategoryBestItem', [$this, 'setCategoryBestItem']),
         ];
+    }
+
+
+    public function setCategoryBestItem(?Category $Category){
+        
+        if(!$Category){return ;}
+        $Recommands = $this->RecommendRepository->getRecommendByCategory($Category);
+
+        if (count($Recommands)<0){return ;}
+
+        return $this->Twig->render(self::BestItemTwig, [
+            'Recommands' => $Recommands,
+            'Category'   => $Category
+        ]);
+
     }
 
     public function setcategoryImg(?Category $Category){
@@ -359,5 +376,17 @@ class ProductTwigExtention extends AbstractExtension
         return str_repeat("_ ", $Category->getHierarchy() -1 ) .$Category->getName()."({$Category->getId()})";
     }
 
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('SALE', [$this, 'setSale']),
 
+        ];
+    }
+    public function setSale(Product $Product){
+
+        if(!$Product->priceDownRate()){ return ;}
+
+        return '<span class="plgShiro8PriceDownRate">SALE</span>';
+    }
 }

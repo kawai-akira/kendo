@@ -15,7 +15,8 @@
    ******************************************************/
 namespace Customize\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
+#use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
 use Eccube\Common\EccubeConfig;
 use Eccube\Doctrine\Query\Queries;
@@ -29,6 +30,7 @@ use Eccube\Entity\Tag;
 use Eccube\Util\StringUtil;
 use Eccube\Repository\QueryKey;
 
+
 /**
  * ProductRepository
  *
@@ -37,6 +39,12 @@ use Eccube\Repository\QueryKey;
  */
 class ProductRepository extends \Eccube\Repository\ProductRepository
 {
+
+    /**
+     * @var EntityManagerInterface
+     */
+
+    private $em;
 
     /**
      * ProductRepository constructor.
@@ -49,8 +57,10 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
         RegistryInterface $registry,
         Queries $queries,
         EccubeConfig $eccubeConfig
+        ,EntityManagerInterface $EntityManager
     ) {
         parent::__construct($registry, $queries,$eccubeConfig);
+        $this->em = $EntityManager;
     }
 
     public function intializeTotal(){
@@ -142,7 +152,6 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
                     ->setParameter($key, '%'.$keyword.'%');
             }
         }
-
         // Order By
         // 価格低い順
         $config = $this->eccubeConfig;
@@ -172,13 +181,31 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
             }
             $qb->orderBy('p.create_date', 'DESC');
             $qb->addOrderBy('p.id', 'DESC');
+        //オススメ順（オススメに順序はないのでオススメタグが付いている商品のid順）
+       /* } else if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == '5') {
+            $Tag = $this->em->getRepository(Tag::class)->find(2);
+            $qb->addSelect('t2.id as HIDDEN tag')
+              ->leftJoin('p.ProductTag', 'pt2' , 'WITH', 'pt2.Tag = :Tag')
+              ->leftJoin('pt2.Tag', 't2')
+              ->setParameter('Tag', $Tag)
+              ->orderBy('tag', 'ASC');
+            //レビュー順（レビューの星の数の平均点降順）
+        } else if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == '4') {
+              $qb->addSelect('AVG(COALESCE(pr.recommend_level, 0)) as HIDDEN recommend_level');
+              $qb->leftJoin('p.ProductReviews', 'pr');
+              $qb->groupBy('p');
+              $qb->orderBy('recommend_level', 'DESC');*/
+
+
         } else {
             if ($categoryJoin === false) {
                 $qb
                     ->leftJoin('p.ProductCategories', 'pct')
                     ->leftJoin('pct.Category', 'c');
             }
-            $qb
+            $qb 
+                #売上順
+               
                 ->addOrderBy('p.Total', 'DESC');
         }
 
