@@ -1,0 +1,41 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月30日作成
+ #
+ #　app\template\default\Product\Parts\Categoryinfo.twig
+ #
+ #
+ # 
+ #
+ # 商品一覧カテゴリーイメージ
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<style>
+#category_info_area{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+#category_info_area h2.header-line01{
+   font-size: 20px;
+   border-bottom: 1px solid #222;
+   padding-bottom: 15px;
+   margin-bottom: 25px;
+}
+#category_info_area h3{
+   font-size: 16px;
+}
+#category_info_area p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+</style>
+
+<div id="category_info_area" >
+   <div class="category_info">
+      <h2 class="header-line01">{{Info.title}}</h2>
+      {{ Info.html|raw}}
+   <div>
+</div>

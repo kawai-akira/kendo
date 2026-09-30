@@ -1,4 +1,3 @@
-
 {#
  # EC=CUBE4.3 TWIG
  # 株式会社 翔 kakeru.co.jp
@@ -193,10 +192,10 @@
                     {% endfor %}
                 </ul>
             </div>
-
             <div class="ec-pagerRole">
                 {% include "pager.twig" with {'pages': pagination.paginationData} %}
             </div>
         {% endif %}
     {% endif %}
+    {{CategoryInfo(Category)|raw}}
 {% endblock %}

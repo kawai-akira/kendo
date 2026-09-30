@@ -21,7 +21,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Component\Form\FormView;
 use Twig\TwigFilter;
-#use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment as Twig;
 use Eccube\Entity\Product;
@@ -30,7 +30,7 @@ use Customize\Service\CommonService;
 use Eccube\Entity\OrderItem;
 use Eccube\Entity\Category;
 use Customize\Repository\Plugin\RecommendProductRepository;
-
+use Plugin\SubContent43\Entity\SubContent;
 
 class ProductTwigExtention extends AbstractExtension
 {
@@ -64,7 +64,8 @@ class ProductTwigExtention extends AbstractExtension
     private const FreeInput3Admin = '@admin/Order/Parts/FreeInput3Form.twig';
     private const categoryImgTwig = 'Product/Parts/CategoryImage.twig';
     private Const categoryImgDir  = '/assets/img/categoryImg/';
-    private Const BestItemTwig    = 'Product/Parts/bestItem.twig';
+    private Const BestItemTwig     = 'Product/Parts/bestItem.twig';
+    private const CategoryInfoTwig = 'Product/Parts/Categoryinfo.twig';
  
 
    /**
@@ -72,7 +73,10 @@ class ProductTwigExtention extends AbstractExtension
      * @var Twig; 
      */
     private $Twig;
-    
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
     /**
      * @var CommonService.
      */
@@ -90,11 +94,13 @@ class ProductTwigExtention extends AbstractExtension
      */
     public function __construct(
             Twig $Twig
+            ,EntityManagerInterface $EntityManager
             ,CommonService $CommonService
             ,RecommendProductRepository $RecommendProductRepository
 
     ) {
         $this->Twig = $Twig;
+        $this->em = $EntityManager;
         $this->CommonService = $CommonService;
         $this->RecommendRepository = $RecommendProductRepository;
 
@@ -123,16 +129,31 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('categoryFormat1', [$this, 'setcategoryFormat1']),
             new TwigFunction('categoryImg', [$this, 'setcategoryImg']),
             new TwigFunction('CategoryBestItem', [$this, 'setCategoryBestItem']),
+            new TwigFunction('CategoryInfo', [$this, 'setCategoryInfo']),
         ];
     }
 
+
+    public function setCategoryInfo(Category $Category){
+
+        if(!$Category){return ;}    
+        $Paths = $Category->getPath();
+        $Path = array_shift($Paths);
+
+        if(!$Info = $this->em->getRepository(SubContent::class)->GetSubContentPart('category',$Path->getId())){return ;};
+        
+        return $this->Twig->render(self::CategoryInfoTwig, [
+            'Info' => $Info,
+        ]);
+
+    }
 
     public function setCategoryBestItem(?Category $Category){
         
         if(!$Category){return ;}
         $Recommands = $this->RecommendRepository->getRecommendByCategory($Category);
 
-        if (count($Recommands)<0){return ;}
+        if (count($Recommands)<1){return ;}
 
         return $this->Twig->render(self::BestItemTwig, [
             'Recommands' => $Recommands,
@@ -370,7 +391,7 @@ class ProductTwigExtention extends AbstractExtension
         ]);     
     }
        
-    public function setcategoryFormat1($Category){
+    public function setcategoryFormat1(Category $Category){
 
    
         return str_repeat("_ ", $Category->getHierarchy() -1 ) .$Category->getName()."({$Category->getId()})";

@@ -16,7 +16,7 @@
 
 namespace Customize\Repository\Plugin;
 
-
+use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Master\ProductStatus;
 use Eccube\Repository\AbstractRepository;
 use Plugin\Recommend42\Entity\RecommendProduct;
@@ -34,15 +34,21 @@ class RecommendProductRepository extends \Plugin\Recommend42\Repository\Recommen
 {
 
     /**
+     * @var EntityManagerInterface;
+     */
+
+    private $em; 
+    /**
      * CouponRepository constructor.
      *
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry
-
+                                ,EntityManagerInterface $EntityManager
     )
     {
         parent::__construct($registry);
+        $this->em = $EntityManager;
     }
 
     /**
@@ -75,11 +81,15 @@ class RecommendProductRepository extends \Plugin\Recommend42\Repository\Recommen
     public function getRecommendByCategory(Category $Category){
      
     
+        $Status = $this->em->getRepository(ProductStatus::class)->find(ProductStatus::DISPLAY_SHOW);
         $qb = $this->createQueryBuilder('rp');
             
-        $qb->where('rp.visible = true')
+        $qb->innerJoin('rp.Product', 'p')
+           ->where('rp.visible = true')
            ->andWhere('rp.Category = :Category')
            ->setParameter('Category' , $Category)
+           ->andWhere('p.Status = :Status')
+           ->setParameter('Status',$Status)
            ->addOrderBy('rp.sort_no', 'DESC');
 
         return $qb->getQuery()->getResult();

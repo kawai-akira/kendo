@@ -1,0 +1,32 @@
+parameters:
+  Plugin_SubContent_Image_Dir: '%kernel.project_dir%/html/user_data/SubContent'
+  Plugin_SubContent_Controller: 'Plugin\SubContent43\Controller\SubContentController::index'
+  Plugin_SubContent_Url_name: Plugin_SubContent_
+  Plugin_SubContent_dir: '%plugin_realdir%/SubContent43'
+  Plugin_SubContent_Js_dir: 'app/template/plugin/SubContent43/js/'
+  Plugin_SubContent__data_dir: '%plugin_realdir%/SubContent43/Resource/_data/'
+  Plugin_SubContent_YamlPath: '%plugin_realdir%/SubContent43/Resource/Yaml/'
+  Plugin_SubContent_RoutesYaml: '%plugin_realdir%/SubContent43/Resource/config/routes.yaml'
+  Plugin_SubContent_Image_Exe:
+    - gif
+    - jpg
+    - jpeg
+    - png
+  Plugin_SubContent_Date_format:
+    - 年
+    - 月
+    - 日
+  Plugin_SubContent_Image_Name: '/^[0-9a-zA-Z\_\-\.]+$/'
+  Plugin_SubContent_After_Regist: true #管理画面　登録後,区分とホルダーの変更をしない
+  Plugin_SubContent_Holder_Limit: '/^[0-9a-zA-Z\_\-\/]+$/' #ホルダー、パラメーター正規表現
+  Plugin_SubContent_Parameter_Limit: '/^[0-9a-zA-Z\_\-\/]+$/' #パーツの場合の正規表現
+  Plugin_SubContent_target_path: mypage
+  Plugin_SubContent_Template_dir: '%eccube_theme_app_dir%/plugin/SubContent43/'
+  Plugin_SubContent_Template_js_dir: '%Plugin_SubContent_Template_dir%js/'
+  Plugin_SubContent_Textarea_def:
+    Html: 10
+    Stylesheet: 5
+  Plugin_SubContent_prameter_parts: 2  #0: ホルダー・パラメーター 仕様不能 1:パラメーター仕様不能 2: ホルダー *パラメーター 仕様可能
+  Plugin_SubContent_thumbnail_name: ブログ
+  Plugin_SubContent_js_extension: '.js.twig'
+  Plugin_SubContent_list_page_count: 30
