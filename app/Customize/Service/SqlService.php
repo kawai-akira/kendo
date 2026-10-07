@@ -22,7 +22,7 @@
     const USER  = 'user';
     const PASS  = 'wZz77iWW';
     const HOST  = 'localhost';
-    public const DBNAMES = ['kendo_db','kendo_old'];
+    public const DBNAMES = ['kendo_db','kendo_old','kendo_wp'];
 
 
 
@@ -98,6 +98,10 @@
     public function FindAllBy($DbName = self::DBNAMES[1]){
 
         $this->MakeSelect();
+        //echo $this->Sql.'<br>';
+       //print_r($this->Param);
+
+
         return  $this->FetchAll($DbName);
 
     }
