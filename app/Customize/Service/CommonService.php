@@ -21,6 +21,7 @@ namespace Customize\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -40,10 +41,8 @@ class CommonService{
      */
     
     Public $entityManager;
-    /**
-     * @param RequestStack
-     */
-    protected $Request;
+
+    protected ?Request $Request;
 
     protected const PhonNumberUnit          = '-'; #電話番号区切り文字
 
