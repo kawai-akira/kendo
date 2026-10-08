@@ -17,6 +17,7 @@
 namespace Customize\TwigExtention;
 
 use Carbon\Carbon;
+use Customize\Form\Type\ItemOptionType;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Component\Form\FormView;
@@ -26,10 +27,10 @@ use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment as Twig;
 use Eccube\Entity\Product;
 use Customize\Service\CommonService;
-#use Google\Service\GKEOnPrem\BareMetalNetworkConfig;
 use Eccube\Entity\OrderItem;
 use Eccube\Entity\Category;
 use Customize\Repository\Plugin\RecommendProductRepository;
+use Customize\Service\OptionService;
 use Plugin\SubContent43\Entity\SubContent;
 
 class ProductTwigExtention extends AbstractExtension
@@ -66,6 +67,7 @@ class ProductTwigExtention extends AbstractExtension
     private Const categoryImgDir  = '/assets/img/categoryImg/';
     private Const BestItemTwig     = 'Product/Parts/bestItem.twig';
     private const CategoryInfoTwig = 'Product/Parts/Categoryinfo.twig';
+    private const ItemOption       = 'Common/ItemOption.twig';
  
 
    /**
@@ -86,6 +88,12 @@ class ProductTwigExtention extends AbstractExtension
      * @var RecommendProductRepository
      */
     private $RecommendRepository;
+
+    /**
+     *  @var OptionService 
+     * 
+    */
+    private $OptionService;
     /**
      *
      * @param Twig $Twig
@@ -97,15 +105,16 @@ class ProductTwigExtention extends AbstractExtension
             ,EntityManagerInterface $EntityManager
             ,CommonService $CommonService
             ,RecommendProductRepository $RecommendProductRepository
+            ,OptionService $OptionService
 
     ) {
         $this->Twig = $Twig;
         $this->em = $EntityManager;
         $this->CommonService = $CommonService;
         $this->RecommendRepository = $RecommendProductRepository;
+        $this->OptionService = $OptionService;
 
     }
-
 
     public function getFunctions()
     {
@@ -130,8 +139,22 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('categoryImg', [$this, 'setcategoryImg']),
             new TwigFunction('CategoryBestItem', [$this, 'setCategoryBestItem']),
             new TwigFunction('CategoryInfo', [$this, 'setCategoryInfo']),
+            new TwigFunction('showOption', [$this, 'setShowOption']),
         ];
     }
+
+    public function setShowOption(array|null $Options){
+
+        if(is_null($Options)){return;}
+ 
+        return $this->Twig->render(self::ItemOption, [
+          'ItemOptions' => $this->OptionService->setShowOption($Options),
+               
+        ]);
+
+
+    }    
+
 
 
     public function setCategoryInfo(Category $Category){

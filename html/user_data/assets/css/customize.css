@@ -1,6 +1,7 @@
 /* カスタマイズ用CSS */
 .ec-headerRole,
-.ec-headerNaviRole{
+.ec-headerNaviRole,
+.ec-role {
     max-width: 1400px;
 }
 .ec-categoryNaviRole{

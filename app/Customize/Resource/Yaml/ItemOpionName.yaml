@@ -1,0 +1,139 @@
+# Yaml\ItemOpionName.yaml
+sex: 
+    name: 性別
+height: 
+    name: 身長
+men: 
+    name: 面
+    data:
+        men_size_a:
+            label: 面サイズA 
+            name: A
+            unit: cm
+            title: あご先〜耳前〜つむじの周囲
+        men_size_b:
+            label: 面サイズB
+            name: B
+            unit: cm
+            title: まゆ上ハチマキの位置の周囲)
+        men_size_c:
+            label: 面サイズC
+            name: C
+            unit: cm
+            title: あご先〜目の物見高さ
+        men_etc:
+            label: 面その他希望
+            name: その他ご希望
+            title: ''
+            unit: '' 
+kote:
+    name: 小手
+    data:    
+        kote_size_left_d:
+            label: 小手サイズ左D
+            name: 左D
+            title: 親指以外の指付け根の周囲
+            unit: cm
+        kote_size_left_e:
+            label: 小手サイズ左E
+            name: 左E
+            title: 親指付け根の周囲
+            unit: cm
+        kote_size_left_f:
+            label: 小手サイズ左E
+            name: 左F
+            title: 親指以外の指付け根の周囲
+            unit: cm
+        kote_size_right_d:
+            label: 小手サイズ右D
+            name: 右D
+            title: 親指以外の指付け根の周囲
+            unit: cm
+        kote_size_right_e:
+            label: 小手サイズ右E
+            name: 右E
+            title: 親指付け根の周囲
+            unit: cm
+        kote_size_right_f:
+            label: 小手サイズ右F
+            name: 右F
+            title: 親指以外の指付け根の周囲
+            unit: cm
+        kote_etc:
+            label: 小手その他希望
+            name: その他ご希望
+            title: ''
+            unit: ''  
+dou:
+    name: 胴 
+    data:    
+        dou_size_bust:
+            label: 胸囲
+            name: 胸囲
+            title: ''
+            unit: cm
+        dou_size_waist:
+            label: ウエスト最大箇所
+            name: ウエスト
+            title: 'ウエスト最大箇所 0不明' 
+            unit: cm
+        dou_size_g:
+            label: 胴サイズG
+            name: G
+            title: 胴台の幅
+            unit: cm
+        dou_etc:
+            label: 胴その他希望
+            name: その他希望
+            title: ''
+            unit: ''
+tare:
+    name: 垂
+    data:
+        tare_size_waist:
+            label: ウエスト最大箇所 
+            name: ウエスト
+            title: 'ウエスト最大箇所 0不明' 
+            unit: cm
+        tare_etc:
+            label: 垂その他希望
+            name: その他希望
+            title: ''
+            unit: cm
+doui:
+    name: 道衣
+    data:
+        doui_type:
+            label: 体型 
+            name:  体型
+            title: '' 
+            unit: ''
+        doui_hope:
+            label: サイズ希望 
+            name: サイズ希望
+            title: ''
+            unit: ''
+        doui_etc:
+            label: 道衣その他希望 
+            name: その他希
+            title: ''
+            unit: ''
+hakama: 
+    name: 袴
+    data:
+        hakama_size_waist:
+            label: ウエスト最大箇所
+            name:  ウエスト
+            title: 'ウエスト最大箇所 0不明'
+            unit: cm
+        hakama_size_length:
+            label: 袴サイズH 
+            name:  H
+            title: '袴サイズH' 
+            unit: ''
+        hakama_etc:
+            label: 袴その他希望
+            name:  その他希
+            title: 'サイズ指定等' 
+            unit: ''
+            

@@ -287,6 +287,9 @@
             $('.ec-modal').hide()
         });
 #}
+    function form01Submit(){
+        $('#form01').submit();
+    }     
     </script>
     <script type="application/ld+json">
     {
@@ -460,7 +463,7 @@
                         {% endfor %}
                     </div>
                 {% endif %}     
-                <form action="{{ url('product_detail', {id:Product.id}) }}" method="post" id="form1" name="form1">
+                <form action="{{ url('product_detail', {id:Product.id}) }}" method="post" id="form01" name="form01">
                 
                     {% if Product.stock_find %}
                         <div class="ec-productRole__actions">
@@ -517,7 +520,6 @@
                     {{ DouiForm(Product,form)|raw }}
                     {#　袴 #}
                     {{ HakamaForm(Product,form)|raw }}
-
                     {#　フリーインプット1　#}
                     {{ FreeInput1Form(Product,form)|raw }}
                     {#　フリーインプット2　#}
@@ -539,7 +541,7 @@
                     {% endif %}
                    {% if Product.stock_find %}
                             <div class="ec-productRole__btn">
-                                <button type="submit" class="ec-blockBtn--action add-cart">
+                                <button type="button" class="ec-blockBtn--action add-cart" onclick="form01Submit()" >
                                     {{ 'カートに入れる'|trans }}
                                 </button>
                             </div>
@@ -567,7 +569,7 @@
                         </div>
                     </div>
 #}
-                </from>
+                </form>
             </div>
         </div>
                 
