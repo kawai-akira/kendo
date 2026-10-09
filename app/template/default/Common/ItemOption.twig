@@ -13,8 +13,15 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
+ {% if flg %}
  <div class="ItemOption">
     {% for ItemOption in ItemOptions %}
         <div>{{ItemOption|raw}}</div>
     {% endfor %}
  </div>
+ {% else %}
+
+ {% for ItemOption in ItemOptions %}
+    {{ItemOption|raw}}
+ {% endfor %}
+ {% endif %}

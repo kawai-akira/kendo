@@ -136,4 +136,20 @@ hakama:
             name:  その他希
             title: 'サイズ指定等' 
             unit: ''
-            
+shinai:            
+    name: 竹刀
+    data:
+        shinai_etc:
+            label: 竹刀その他希望
+            name:  その他希
+            title: '' 
+            unit: ''
+zekken:
+    name: 垂名札
+    data:
+        shinai_etc:
+            label: 垂名札その他希望
+            name:  その他希
+            title: '' 
+            unit: ''
+    

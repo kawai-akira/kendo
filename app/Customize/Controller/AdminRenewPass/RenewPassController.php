@@ -98,8 +98,7 @@ class RenewPassController extends \Eccube\Controller\AbstractController
             throw $this->createNotFoundException();
         }
 
-
-        
+       
         /** @var Member */
         $Member = $this->MemberRepository->getRenewPass($reset_key);
 

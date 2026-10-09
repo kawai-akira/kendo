@@ -111,8 +111,9 @@ namespace Customize\Service;
     /**
      * 
      */
-    public function setShowOption(array $Options){
+    public function setShowOption(array $Options ,$flg = true){
         
+        $span = $flg ?  '<span title="TITLE" >' :'';               
         $OptionName = $this->CommonService->getYaml('ItemOpionName.yaml');                
         
         $Re['common'] = null ;     
@@ -154,15 +155,14 @@ namespace Customize\Service;
                         }
                        
                     default: 
-                    $Re[$key] = $this->setOpitionName($Name,$OPtion,$OptionName[$key]['data']);
+                    $Re[$key] = $this->setOpitionName($Name,$OPtion,$OptionName[$key]['data'],$span);
 
 
             }          
 
 
         }                
-   
-
+ 
     return $Re;
 
     }
@@ -175,7 +175,7 @@ namespace Customize\Service;
                $Value  =  $Options[$Key] ?? '';   
         
                $span1 = $span ? str_replace('TITLE',$OptionName['title'],$span) : '';
-               if (preg_match('/\_etc/',$Key) && !empty($Value)){
+               if (preg_match('/\_etc/',$Key) && !empty($Value) && $span){
                     $span1 = '<p>';    
                     $span2 = '</p>';    
                } 

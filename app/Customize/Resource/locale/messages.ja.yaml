@@ -58,7 +58,7 @@ product_hakama_size_waist: ウエスト最大箇所 (不明の場合「0」と�
 product_hakama_size_length: 袴サイズH ( =前紐下丈 / 不明の場合「0」と記入)
 product_hakama_etc: 袴その他希望 (サイズ指定等)
 product_shinai_etc: 竹刀その他希望
-product_zekken_etc: ゼッケンその他希望
+product_zekken_etc: 垂名札その他希望
 admin.shop.shop_managemen: 店舗管理
 admin.shop.shop_list: 店舗一覧
 admin.shop.shop_title: 店舗名

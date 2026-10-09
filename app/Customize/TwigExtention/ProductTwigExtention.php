@@ -143,12 +143,13 @@ class ProductTwigExtention extends AbstractExtension
         ];
     }
 
-    public function setShowOption(array|null $Options){
+    public function setShowOption(array|null $Options ,$flg = true){
 
         if(is_null($Options)){return;}
  
         return $this->Twig->render(self::ItemOption, [
-          'ItemOptions' => $this->OptionService->setShowOption($Options),
+          'ItemOptions' => $this->OptionService->setShowOption($Options,$flg),
+          'flg' => $flg,
                
         ]);
 

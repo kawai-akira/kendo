@@ -55,7 +55,7 @@
      * @param EntityManagerInterface $em
      * @param EccubeConfig $eccubeConfig
      * @param MailService $MailService
-     * @param UrlGeneratorInterface UrlGenerator
+     * @param UrlGeneratorInterface $UrlGenerator
      */
     public function __construct(
              EntityManagerInterface $em
@@ -125,7 +125,7 @@
         $resetUrl = $this->UrlGenerator->generate(
                 'forgot_reset', 
                 ['reset_key' => $Customer->getResetKey()], 
-                UrlGeneratorInterface::ABSOLUTE_URL // メール用なので絶対URLにする
+                UrlGeneratorInterface::ABSOLUTE_URL
             );
         
         $this->MailService->sendPasswordResetNotificationMail($Customer,$resetUrl);

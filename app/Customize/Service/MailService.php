@@ -158,7 +158,6 @@ const BirthdayMail    = 11;
             ->replyTo($this->BaseInfo->getEmail03())
             ->returnPath($this->BaseInfo->getEmail04());
 
-
         $message->text($body);
 
         try {
