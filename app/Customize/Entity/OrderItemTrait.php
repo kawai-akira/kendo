@@ -16,8 +16,7 @@
 
     use Doctrine\ORM\Mapping as ORM;
     use Eccube\Annotation\EntityExtension;
-    use Eccube\Entit\Category;
-
+    use Customize\Entity\Shop;
 
     /**
      * @EntityExtension("Eccube\Entity\OrderItem")
@@ -30,6 +29,13 @@
          */
         private $Options;
     
+        /**
+         * @var Shop
+         * @ORM\ManyToOne(targetEntity="Customize\Entity\Shop")
+         * @ORM\JoinColumn(name="shop_id", referencedColumnName="id", nullable=true)
+         */
+        private $Shop;
+
 
         public function setOption(?string $Options = null): self
         {
@@ -57,6 +63,21 @@
             if(is_null($this->Options)){
                 return null;
             }
-           return json_decode($this->Options ,true); 
+           return json_decode($this->Options ,true);
+
         }
-    }
+        
+
+        public function setShop(?Shop $Shop = null):self
+        {
+            $this->Shop = $Shop;
+
+            return $this;
+        }
+
+        public function getShop(): Shop|null
+        {
+            return $this->Shop;
+        }
+
+}

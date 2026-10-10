@@ -24,7 +24,9 @@ services:
         autoconfigure: true 
         arguments:
             $serviceContainer: !tagged_locator { tag: 'eccube_payment_method' }
-        tags: [ 'controller.service_arguments' ]  
+        tags: [ 'controller.service_arguments' ]
+    Eccube\Service\Cart\CartItemAllocator:
+        class: Customize\Service\Cart\CartAllocator
     #Customize\Repository\OrderRepository:
     #    decorates: Eccube\Repository\OrderRepository # 差し替え元（デフォルトのEccube側）を上書き指定する
     #    arguments: true

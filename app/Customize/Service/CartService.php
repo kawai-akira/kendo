@@ -24,6 +24,7 @@ use Eccube\Entity\CartItem;
 use Eccube\Entity\Customer;
 use Eccube\Entity\ItemHolderInterface;
 use Eccube\Entity\ProductClass;
+use Eccube\Entity\Product;
 use Eccube\Repository\CartRepository;
 use Eccube\Repository\OrderRepository;
 use Eccube\Repository\ProductClassRepository;
@@ -86,12 +87,14 @@ class CartService extends \Eccube\Service\CartService
         if ($ClassCategory2 && !$ClassCategory2->isVisible()) {
             return false;
         }
-
+        /** @var Product */
+        $Product = $ProductClass->getProduct();
         $newItem = new CartItem();
         $newItem->setQuantity($quantity);
         $newItem->setPrice($ProductClass->getPrice02IncTax());
         $newItem->setProductClass($ProductClass)
-                ->setOptions($Option);
+                ->setOptions($Option)
+                ->setShop($Product->getShop());
 
         $allCartItems = $this->mergeAllCartItems([$newItem]);
         $this->restoreCarts($allCartItems);

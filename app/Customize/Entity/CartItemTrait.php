@@ -5,18 +5,17 @@
    * @author
    * 2026年09月03日作成
    *
-   * app\Customize\Entity\CategoryTrait.php
-   *
+   * app\Customize\Entity\CartItemTrait.php
    * 
    *
    * 
-   *                               C= C= C= ┌(;･_･)┘ﾄｺﾄｺ
+   *                              C= C= C= ┌(;･_･)┘ﾄｺﾄｺ
    ******************************************************/
     namespace Customize\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Eccube\Annotation\EntityExtension;
-    use Eccube\Entit\Category;
+    use Customize\Entity\Shop;
 
 
     /**
@@ -29,8 +28,14 @@
          * @ORM\Column(name="options", type="text", nullable=true)
          */
         private $Options;
-    
+        /**
+         * @var Shop
+         * @ORM\ManyToOne(targetEntity="Customize\Entity\Shop")
+         * @ORM\JoinColumn(name="shop_id", referencedColumnName="id", nullable=true)
+         */
+        private $Shop;
 
+ 
         public function setOption(?string $Options = null): self
         {
             $this->Options = $Options;
@@ -58,5 +63,18 @@
                 return null;
             }
            return json_decode($this->Options ,true); 
+        }
+        
+
+        public function setShop(?Shop $Shop = null):self
+        {
+            $this->Shop = $Shop;
+
+            return $this;
+        }
+
+        public function getShop(): Shop|null
+        {
+            return $this->Shop;
         }
     }

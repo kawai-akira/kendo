@@ -18,6 +18,7 @@
     use Eccube\Annotation\EntityExtension;
     use Eccube\Entity\Product;
     use Customize\Entity\Master\ProductType;
+    use Customize\Entity\Shop;
     
 
 
@@ -144,21 +145,14 @@
         private $Total = 0;
 
 
-       /**
-         * @param \Customize\Entity\Shop|null $Shop
-         * @return Product
-         */
-        public function setShop(Shop $Shop = null)
+        public function setShop(?Shop $Shop = null): self
         {
             $this->Shop = $Shop;
 
             return $this;
         }
 
-        /**
-         * @return \Customize\Entity\Shop|null
-         */
-        public function getShop()
+        public function getShop(): Shop|null
         {
             return $this->Shop;
         }
@@ -208,7 +202,7 @@
             return $this->ItemFeatures;
         }
 
-        public function setProductType(ProductType $ProductType = null): self
+        public function setProductType(?ProductType $ProductType = null): self
         {
             $this->ProductType = $ProductType;
             return $this;

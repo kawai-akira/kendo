@@ -29,9 +29,14 @@ use Eccube\Entity\Product;
 use Customize\Service\CommonService;
 use Eccube\Entity\OrderItem;
 use Eccube\Entity\Category;
+use Eccube\Entity\CartItem;
 use Customize\Repository\Plugin\RecommendProductRepository;
 use Customize\Service\OptionService;
+use Customize\Entity\Shop;
+use Eccube\Entity\Delivery;
 use Plugin\SubContent43\Entity\SubContent;
+ 
+
 
 class ProductTwigExtention extends AbstractExtension
 {
@@ -68,6 +73,7 @@ class ProductTwigExtention extends AbstractExtension
     private Const BestItemTwig     = 'Product/Parts/bestItem.twig';
     private const CategoryInfoTwig = 'Product/Parts/Categoryinfo.twig';
     private const ItemOption       = 'Common/ItemOption.twig';
+    private const DeliveryFeeAlert = 'Cart\Parts\DeliveryFreeAlert.twig';
  
 
    /**
@@ -140,8 +146,32 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('CategoryBestItem', [$this, 'setCategoryBestItem']),
             new TwigFunction('CategoryInfo', [$this, 'setCategoryInfo']),
             new TwigFunction('showOption', [$this, 'setShowOption']),
+            new TwigFunction('DeliveryFreeAlert', [$this, 'setSDeliveryFreeAlert']),
         ];
     }
+
+    /**
+     * カートで配送料のアラートを出漁区
+     *
+     */
+
+    public function setSDeliveryFreeAlert(?Shop $Shop ,array $Amount){
+
+        if(is_null($Shop)){return ;} 
+    
+    
+        return $this->Twig->render(self::DeliveryFeeAlert, [
+                
+          'Shop' => $Shop,
+          'Amount' =>$Amount[$Shop->getId()],
+
+        ]);
+
+
+
+    }
+
+
 
     public function setShowOption(array|null $Options ,$flg = true){
 
@@ -158,7 +188,7 @@ class ProductTwigExtention extends AbstractExtension
 
 
 
-    public function setCategoryInfo(Category $Category){
+    public function setCategoryInfo(?Category $Category){
 
         if(!$Category){return ;}    
         $Paths = $Category->getPath();
