@@ -151,15 +151,14 @@ class ProductTwigExtention extends AbstractExtension
     }
 
     /**
-     * カートで配送料のアラートを出漁区
+     * カートで配送料のアラートを出力
      *
      */
 
     public function setSDeliveryFreeAlert(?Shop $Shop ,array $Amount){
 
         if(is_null($Shop)){return ;} 
-    
-    
+        
         return $this->Twig->render(self::DeliveryFeeAlert, [
                 
           'Shop' => $Shop,
@@ -167,11 +166,7 @@ class ProductTwigExtention extends AbstractExtension
 
         ]);
 
-
-
     }
-
-
 
     public function setShowOption(array|null $Options ,$flg = true){
 

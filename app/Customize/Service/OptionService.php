@@ -85,12 +85,12 @@ namespace Customize\Service;
 
     /**
      * 配列にオブジェクトが混じる　SerializerInterface　は　余計なColumnが入る
-     *
-     * @param array $OPtions
-     * @return array
      */
-    public function serializer($OPtions){
+    public function serializer(?array $OPtions): ?array
+    {
       
+        if(is_null($OPtions)){return null;}
+
         $Re = $OPtions;
 
         foreach ($OPtions as $key1 => $Datas){
