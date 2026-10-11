@@ -19,12 +19,7 @@ services:
             - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: onAdminCheckPassport, dispatcher: security.event_dispatcher.admin }
             # 会員（customer）の認証時は、このクラスの onCustomerCheckPassport を動かす
             - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: onCustomerCheckPassport, dispatcher: security.event_dispatcher.customer }
-    Customize\Controller\ShoppingController:
-        autowire: true 
-        autoconfigure: true 
-        arguments:
-            $serviceContainer: !tagged_locator { tag: 'eccube_payment_method' }
-        tags: [ 'controller.service_arguments' ]
+    Eccube\Service\OrderHelper: '@Customize\Service\OrderHelper'
     Eccube\Service\Cart\CartItemAllocator:
         class: Customize\Service\Cart\CartAllocator
     #Customize\Repository\OrderRepository:
@@ -33,3 +28,9 @@ services:
     #Eccube\Repository\OrderRepository:
     #    class: Customize\Repository\OrderRepository
     #    autowire: true
+    #    Customize\Controller\ShoppingController:
+#        autowire: true 
+#        autoconfigure: true
+#        arguments:
+#            $serviceContainer: !tagged_locator { tag: 'eccube_payment_method' }
+#        tags: [ 'controller.service_arguments' ]

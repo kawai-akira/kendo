@@ -175,7 +175,7 @@
                                 {% set Product = ProductClass.Product %}
                                 {% set Shop = Product.Shop %}
                                 <ul class="ec-cartRow">
-                                    <li class="ec-cartRow__delColumn">{{Product.id}}-{{ Product.Shop.id}}
+                                    <li class="ec-cartRow__delColumn">{#{Product.id}}-{{ Product.Shop.id}#}
                                         <a href="{{ url('cart_handle_item', {'operation': 'remove', 'productClassId': ProductClass.id }) }}" {{ csrf_token_for_anchor() }} class="ec-icon" data-method="put" data-message="カートから商品を削除してもよろしいですか?">
                                             <img src="{{ asset('assets/icon/cross.svg') }}" alt="delete">
                                         </a>
@@ -207,18 +207,21 @@
                                         <div class="ec-cartRow__amount">{{ CartItem.quantity|number_format }}</div>
                                         <div class="ec-cartRow__amountSP">{{ '数量：'|trans }}{{ CartItem.quantity|number_format }}</div>
                                         <div class="ec-cartRow__amountUpDown">
-                                            {% if CartItem.quantity > 1 %}
-                                                <a href="{{ url('cart_handle_item', {'operation': 'down', 'productClassId': ProductClass.id}) }}" {{ csrf_token_for_anchor() }} class="ec-cartRow__amountDownButton load-overlay" data-method="put" data-confirm="false">
-                                                    <span class="ec-cartRow__amountDownButton__icon"><img src="{{ asset('assets/icon/minus-dark.svg') }}" alt="reduce"></span>
-                                                </a>
-                                            {% else %}
-                                                <div class="ec-cartRow__amountDownButtonDisabled">
-                                                    <span class="ec-cartRow__amountDownButton__icon"><img src="{{ asset('assets/icon/minus.svg') }}" alt="reduce"></span>
-                                                </div>
-                                            {% endif %}
-                                            <a href="{{ url('cart_handle_item', {'operation': 'up', 'productClassId': ProductClass.id}) }}" {{ csrf_token_for_anchor() }} class="ec-cartRow__amountUpButton load-overlay" data-method="put" data-confirm="false">
-                                                <span class="ec-cartRow__amountUpButton__icon"><img src="{{ asset('assets/icon/plus-dark.svg') }}" alt="increase"></span>
-                                            </a>
+                                            {% if CartItem.getOptions() is null %}
+                                                {% if CartItem.quantity > 1 %}
+                                                    
+                                                    <a href="{{ url('cart_handle_item', {'operation': 'down', 'productClassId': ProductClass.id}) }}" {{ csrf_token_for_anchor() }} class="ec-cartRow__amountDownButton load-overlay" data-method="put" data-confirm="false">
+                                                        <span class="ec-cartRow__amountDownButton__icon"><img src="{{ asset('assets/icon/minus-dark.svg') }}" alt="reduce"></span>
+                                                    </a>
+                                                {% else %}
+                                                    <div class="ec-cartRow__amountDownButtonDisabled">
+                                                        <span class="ec-cartRow__amountDownButton__icon"><img src="{{ asset('assets/icon/minus.svg') }}" alt="reduce"></span>
+                                                    </div>
+                                                {% endif %}
+                                                    <a href="{{ url('cart_handle_item', {'operation': 'up', 'productClassId': ProductClass.id}) }}" {{ csrf_token_for_anchor() }} class="ec-cartRow__amountUpButton load-overlay" data-method="put" data-confirm="false">
+                                                        <span class="ec-cartRow__amountUpButton__icon"><img src="{{ asset('assets/icon/plus-dark.svg') }}" alt="increase"></span>
+                                                    </a>
+                                                {% endif %}                                            
                                         </div>
                                     </li>
                                     <li class="ec-cartRow__subtotalColumn">

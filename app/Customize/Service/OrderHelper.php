@@ -93,7 +93,8 @@ class OrderHelper extends \Eccube\Service\OrderHelper
                 ->setPrice($ProductClass->getPrice02())
                 ->setQuantity($item->getQuantity())
                 ->setOrderItemType($ProductItemType)
-                ->setOption($item->getOption());
+                ->setOption($item->getOption())
+                ->setShop($Product->getShop());
 
             $ClassCategory1 = $ProductClass->getClassCategory1();
             if (!is_null($ClassCategory1)) {
