@@ -17,7 +17,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Eccube\Entity\AbstractEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Eccube\Entity\Customer;
 use Customize\Entity\Shop;
+use PhpParser\Node\Stmt\Break_;
+use PhpParser\Node\Stmt\Switch_;
 
 /**
  * Coupon
@@ -34,6 +37,8 @@ class Coupon extends AbstractEntity
     const PRODUCT = 1;
     const CATEGORY = 2;
     const ALL = 3;
+    const SHOP  = 4 ; 
+    const CUSTONER = 5; 
 
     const DISCOUNT_PRICE = 1;
     const DISCOUNT_RATE = 2;
@@ -175,6 +180,12 @@ class Coupon extends AbstractEntity
      */
     private $Shop = null;
 
+     /**
+     * @var Customer
+     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Customer")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
+     */
+    private $Customer = null;
 
     /**
      * Constructor.
@@ -606,9 +617,44 @@ class Coupon extends AbstractEntity
         return $this;
     }
 
-    public function getShop() :Shop|null
+    public function getShop() :?Shop
     {
         return $this->Shop;
     }
+    
+    public function setCustomer(?Customer $Customer = null): self
+    {
+        $this->Customer = $Customer;
+        return $this;
+    }
+
+    public function getCustomer() :?Customer
+    {
+        return $this->Customer;
+    }
+    
+    /**
+     * Get coupon_type.
+     *
+     * @return int
+     */
+    public function getCouponTypeCustom()
+    {
+        $Re = self::ALL;
+        switch(true){
+            case !is_null($this->Shop):
+                $Re = self::SHOP;
+                break; 
+            case !is_null($this->Customer):
+                $Re = self::CUSTONER;
+                break;     
+            default:
+                $Re = $this->coupon_type;
+                break;
+                }             
+    
+        return $Re;
+    }
+
 
 }

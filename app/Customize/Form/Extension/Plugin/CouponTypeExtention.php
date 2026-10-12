@@ -16,11 +16,14 @@
 namespace Customize\Form\Extension\Plugin;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Eccube\Form\DataTransformer\EntityToIdTransformer;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Plugin\Coupon42\Form\Type\CouponType;
 use Customize\Entity\Shop;
+use Eccube\Entity\Customer;
 
 class CouponTypeExtention extends AbstractTypeExtension
 {
@@ -53,8 +56,15 @@ class CouponTypeExtention extends AbstractTypeExtension
                 'choices' => $this->em->getRepository(Shop::class)->select(),					
                 'choice_label' => 'shopName',      				
                 'choice_value' => 'id',      				
-                'placeholder' => 'plugin_coupon.admin.select' ,
+                'placeholder' => 'plugin_coupon.admin.shop_select' ,
             ])
+            ->add($builder								
+                ->create('Customer', HiddenType::class, [                								
+                       // 'data_class' => Customer::class,								
+           		])     								
+                ->addModelTransformer(new EntityToIdTransformer($this->em, Customer::class))								
+            )								
+
             ;
     }
 

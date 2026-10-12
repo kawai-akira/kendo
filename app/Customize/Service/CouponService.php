@@ -101,7 +101,7 @@ const availableDate = 30; #有効期間
         foreach ($Cuatomers as $Customer){
           
 
-            $couponName ='バースデイ クーポン'.  $TargetMonth->format('Y/m').'分 '. $Customer->getName01() . ' ' . $Customer->getName02() ."({$Customer->getId()})" ;
+            $couponName ='バースデイ クーポン'.  $TargetMonth->format('Y/m').'分 '. $Customer->getName01() . ' ' . $Customer->getName02() ."様" ;
             $couponCd = $this->plCouponService->generateCouponCd();
 
             $Coupon = new Coupon();
@@ -120,7 +120,8 @@ const availableDate = 30; #有効期間
                    ->setCouponMember(0)
                    ->setCouponLowerLimit(null)
                    ->setCouponRelease(self::couponRelease) #発行枚数
-                   ->setShop(null);
+                   ->setShop(null)
+                   ->setCustomer($Customer);
 
             $this->em->persist($Coupon);
             $this->em->flush();

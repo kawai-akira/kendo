@@ -209,7 +209,6 @@
                                         <div class="ec-cartRow__amountUpDown">
                                             {% if CartItem.getOptions() is null %}
                                                 {% if CartItem.quantity > 1 %}
-                                                    
                                                     <a href="{{ url('cart_handle_item', {'operation': 'down', 'productClassId': ProductClass.id}) }}" {{ csrf_token_for_anchor() }} class="ec-cartRow__amountDownButton load-overlay" data-method="put" data-confirm="false">
                                                         <span class="ec-cartRow__amountDownButton__icon"><img src="{{ asset('assets/icon/minus-dark.svg') }}" alt="reduce"></span>
                                                     </a>
@@ -221,7 +220,9 @@
                                                     <a href="{{ url('cart_handle_item', {'operation': 'up', 'productClassId': ProductClass.id}) }}" {{ csrf_token_for_anchor() }} class="ec-cartRow__amountUpButton load-overlay" data-method="put" data-confirm="false">
                                                         <span class="ec-cartRow__amountUpButton__icon"><img src="{{ asset('assets/icon/plus-dark.svg') }}" alt="increase"></span>
                                                     </a>
-                                                {% endif %}                                            
+                                             {% else %}
+                                             {#<div class="" style="font-size:11px;" title="オプション（面・小手・・のついた商品は数量の変更ができません">数量の変更について</div> #}      
+                                            {% endif %}                                            
                                         </div>
                                     </li>
                                     <li class="ec-cartRow__subtotalColumn">

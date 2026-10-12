@@ -319,6 +319,15 @@
                                     {{ form_errors(form.coupon_member) }}
                                 </div>
                             </div>
+                            <div class="row mb-1">
+                                <div class="col-3">会員限定</div>
+                                <div class="col mb-2">
+                                    {% if Coupon.Customer is not null%}{{ Coupon.Customer.name01}}{{ Coupon.Customer.name02 }}様限定{% endif %}
+                                    {{ form_widget(form.Customer) }}
+                                </div>
+                            </div>
+
+
                             {# 値引き種別 #}
                             <div class="row mb-1">
                                 <div class="col-3">{{ form_label(form.discount_type) }}<span class="badge bg-primary ms-1">{{ 'admin.common.required'|trans }}</span></div>
