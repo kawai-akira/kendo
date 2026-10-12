@@ -101,6 +101,23 @@
     </script>
 {% endblock javascript %}
 
+{% block stylesheet %}
+<style>
+    .ec-orderDelivery .orderDelivery_address_block{
+        padding: 5px 0 17px;
+        position: relative;
+    }
+    .ec-orderDelivery .ec-orderDelivery__address {
+        margin-top: 0;
+        top: 3px;  
+    }
+    .ec-selects {
+        margin-bottom: 25px;
+    }
+</style>
+{% endblock stylesheet %}
+
+
 {% block main %}
 
     <div class="ec-role">
@@ -283,26 +300,17 @@
                     {% endif %}
                 </div>
                 <div class="ec-orderDelivery">
-                    <div class="ec-rectHeading">
-                        <h2>{{ '配送情報'|trans }}</h2>
-                    </div>
                     {% for shipping in Order.shippings %}
                         {% set idx = loop.index0 %}
                         {% set isShowReducedTaxMess = false %}
-                        <div class="ec-orderDelivery__title">{{ 'お届け先'|trans }}{% if Order.multiple %}({{ loop.index }}){% endif %}
-                            <div class="ec-orderDelivery__change">
-                                {% if is_granted('ROLE_USER') %}
-                                    <button class="ec-inlineBtn" data-id="{{ shipping.id }}" data-trigger="click" data-path="{{ path('shopping_shipping', {'id': shipping.id}) }}">{{ '変更'|trans }}</button>
-                                {% else %}
-                                    <button class="ec-inlineBtn" data-id="{{ shipping.id }}" data-trigger="click" data-path="{{ path('shopping_shipping_edit', {'id': shipping.id}) }}">{{ '変更'|trans }}</button>
-                                {% endif %}
-                            </div>
+                        <div class="ec-rectHeading">
+                            <h2>{{ shipping.getShop().ShopName }}</h2>
                         </div>
                         <div class="ec-orderDelivery__item">
                             <ul class="ec-borderedList">
                                 {% for orderItem in shipping.productOrderItems %}
                                     <li>
-                                        <div class="ec-imageGrid">
+                                        <div class="ec-imageGrid pb-2">
                                             <div class="ec-imageGrid__img"><img src="{{ asset((orderItem.product is null ? null : orderItem.product.MainListImage)|no_image_product, 'save_image') }}" alt="{{ orderItem.productName }}"></div>
                                             <div class="ec-imageGrid__content">
                                                 <p>{{ orderItem.productName }}{% if is_reduced_tax_rate(orderItem) %}{{ '※'|trans }}{% set isShowReducedTaxMess = true %}{% endif %}</p>
@@ -316,22 +324,34 @@
                                                 <p>{{ orderItem.priceIncTax|price }} × {{ orderItem.quantity|number_format }}<span>{{ '小計：'|trans }}{{ orderItem.totalPrice|price }}</span></p>
                                             </div>
                                         </div>
+                                        {% if isShowReducedTaxMess %}
+                                            <p>{{ isShowReducedTaxMess ? '※ は軽減税率対象商品です。'|trans }}</p>
+                                        {% endif %}
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <p>{{ isShowReducedTaxMess ? '※ は軽減税率対象商品です。'|trans }}</p>
                         </div>
-                        <div class="ec-orderDelivery__address">
-                            <p>{{ ''|trans }}{{ shipping.name01 }} {{ shipping.name02 }} ({{ shipping.kana01 }} {{ shipping.kana02 }}){{ ' 様'|trans }}</p>
-                            <p>{{ '〒'|trans }}{{ shipping.postal_code }} {{ shipping.pref }}{{ shipping.addr01 }}{{ shipping.addr02 }}</p>
-                            <p>{{ shipping.phone_number }}</p>
-                        </div>
+                        <div class="orderDelivery_address_block">
+                            <div class="ec-orderDelivery__address">
+                                <p>{{ ''|trans }}{{ shipping.name01 }} {{ shipping.name02 }} ({{ shipping.kana01 }} {{ shipping.kana02 }}){{ ' 様'|trans }}</p>
+                                <p>{{ '〒'|trans }}{{ shipping.postal_code }} {{ shipping.pref }}{{ shipping.addr01 }}{{ shipping.addr02 }}</p>
+                                <p>{{ shipping.phone_number }}</p>
+                            </div>
+                            <div class="ec-orderDelivery__change">
+                                {% if is_granted('ROLE_USER') %}
+                                    <button class="ec-inlineBtn" data-id="{{ shipping.id }}" data-trigger="click" data-path="{{ path('shopping_shipping', {'id': shipping.id}) }}">{{ '変更'|trans }}</button>
+                                {% else %}
+                                    <button class="ec-inlineBtn" data-id="{{ shipping.id }}" data-trigger="click" data-path="{{ path('shopping_shipping_edit', {'id': shipping.id}) }}">{{ '変更'|trans }}</button>
+                                {% endif %}
+                            </div>
+                        </div>    
                         <div class="ec-orderDelivery__actions">
                             <div class="ec-selects">
                                 <div class="ec-select">
                                     <label>{{ '配送方法'|trans }}</label>
                                     {{ form_widget(form.Shippings[idx].Delivery, { 'attr': { 'class': 'form-control', 'data-trigger': 'change' }}) }}
                                     {{ form_errors(form.Shippings[idx].Delivery) }}
+                                    <span>配送費:{{DeliveryFree(shipping)|price}}</span>
                                 </div>
                                 <div class="ec-select ec-select__delivery">
                                     <label>{{ 'お届け日'|trans }}</label>
@@ -346,9 +366,11 @@
                             </div>
                         </div>
                     {% endfor %}
+                    {#
                     <div class="ec-orderDelivery__edit">
                         <button type="button" class="ec-inlineBtn" data-trigger="click" data-path="{{ path('shopping_shipping_multiple') }}">{{ 'お届け先を追加する'|trans }}</button>
                     </div>
+                    #}
                 </div>
                 <div class="ec-orderPayment">
                     <div class="ec-rectHeading">

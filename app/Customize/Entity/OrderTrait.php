@@ -24,8 +24,6 @@
     * @EntityExtension("Eccube\Entity\Order")
     */
 
-
-
     Trait OrderTrait 
     {
         /**
@@ -49,7 +47,7 @@
 
             return $this;
         }
-        public function getShop(): Shop
+        public function getShop(): ?Shop
         {
             return $this->Shop;
         }

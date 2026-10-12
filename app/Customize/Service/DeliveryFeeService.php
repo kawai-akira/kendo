@@ -73,4 +73,15 @@ public function setDeliveryFee(Shipping $Shipping){
     {
         return $this->Shop;
     }
+
+    public function getDeliveryFree(Shipping $Shipping): int
+    {
+
+        $Delibery = $Shipping->getDelivery();
+           $DeliveryFee = $this->DeliveryFeeRepository->findOneBy([
+               'Delivery' => $Shipping->getDelivery(),
+               'Pref' => $Shipping->getPref(),
+           ]);
+        return $DeliveryFee->getFee();
+    }
 }

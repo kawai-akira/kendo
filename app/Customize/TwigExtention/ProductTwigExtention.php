@@ -29,13 +29,13 @@ use Eccube\Entity\Product;
 use Customize\Service\CommonService;
 use Eccube\Entity\OrderItem;
 use Eccube\Entity\Category;
-use Eccube\Entity\CartItem;
+use Eccube\Entity\Order;
 use Customize\Repository\Plugin\RecommendProductRepository;
 use Customize\Service\OptionService;
+use Customize\Service\DeliveryFeeService;
 use Customize\Entity\Shop;
-use Eccube\Entity\Delivery;
 use Plugin\SubContent43\Entity\SubContent;
- 
+use Eccube\Entity\Shipping;
 
 
 class ProductTwigExtention extends AbstractExtension
@@ -97,9 +97,13 @@ class ProductTwigExtention extends AbstractExtension
 
     /**
      *  @var OptionService 
-     * 
     */
     private $OptionService;
+
+    
+    private DeliveryFeeService $DeliveryFeeService; 
+    
+
     /**
      *
      * @param Twig $Twig
@@ -112,6 +116,7 @@ class ProductTwigExtention extends AbstractExtension
             ,CommonService $CommonService
             ,RecommendProductRepository $RecommendProductRepository
             ,OptionService $OptionService
+            ,DeliveryFeeService $DeliveryFeeService
 
     ) {
         $this->Twig = $Twig;
@@ -119,6 +124,7 @@ class ProductTwigExtention extends AbstractExtension
         $this->CommonService = $CommonService;
         $this->RecommendRepository = $RecommendProductRepository;
         $this->OptionService = $OptionService;
+        $this->DeliveryFeeService = $DeliveryFeeService;
 
     }
 
@@ -147,14 +153,31 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('CategoryInfo', [$this, 'setCategoryInfo']),
             new TwigFunction('showOption', [$this, 'setShowOption']),
             new TwigFunction('DeliveryFreeAlert', [$this, 'setSDeliveryFreeAlert']),
+            new TwigFunction('DeliveryFree', [$this->DeliveryFeeService, 'getDeliveryFree']),
+            new TwigFunction('AdminOrderShop', [$this, 'getAdminOrderShop']),
         ];
+    }
+
+
+    /**
+     * 
+     */
+    public function getAdminOrderShop(Shipping $Shipping ,Order $Order){
+
+        /** @var Shop */    
+        if($Shop = $Order->getShop()){
+            return $Shop->getShopName();
+        }
+
+        /** @var Shop */
+        $Shop =$Shipping->getShop();
+
+        return $Shop->getShopName();
     }
 
     /**
      * カートで配送料のアラートを出力
-     *
      */
-
     public function setSDeliveryFreeAlert(?Shop $Shop ,array $Amount){
 
         if(is_null($Shop)){return ;} 
