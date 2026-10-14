@@ -13,7 +13,29 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div id="searchProductCst" class="PC">
+<script>
+
+$(function(){
+    $('#searchProductCst #Shop').change(function(){
+        var id = $(this).val();
+        $('#searchProductCst button').prop('disabled', true);
+        const $Option = $('#searchProductCst .category')								
+            .prop('disabled', true)								
+            .load('{{ url('block_search_category_load')}}'+'?Shop=' + id ,'' , function() {								
+                $(this).prop('disabled', false);								
+                $('#searchProductCst button').prop('disabled', false);
+            
+            });
+    });    							
+  });
+
+ 					
+
+
+
+
+</script>
+<div id="searchProductCst" class="">
     <div class="search" >
         <form method="get" id="searchformCst" action="{{ path('product_list') }}">
             <div class="search_inner">
@@ -22,7 +44,7 @@
                         {{ form_widget(formCst.Shop) }}
                 </div>
                 <div class="category">
-                    <p>商品カテゴリーから選ぶ</p>
+                    <p>{{'front_search_product_category'|trans}}</p>
                     {{ form_widget(formCst.category_id ,{'id': null, 'attr': {'class': 'form-select'}}) }}
                 </div>
                 <div class="tag">

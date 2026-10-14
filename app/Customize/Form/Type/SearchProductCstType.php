@@ -61,11 +61,13 @@ class SearchProductCstType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var ?Shop */
         $ShopId = $options['ShopId'];
-        echo $ShopId;
+
         $placeholder = 'common.select__all_products';
         
         if($ShopId){
+            /** @var Shop */
             $Shop = $this->em->getRepository(Shop::class)->find($ShopId);
             $placeholder = $Shop->getShopName().'のカテゴリー';
             $Categories = $this->ProductCategoryRepository->getCategoryByShop($Shop);
@@ -106,8 +108,8 @@ class SearchProductCstType extends AbstractType
                 'choices' => $this->em->getRepository(Tag::class)->findAll(),
                 'choice_label' => 'name',      						
                 'choice_value' => 'id',
-                'placeholder' => '全商品',   						
-      ]);;					
+                'placeholder' => '全商品特性',   						
+      ]);				
 
     }
 

@@ -43,7 +43,8 @@ class ProductCategoryRepository extends \Eccube\Repository\ProductCategoryReposi
                    ->orderBy('c1.hierarchy', 'ASC')
                     ->addOrderBy('c1.sort_no', 'DESC')
                     ->where('p.Shop = :Shop')
-                    ->setParameter('Shop',$Shop);
+                    ->setParameter('Shop',$Shop)
+                    ->andWhere('p.Status = 1');
 
         $Pcs = $qb->getQuery()->getResult();
 

@@ -86,3 +86,4 @@ plugin_coupon.admin.tooltip_shop:  クーポンに対象店舗がある場合は
 plugin_recommend.admin.tipe_title1: カテゴリー
 plugin_recommend.admin.tipe_title2: 区分
 front_entry_coupon_nuw_customer: 新規会員登録クーポン
+front_search_product_category: 商品カテゴリーから選ぶ

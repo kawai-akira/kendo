@@ -9,7 +9,7 @@
  *
  *  
  *
- *
+ *SELECT * FROM `dtb_product`T1 LEFT JOIN dtb_product_category T2 ON T1.id = T2.product_id WHERE T1.`shop_id` =17 
  *
  *                             C= C= C= ┌(;･_･)┘ﾄｺﾄｺ
  ******************************************************/
@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Customize\Entity\Shop;
 
 class SearchProductCstController extends AbstractController
 {
@@ -42,6 +43,7 @@ class SearchProductCstController extends AbstractController
     public function index(Request $request)
     {
         $request = $this->requestStack->getMainRequest();
+     
         $builder = $this->formFactory
             ->createNamedBuilder('', SearchProductCstType::class,null, ['ShopId'=>$request->get('Shop')])
             ->setMethod('GET');
@@ -54,14 +56,18 @@ class SearchProductCstController extends AbstractController
         ];
     }
     /**
-     * @Route("/block/search_product_cast", name="block_search_product_cst", methods={"GET"})
+     * @Route("/block/search_category", name="block_search_category_load", methods={"GET"})
      * @Template("Block/Parts/SetCategory.twig")
      */
+    public function setCategory(Request $request){
 
-    public function setCategory(){
+        $builder = $this->formFactory
+            ->createNamedBuilder('', SearchProductCstType::class,null, ['ShopId'=>$request->get('Shop')]);
 
-
-
+        $form = $builder->getForm();    
+        return [
+            'formCst' => $form->createView(),
+        ];
 
 
     }
