@@ -41,13 +41,11 @@ class SearchProductCstController extends AbstractController
      */
     public function index(Request $request)
     {
-        $builder = $this->formFactory
-            ->createNamedBuilder('', SearchProductCstType::class)
-            ->setMethod('GET');
-
-
         $request = $this->requestStack->getMainRequest();
-
+        $builder = $this->formFactory
+            ->createNamedBuilder('', SearchProductCstType::class,null, ['ShopId'=>$request->get('Shop')])
+            ->setMethod('GET');
+      
         $form = $builder->getForm();
         $form->handleRequest($request);
 
@@ -55,4 +53,17 @@ class SearchProductCstController extends AbstractController
             'formCst' => $form->createView(),
         ];
     }
+    /**
+     * @Route("/block/search_product_cast", name="block_search_product_cst", methods={"GET"})
+     * @Template("Block/Parts/SetCategory.twig")
+     */
+
+    public function setCategory(){
+
+
+
+
+
+    }
+
 }

@@ -175,7 +175,7 @@ class ShopType extends AbstractType
                 'multiple' => false,							
                 'expanded' => true,							
 				'placeholder' => false,			
-                'data' => true	
+//                'data' => true	
                 ])
             ->add('sort_no' ,TextType::class,[
                 'label' => '店舗一覧表示順',

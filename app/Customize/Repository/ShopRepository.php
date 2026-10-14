@@ -74,7 +74,6 @@ use Symfony\Component\Cache\Adapter\NullAdapter;
 
 		public function select(?Product $Product = Null){
 	
-
         $Status = $this->ShopStatusRepository->find(ShopStatus::REMOVE);
    		$qb = $this->createQueryBuilder('s')				
 	 		->orderBy('s.id', 'ASC')			
@@ -87,6 +86,26 @@ use Symfony\Component\Cache\Adapter\NullAdapter;
                     ->setParameter('ID',$Shop->getId());
             }
         }
+
+	
+		return $qb->getQuery()->getResult();
+
+		}
+
+
+        public function Search(){
+
+        $Status = $this->ShopStatusRepository->find(ShopStatus::REMOVE);
+   		$qb = $this->createQueryBuilder('s')
+            ->distinct()
+            ->leftJoin('s.Products' ,'p')			
+	 		->orderBy('s.sort_no', 'ASC')
+            ->addOrderBy('s.id', 'ASC')		
+      		->where('s.ShopStatus < :status')				
+      		->setParameter('status', $Status)
+            ->andWhere('p.Status = 1 ');
+
+   
 
 	
 		return $qb->getQuery()->getResult();

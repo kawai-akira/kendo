@@ -25,30 +25,35 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Customize\Entity\Shop;
 use Eccube\Repository\CategoryRepository;
+use Customize\Repository\ProductCategoryRepository;
 use Eccube\Entity\Tag;
 
 class SearchProductCstType extends AbstractType
 {
 
-
-       
+    /**
+     * @var CategoryRepository 
+     */
+    protected $CategoryRepository;   
     /**
      * @var EntityManagerInterface $em
      */
     protected $em;
     /**
-     * @var CategoryRepository
+     * @var ProductCategoryRepository
      */
-    private $CategoryRepository;
+    private $ProductCategoryRepository;
     /*
      * SearchProductTypeExtention constructor.
      */
     public function __construct(
         EntityManagerInterface $em
         ,CategoryRepository $CategoryRepository
+        ,ProductCategoryRepository $ProductCategoryRepository
     ) {
         $this->em = $em;
-        $this->CategoryRepository = $CategoryRepository;
+        $this->CategoryRepository =$CategoryRepository;
+        $this->ProductCategoryRepository = $ProductCategoryRepository;
     }    
 
     /**
@@ -56,11 +61,19 @@ class SearchProductCstType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $Categories = $this->CategoryRepository
-            ->getList(null, true);
-            
-          $builder
+        $ShopId = $options['ShopId'];
+        echo $ShopId;
+        $placeholder = 'common.select__all_products';
+        
+        if($ShopId){
+            $Shop = $this->em->getRepository(Shop::class)->find($ShopId);
+            $placeholder = $Shop->getShopName().'のカテゴリー';
+            $Categories = $this->ProductCategoryRepository->getCategoryByShop($Shop);
+        }else{
+            $Categories = $this->CategoryRepository->getList(null, true);
+           
+        }
+        $builder
             ->add('price01',TextType::class,[
                 'label' => '価格1',						
                 'required' => false,	
@@ -74,7 +87,7 @@ class SearchProductCstType extends AbstractType
                 'label' => '武具店',						
                 'required' => false,						
                 'class' => Shop::class,						
-                'choices' => $this->em->getRepository(Shop::class)->findBy(['ShopStatus'=>1],['sort_no'=>'ASC','id'=>'ASC']),
+                'choices' => $this->em->getRepository(Shop::class)->search(),
                 'choice_label' => 'ShopName',      						
                 'choice_value' => 'id',
                 'placeholder' => '全武道具店',   						
@@ -83,7 +96,7 @@ class SearchProductCstType extends AbstractType
             'class' => 'Eccube\Entity\Category',
             'choice_label' => 'NameWithLevel',
             'choices' => $Categories,
-            'placeholder' => 'common.select__all_products',
+            'placeholder' => $placeholder,
             'required' => false,
         ])
             ->add('Tag', EntityType::class, [
@@ -104,10 +117,11 @@ class SearchProductCstType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'csrf_protection' => false,
-            'allow_extra_fields' => true,
+            'ShopId' => null,
         ]);
     }
+
+					
 
     /**
      * {@inheritdoc}

@@ -156,7 +156,25 @@
          */
         private int $sort_no = 0 ;
 
+        
+        /**
+         * @var \Doctrine\Common\Collections\Collection
+         *
+         * @ORM\OneToMany(targetEntity="Eccube\Entity\Product", mappedBy="Shop", cascade={"remove"})
+         * @ORM\OrderBy({
+         *     "id"="ASC"
+         * })
+         */
+        private $Products;
 
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+            $this->Products = new \Doctrine\Common\Collections\ArrayCollection();
+
+        }
 
         public function getId(): ?int
         {
@@ -371,5 +389,19 @@
         public function getSortNo(): int
         {
             return $this->sort_no;
+        }
+                /**
+         * Get productImage.
+         *
+         * @return \Doctrine\Common\Collections\Collection
+         */
+        public function getProducts()
+        {
+            return $this->Products;
+        }
+        
+        public function IiProducts(): bool
+        {
+            return count($this->Products) >0 ? true : false ;
         }
     }
