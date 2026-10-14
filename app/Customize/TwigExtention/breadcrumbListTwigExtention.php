@@ -99,7 +99,8 @@ class breadcrumbListTwigExtention extends AbstractExtension
             case 'help_about':    
             case 'entry':
             case 'help_tradelaw':
-            case 'help_privacy':     
+            case 'help_privacy': 
+            case 'shop_list':     
 
                 
                 $Page = $this->em->getRepository(Page::class)->getPageByRoute($UrlName);

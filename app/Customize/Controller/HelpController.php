@@ -1,6 +1,6 @@
 <?php
 /**
- * @version EC=CUBE4.2
+ * @version EC=CUBE4.3
  * @copyright 株式会社 翔 kakeru.co.jp
  * @author
  * 2026年08月25日作成

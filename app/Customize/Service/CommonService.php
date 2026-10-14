@@ -210,11 +210,10 @@ class CommonService{
 
     /**
      * リクエストを返す
-     * @param string $Name
      * @return mix
      */
-    public function getRequest($Name){
-        return $this->Request->get($Name);
+    public function getRequest(string $Name){
+               return $this->Request->get($Name);
     }
 
     /**

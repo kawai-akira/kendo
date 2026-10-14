@@ -1,0 +1,47 @@
+{# @version  EC=CUBE4.3 TWIG
+ # @copyright 株式会社 翔 kakeru.co.jp
+ # @author
+ # 2026年10月13日作成
+ #
+ # app\template\default\Block\SearchProductCst.twig
+ #
+ #
+ #
+ # 商品検索拡張
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div id="searchProductCst" class="PC">
+    <div class="search" >
+        <form method="get" id="searchformCst" action="{{ path('product_list') }}">
+            <div class="search_inner">
+                <div class="Shop">
+                    <p>武具店から選ぶ</p>
+                        {{ form_widget(formCst.Shop) }}
+                </div>
+                <div class="category">
+                    <p>商品カテゴリーから選ぶ</p>
+                    {{ form_widget(formCst.category_id ,{'id': null, 'attr': {'class': 'category_id'}}) }}
+                </div>
+                <div class="tag">
+                    <p>商品特性から選ぶ</p>
+                    {{ form_widget(formCst.Tag) }}
+                </div>
+                <div>
+                <div class="price_area">
+                    <p>キーワードを入力</p>
+                        <input type="search" id="name" name="name" maxlength="50" placeholder="アイテム検索" class="form-control">
+                    <div class="search_price">
+                        <p>価格</p>
+                        {{ form_widget(formCst.price01) }}円 ～{{ form_widget(formCst.price02) }}円
+                    </div>
+                </div>    
+                <div class="mt-4 text-center" >  
+                    <button type="submit" class="btn btn-secondary">検索</button>
+                </div>
+            </div>    
+        </form>
+    </div>
+</div>

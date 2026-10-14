@@ -327,6 +327,19 @@
                                     {{ form_errors(form.deliveryFreeAmount) }}
                                 </div>
                             </div>
+                            <div class="row mb-2">
+                                <div class="col-2">
+                                    <span>店舗一覧に表示するしない</span>
+                                </div>
+                                <div class="col-4">
+                                    {{ form_widget(form.visible ,{'label_attr': {'class': 'radio-inline'}}) }}
+                                    {{ form_errors(form.visible) }}
+                                </div>
+                                <div class="col-4">
+                                    {{ form_widget(form.sort_no) }}
+                                    {{ form_errors(form.sort_no) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card rounded border-0 mb-4">

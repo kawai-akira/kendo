@@ -31,6 +31,7 @@ use Eccube\Util\StringUtil;
 use Eccube\Repository\QueryKey;
 
 
+
 /**
  * ProductRepository
  *
@@ -122,6 +123,12 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
     {
         $qb = $this->createQueryBuilder('p')
             ->andWhere('p.Status = 1');
+
+        if (!empty($searchData['Shop']) && $searchData['Shop']) {
+            $qb->andWhere('p.Shop = :Shop')
+               ->setParameter('Shop',$searchData['Shop']) ;
+        
+        }
 
 
         // category

@@ -101,7 +101,7 @@ const availableDate = 30; #有効期間
         foreach ($Cuatomers as $Customer){
           
 
-            $couponName ='バースデイ クーポン'.  $TargetMonth->format('Y/m').'分 '. $Customer->getName01() . ' ' . $Customer->getName02() ."様" ;
+            $couponName = $Customer->getName01() . ' ' . $Customer->getName02() .'様 お誕生日特別割引 '. $TargetMonth->format('Y/m').'分 '  ;
             $couponCd = $this->plCouponService->generateCouponCd();
 
             $Coupon = new Coupon();

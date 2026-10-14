@@ -11,7 +11,7 @@
 }
 .ec-itemNav{
     max-width: 1400px;
-    width:100;
+    width:100%;
     background-color:#b80000;
 }
 .ec-itemNav__nav{
@@ -76,4 +76,21 @@
 }
 .ItemOption div{
     font-size:12px;
+}
+/** SEARCH Product Ex */
+#searchProductCst{
+    padding-left:20px ;
+}
+#searchProductCst .search p{
+    margin: 10px 5px;
+    font-weight: 600;
+}
+#searchProductCst .form-control{
+    display:inline-block;
+}
+#searchProductCst .search_price input.form-control{
+    width: 43%;
+}
+#searchProductCst .btn{
+    width: 50%;
 }

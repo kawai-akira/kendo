@@ -146,6 +146,16 @@
          */
         private $updateDate;
 
+        /**
+         * @ORM\Column(name="visible", type="boolean", options={"default"=true})
+         */
+        private bool $visible = true ;
+
+        /**
+         * @ORM\Column(name="sort_no", type="integer",  options={"unsigned"=true,"default"=0})
+         */
+        private int $sort_no = 0 ;
+
 
 
         public function getId(): ?int
@@ -338,5 +348,28 @@
         public function getProductDetailMemo(): ?string
         {
             return $this->productDetailMemo;
+        }
+    
+
+        public function setVisible(bool $visible): self
+        {
+            $this->visible = $visible;
+
+            return $this;
+        }
+
+        public function isVisible() :bool 
+        {
+            return $this->visible;
+        }
+        public function setSortNo(int $sortNo = 0): self
+        {
+            $this->sort_no = $sortNo;
+
+            return $this;
+        }
+        public function getSortNo(): int
+        {
+            return $this->sort_no;
         }
     }

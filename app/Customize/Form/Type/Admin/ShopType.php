@@ -38,6 +38,7 @@ use Customize\Entity\Shop;
 use Eccube\Entity\Member;
 use Customize\Entity\Master\ShopStatus;
 use Customize\Repository\MemberRepository;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ShopType extends AbstractType
 {
@@ -110,17 +111,10 @@ class ShopType extends AbstractType
             ->add('address', AddressType::class, [
                 'required' => true,
             ])
-
-
-
             ->add('phoneNumber', PhoneNumberType::class, [
                 'label' => '電話番号（必須）',
                 'required' => true,
-	
-
-
             ])
-
             ->add('deliveryFreeAmount', PriceType::class, [
                 'label' => '送料無料条件',
                 'required' => false,
@@ -173,7 +167,25 @@ class ShopType extends AbstractType
                         'max' => $this->config['eccube_ltext_len'],
                     ]),
                 ],
-            ]);
+            ])
+            ->add('visible' ,ChoiceType::class,[
+                'label' => '店舗一覧表示',
+                'required' => false,
+                'choices'=>  ['表示する'=>true,'表示しない'=>false],						
+                'multiple' => false,							
+                'expanded' => true,							
+				'placeholder' => false,			
+                'data' => true	
+                ])
+            ->add('sort_no' ,TextType::class,[
+                'label' => '店舗一覧表示順',
+                'required' => false,
+                 ]);	
+                
+                ;							
+
+            
+
 
             if($Shop->getId()){
             $builder

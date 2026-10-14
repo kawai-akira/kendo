@@ -24,7 +24,10 @@ use Symfony\Component\Form\FormView;
 use Twig\TwigFilter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 use Twig\Environment as Twig;
+use Symfony\Component\Form\FormFactoryInterface;
 use Eccube\Entity\Product;
 use Customize\Service\CommonService;
 use Eccube\Entity\OrderItem;
@@ -36,6 +39,7 @@ use Customize\Service\DeliveryFeeService;
 use Customize\Entity\Shop;
 use Plugin\SubContent43\Entity\SubContent;
 use Eccube\Entity\Shipping;
+
 
 
 class ProductTwigExtention extends AbstractExtension
@@ -103,6 +107,11 @@ class ProductTwigExtention extends AbstractExtension
     
     private DeliveryFeeService $DeliveryFeeService; 
     
+    /**
+     * @var FormFactoryInterface
+     */
+    private $FormFactory;
+
 
     /**
      *
@@ -117,6 +126,8 @@ class ProductTwigExtention extends AbstractExtension
             ,RecommendProductRepository $RecommendProductRepository
             ,OptionService $OptionService
             ,DeliveryFeeService $DeliveryFeeService
+            ,FormFactoryInterface $FormFactory
+
 
     ) {
         $this->Twig = $Twig;
@@ -125,6 +136,7 @@ class ProductTwigExtention extends AbstractExtension
         $this->RecommendRepository = $RecommendProductRepository;
         $this->OptionService = $OptionService;
         $this->DeliveryFeeService = $DeliveryFeeService;
+        $this->FormFactory =$FormFactory;
 
     }
 
@@ -155,8 +167,11 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('DeliveryFreeAlert', [$this, 'setSDeliveryFreeAlert']),
             new TwigFunction('DeliveryFree', [$this->DeliveryFeeService, 'getDeliveryFree']),
             new TwigFunction('AdminOrderShop', [$this, 'getAdminOrderShop']),
+
         ];
     }
+
+
 
 
     /**
