@@ -28,12 +28,6 @@ $(function(){
             });
     });    							
   });
-
- 					
-
-
-
-
 </script>
 <div id="searchProductCst" class="">
     <div class="search" >
@@ -52,9 +46,9 @@ $(function(){
                     {{ form_widget(formCst.Tag) }}
                 </div>
                 <div>
-                <div class="price_area">
+                <div class="price_area ec-input">
                     <p>キーワードを入力</p>
-                        <input type="search" id="name" name="name" maxlength="50" placeholder="アイテム検索" class="form-control">
+                       {{ form_widget(formCst.name) }}
                     <div class="search_price">
                         <p>価格</p>
                         {{ form_widget(formCst.price01) }}円 ～{{ form_widget(formCst.price02) }}円

@@ -110,10 +110,7 @@
     {% else %}
         <div class="ec-searchnavRole">
 
-            {{ categoryImg(Category)|raw}}
-
-
-
+            {{ ProductListImg(SearchFormData)|raw}}
 
             <form name="form1" id="form1" method="get" action="?">
                 {% for item in search_form %}
@@ -197,5 +194,6 @@
             </div>
         {% endif %}
     {% endif %}
-    {{CategoryInfo(Category)|raw}}
+
+    {{ProductListInfo(SearchFormData)|raw}}
 {% endblock %}

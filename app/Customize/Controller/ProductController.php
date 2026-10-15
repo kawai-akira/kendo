@@ -160,9 +160,9 @@ private $OptionService;
         $ProductsAndClassCategories = $this->productRepository->findProductsWithSortedClassCategories($ids, 'p.id');
 
         // addCart form
-        $forms = [];
+       /* $forms = [];
         foreach ($pagination as $Product) {
-            /** @var \Symfony\Component\Form\FormBuilderInterface $builder */
+            /** @var \Symfony\Component\Form\FormBuilderInterface $builder * /
             $builder = $this->formFactory->createNamedBuilder(
                 '',
                 AddCartType::class,
@@ -175,16 +175,15 @@ private $OptionService;
             $addCartForm = $builder->getForm();
 
             $forms[$Product->getId()] = $addCartForm->createView();
-        }
-
-        $Category = $searchForm->get('category_id')->getData();
+        }*/
 
         return [
             'subtitle' => $this->getPageTitle($searchData),
             'pagination' => $pagination,
             'search_form' => $searchForm->createView(),
-            'forms' => $forms,
-            'Category' => $Category,
+            'SearchFormData' => $searchForm->getData(),
+            'Category' => $searchForm->get('category_id')->getData(),
+            'Shop' => $searchForm->get('Shop')->getData(),
         ];
     }
     /**

@@ -1,0 +1,55 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月30日作成
+ #
+ #　app\template\default\Product\Parts\ProductListInfo.twig
+ #
+ #
+ # 
+ #
+ # 商品一覧カテゴリーイメージ
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<style>
+#product_list_info_area{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+#product_list_info_area h2.header-line01{
+   font-size: 20px;
+   border-bottom: 1px solid #222;
+   padding-bottom: 15px;
+   margin-bottom: 25px;
+}
+#product_list_info_area h3{
+   font-size: 16px;
+}
+#product_list_info_area p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+</style>
+<div id="product_list_info_area" >
+{% if 'category'==Flg %}
+   <div class="category_info">
+      <h2 class="header-line01">{{Info.title}}</h2>
+      {{ Info.html|raw}}
+   <div>
+{% endif %}
+{% if 'shop' == Flg %}
+      <div class="shop_info">
+         <h2 class="header-line01">{{Shop.ShopName}}</h2>
+            {{ SC_PartsId(Shop.id,true)|raw }}
+            {% if 1 == urlFlg %}
+               <div>
+                  <a href="{{ Shop.ShopUrl}}" target="_blank">{{Shop.ShopName}}</a> 
+               </div>   
+            {% elseif 2 == urlFlg %}
+               {{ SC_PartCompoPage('kenjoy',Shop.ShopUrl)|raw}};
+            {% endif %}
+      <div>
+{% endif %}  
+</div>

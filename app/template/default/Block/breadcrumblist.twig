@@ -17,7 +17,7 @@
 {% if app.request.get('_route') == 'product_detail' %}
     {{ breadcrumbList(Product)|raw }}
 {% elseif app.request.get('_route') == 'product_list' %}
-    {{ breadcrumbList(Category)|raw }}
+    {{ breadcrumbList(Category,Shop)|raw }}
 {% else %}
     {{ breadcrumbList()|raw }}
 {% endif %}    

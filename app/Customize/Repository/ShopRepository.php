@@ -95,13 +95,13 @@ use Symfony\Component\Cache\Adapter\NullAdapter;
 
         public function Search(){
 
-        $Status = $this->ShopStatusRepository->find(ShopStatus::REMOVE);
+        $Status = $this->ShopStatusRepository->find(ShopStatus::ACTIVE);
    		$qb = $this->createQueryBuilder('s')
             ->distinct()
             ->leftJoin('s.Products' ,'p')			
 	 		->orderBy('s.sort_no', 'ASC')
             ->addOrderBy('s.id', 'ASC')		
-      		->where('s.ShopStatus < :status')				
+      		->where('s.ShopStatus = :status')				
       		->setParameter('status', $Status)
             ->andWhere('p.Status = 1 ');
 

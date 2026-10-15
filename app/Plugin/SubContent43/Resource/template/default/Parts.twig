@@ -1,0 +1,30 @@
+{#
+ # EC-CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年05月10日作成
+ #
+ #  app\Plugin\SubContent43\Resource\template\default\Parts.twig
+ #
+ #
+ # サブコンテンツ Parts
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% if SubContent.css is not null %}
+    <style type="text/css">
+	    {{ SubContent.css|raw }}
+    </style>
+{% endif %}
+<section id="SubContent" class="SubContent_part">
+    <div class="{{SC_Class(SubContent) }}" id="SubContent_part{{ SubContent.id}}">
+    {% if titleFlg %}
+    <h2>{{ SubContent.Title }}</h2> 
+    {% endif %}
+	{% if SubContent.html is not null %}
+    	{{ SubContent.html|raw}}
+	{% endif %}
+    </div>
+</section>

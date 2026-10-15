@@ -20,6 +20,13 @@
             <li class="breadcrumb-item">
                 <a href="{{ url('homepage') }}">ホーム</a>
             </li>
+            {% if Shop is not null %}
+                <li class="breadcrumb-item">
+                    <a href="{{ url('product_list') }}?Shop={{ Shop.id }}">
+                        {{ Shop.ShopName }}
+                    </a>
+                </li>
+            {% endif %}
             {% if Category is not null%}
                 {% for ancestor in Category.path %}
                     {# ループの最後（＝現在表示しているカテゴリ自身）はリンクにしない #}

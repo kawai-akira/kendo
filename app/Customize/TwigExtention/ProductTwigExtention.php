@@ -25,7 +25,6 @@ use Twig\TwigFilter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RequestStack;
-
 use Twig\Environment as Twig;
 use Symfony\Component\Form\FormFactoryInterface;
 use Eccube\Entity\Product;
@@ -39,6 +38,7 @@ use Customize\Service\DeliveryFeeService;
 use Customize\Entity\Shop;
 use Plugin\SubContent43\Entity\SubContent;
 use Eccube\Entity\Shipping;
+
 
 
 
@@ -72,12 +72,12 @@ class ProductTwigExtention extends AbstractExtension
     private const FreeInput1Admin = '@admin/Order/Parts/FreeInput1Form.twig';
     private const FreeInput2Admin = '@admin/Order/Parts/FreeInput2Form.twig';
     private const FreeInput3Admin = '@admin/Order/Parts/FreeInput3Form.twig';
-    private const categoryImgTwig = 'Product/Parts/CategoryImage.twig';
-    private Const categoryImgDir  = '/assets/img/categoryImg/';
-    private Const BestItemTwig     = 'Product/Parts/bestItem.twig';
-    private const CategoryInfoTwig = 'Product/Parts/Categoryinfo.twig';
-    private const ItemOption       = 'Common/ItemOption.twig';
-    private const DeliveryFeeAlert = 'Cart\Parts\DeliveryFreeAlert.twig';
+    private const ProductListImgTwig    = 'Product/Parts/ProductListImage.twig';
+    private Const categoryImgDir        = 'assets/img/categoryImg/';
+    private Const BestItemTwig          = 'Product/Parts/bestItem.twig';
+    private const ProductListInfoTwig   = 'Product/Parts/ProductListInfo.twig';
+    private const ItemOption            = 'Common/ItemOption.twig';
+    private const DeliveryFeeAlert      = 'Cart\Parts\DeliveryFreeAlert.twig';
  
 
    /**
@@ -160,9 +160,9 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('FreeInput3Form', [$this, 'setfreeInput3']),
             new TwigFunction('AdminItemOption', [$this, 'setAdminItemOption']),
             new TwigFunction('categoryFormat1', [$this, 'setcategoryFormat1']),
-            new TwigFunction('categoryImg', [$this, 'setcategoryImg']),
+            new TwigFunction('ProductListImg', [$this, 'setProductListImg']),
             new TwigFunction('CategoryBestItem', [$this, 'setCategoryBestItem']),
-            new TwigFunction('CategoryInfo', [$this, 'setCategoryInfo']),
+            new TwigFunction('ProductListInfo', [$this, 'setProductListInfo']),
             new TwigFunction('showOption', [$this, 'setShowOption']),
             new TwigFunction('DeliveryFreeAlert', [$this, 'setSDeliveryFreeAlert']),
             new TwigFunction('DeliveryFree', [$this->DeliveryFeeService, 'getDeliveryFree']),
@@ -172,6 +172,83 @@ class ProductTwigExtention extends AbstractExtension
     }
 
 
+
+    
+    public function setProductListImg(?array $Datas){
+
+            extract($Datas);
+            list($Flg,$Image) = $this->setProductLisrFlg($Datas);
+            
+     
+            if(0 == $Flg){return ;}         
+        
+        return $this->Twig->render(self::ProductListImgTwig, [
+           'image' => $Image,
+           'Category'  => $category_id,
+           'flg'   => $Flg,
+           'Shop'  => $Shop, 
+        ]);                    
+
+    }
+
+    public function setProductListInfo(?array $Datas){
+        extract($Datas);
+
+        list($Flg,$Image) = $this->setProductLisrFlg($Datas ,true);
+        if(0 == $Flg){return ;}
+
+        $Info = null;
+    
+        if('category' == $Flg){
+            $Paths = $category_id->getPath();
+            $Path  = array_shift($Paths);
+            if(!$Info = $this->em->getRepository(SubContent::class)->GetSubContentPart('category',$Path->getId())){return ;};
+        }
+        $urlFlg = 0;
+        if('shop' == $Flg){
+            $urlFlg = preg_match('/^http:\/\/+.$/',$Shop->getShopUrl()) ? 1:2;
+        }
+
+        return $this->Twig->render(self::ProductListInfoTwig, [
+            'Flg' => $Flg, 
+            'Info' => $Info,
+            'Shop' => $Shop,
+            'urlFlg' => $urlFlg
+        ]);
+
+    }
+
+    private function setProductLisrFlg(array $Datas,bool $InfoFlg = false ){
+
+            extract($Datas);
+            $Flg = 0;
+            $Image = null;
+                switch(true){
+                    case $name:
+                         $Flg = 0;
+                        break;
+                    case $Shop && is_null($category_id):
+                        $Flg =  $Shop->isVisible() == true ? 'shop' : null;
+                        break;
+                    case $category_id:
+                            $Flg = 'category';
+                            if(!$InfoFlg){
+                                $Image = self::categoryImgDir.$category_id->getId().'.jpg';
+                                $Path = $this->CommonService->getConfig('html_user_data_dir').'/'. $Image;
+                                $Flg  = file_exists($Path) ? 'category' :  null;
+                            }
+                        break;
+                    case $price01:
+                    case $price02:
+                    case $Tag:    
+                    default:    
+                        $Flg = 0;
+                        break;    
+                }
+   
+            return [$Flg,$Image];
+
+    } 
 
 
     /**
@@ -221,19 +298,7 @@ class ProductTwigExtention extends AbstractExtension
 
 
 
-    public function setCategoryInfo(?Category $Category){
 
-        if(!$Category){return ;}    
-        $Paths = $Category->getPath();
-        $Path = array_shift($Paths);
-
-        if(!$Info = $this->em->getRepository(SubContent::class)->GetSubContentPart('category',$Path->getId())){return ;};
-        
-        return $this->Twig->render(self::CategoryInfoTwig, [
-            'Info' => $Info,
-        ]);
-
-    }
 
     public function setCategoryBestItem(?Category $Category){
         
@@ -249,21 +314,6 @@ class ProductTwigExtention extends AbstractExtension
 
     }
 
-    public function setcategoryImg(?Category $Category){
-
-        if( is_null($Category)){return ;}
-
-            $Image = self::categoryImgDir.$Category->getId().'.jpg';
-            $Path = $this->CommonService->getConfig('html_user_data_dir'). $Image;
-
-        if(!file_exists($Path)){return ;}
-
-        return $this->Twig->render(self::categoryImgTwig, [
-           'image' => $this->CommonService->getConfig('html_user_data_root') .$Image,
-           'name'  => $Category->getName(),                           
-        ]);
-
-    }
 
 
 

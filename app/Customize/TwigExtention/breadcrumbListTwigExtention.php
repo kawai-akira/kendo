@@ -24,6 +24,7 @@ use Eccube\Entity\ProductCategory;
 use Eccube\Entity\Category;
 use Eccube\Entity\Product;
 use Eccube\Entity\Page;
+use Customize\Entity\Shop;
 use Customize\Service\CommonService;
 
 class breadcrumbListTwigExtention extends AbstractExtension
@@ -66,7 +67,7 @@ class breadcrumbListTwigExtention extends AbstractExtension
     }
 
 
-    public function setbreadcrumbList(mixed $data = null){
+    public function setbreadcrumbList(mixed $data = null,?Shop $Shop = null){
 
         $Category = null;
         $Name     = null; 
@@ -74,13 +75,16 @@ class breadcrumbListTwigExtention extends AbstractExtension
 
             case 'product_list':
                 /** @var Category  */
-                $Category = $data ;
+                $Category = $data;
+
+                
                 break;
 
             case 'product_detail':
                
                 /** @var Product */
                 $Product = $data;
+                $Shop = $Product->getShop();
                 $Name = $Product->getName();
                 $PCategorys = $Product->getProductCategories();
 
@@ -113,11 +117,11 @@ class breadcrumbListTwigExtention extends AbstractExtension
         };
     
         
-    
-    
+
     return $this->Twig->render(self::breadcrumbListTwig, [
         'Category' => $Category,
-        'Name'     => $Name
+        'Name'     => $Name,
+        'Shop'     => $Shop
 
       
       

@@ -19,8 +19,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Form\Type\SearchProductType;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Customize\Entity\Shop;
@@ -84,7 +84,12 @@ class SearchProductCstType extends AbstractType
                 'label' => '価格1',						
                 'required' => false,	
             ])
-
+            ->add('name', SearchType::class, [
+            'required' => false,
+            'attr' => [
+                'maxlength' => 50,
+            ],
+            ])
             ->add('Shop', EntityType::class, [
                 'label' => '武具店',						
                 'required' => false,						

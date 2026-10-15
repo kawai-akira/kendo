@@ -14,14 +14,6 @@
  ##############################################################}
 {% extends 'default_frame.twig' %}
 
-{% block stylesheet %}
-    <style>
-
-
-
-    </style>
-{% endblock %}
-
 {% block main %}
     <div class="ec-shelfRole">
         <ul class="ec-shelfGrid">
@@ -29,7 +21,7 @@
            {% for Shop in Shops %}
                 <li class="ec-shelfGrid__item ">
                     <div class="pickup_item">
-                        <a href="{#{ url('shop_detail', { 'id': Shop.id}) }#}">
+                        <a href="{{ url('product_list') }}?Shop={{ Shop.id }}">
                             <div class="shop_photo" data-is="{{Shop.id}}"><img src="{{asset(Shop.shopImage|no_image_product ,'save_image')}}" alt="{{ Shop.shop_name }}"/></div>
                             <div class="shop_name">{{ Shop.shop_name }}</div>
                         </a>
@@ -38,22 +30,7 @@
             {% endfor %}
         </ul>
         <div id="orgtxt_area">
-                <h2 class="header-line01">お取り扱い店舗につきまして</h2>
-                <p>KENDO PARKでは、日本全国の優良武道具店と提携し、その中でもオリジナリティ溢れる、かつ魅力的な剣道具をセレクトして商品掲載を行っております。</p>
-            <br>
-                <p>各武道具店には、原則としてKENDO PARKスタッフが直接訪問しております。</p>
-                <p>提携にあたりましては、店主の方々から提供剣道具へのこだわりをお伺いし、また製造現場や商品を直接確認した上で提携を行っております。</p>
-                <br>
-                <p>剣道具（防具）、竹刀、道衣（道着・道着）、袴、防具袋、竹刀袋、垂れ名札（ゼッケン・垂れネーム）等のみならず、ギフトや小物、剣道雑誌に至るまで、剣道にまつわる優れたアイテムを取り扱う武道具店のみを掲載しております。</p>
-                <br>
-                <p>武道具店選定にあたりましては、警察、道場、実業団、中学、高校、大学等の各チーム、さらには日本代表、海外の代表選手に至るまで、ユーザーとなる各剣道家の方々の声をヒアリングした上で、提携店舗の選定を行っております。</p>
-                <p>また、各店舗の店主の方々からお話をお伺いし、KENDO PARKとビジョンや志を共有いただける武道具店を中心に提携を行っております。</p>
-                <br>
-                <p>現在日本全国には約400店舗の武道具店が存在します。（KENDO PARK調べ）</p>
-                <p>しかし低価格化、後継者不足、商品開発力不足、少子化等の要因から、その数は減少の一途を辿っております。</p>
-                <p>そういった中で、「日本の伝統文化・伝統工芸」としての剣道具を守るべく、全国に眠る優れた店舗や剣道具を皆様に届けて行くことができれば幸いです。</p>
-                <br>
-                <p>お取り扱い店舗は順次増加予定でございますので、ごゆっくりとお買い物をお楽しみください。</p>
+                {{SC_PartsId(12,true)|raw}}
         </div>
     </div>
 {% endblock %}
