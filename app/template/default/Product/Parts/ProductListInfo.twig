@@ -31,6 +31,11 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+#product_list_info_area .link a{
+    color: #910404;
+    font-weight: bold;
+}
+
 </style>
 <div id="product_list_info_area" >
 {% if 'category'==Flg %}
@@ -42,13 +47,22 @@
 {% if 'shop' == Flg %}
       <div class="shop_info">
          <h2 class="header-line01">{{Shop.ShopName}}</h2>
-            {{ SC_PartsId(Shop.id,true)|raw }}
+            <div class="info mb-5">
+                {{ SC_PartsId(Shop.id,true)|raw }}
+            </div>
+         
+            
             {% if 1 == urlFlg %}
-               <div>
+               <div class="link">
                   <a href="{{ Shop.ShopUrl}}" target="_blank">{{Shop.ShopName}}</a> 
-               </div>   
-            {% elseif 2 == urlFlg %}
-               {{ SC_PartCompoPage('kenjoy',Shop.ShopUrl)|raw}};
+               </div>
+            {% elseif 2 == urlFlg and SubContent is not null %}
+               <div class="link">
+                  <a href="{{url('Plugin_SubContent_Kenjoy',{'cd': Shop.ShopUrl })}}" target="_blank">
+                     <p>▼{{Shop.ShopName}}のインタビュー記事へ！！ ▼</p>
+                      <span>{{SubContent.Title}}</span>
+                  </a> 
+               </div>
             {% endif %}
       <div>
 {% endif %}  

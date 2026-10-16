@@ -17,6 +17,7 @@ namespace Customize\Controller;
 
 
 use Eccube\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;						
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,19 +37,31 @@ class ShopController extends AbstractController
     {
     }
     /**
-     * @Route("/shop/list", name="shop_list", methods={"GET"})
+     * @Route("/shop/list", name="shop_list", methods={"GET"} )
      * @Template("Shop/list.twig")
      */
     public function list(Request $request)
     {
-
     $Shops = $this->entityManager->getRepository(Shop::class)->findBy(['ShopStatus'=>1,'visible'=>true],['sort_no'=>'ASC','id'=>'ASC']);
 
+        return[
+            'Shops'=>$Shops,
+        ];
+    }
+    /**
+     * @Route("/shop/detail/{id}", name="shop_detail", methods={"GET"} , requirements={"id" = "\d+"}))
+     * 
+     */
+    public function detail(Request $request, $id = null)
+    {
+        if(!$id){
+            throw new NotFoundHttpException();
+        }
+        if(!$Shop = $this->entityManager->getRepository(Shop::class)->find($id)){
+            throw new NotFoundHttpException();
+        }
 
-    return[
-        'Shops'=>$Shops,
-    ];
-
-
+        $Url = $this->generateUrl('product_list').'?Shop='.$id; 
+        return $this->redirect($Url);
     }
 }

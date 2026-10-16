@@ -26,7 +26,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment as Twig;
-use Symfony\Component\Form\FormFactoryInterface;
 use Eccube\Entity\Product;
 use Customize\Service\CommonService;
 use Eccube\Entity\OrderItem;
@@ -38,6 +37,7 @@ use Customize\Service\DeliveryFeeService;
 use Customize\Entity\Shop;
 use Plugin\SubContent43\Entity\SubContent;
 use Eccube\Entity\Shipping;
+use Plugin\SubContent43\Repository\SubContentRepository;
 
 
 
@@ -107,12 +107,13 @@ class ProductTwigExtention extends AbstractExtension
     
     private DeliveryFeeService $DeliveryFeeService; 
     
+
+
     /**
-     * @var FormFactoryInterface
+     * @var SubContentRepository
      */
-    private $FormFactory;
 
-
+    private $SubContentRepository;
     /**
      *
      * @param Twig $Twig
@@ -126,7 +127,7 @@ class ProductTwigExtention extends AbstractExtension
             ,RecommendProductRepository $RecommendProductRepository
             ,OptionService $OptionService
             ,DeliveryFeeService $DeliveryFeeService
-            ,FormFactoryInterface $FormFactory
+            ,SubContentRepository $SubContentRepository
 
 
     ) {
@@ -136,7 +137,7 @@ class ProductTwigExtention extends AbstractExtension
         $this->RecommendRepository = $RecommendProductRepository;
         $this->OptionService = $OptionService;
         $this->DeliveryFeeService = $DeliveryFeeService;
-        $this->FormFactory =$FormFactory;
+        $this->SubContentRepository = $SubContentRepository;
 
     }
 
@@ -177,9 +178,10 @@ class ProductTwigExtention extends AbstractExtension
     public function setProductListImg(?array $Datas){
 
             extract($Datas);
+
             list($Flg,$Image) = $this->setProductLisrFlg($Datas);
-            
-     
+
+    
             if(0 == $Flg){return ;}         
         
         return $this->Twig->render(self::ProductListImgTwig, [
@@ -194,6 +196,7 @@ class ProductTwigExtention extends AbstractExtension
     public function setProductListInfo(?array $Datas){
         extract($Datas);
 
+
         list($Flg,$Image) = $this->setProductLisrFlg($Datas ,true);
         if(0 == $Flg){return ;}
 
@@ -205,22 +208,32 @@ class ProductTwigExtention extends AbstractExtension
             if(!$Info = $this->em->getRepository(SubContent::class)->GetSubContentPart('category',$Path->getId())){return ;};
         }
         $urlFlg = 0;
+        $SubContent = null;
         if('shop' == $Flg){
-            $urlFlg = preg_match('/^http:\/\/+.$/',$Shop->getShopUrl()) ? 1:2;
+            if($ShopUrl = $Shop->getShopUrl()){
+                $urlFlg = preg_match('/^http:\/\/+.$/',$ShopUrl) ? 1:2;
+            }
+            if(2 == $urlFlg){
+                $SubContent =$this->SubContentRepository->getSubContentCompoPage('kenjoy',$ShopUrl);
+            }
         }
-
         return $this->Twig->render(self::ProductListInfoTwig, [
             'Flg' => $Flg, 
             'Info' => $Info,
             'Shop' => $Shop,
-            'urlFlg' => $urlFlg
+            'urlFlg' => $urlFlg,
+            'SubContent' =>$SubContent, 
         ]);
 
     }
 
     private function setProductLisrFlg(array $Datas,bool $InfoFlg = false ){
-
+    
+            # SHOP SELECTで 　値が無いものは　DATAからSHOPが消える カテゴリーも同様
+            if(!isset($Dates['Shop'])){$Shop = null;}
+            if(!isset($Dates['category_id'])){$category_id = null;}
             extract($Datas);
+
             $Flg = 0;
             $Image = null;
                 switch(true){
