@@ -19,9 +19,16 @@ $(function(){
     $('#searchProductCst #Shop').change(function(){
         var id = $(this).val();
         $('#searchProductCst button').prop('disabled', true);
-        const $Option = $('#searchProductCst .category')								
+{#        const $Category = $('#searchProductCst .category')								
             .prop('disabled', true)								
             .load('{{ url('block_search_category_load')}}'+'?Shop=' + id ,'' , function() {								
+                $(this).prop('disabled', false);								
+         
+            });
+#}
+        const $tag = $('#searchProductCst .tag')								
+            .prop('disabled', true)								
+            .load('{{ url('block_search_tag_load')}}'+'?Shop=' + id ,'' , function() {								
                 $(this).prop('disabled', false);								
                 $('#searchProductCst button').prop('disabled', false);
             
@@ -42,8 +49,8 @@ $(function(){
                     {{ form_widget(formCst.category_id ,{'id': null, 'attr': {'class': 'form-select'}}) }}
                 </div>
                 <div class="tag">
-                    <p>商品特性から選ぶ</p>
-                    {{ form_widget(formCst.Tag) }}
+                    <p>{{'front_search_product_tag'|trans}}</p>
+                    {{ form_widget(formCst.Tag,{'attr': {'class': 'form-select'}}) }}
                 </div>
                 <div>
                 <div class="price_area ec-input">
@@ -51,7 +58,7 @@ $(function(){
                        {{ form_widget(formCst.name) }}
                     <div class="search_price">
                         <p>価格</p>
-                        {{ form_widget(formCst.price01) }}円 ～{{ form_widget(formCst.price02) }}円
+                        {{ form_widget(formCst.min) }}円 ～{{ form_widget(formCst.max) }}円
                     </div>
                 </div>    
                 <div class="mt-4 text-center" >  

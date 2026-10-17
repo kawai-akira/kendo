@@ -29,6 +29,7 @@ use Eccube\Entity\ProductStock;
 use Eccube\Entity\Tag;
 use Eccube\Util\StringUtil;
 use Eccube\Repository\QueryKey;
+use Eccube\Entity\TaxRule;
 
 
 
@@ -122,7 +123,8 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
     public function getQueryBuilderBySearchData($searchData)
     {
         $qb = $this->createQueryBuilder('p')
-            ->andWhere('p.Status = 1');
+            ->andWhere('p.Status = 1')
+            ->innerJoin('p.ProductClasses', 'pc');
 
         if (!empty($searchData['Shop']) && $searchData['Shop']) {
             $qb->andWhere('p.Shop = :Shop')
@@ -159,13 +161,47 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
                     ->setParameter($key, '%'.$keyword.'%');
             }
         }
+        #タグの絞り込み
+        if ($Tag = $searchData['Tag'] )
+        {
+            $qb->leftjoin('p.ProductTag','tg')
+               ->andWhere('tg.Tag = :Tag')
+               ->setParameter('Tag' ,$Tag);
+        }   
+
+        #価格の計算　税込み
+        $Min = $searchData['min'] ?? null;
+        $Max = $searchData['max'] ?? null;
+
+        #税込み
+        if($Min  || $Max){
+            /** @var TaxRule */
+            $TaxRul = $this->getEntityManager()->getRepository(TaxRule::class)->getByRule();
+            $Tax = $TaxRul->getTaxRate()/100 +1;
+            $qb->setParameter('Tax',$Tax);
+
+        }
+        if($Min  && $Min > $Max){
+            $Max = 0;
+        }    
+        if($Min){
+            $qb
+                ->andWhere($qb->expr()->gte('pc.price02 * :Tax', ':min'))
+                ->setParameter('min', (int)$Min);
+        }
+        if($Max){
+            $qb
+                ->andWhere($qb->expr()->lte('(pc.price02 * :Tax) -1 ', ':max'))
+                ->setParameter('max', (int)$Max);
+        }
+
         // Order By
         // 価格低い順
         $config = $this->eccubeConfig;
         if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == $config['eccube_product_order_price_lower']) {
             // @see http://doctrine-orm.readthedocs.org/en/latest/reference/dql-doctrine-query-language.html
             $qb->addSelect('MIN(pc.price02) as HIDDEN price02_min');
-            $qb->innerJoin('p.ProductClasses', 'pc');
+        #    $qb->innerJoin('p.ProductClasses', 'pc');
             $qb->andWhere('pc.visible = true');
             $qb->groupBy('p.id');
             $qb->orderBy('price02_min', 'ASC');
@@ -173,7 +209,7 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
         // 価格高い順
         } elseif (!empty($searchData['orderby']) && $searchData['orderby']->getId() == $config['eccube_product_order_price_higher']) {
             $qb->addSelect('MAX(pc.price02) as HIDDEN price02_max');
-            $qb->innerJoin('p.ProductClasses', 'pc');
+        #    $qb->innerJoin('p.ProductClasses', 'pc');
             $qb->andWhere('pc.visible = true');
             $qb->groupBy('p.id');
             $qb->orderBy('price02_max', 'DESC');
@@ -183,7 +219,7 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
             // 在庫切れ商品非表示の設定が有効時対応
             // @see https://github.com/EC-CUBE/ec-cube/issues/1998
             if ($this->getEntityManager()->getFilters()->isEnabled('option_nostock_hidden') == true) {
-                $qb->innerJoin('p.ProductClasses', 'pc');
+         #       $qb->innerJoin('p.ProductClasses', 'pc');
                 $qb->andWhere('pc.visible = true');
             }
             $qb->orderBy('p.create_date', 'DESC');

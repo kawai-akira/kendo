@@ -251,8 +251,8 @@ class ProductTwigExtention extends AbstractExtension
                                 $Flg  = file_exists($Path) ? 'category' :  null;
                             }
                         break;
-                    case $price01:
-                    case $price02:
+                    case $min:
+                    case $max:
                     case $Tag:    
                     default:    
                         $Flg = 0;

@@ -27,7 +27,7 @@ use Customize\Entity\Shop;
 use Eccube\Repository\CategoryRepository;
 use Customize\Repository\ProductCategoryRepository;
 use Eccube\Entity\Tag;
-
+use Customize\Repository\ProductTagRepository;
 class SearchProductCstType extends AbstractType
 {
 
@@ -43,6 +43,11 @@ class SearchProductCstType extends AbstractType
      * @var ProductCategoryRepository
      */
     private $ProductCategoryRepository;
+
+    /**
+     * @var ProductTagRepository
+     */
+    private $ProductTagRepository;
     /*
      * SearchProductTypeExtention constructor.
      */
@@ -50,11 +55,13 @@ class SearchProductCstType extends AbstractType
         EntityManagerInterface $em
         ,CategoryRepository $CategoryRepository
         ,ProductCategoryRepository $ProductCategoryRepository
+        ,ProductTagRepository $ProductTagRepository
     ) {
         $this->em = $em;
         $this->CategoryRepository =$CategoryRepository;
         $this->ProductCategoryRepository = $ProductCategoryRepository;
-    }    
+        $this->ProductTagRepository = $ProductTagRepository;
+        }    
 
     /**
      * {@inheritdoc}
@@ -64,23 +71,31 @@ class SearchProductCstType extends AbstractType
         /** @var ?Shop */
         $ShopId = $options['ShopId'];
 
-        $placeholder = 'common.select__all_products';
+        $CatPlaceholder = 'common.select__all_products';
+        $TgPlaceholder  = '全の商品特性';
         
         if($ShopId){
             /** @var Shop */
             $Shop = $this->em->getRepository(Shop::class)->find($ShopId);
-            $placeholder = $Shop->getShopName().'のカテゴリー';
+            $CatPlaceholder = $Shop->getShopName().'のカテゴリー';
             $Categories = $this->ProductCategoryRepository->getCategoryByShop($Shop);
+            $Tags = $this->ProductTagRepository->getTagByShop($Shop);
+            $TgPlaceholder = $Shop->getShopName().'の商品特性';
+
+           
         }else{
             $Categories = $this->CategoryRepository->getList(null, true);
-           
+            //$Tags = $this->em->getRepository(Tag::class)->findBy([],['sort_no'=>'DESC']);
+            $Tags = $this->ProductTagRepository->getTagByShop();
         }
+
+        if (count($Tags) < 1 ){$TgPlaceholder ='商品特性はお選びいただけません';}
         $builder
-            ->add('price01',TextType::class,[
+            ->add('min',TextType::class,[
                 'label' => '価格1',						
                 'required' => false,	
             ])
-            ->add('price02',TextType::class,[
+            ->add('max',TextType::class,[
                 'label' => '価格1',						
                 'required' => false,	
             ])
@@ -103,17 +118,17 @@ class SearchProductCstType extends AbstractType
             'class' => 'Eccube\Entity\Category',
             'choice_label' => 'NameWithLevel',
             'choices' => $Categories,
-            'placeholder' => $placeholder,
+            'placeholder' => $CatPlaceholder,
             'required' => false,
         ])
             ->add('Tag', EntityType::class, [
                 'label' => 'タグ',						
                 'required' => false,						
                 'class' => Shop::class,						
-                'choices' => $this->em->getRepository(Tag::class)->findAll(),
+                'choices' => $Tags,
                 'choice_label' => 'name',      						
                 'choice_value' => 'id',
-                'placeholder' => '全商品特性',   						
+                'placeholder' => $TgPlaceholder ,   						
       ]);				
 
     }

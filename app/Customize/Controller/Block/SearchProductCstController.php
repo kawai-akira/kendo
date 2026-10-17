@@ -71,5 +71,21 @@ class SearchProductCstController extends AbstractController
 
 
     }
+    /**
+     * @Route("/block/search_tag", name="block_search_tag_load", methods={"GET"})
+     * @Template("Block/Parts/SetTag.twig")
+     */
+    public function setTag(Request $request){
+
+        $builder = $this->formFactory
+            ->createNamedBuilder('', SearchProductCstType::class,null, ['ShopId'=>$request->get('Shop')]);
+
+        $form = $builder->getForm();    
+        return [
+            'formCst' => $form->createView(),
+        ];
+
+
+    }
 
 }

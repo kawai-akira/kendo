@@ -52,11 +52,11 @@ class SearchProductTypeExtention extends AbstractTypeExtension
     {
             
           $builder
-            ->add('price01',TextType::class,[
+            ->add('min',TextType::class,[
                 'label' => '価格1',						
                 'required' => false,	
             ])
-            ->add('price02',TextType::class,[
+            ->add('max',TextType::class,[
                 'label' => '価格1',						
                 'required' => false,	
             ])
