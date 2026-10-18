@@ -1,0 +1,218 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月19日作成
+ #
+ # app\template\default\default_frame.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <style>
+        .ec-sliderRole{
+            max-width:1400px!important ;
+        }
+        .ec-sliderRole .slick-slider {
+            margin-bottom: 30px;
+        }
+
+        .slick-dots {
+            position: absolute;
+            bottom: -45px;
+            display: block;
+            width: 100%;
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+
+        .slick-dots li {
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 0 5px;
+            padding: 0;
+
+            cursor: pointer;
+        }
+
+        .slick-dots li button {
+            font-size: 0;
+            line-height: 0;
+            display: block;
+            width: 20px;
+            height: 20px;
+            padding: 5px;
+            cursor: pointer;
+            color: transparent;
+            border: 0;
+            outline: none;
+            background: transparent;
+        }
+{#
+        .slick-dots li button:hover,
+        .slick-dots li button:focus {
+            outline: none;
+        }
+
+        .slick-dots li button:hover:before,
+        .slick-dots li button:focus:before {
+            opacity: 1;
+        }
+
+        .slick-dots li button:before {
+            content: " ";
+            line-height: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            text-align: center;
+            opacity: .25;
+            background-color: black;
+            border-radius: 50%;
+
+        }
+
+        .slick-dots li.slick-active button:before {
+            opacity: .75;
+            background-color: black;
+        }
+
+        .slick-dots li button.thumbnail img {
+            width: 0px;
+            height:0px;
+        }
+    #}
+        .slick-prev, .slick-next {
+             z-index: 10; /* 画像の後ろに隠れないように前面に出す */
+            width: 40px;
+             height: 40px;
+             color:#333;
+        }
+    
+        .slick-prev {
+             left: 20px !important;
+        }
+        .slick-next {
+            right: 20px !important;
+        }
+        .slick-prev:before, .slick-next:before {
+            font-size: 30px !important; /* 矢印を少し大きく */
+            color: #000000 !important;   /* 矢印の色を「黒」に変更（目立つ色に変えてもOK） */
+            opacity: 0.7;               /* 少し透明度を入れる */
+        }
+{#        
+        .slick-prev:before, .slick-next:before {
+             content: '' !important;
+        }
+        .custom-arrow { 
+            font-size: 24px !important; /* 文字の大きさ */
+            color: #333333 !important;  /* 文字の色 */
+            font-weight: bold;          /* 太字にする */
+        }
+#}
+/* マウスを乗せたとき */
+.slick-prev:hover:before, .slick-next:hover:before {
+  opacity: 1;
+}
+        .ec-sliderRole .item {
+            max-width:1400px!important;
+        }
+        .item img {
+            width:100%;
+            height:500px;
+        }
+
+
+    </style>
+   <script>
+        $(function() {
+            $('.ec-sliderRole').slick({
+                dots: false,  {#ドットボタン#}
+                arrows: true, {# 左右ボタン#}
+                autoplay: true,
+                speed: 300,
+                variableWidth: false,
+            {#
+                prevArrow: '<button type="button" class="slick-prev custom-arrow">＜</button>',
+                nextArrow: '<button type="button" class="slick-next custom-arrow">＞</button>', 
+                prevArrow: '<img src="images/arrow-left.png" class="slick-prev custom-img-arrow" alt="前へ">',
+                nextArrow: '<img src="images/arrow-right.png" class="slick-next custom-img-arrow" alt="次へ">',
+            #}
+                slidesToShow: 1,
+                slidesToScroll: 1
+            });
+        });
+    </script>
+    <div class="ec-sliderRole">
+        <div class="item">
+            <a href="{{url('homepage')}}">
+                <img src="{{ asset('assets/img/Slider/0107100545_5c32a5e93e348.jpg', 'user_data')}}" alt="KENDO PARK 剣道具・防具通販">
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_list')}}?shop=51">
+                <img src="{{ asset('assets/img/Slider/doren_slider.jpg', 'user_data')}}" height="500" alt="全日本剣道道場連">
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_list')}}?shop=50">
+                <img src="{{ asset('assets/img/Slider/eibudou-bannar.png', 'user_data')}}" alt="永武堂 【かたつむり甲手】">
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_list')}}?shop=50>?category_id=75" alt="お得な竹刀セット">
+                <img src="{{ asset('assets/img/Slider/shinaiset.jpg', 'user_data')}}" >
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_detail',{'id':2841} )}}">
+                <img src="{{ asset('assets/img/Slider/reika-5.jpg', 'user_data')}}" alt="信武 【礼華】女性専用ジャージ剣道着">
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_detail',{'id':2463} )}}">
+                <img src="{{ asset('assets/img/Slider/1017135359_5bc6c0674ad40.jpg', 'user_data')}}" alt="福田武道具 軽快撥水リュック">
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_list')}}?shop=49">
+                <img src="{{ asset('assets/img/Slider/hide-bana-2.jpg', 'user_data')}}" alt="剣道具工房「秀」">
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_detail',{'id':2835} )}}">
+                <img src="{{ asset('assets/img/Slider/kijido_slider.jpg', 'user_data')}}" alt="KPセレクト【綴じ胸・生地胴】">
+            </a>
+        </a>
+        </div> 
+        <div class="item">
+            <a href="https://lin.ee/ylqgwXZ">
+                <img src="{{ asset('assets/img/Slider/line_slider.jpg', 'user_data')}}" alt="kendopark line">
+            </a>
+        </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('entry')}}">
+                <img src="{{ asset('assets/img/Slider/banner-coupon01.jpg', 'user_data')}}" alt="新規会員　5％クーポンコード">
+            </a>
+        </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_list')}}?23">
+                <img src="{{ asset('assets/img/Slider/isenokami04.jpg', 'user_data')}}" alt="伊勢守">
+            </a>
+        </div> 
+        <div class="item">
+            <a href="{{url('product_detail',{'id':2705} )}}">
+                <img src="{{ asset('assets/img/Slider/nipponbudobanner04.jpg', 'user_data')}}" alt="日本武道宮崎【サード】小手">
+            </a>
+        </div>
+    </div>
