@@ -248,10 +248,12 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
             }
             $qb 
                 #売上順
-               
-                ->addOrderBy('p.Total', 'DESC');
+                ->OrderBy('p.Total', 'DESC')
+                ->addOrderBy('p.id', 'DESC');
+
         }
 
+ 
         return $this->queries->customize(QueryKey::PRODUCT_SEARCH, $qb, $searchData);
     }
 

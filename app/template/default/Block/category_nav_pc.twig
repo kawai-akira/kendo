@@ -1,0 +1,61 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月18日作成
+ #
+ # app\template\default\Block\category_nav_pc.twig
+ #
+ # 
+ # 
+ # 
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% set Categories = repository('Eccube\\Entity\\Category').getList() %}
+{% set Shops = repository('Customize\\Entity\\Shop').Search() %}
+{% macro tree(Category) %}
+    {% from _self import tree %}
+    <a href="{{ url('product_list') }}?category_id={{ Category.id }}">
+        {{ Category.name }}
+    </a>
+    {% if Category.children|length > 0 %}
+        <ul>
+            {% for ChildCategory in Category.children %}
+                <li>
+                    {{ tree(ChildCategory) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{# @see https://github.com/bolt/bolt/pull/2388 #}
+{% from _self import tree %}
+
+<div class="ec-categoryNaviRole">
+    <div class="ec-itemNav">
+        <ul class="ec-itemNav__nav">
+            {% for Category in Categories %}
+                <li>
+                    {{ tree(Category) }}
+                </li>
+            {% endfor %}
+            <li>
+                <a href="{{url('shop_list')}}">
+                    武具店
+                </a> 
+                <ul>
+                {% for Shop in Shops %}
+                    <li>
+                        <a href="{{url('product_list')}}?Shop={{Shop.id}}">
+                            {{Shop.ShopName}}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

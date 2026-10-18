@@ -106,8 +106,6 @@ use Symfony\Component\Cache\Adapter\NullAdapter;
             ->andWhere('p.Status = 1 ');
 
    
-
-	
 		return $qb->getQuery()->getResult();
 
 		}
