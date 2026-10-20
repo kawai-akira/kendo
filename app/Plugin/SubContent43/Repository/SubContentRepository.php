@@ -56,8 +56,8 @@ class SubContentRepository extends AbstractRepository
 
         $qb = $this->createQueryBuilder('T')
             ->select('T')
-            ->where('T.del_flg=:DelFlg')
-            ->setParameter('DelFlg',0)
+            ->where('T.visible=:Visible')
+            ->setParameter('Visible',0)
             ->addOrderBy('T.update_date', 'DESC');
 
 
@@ -97,8 +97,8 @@ class SubContentRepository extends AbstractRepository
      
         $qb = $this->createQueryBuilder('s')
             ->select('s')
-            ->where('s.del_flg = :DelFlg')
-            ->setParameter('DelFlg',0)
+            ->where('s.visible = :Visible')
+            ->setParameter('Visible',0)
             ->andWhere('s.holder = :Holder')
             ->setParameter('Holder',$Holder)
             ->andWhere('s.kbn = :kbn')
@@ -126,8 +126,8 @@ class SubContentRepository extends AbstractRepository
 
         $qb = $this->createQueryBuilder('s')
             ->select('s')
-            ->where('s.del_flg = :DelFlg')
-            ->setParameter('DelFlg',0)
+            ->where('s.visible = :Visible')
+            ->setParameter('Visible',0)
             ->andWhere('s.Config = :Config')
             ->setParameter('Config',$Config)
             ->andWhere('s.kbn = :kbn')
@@ -203,8 +203,8 @@ class SubContentRepository extends AbstractRepository
 
     try{
             $Qb  =$this->createQueryBuilder('S');
-                    $Qb->where('S.del_flg=:DelFlg')
-                       ->setParameter('DelFlg',0)
+                    $Qb->where('S.visible=:Visible')
+                       ->setParameter('Visible',0)
                       #ホルダーがダブっているのはダメ
                        ->andWhere('S.holder = :Holder')
                        ->setParameter('Holder',$Holder);
@@ -242,7 +242,7 @@ class SubContentRepository extends AbstractRepository
         $qb=$this->createQueryBuilder('S')
                  ->innerJoin('S.Config','C')
                  ->where('C.holder = :holder')
-                 ->andWhere('S.del_flg=0')
+                 ->andWhere('S.visible=0')
                  ->setParameter('holder', $holder);
         
         if ($Sort){

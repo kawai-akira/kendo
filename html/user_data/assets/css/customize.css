@@ -9,6 +9,7 @@
     font-size: 14px;
     margin-bottom: 10px;
 }
+/* ナビげーション */
 .ec-itemNav{
     max-width: 1400px;
     width:100%;
@@ -45,7 +46,18 @@
 .ec-itemNav__nav li:hover ul li ul li a:hover {
     background: #fff;
 }
-
+.ec-itemNav__nav li ul{
+    min-width: 230PX;
+}
+.ec-itemNav__nav li ul li ul{
+    min-width: 220PX;
+}
+.ec-itemNav__nav li ul li:hover > ul > li{
+    width:100%;
+}
+.ec-itemNav__nav li a{
+    height:50px; 
+}
 .ec-layoutRole .ec-layoutRole__contents{
     max-width: 1400px;
 }
@@ -93,4 +105,21 @@
 }
 #searchProductCst .btn{
     width: 50%;
+}
+/** kenjoy #################################################################*/
+#kenjoy {
+    padding: 10px 20px;
+}
+#kenjoy .block-image{
+    margin-bottom: 20px;
+    max-width:90%;
+}
+#kenjoy .image{
+    max-width: 1000px;
+}
+#kenjoy .image img{
+    width: 100%;
+}
+#kenjoy .bana{
+ max-width: 400px;
 }

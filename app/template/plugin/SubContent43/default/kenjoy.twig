@@ -1,0 +1,49 @@
+{#
+ # EC-CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月18日作成
+ #
+ # app\template\plugin\SubContent43\default\kenjoy.twig
+ #
+ #
+ # サブコンテンツ フロント
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'SubContent_Page' %}
+
+{% block stylesheet %}
+<style type="text/css">
+#subcontent_area{
+	margin-top: 155px;
+}
+{{ SubContent.css|raw }}
+</style>
+{% endblock stylesheet %}
+{% block javascript %}
+<script>
+{{include('@SubContent43/js/Plugin_SubContent.js.twig') }}
+{% if SubContent.Config is not null %}
+{% if 1 == SubContent.Config.JsKbn %}
+{{ SC_PageJs()|raw}}
+{% endif %}
+{% endif %}
+</script>
+{% endblock %}
+{% block main %}
+<div id="kenjoy" class="kenjoy">
+	{% if SubContent.Html is not null %}
+        <p>{{kenjoyDate(SubContent)}}</p>    
+        <h2>{{SubContent.title}}</h2>
+
+		<div class="{{SC_Class(SubContent) }}" id="SubContent_{{ SubContent.id}}">
+			{{ SubContent.html|raw }}
+    	</div>
+	{% endif %}
+</div>
+{% endblock %}

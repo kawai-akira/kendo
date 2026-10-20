@@ -168,11 +168,22 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('DeliveryFreeAlert', [$this, 'setSDeliveryFreeAlert']),
             new TwigFunction('DeliveryFree', [$this->DeliveryFeeService, 'getDeliveryFree']),
             new TwigFunction('AdminOrderShop', [$this, 'getAdminOrderShop']),
-
+            new TwigFunction('kenjoyDate', [$this, 'setKenjoyData']),
         ];
     }
 
+    public function setKenjoyData(SubContent $SubContent)
+    {
 
+
+       
+        if($SubContent->getText03()){
+           $Date = new Carbon($SubContent->getText03());
+           return  $Date->format('Y.m.d');
+        }
+         return $SubContent->getCreateDate()->format('Y.m.d');
+
+    }
 
     
     public function setProductListImg(?array $Datas){
