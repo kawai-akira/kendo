@@ -1,18 +1,18 @@
 <?php
-   /**
-	   * @version EC-CUBE4.3
-	   * @copyright 株式会社 翔 kakeru.co.jp
-	   * @author
-	   * 2026年05月10日作成
-	   *
-	   * app/Plugin/SubContent43/Entity/SubContent.php
-	   *
-	   *
-	   *
-	   * サブコンテンツエンティティ
-	   *
-	   * 							       C= C= C= ┌(;･_･)┘ﾄｺﾄｺ
-	   ******************************************************/
+    /**
+    * @version EC-CUBE4.3
+    * @copyright 株式会社 翔 kakeru.co.jp
+    * @author
+    * 2026年05月10日作成
+    *
+    * app/Plugin/SubContent43/Entity/SubContent.php
+    *
+    *
+    *
+    * サブコンテンツエンティティ
+    *
+    * 							       C= C= C= ┌(;･_･)┘ﾄｺﾄｺ
+    ******************************************************/
        namespace Plugin\SubContent43\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
@@ -309,24 +309,7 @@
               return $this;
        }
 
-     /**
-      * Get keyword
-      *
-      * @return string
-      */
-     public function getKeyword(){
-          return $this->keyword;
-     }
-     /**
-      * Set keyword
-      *
-      * @param string
-      * @return SubContent
-     */
-     public function setKeyword($Value){
-          $this->keyword= $Value;
-          return $this;
-     }
+
      /**
       * Set metaRobots.
       *

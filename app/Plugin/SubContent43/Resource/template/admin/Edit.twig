@@ -1,0 +1,657 @@
+ {#
+  # EC-CUBE4.3 TWIG
+  # 株式会社 翔 kakeru.co.jp
+  #
+  # 2026年05月10日作成
+  #
+  #  app/Plugin/SubContent43/Resource/template/admin/Edit.twig
+  #
+  # kbn ホルダーとパラメーターとの関係
+  #　1 kbn parts時
+  #　      Plugin_SubContent_prameter_parts　で設定　
+  # 　　　  ホルダー　パラメーター 
+  #     0    ✕　　 　 ✕　　　　default
+  #     1    〇　      ✕
+  #     2    〇        〇
+  #　2 knb page
+  #    パラメーターの正規表現が設定
+  #　　していない ✕
+  #    している　 〇    　
+  #                                                  ≡≡≡┏(＾o＾)┛
+  ##############################################################}
+{% set HtmlAreaId ='Admin_SubContent_Edit_html' %}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['SubContent', 'SubContent_News'] %}
+{% set Id = SubContent.id %}
+{% set Config = SubContent.Config %}
+
+
+{% block title %}{{ 'SubContent_Management'|trans }}{% endblock %}
+
+{% block sub_title %}{{ 'SubContent_Edit_Name'|trans }}{% endblock %}
+
+
+{% block stylesheet %}
+
+<style type="text/css">
+
+div.toggle_area{
+    margin:10px 0;
+}
+.metatag_box{
+    display: none;
+}
+#comment_area P,
+#metatag_area p{
+    font-size: 110%;
+    padding: 0 20px;
+}
+#comment_area P span,
+#metatag_area p span{
+   float: right;
+}
+#html_plus{
+    padding-right: 20px;
+}
+.c-form__fileUploadThumbnail p{
+    z-index: 500;
+}
+.ImageListThumbnail{
+    position: relative;
+    cursor: pointer;
+    z-index: 10;
+}
+.ImageListThumbnail .image{
+    width:95%;
+    /*min-height:px;*/
+
+}
+
+.ImageListThumbnail:hover{
+   background-color: #666;
+   opacity: 0.3;
+}
+.ImageListThumbnail P{
+    z-index: 500;
+}
+.ImageListThumbnail a{
+    display: inline-block;
+    text-align: right;
+    position:absolute;
+    padding:7px;
+    color:#333;
+    right: 10px;
+    Z-index:120;
+}
+#Admin_SubContent_Edit_holder{
+   display:none; 
+}
+</style>
+{% endblock stylesheet %}
+{% block javascript %}
+
+{#<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>#}
+<script>
+
+
+    $(function(){
+        {% if eccube_config.Plugin_SubContent_After_Regist and SubContent.id %}
+            $("input[name='Admin_SubContent_Edit[kbn]'").each(function( value ) {		
+                if('checked'!=$(this).attr('checked')){
+                    $(this).prop('disabled', true);
+                }
+            });
+
+            $('#Admin_SubContent_Edit_Config option').each(function( value ) {
+                {% if  SubContent.Config is not null %}
+                    if( {{SubContent.Config.id}} != $(this).val() ){
+                        $(this).hide();
+                }
+                {% endif %}
+            });
+
+  
+        {% endif %}
+
+        SetHolder();
+
+        const $dropArea = $('#upload-zone');
+
+        //1 ドラッグした状態で要素内に入ったとき
+        $dropArea.on('dragover', function(e) {
+            // デフォルトの動作を止めて、要素のスタイルを変える
+            e.stopPropagation();
+            e.preventDefault();
+            $dropArea.css('background', '#e1e7f0');
+        });
+
+        //2 ドラッグした状態で要素から出たとき
+        $dropArea.on('dragleave', function(e) {
+        // 要素のスタイルを元に戻す
+        $dropArea.css('background', '#ffffff');
+        });
+
+        //3 ファイルが要素内でドロップされたとき
+        $dropArea.on('drop', function(e) {
+    
+        // デフォルトの動作を止めて、要素のスタイルを元に戻す
+        e.preventDefault();
+        $dropArea.css('background', '#ffffff');
+        // dataTrasnferプロパティからドロップされたファイルのFileListオブジェクトが取得できる
+        const  files = e.originalEvent.dataTransfer.files;
+        var form = new FormData($('#form_image').get(0)); 
+            
+           for(let i = 0; i < files.length;i++){
+
+           form.append("Admin_SubContent_Edit[image_file][]", files[i]);
+
+           };
+        // fileUploadJQuery(formData);
+        FileUploag(form);
+        });
+
+        //UPロードボタンを押したとき
+        $('#Admin_SubContent_Edit_image_file').on('change', function (e) {
+        formdata  = new FormData($('#form_image').get(0)); 
+        FileUploag(formdata);
+        });
+
+
+
+        $("#Admin_SubContent_Edit_kbn").change(function(){
+            SetHolder();
+        });
+
+
+        $("#Admin_SubContent_Edit_Config").change(function(){
+                var ConfigId = $(this).val();
+
+                $.ajax({
+                        url: "{{ url('admin_SubContent_ConfigAjax')}}",
+                        type: 'POST',
+                        data: {ConfigId: ConfigId },
+                        dataType: 'json'
+                    }).done(function(data) {
+                        if (data.status=='OK'){
+                            $('p#requirements').data('requirements',data.requirements);
+                        }
+                    }).fail(function(jqXHR) {
+                            alert('{{'SUbcontent.Admin.message03'|trans}}')
+                    }).always(function(data) {
+                        if (data.status=='OK'){
+                            SetRequirements();
+                        }     
+                    });
+            
+
+            });
+
+        $('div.ImageListThumbnail').dblclick(function (){
+            let image  = $(this).data('image');
+            let id     = $(this).data('id');
+            var imge;
+    
+            if (0<id){
+                img ='<img src="' + image + '" alt="">';
+            }else{
+                 //共通画像
+                img ="<img src='" + image + "'" + ' alt="">';
+            }
+            let html= $('#Admin_SubContent_Edit_html').val();
+                $('#Admin_SubContent_Edit_html').val(html + '\n'+img);
+        });
+
+    $('div.ImageListThumbnail a.remove-image').on("click", function() {
+        if(!confirm('本当に削除しますか？ \n削除すると元にもどりません'))
+            {
+                return false;
+            }     
+            let Parent = $(this).parent('div.ImageListThumbnail');
+            let FileName = Parent.data('image');
+
+            $.ajax({
+                url: "{{ url('admin_SubContent_image_remove')}}",
+                    type: 'POST',
+                    data: {image: FileName,id: '{{Id}}' },
+                    dataType: 'json'
+                    }).done(function(data) {
+                        if (data.status=='OK'){
+                            Parent.hide();
+                            alert(data.image + '{{'SUbcontent.Admin.message01'|trans}}');
+                        }
+                    }).fail(function(data) {
+                            alert('{{'SUbcontent.Admin.message02'|trans}}')
+                    }).always(function(data) {
+                        if (data.status=='OK'){}
+                       
+
+            });
+        });
+
+    });
+
+
+function FileUploag(formdata){ 
+
+   $.ajax({
+        url  : '{{url('admin_SubContent_image_add') }}',
+        type : "POST",
+        data :  formdata,
+        cache       : false,
+        contentType : false,
+        processData : false,
+        dataType    : "json"
+    })
+    .done(function(data){
+        if (data.status=='NG')
+        {
+             alert(data.message);  
+        }
+    })
+    .fail(function(jqXHR){
+         alert('{{'SUbcontent.Admin.Image_error10'|trans}}');
+    })
+    .always(function(data) {
+        if (data.status=='OK'){
+            alert('{{'SUbcontent.Admin.message00'|trans}}');
+            window.location.href='{{ url('Plugin_Admin_SubContent_Edit',{'id': Id}) }}';
+        }     
+    });
+}
+
+
+/*function FunSubmit(mode){
+   $('form#form1 #mode').val(mode);
+   $('form#form1').submit();
+}*/
+
+
+/**
+ *
+ *
+ */
+function SetHolder(){
+    var kbn = $("input[name='Admin_SubContent_Edit[kbn]']:checked").val();
+    var Flg = false ;
+
+    if ( 1 == kbn){
+        Flg = true;
+        $('#metatag_area').hide();
+        $('#Admin_SubContent_Edit_Config').hide().val('');
+        $('#Admin_SubContent_Edit_holder').show();
+        $('#PreviewBtn').show();
+
+        switch( {{ eccube_config.Plugin_SubContent_prameter_parts }} ){
+            case 2:
+                SetDisabled('parameter',false);
+                SetDisabled('holder',false);
+                break;
+            case 1:
+                SetDisabled('parameter',true);
+                SetDisabled('holder',false);
+                break;
+            default:
+            case 0:
+                SetDisabled('parameter',true);
+                SetDisabled('holder',true);
+            break;
+        }
+    }else{
+        $('#metatag_area').show();
+        $('#Admin_SubContent_Edit_Config').show();
+        $('#Admin_SubContent_Edit_holder').hide();
+        $('#PreviewBtn').hide();
+
+    }
+
+    SetRequirements();
+
+
+
+
+}
+function SetDisabled(name , Flg){
+    var placeholder = Flg  ?  '使用できません' : '';
+    
+    $("#Admin_SubContent_Edit_" + name ).attr('disabled',Flg).prop('placeholder',placeholder);;
+    if (Flg){
+        $("#Admin_SubContent_Edit_" + name ).val('');
+    }
+}
+function SetRequirements(){
+
+    var Val = $('p#requirements').data('requirements');
+    {#ページで  要件が設定されていない場合はパラメーターは使用できない#}
+    if( 0 == $("input[name='Admin_SubContent_Edit[kbn]']:checked").val()){
+        if(Val){
+            SetDisabled('parameter',false);
+        }else{
+            SetDisabled('parameter',true);
+        }
+    }else{
+        $('p#requirements').data('requirements','');
+        Val = '';
+    } 
+    
+  
+  
+    var html = Val ?  '正規表現 : ' + Val : '';
+    $('#requirements').html(html);
+}
+
+//画像を表示する2022
+function LoadImage(){
+
+    var $form= $('#form02');
+    var params =	$form.serialize();
+    const $Images = $('#ImageBlock')
+        .prop('disabled', true)
+        .load('{{ url('admin_SubContent_image_load') }}', params, function () {
+         	$(this).prop('disabled', false);
+  
+		});
+}
+</script>
+{% endblock javascript %}
+
+
+
+{% block main %}
+<div class="c-contentsArea__cols">
+    <form role="form" name="form1" id="form1" method="post" action="" novalidate enctype="multipart/form-data">
+        {{ form_widget(form._token) }}
+   
+        {#<input type="hidden" name="mode" id="mode" value="">#}
+        <div class="collapse show ec-cardCollapse" id="ordererInfo">
+            <div class="row mb-2">
+                <div class="col-2">
+                    <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{'SUbcontent.Admin.Name01'|trans}}">
+                        <span>{{'SUbcontent.Admin.Name01'|trans}}</span>{#サブコンテンツID#}
+                    </div>
+                </div>
+                <div class="col">
+                    <p>
+                        {% if Id %}
+                            {{ Id }}
+                        {% else %}
+                            {{'SUbcontent.Admin.Name02'|trans}}{#新規登録#}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div id="title_area" class="row mb-2">
+                <div class="col-2">
+                    <span>タイトル</span>
+                    <span class="badge bg-primary ms-1">{{ 'admin.common.required'|trans }}</span>
+                </div>
+                <div class="col">
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.title) }}
+                </div>
+            </div>
+            <div id="kbn_area" class="row mb-2">
+                <div class="col-2">
+                    <span>区分</span>
+                </div>
+                <div class="col">
+                    {{ form_widget(form.kbn ,{'label_attr': {'class': 'radio-inline'}}) }}
+                    {{ form_errors(form.kbn) }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-2">
+                    <span>ホルダー</span>
+                    <span class="badge bg-primary ms-1">{{ 'admin.common.required'|trans }}</span>
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.Config) }}
+                    {{ form_widget(form.holder) }}
+                    {{ form_errors(form.Config) }}
+                    {{ form_errors(form.holder) }}
+                </div>
+                <div class="col-1">
+                    <span>パラメーター</span>
+                </div>
+                <div class="col-5">
+                    {{ form_widget(form.parameter) }}
+                    {{ form_errors(form.parameter) }}
+                    <p id="requirements" data-requirements="{% if form.Config.vars.data %}{{form.Config.vars.data.requirements}}{%else%}{% endif %}"></p>
+                </div>
+            </div>
+{# TEXT01 使用例  ブログサムネイル  
+            <div id="topics_area" class="row mb-2">
+                <div class="col-2">
+                    <span>{{eccube_config.Plugin_SubContent_thumbnail_name}}サムネイル</span>
+                </div>
+                <div class="col">
+                    {{ form_widget(form.text01) }}
+                    {{ form_errors(form.text01) }}
+                     <p>サムネイルの画像は正方形で登録してください</p>
+                </div>
+            </div>
+#}
+            <div  id="metatag_area" class="row">
+                <div class="col-2">
+                    <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="ページ毎のメタタグが設定できます"> 								
+                        <span class="card-title">メタタグ</span>
+                        <i class="fa fa-question-circle fa-lg ml-1"></i>
+                    </div>
+
+                </div>
+                <div class="toggle_area col">
+                    <div class="d-inline-block mb-2" data-bs-toggle="collapse" href="#metatag_box" role="button" aria-expanded="false" aria-controls="#metatag_box">
+                        <a>
+                            <i class="fa fa-plus-square-o fw-bold me-1"></i>
+                                <span class="fw-bold text-ec-black">
+                                メタタグの設定の表示
+                                </span>
+                        </a>
+                    </div>
+
+                    <div  id="metatag_box" class="row mb-2 collapse hide ec-cardCollapse">
+                        <div class="col-1">
+                            <span>author</span>    
+                        </div>
+                        <div class="col-11">
+                            {{ form_widget(form.author) }}
+                            {{ form_errors(form.author) }}
+                        </div>
+                        <div class="col-1">
+                            <span>description</span>
+                        </div>
+                        <div class="col-11">
+                            {{ form_widget(form.description) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                        <div class="col-1">
+                            <span>robots</span>
+                        </div>
+                        <div class="col-11">
+                            {{ form_widget(form.meta_robots) }}
+                            {{ form_errors(form.meta_robots) }}
+                        </div>
+                        <div class="col-1">
+                            <span>meta tags</span>
+                        </div>
+                        <div class="col-11">
+                            {{ form_widget(form.meta_tags) }}
+                            {{ form_errors(form.meta_tags) }}
+                        </div>
+                    </div>
+                </div>
+            </div>    
+            {# テキストエディタ #}
+            {{ include('@SubContent43/admin/Parts/TextEditor.twig') }}
+    
+            <div id="HtmlArea" class="row mb-2">
+                <div class="col-2">
+                    <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="HTMLを入力してください"> 
+                        <span class="card-title">html<span class="badge bg-primary ms-1">{{ 'admin.common.required'|trans }}</span></span>
+                        <i class="fa fa-question-circle fa-lg ml-1"></i>
+                    </div>
+                </div>
+                <div class="col">
+                    {{ form_widget(form.html) }}
+                    {{ form_errors(form.html) }}
+
+                    <div class="d-inline-block mb-2" data-bs-toggle="collapse" href="#html_box" role="button" aria-expanded="false" aria-controls="#html_box">
+                        <a>
+                            <i class="fa fa-plus-square-o fw-bold me-1"></i>
+                                <span class="fw-bold text-ec-black">
+                                Html入力説明の表示
+                                </span>
+                        </a>
+                    </div>
+                    <div id="html_box" class="collapse hide ec-cardCollapse"> 
+                        HTMLタグを入れてください。
+                            <br>IMEGEは,&lt;img src="イメージ名">(<span class="text-danger">html/upload/SubContent/Image/ID</span>に格納されています。)
+                            <br>共通画像は,&lt;img src='(ホルダー/)イメージ名'>(<span class="text-danger">html/upload/SubContent/Image</span>に格納さてています。)
+                            <br>http等の外部リンクは変換されません。内部リンクは、ページ一覧から選択してください。＊＊は。パラメーターを入力してください
+                            <br>画像をダブルクリックすると、&lt;img>が作成されます。
+                            <p>&#123&#123column&#125&#125で会社情報を表示できます。&#123&#123title&#125&#125でサブコンテンツのタイトルを表示します。</p>
+                    </div>
+                </div>    
+            </div>
+            <div id="StylesheetArea" class="row mb-2">
+                <div class="col-2">
+                    <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="スタイルシートを入力してください"> 
+                        <span class="card-title">スタイルシート</span>
+                        <i class="fa fa-question-circle fa-lg ml-1"></i>
+                    </div>
+                </div>    
+                <div  class="col">
+                    <p id="icon" class="text-end">
+                            <i class="fa fa-square-o fa-2x" data-name="Stylesheet" title="{{'SUbcontent.TextEditor_button05'|trans}}"></i> 
+                            <i class="fa fa-plus-square fa-2x" data-name="Stylesheet" title="{{'SUbcontent.TextEditor_button06'|trans}}"></i>
+                    </p>
+                    {{ form_widget(form.css) }}
+                    {{ form_errors(form.css) }}
+                    <div class="d-inline-block mb-2" data-bs-toggle="collapse" href="#css_box" role="button" aria-expanded="false" aria-controls="#css_box">
+                        <a>
+                            <i class="fa fa-plus-square-o fw-bold me-1"></i>
+                                <span class="fw-bold text-ec-black">
+                                スタイルシート入力説明の表示
+                                </span>
+                        </a>
+                    </div>
+  
+                    <div id="css_box" class="collapse hide ec-cardCollapse">
+                        <p>スタイルシートを入れてください 
+                            <br>background-imagは url("イメージ名")。 共通画像はurl('ホルダー/イメージ名')シングルとダブルの違い
+                            <br>サブコンテンツのHTMLは&lt;section id="SubContent_area">&lt;div class="SubContent_Block" id="SubContent_ホルダー><span class="text-danger">HTML</span>&lt;/div>&lt;/section> 内に格納されます。
+                        </p>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </form>
+    <div id="ImageArea" class="row mb-4">
+        <div class="col-2">
+            {% if Id %}
+               {% set comment ='ID毎の画像を登録できます' %}
+            {% else %}
+               {% set comment ='画像はIDが出来ると登録できます' %}
+            {% endif %}
+            <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ comment }}">   
+                <span class="card-title">画像</span>
+                    <i class="fa fa-question-circle fa-lg ml-1"></i>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-inline-block mb-2" data-bs-toggle="collapse" href="#image_box" role="button" aria-expanded="false" aria-controls="#image_box">
+                <a>
+                    <i class="fa fa-plus-square-o fw-bold me-1"></i>
+                    <span class="fw-bold text-ec-black">
+                         画像の説明の表示
+                    </span>
+                </a>
+            </div>
+            <div id="image_box" class="collapse hide ec-cardCollapse"> 
+                画像は<span class="text-danger">html/upload/SubContent/Image/ID</span>に格納されています。
+                <br>画像をダブルクリックするとhtml に&lt;img src="・・・"で表示されます。alert 等を入れてください。
+                <br>画像のアップロードで、画像名が英数字でない場合、自動的に画像名が変換されます。
+                <br>画像の削除は、<i class="fa fa-times" aria-hidden="true"></i>をクリックしてください。
+                <br>共通画像は<span class="text-danger">html/upload/SubContent/Commom</span>に格納されています。
+                <br>共通画像は、コンテンツ管理ファイル管理でUPできます。
+                <br>共通画像をダブルクリックするとhtml に&lt;img src='・・・'で表示されます。alert 等を入れてください。
+            </div>
+        </div>
+        <div id="ImageBlock" class="row">
+            {{ SC_ImageList(Id)|raw }}
+        </div>
+
+    </div>   
+    <div id="CommonImageArea" class="row mb-4">   
+        <div class="col-2 mb-4">
+            <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="共通画像の説明です。共通画像は、コンテンツ管理ファイル管理でUPできます。">   
+                <span class="card-title">共通画像</span>
+                    <i class="fa fa-question-circle fa-lg ml-1"></i>
+            </div>
+        </div>
+        <div class="col-10 mb-4">
+            <div class="d-inline-block mb-2" data-bs-toggle="collapse" href="#CommonImageBlock" role="button" aria-expanded="false" aria-controls="#CommonImageBlock">
+                <a>
+                    <i class="fa fa-plus-square-o fw-bold me-1"></i>
+                    <span class="fw-bold text-ec-black">共通画像の表示</span>
+                </a>
+            </div>
+        </div>
+        <div id="CommonImageBlock" class="row collapse ec-cardCollapse">
+            {{ SC_ImageList()|raw }}
+        </div>
+    </div>
+    {#画像UP#}            
+    <div id="UploadImageArea" class="row"> 
+        <div class="col-12 mb-2 bg-white">
+            {% if Id %}
+                <div id="upload-zone" class="media py-5 border-ec-dashed mb-2 rounded ">
+                    <form role="form" name="form_image" id="form_image" method="post" action="" novalidate enctype="multipart/form-data">
+                        <input type="hidden" name="ImageInfo[Id]" value="{{ Id }}">
+                        <div class="media-body">
+                            <i class="fa fa-cloud-upload fa-3x text-ec-lightGray mx-3 align-middle" aria-hidden="true"></i>
+                                {{ 'admin.common.drag_and_drop_image_description'|trans }}
+                                {#{ form_widget(form.image_file) }#}
+                                {{ form_widget(form.image_file, { attr : { accept : 'image/*', style : 'display:none;' } }) }}
+                                {{ form_errors(form.image_file) }}
+                                <a class="btn btn-ec-regular mr-2" onclick="$('#{{ form.image_file.vars.id }}').click()">
+                                   {{ 'admin.common.file_select'|trans }}
+                                </a>
+                        </div><!-- /.media-body -->
+                    </form>
+                </div><!-- /.media -->                   
+            {% endif %}
+        </div>
+    </div>    
+    <div class="c-conversionArea">
+        <div class="c-conversionArea__container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-6">
+                    <div class="c-conversionArea__leftBlockItem">
+                        <a class="c-baseLink" href="{{ url('Plugin_Admin_SubContent_List') }}" data-action="confirm" title="">
+                            <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'SubContent_List_Name'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-ec-conversion px-5 btn-block" type="button" onclick="$('#form1').submit()">{{ 'admin.common.registration'|trans }}</button>
+                </div>
+                    {% if Id %}
+                        <div class="col-auto">
+                            {% if PlUrl %}
+                                <a href="{{ PlUrl }}" target="_brank" class="btn btn-ec-conversion px-5">{{'SUbcontent.TextEditor_button04'|trans}}</a>
+                            {% else %}    
+                                <a href="{{ url('Plugin_SubContent_Index', { 'cd': Id }) }}" target="_brank" class="btn btn-ec-conversion px-5">{{'SUbcontent.TextEditor_button04'|trans}}</a>
+                            {% endif %}    
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>{# c-conversionArea 
+    </div>
+
+</div>{#c-contentsArea__cols#}
+<form role="form" name="form02" id="form02" method="post"  novalidate>
+    <input type="hidden" name="load[id]" value="{{Id}}">
+</form>
+{% endblock main %}
