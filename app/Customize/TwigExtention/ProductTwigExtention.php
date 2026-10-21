@@ -169,20 +169,24 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('DeliveryFree', [$this->DeliveryFeeService, 'getDeliveryFree']),
             new TwigFunction('AdminOrderShop', [$this, 'getAdminOrderShop']),
             new TwigFunction('kenjoyDate', [$this, 'setKenjoyData']),
+            new TwigFunction('getYaml', [$this->CommonService, 'getYaml']),
         ];
     }
 
     public function setKenjoyData(SubContent $SubContent)
     {
 
-
+        $re = '';
        
         if($SubContent->getText03()){
-           $Date = new Carbon($SubContent->getText03());
-           return  $Date->format('Y.m.d');
-        }
-         return $SubContent->getCreateDate()->format('Y.m.d');
 
+            $Date = new Carbon($SubContent->getText03());
+            $re = $Date->format('Y.m.d');
+        }else{
+
+            $re = $SubContent->getCreateDate()->format('Y.m.d');
+        }
+        return '<p data-id="'.$SubContent->getId() .':'. $SubContent->getText01().'">' .$re.'</p>';
     }
 
     

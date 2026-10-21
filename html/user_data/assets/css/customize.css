@@ -107,8 +107,20 @@
     width: 50%;
 }
 /** kenjoy #################################################################*/
+.SubContent_Page li{
+    list-style: none
+}
+#kenjoyCategorys a{
+    font-size:16px;
+    color: #333;
+    line-height:2.2;
+}
+
 #kenjoy {
     padding: 10px 20px;
+}
+#kenjoy li{ 
+    list-style: none;
 }
 #kenjoy .block-image{
     margin-bottom: 20px;
@@ -122,4 +134,8 @@
 }
 #kenjoy .bana{
  max-width: 400px;
+}
+#kenjoy .tiled-gallery ul,
+#kenjoy .tiled-gallery li{
+    display: flex;
 }

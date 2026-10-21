@@ -20,5 +20,6 @@
 
 
         public const SHOP_SEARCH = 'Shop.getQueryBuilderBySearchData';
+		public const KENJOY_LIST = 'KENJOY.getKenJoylist';
 
     }

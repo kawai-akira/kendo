@@ -31,7 +31,7 @@ use Customize\Repository\ProductRepository;
 use Customize\Service\CartService;
 use Eccube\Service\PurchaseFlow\PurchaseContext;
 use Eccube\Service\PurchaseFlow\PurchaseFlow;
-#use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -103,7 +103,7 @@ private $OptionService;
             $this->entityManager->getFilters()->enable('option_nostock_hidden');
         }
 
-        // handleRequestは空のqueryの場合は無視するため
+       // handleRequestは空のqueryの場合は無視するため
         if ($request->getMethod() === 'GET') {
             $request->query->set('pageno', $request->query->get('pageno', ''));
         }
@@ -131,6 +131,7 @@ private $OptionService;
 
         // paginator
         $searchData = $searchForm->getData();
+
         $qb = $this->productRepository->getQueryBuilderBySearchData($searchData);
 
         $event = new EventArgs(

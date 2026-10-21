@@ -1,1 +1,27 @@
-qq
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月20日作成
+ #
+ # app\template\default\Block\kenjoyCategorys.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <div id="kenjoyCategorys">
+    <div class="logo mt-3 mb-2">
+        <img src="{{ asset('assets/img/common/Kenjoy.jpg', 'user_data')}}" alt="KENDO PARK KENJOY">
+    </div>
+
+    <h3 class="h4 mb-2">KenJoy一覧</h3>
+   <ul class="">
+   {% for holder , Category in  getYaml('KenjoyCategorys.yaml') %}
+    <li>
+        <a href="{{ url('SubContent_Kenjoy_List',{'holder':holder})  }}">{{Category}}</a>
+    </li>
+   {% endfor %}
+ </div>

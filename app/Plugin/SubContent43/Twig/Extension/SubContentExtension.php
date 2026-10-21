@@ -21,6 +21,7 @@ use Twig\TwigFunction;
 use Twig\TwigFilter;
 use Twig\Environment as Twig;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use plugin\SubContent43\Entity\SubContent;
 use Plugin\SubContent43\Service\ScService;
 use Plugin\SubContent43\Repository\SubContentRepository;
 use Symfony\Component\Filesystem\Filesystem;
@@ -67,8 +68,15 @@ class SubContentExtension extends AbstractExtension
            new  TwigFunction('SC_PartCompoPage', [$this , 'getPartCompoPage']),
            new  TwigFunction('SC_PageJs', [$this , 'GetPageJs']),
            new  TwigFunction('SC_Class', [$this , 'SetClass']),
-   
+           new  TwigFunction('SC_Converter', [$this , 'SetConverter']),
+
             ];
+    }
+
+    public function SetConverter(SubContent $SubContent){
+            $this->ScService->SetSubcontent($SubContent);
+        return  $this->ScService->GetSubcontent();  
+
     }
     
     public function getPartCompoPage(string $Holder , ?string $Parameter =null , bool $titleFlg = false, $customerFlg = false){

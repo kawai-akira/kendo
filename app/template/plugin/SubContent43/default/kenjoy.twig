@@ -38,7 +38,7 @@
 {% block main %}
 <div id="kenjoy" class="kenjoy">
 	{% if SubContent.Html is not null %}
-        <p>{{kenjoyDate(SubContent)}}</p>    
+        {{kenjoyDate(SubContent)|raw}}    
         <h2>{{SubContent.title}}</h2>
 
 		<div class="{{SC_Class(SubContent) }}" id="SubContent_{{ SubContent.id}}">
