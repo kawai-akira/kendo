@@ -70,15 +70,16 @@ class ProductTwigExtention extends AbstractExtension
     private const ShinaiTwigAdmin = '@admin/Order/Parts/ShinaiForm.twig';
     private const ZekkenTwigAdmin = '@admin/Order/Parts/ZekkenForm.twig';
     private const FreeInput1Admin = '@admin/Order/Parts/FreeInput1Form.twig';
-    private const FreeInput2Admin = '@admin/Order/Parts/FreeInput2Form.twig';
-    private const FreeInput3Admin = '@admin/Order/Parts/FreeInput3Form.twig';
+    private const FreeInput2Admin       = '@admin/Order/Parts/FreeInput2Form.twig';
+    private const FreeInput3Admin       = '@admin/Order/Parts/FreeInput3Form.twig';
     private const ProductListImgTwig    = 'Product/Parts/ProductListImage.twig';
     private Const categoryImgDir        = 'assets/img/categoryImg/';
     private Const BestItemTwig          = 'Product/Parts/bestItem.twig';
     private const ProductListInfoTwig   = 'Product/Parts/ProductListInfo.twig';
     private const ItemOption            = 'Common/ItemOption.twig';
     private const DeliveryFeeAlert      = 'Cart\Parts\DeliveryFreeAlert.twig';
- 
+    private const HeaderLogo            = 'Block\Parts\logo.twig';
+    private const HeaderLogin           = 'Block\Parts\login.twig';
 
    /**
      * Twig\Environment Twig;
@@ -170,7 +171,28 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('AdminOrderShop', [$this, 'getAdminOrderShop']),
             new TwigFunction('kenjoyDate', [$this, 'setKenjoyData']),
             new TwigFunction('getYaml', [$this->CommonService, 'getYaml']),
+            new TwigFunction('HeaderLogo', [$this, 'setHeaderLogo']),
+            new TwigFunction('Headerlogin',[$this, 'setHeaderLogin']),
+            
         ];
+    }
+
+    public function setHeaderLogin()
+    {
+
+        return $this->Twig->render(self::HeaderLogin, []);
+        
+
+    }
+
+
+    public function setHeaderLogo()
+    {
+        $Urls = ['product_list','product_detail','shop_list'];
+        return $this->Twig->render(self::HeaderLogo, [
+            'flg' => in_array($this->CommonService->getUrlName() ,$Urls ),
+        ]);
+
     }
 
     public function setKenjoyData(SubContent $SubContent)

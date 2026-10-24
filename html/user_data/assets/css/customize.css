@@ -1,13 +1,56 @@
 /* カスタマイズ用CSS */
-.ec-headerRole,
-.ec-headerNaviRole,
+
+#header_area{
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-bottom:30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.header_logo_area{
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #525263;
+    -webkit-text-size-adjust: 100%;
+    width: 100%;
+     display: flex;
+   
+    
+    padding-top: 15px;
+}
+.ec-headerNaviRole__right{
+    display: flex;
+    width:550px;
+    flex-direction: column;      /* 中身を上から下に縦並びにする */
+    align-items: center;         /* 左右の真ん中（中央）に寄せる */
+    justify-content: center;     /* 上下の真ん中（中央）に寄せる */
+    gap: 8px;             
+}
+.header_area .center-block{
+    display: flex;
+    }
+.header_area .center-block span{    
+    color :#b80000;
+}
+
+.ec-headerNaviRole__right .login_area{
+    width:100%;
+    display: flex;
+    gap: 8px;
+}
+
 .ec-role {
     max-width: 1400px;
 }
 .ec-categoryNaviRole{
-    max-width: 1400px;
     font-size: 14px;
     margin-bottom: 10px;
+    padding-left: 0;
+    padding-right: 0;
 }
 /* ナビげーション */
 .ec-itemNav{
@@ -117,7 +160,7 @@
 }
 
 #kenjoy {
-    padding: 10px 20px;
+    padding: 10px 30px;
 }
 #kenjoy li{ 
     list-style: none;
@@ -135,7 +178,65 @@
 #kenjoy .bana{
  max-width: 400px;
 }
-#kenjoy .tiled-gallery ul,
+
+#kenjoy .tiled-gallery img {
+    display: block;
+    height: auto;
+    margin: 0;
+    margin-top:5px;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+    padding: 0;
+    width: 100%;
+}
+#kenjoy .tiled-gallery ul{
+    display: flex;
+    width: 95%;
+    margin: 20px auto;
+}
 #kenjoy .tiled-gallery li{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+}
+#kenjoy .tiled-gallery li.box_1{
+    margin-left:5px;
+
+}
+
+
+#kenjoy .gallery{
+    margin: 20px auto;
+    width: 95%;
+}
+
+#kenjoy .blocks-gallery-grid{
+    display: grid !important;
+    /* 横に3等分の列（カラム）を作る */
+    grid-template-columns: repeat(3, 1fr) !important; 
+    gap: 8px; /* 画像同士のすき間（お好みで調整） */
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    width: 100%;
+}
+#kenjoy .blocks-gallery-item{
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#kenjoy .blocks-gallery-item:nth-child(4) {
+    grid-column: 1 / span 3 !important;
+}
+
+/* 3. 画像自体のサイズを枠（幅）に合わせて自動縮小させる */
+#kenjoy .blocks-gallery-grid img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important; /* 幅に合わせて高さを比例縮小 */
+    object-fit: cover !important; /* 画像の比率が崩れて歪むのを防ぐ */
+    display: block;
 }

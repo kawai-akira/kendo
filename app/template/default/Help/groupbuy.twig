@@ -1,0 +1,94 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年09月25作成
+ #
+ # app\template\default\Help\faq.twig
+ a                           
+ #
+ #
+ # 
+ #　-----------------	剣道具について -----------------
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'groupbuy_page' %}
+{% block stylesheet %}
+<style>
+.groupbuy p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.providecase-img {
+    margin-top: 50px;
+    display: flex;
+    gap: 16px;  
+}
+.providecase-img img {
+    width: 48%;
+    margin-right: 10px;
+       
+   height: auto;        
+   object-fit: cover;
+}
+fa-envelope {
+    margin-right: 7px;
+}
+@media only screen and (max-width: 767px) {
+.providecase-img img {
+    margin-right: 4px;
+}
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div id="contents" class="main_only groupbuy">
+    <div id="agreement_wrap" class="container-fluid inner no-padding">
+        <div id="tools_page">
+
+            <img src="{{ asset('assets/img/groupbuy/grouppurchase.jpg' ,'user_data')}}" alert="団体購入">
+            <h2 class="header-line01">団体購入</h2>
+            <div id="agreement_box__body" class="container-fluid">
+                <div id="agreement_box__customer_agreement" class="row">
+                    <div class="col-md-12">
+                        <p>各団体様で、一括でご注文いただけます。</p>
+                        <br>
+                        <p>正課授業用・中学校・高校・大学・実業団・道場・ご家族等、</p>
+                        <p>一括購入によりKENDO PARK特別割引価格にて、剣道具提供が可能です。</p>
+                        <br>
+                        <p>・まとめ買い、大量購入の見積りを取りたい</p>
+                        <p>・チームで試合用剣道具を揃えたい</p>
+                        <p>・採寸を一括して行いたい</p>
+                        <p>・練習器具を探している　等</p>
+                        <br>
+                        <p>以下よりお問い合わせください。</p>
+                        <br>
+                          
+                        <a class="btn btn-danger btn-block" href="{{url('contact')}}"><i class="fa fa-envelope" aria-hidden="true"></i>ご相談・お見積りはこちらから</a>
+                        <h2 class="header-line01">提供事例</h2>
+                        <p>東京都私立中学校：試合用道衣14着</p>
+                        <br>
+                        <p>（ユーザーコメント）</p>
+                        <p>試合用として見た目にもこだわりつつ、軽くて動きやすい道衣を選んでいただきました。</p>
+                        <br>
+                        <p>袖の刺繍もイメージ通りのものとなり、部員達も大変喜んでおります。</p>
+                        <br>
+                        <p>また特別価格にて迅速に対応いただき、とても助かりました。</p>
+                        <div class="providecase-img">
+                        <div >
+                            <img src="{{ asset('assets/img/groupbuy/IMG_7285_00.JPG','user_data')}}">
+                            <img src="{{ asset('assets/img/groupbuy/IMG_7283.JPG','user_data')}}">
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>                
+</div>
+
+
+{% endblock %}

@@ -106,7 +106,7 @@ class SearchProductCstType extends AbstractType
             ],
             ])
             ->add('Shop', EntityType::class, [
-                'label' => '武具店',						
+                'label' => '武道具店',						
                 'required' => false,						
                 'class' => Shop::class,						
                 'choices' => $this->em->getRepository(Shop::class)->search(),

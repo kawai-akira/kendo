@@ -1,0 +1,114 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月22日作成
+ #
+ #　app\template\default\Block\Parts\login.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <div id="header_login">
+
+
+    {#% if is_granted('ROLE_USER') %}
+        <div id="member" class="member drawer_block pc">
+            <ul class="member_link">
+                <li>
+                    <a href="{{ url('logout') }}">
+                        ログアウト
+                    </a>
+                </li>
+            <li>
+                    <a href="/mypage">
+                        マイページ
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ app.config.root }}help/about_tools">剣道具について</a>
+                </li>	        
+                <li>
+                    <a href="{{ app.config.root }}groupbuy">団体購入はこちら</a>
+                </li>
+                <li>
+                    <a href="{{ app.config.root }}help/faq">よくある質問</a>
+                </li>
+                <li>
+                    <a href="{{ app.config.root }}contact">お問い合わせ</a>
+                </li>
+                {% if BaseInfo.option_favorite_product == 1 %}
+                    <li class="sp"><a href="{{ app.config.root }}mypage/favorite">お気に入り</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% else %}
+    
+        <div id="member" class="member drawer_block pc">
+            <ul class="member_link">
+                <li>
+                    <a href="{{ app.config.root }}mypage/login">
+                        ログイン
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ app.config.root }}help/about_tools">剣道具について</a>
+                </li>	        
+                <li>
+                    <a href="{{ app.config.root }}groupbuy">団体購入はこちら</a>
+                </li>
+                <li>
+                    <a href="{{ app.config.root }}help/faq">よくある質問</a>
+                </li>
+                <li>
+                    <a href="{{ app.config.root }}contact">お問い合わせ</a>
+                </li>
+                {% if BaseInfo.option_favorite_product == 1 %}
+                    <li class="sp"><a href="{{ app.config.root }}mypage/favorite">お気に入り</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %#}
+    <div class="ec-headerNaviRole__right">
+        <div class="login_area">
+            <div class="ec-headerRole__navSP">
+                {{ include('Block/nav_sp.twig') }}
+            </div>
+        
+            <div class="ec-headerNaviRole__nav">
+                {{ include('Block/login.twig') }}
+            </div>
+            <div class="ec-headerRole__cart">
+                {{ include('Block/cart.twig') }}
+            </div>
+        </div>
+        <div class="ec-headerNaviRole">
+            <div class="ec-headerNaviRole__left">
+                <div class="ec-headerNaviRole__search">
+                    {{ render(path('block_search_product')) }}
+                    
+                </div>
+            </div>
+        </div>    
+        <div>
+            <ul>
+                <li>
+                    <a href="{{ url('help_about_tools')}}">剣道具について</a>
+                </li>
+                <li>
+                    <a href="{{ url('groupbuy')}}">団体購入はこちら</a>
+                </li>
+                <li>
+                    <a href="{{ url('help_faq')}}">よくある質問</a>
+                </li>
+                <li>
+                    <a href="{{ url('contact')}}">お問い合わせ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

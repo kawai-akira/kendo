@@ -52,7 +52,7 @@ class KenjoyController extends \Eccube\Controller\HelpController
      * @Route("/kenjoy/list/{holder}", name="SubContent_Kenjoy_List", methods={"GET"} , requirements={"holder"="[a-zA-Z\-]+"})
      * @Template("Kenjoy/list.twig")
      */
-    public function list(Request $request,?string $holder = null ,PaginatorInterface $paginator)
+    public function list(Request $request,PaginatorInterface $paginator,?string $holder = null ,)
     {
     
 

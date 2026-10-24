@@ -1,0 +1,575 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月22作成
+ #
+ #　\app\template\default\Help\about_tools.twig
+ a                           
+ #
+ #
+ # 
+ #　-----------------	剣道具について -----------------
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'about_tools' %}
+
+{% block stylesheet %}
+<style>
+.about_tools img{
+	width:95%;
+}
+.about_tools a{
+	color: #666;
+    text-decoration: none;
+    outline: none;
+}
+.about_tools h2{
+padding: 10px 0;
+    font-size: 1.6rem;
+    border-bottom: #222 1px solid;
+    margin-bottom:20px;
+}	
+#tools_page .btn-light {
+    padding: 10px 0;
+	padding-left: 15px;
+	margin-bottom:10px;
+	margin-right:3px;
+    font-weight: bold;
+	text-align: left;
+	width:32%;
+
+}
+</style>
+{% endblock %}
+{% block main %}
+    <div id="contents" class="main_only">
+        <div id="agreement_wrap" class="container-fluid inner no-padding">
+            <div id="tools_page">
+                <h1 class="page-heading">剣道具について</h1>
+                <div id="agreement_box__body" class="container-fluid">
+                    <div id="agreement_box__customer_agreement" class="row">
+                        <div class="col offset-0">
+                        <!-- read text -->
+							<h2>剣道具を選ぶにあたって</h2>
+							<div class="contents mb-4">
+								<div class="row">
+									<div class="col-8 col-xs-12">
+										<p class="dec_tx_sp mb10">KENDO PARKでは、お客様の好みや使い⽅によって最適な商品を選んで頂くべく、<br>
+										できるだけ詳細な情報を掲載しております。<br>
+										特に「使⽤目的」を一番に考えて、商品選択を行っていただくよう考えております。</p>
+										<p class="dec_tx_sp mb10">剣道具は、⾒た目の差異が出にくいものであるため、なかなか商品選択が難しいと<br>
+										言われております。<br>
+										また中には難しい⽤語もございますので、以下を参考にお客様に適した用具選びの<br>
+										お手伝いができれば幸いでございます。</p>
+										<p class="dec_tx_sp mb10">KENDO PARK運営事務局</p>
+									</div>
+									<div class="col-4">
+										<img src="{{ asset('assets/img/AboutTools/tools_ph_01.jpg','user_data')}}" alt=" " class="dec_img_sp">
+									</div>
+														</div>
+						</div>
+                        <!-- //read text -->
+                        <!-- navi -->
+                        <ul class="contents">
+                        <div class="row">
+                        <li class="col-4 btn btn-light"><a href="#flow"><i class="fas fa-angle-down fa-lg dec_ic" aria-hidden="true"></i>使⽤⽬的別防具選択例</a></li>
+                        <li class="col-4 btn btn-light"><a href="#parts"><i class="fas fa-angle-down fa-lg dec_ic" aria-hidden="true"></i>部位説明</a></li>
+                        <li class="col-4 btn btn-light"><a href="#sasi"><i class="fas fa-angle-down fa-lg dec_ic" aria-hidden="true"></i>「刺」に関しての基本的な考え方</a></li>
+                        <li class="col-4 btn btn-light"><a href="#kagaku"><i class="fas fa-angle-down fa-lg dec_ic" aria-hidden="true"></i>剣道具を科学する</a></li>
+                        <li class="col-4 btn btn-light"><a href="#material"><i class="fas fa-angle-down fa-lg dec_ic" aria-hidden="true"></i>素材・⽤語解説</a></li>
+                        </div>
+                        </ul>
+                        <!-- //navi -->
+                        <!-- flow -->
+                        <div id="flow">
+							<h2>使⽤目的別防具選択例</h2>
+							<div class="contents">
+							<div class="row">
+							
+							<ul class="clearfix">
+							  <li class=""><span>試合等で実戦使用したい<br>試合・練習双⽅で使用したい</span></li>
+							  <li class=""><span>軽量・柔軟性重視・ある程度の耐久性</span></li>
+							  <li class=""><span class="decBg01">薄め・⾼弾⼒・ある程度の凹凸・大きい刺幅の柔軟タイプ</span></li>
+							</ul>
+							
+							<ul class="clearfix">
+							  <li class=""><span>激しい練習をこなしたい<br>打たせることが多い</span></li>
+							  <li class=""><span>耐久性重視</span></li>
+							  <li class=""><span class="decBg01">厚め・凹凸高め・細かい刺幅の重厚タイプ</span></li>
+							</ul>
+							
+							<ul class="clearfix">
+							  <li class=""><span>昇段審査⽤に購⼊したい</span></li>
+							  <li class=""><span>フォルム・こだわり重視</span></li>
+							  <li class=""><span class="decBg01">手刺・高級素材・程よい弾⼒性と硬さを備える高級タイプ</span></li>
+							</ul>
+							
+							<ul class="clearfix">
+							  <li class=""><span>⼦供用購入したい<br>初心者である</span></li>
+							  <li class=""><span>衝撃吸収⼒・機動性重視</span></li>
+							  <li class=""><span class="decBg01">厚め・高弾⼒・大きい刺し幅で、柔軟性も備えるオールラウンドタイプ</span></li>
+							</ul>
+
+							</div>
+							</div>
+						</div>	
+                        <!-- //flow -->
+                        
+                        <!-- parts -->
+                        <div id="parts">
+							<h2>部位説明</h2>
+							<!-- 00 -->
+							<h3>面</h3>
+							<div class="contents">
+							<div class="row mb-3">
+								<dl class="col-12 col-sm-6">
+								<dt>1:⾯金</dt>
+								<dd>チタン・ジュラルミン・合金など様々な素材があり、
+								面全体の重さに影響を与えます。<br>
+								最近では⼝元の部分を抗菌加⼯しているものもあります。</dd>
+								<dt>2:⾯布団</dt>
+								<dd>長さや弾⼒性、使⽤素材がそれぞれ異なります。<br>
+								最近は実戦向けとして短めかつ柔らかいものが多いですが、<br>
+								安全性を考えると、ある程度の⻑さと硬さが必要です。</dd>
+								<dt>3:突垂</dt>
+								<dd>設置位置や⼤きさ、飾りの形状がそれぞれ異なります。<br>
+								一般的に引っ込めた位置に設置し、
+								飾りが盛り上がって<br>
+								いるものが安全です。</dd>
+								</dl>
+								<div class="col-12 col-sm-6">
+									<img src="{{ asset('assets/img/AboutTools/parts_01.jpg','user_data')}}" alt=" ">
+								</div>
+							</div>
+							</div>
+							<div class="contents">
+							<div class="row">
+								<dl class="col-12 col-sm-6">
+								<dt>4:内輪</dt>
+								<dd>内側全体を指します。<br>
+								速乾性が⾼いものや耐久補強しているもの等、<br>
+								利用者の使い勝手にあわせて様々な工夫がなされています。</dd>
+								<dt>5:臆病垂</dt>
+								<dd>突きの打突から⾸元を守るパーツです。<br>
+								突垂と同様に設置位置や大きさに違いがあります。</dd>
+								</dl>
+								<div class="col-12 col-sm-6">
+								<img src="{{ asset('assets/img/AboutTools/parts_02.jpg','user_data')}}" alt=" ">
+								</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>⼩手</h3>
+							<div class="contents">
+							<div class="row mb-3">
+								<dl class="col-12 col-sm-6">
+								<dt>6:甲手頭（親指部分）</dt>
+								<dd>形状がポイントです。<br>
+								最近は湾曲が大きく竹刀を握りやすいタイプが人気です。</dd>
+								<dt>7:甲⼿頭</dt>
+								<dd>いわゆる「拳」の部分です。<br>
+								鍔で守られているもの、飾りやクッション素材で<br>
+								耐久性を増しているものもあります。<br>
+								また中⾝の素材が⿅毛だと、使い込むほどに形が<br>
+								馴染みやすいと言われています。</dd>
+								<dt>8:⼩⼿布団</dt>
+								<dd>刺幅や厚さ、凹凸の⾼さによって、全体の硬さと弾力の<br>
+								バランスが変わります。<br>
+								一般的に薄くて柔らかいものは実戦⽤、硬くて厚いものは<br>
+								練習用と認識されています。</dd>
+								<dt>9:ケラ・⽣子</dt>
+								<dd>主に⼩手の打突を受ける部位です。<br>
+								他の部位を守るため、比較的⾼く硬めに作られている場合が<br>
+								多いです。</dd>
+								</dl>
+								<div class="col-12 col-sm-6">
+								<img src="{{ asset('assets/img/AboutTools/parts_03.jpg','user_data')}}" alt=" ">
+								</div>
+							</div>
+							</div>
+							
+							<div class="contents">
+							<div class="row">
+								<dl class="col-12 col-sm-6">
+								<dt>10:手の内</dt>
+								<dd>握りやすさと耐久性が求められる部位です。<br>
+								素材はクラリーノと⿅革があり、弾力性・耐久性共に<br>
+								後者が優れています。<br>
+								特に⿅革の中でも若い鹿からとった「小唐」は、<br>
+								希少な高級品とされています。</dd>
+								<dt>11:筒</dt>
+								<dd>⼿首の稼働性を左右する部位です。<br>
+								比較的薄い部分ですが、飾りの縫い付けで耐久性を<br>
+								強化しています。<br>
+								最近では、筒から甲手頭にかけて反り返るような形状に<br>
+								仕立てて、⽵刀を上から握りやすくしているものが人気です。</dd>
+								</dl>
+								<div class="col-12 col-sm-6">
+								<img src="{{ asset('assets/img/AboutTools/parts_04.jpg','user_data')}}" alt=" ">
+								</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>垂</h3>
+							<div class="contents">
+							<div class="row mb-3">
+								<dl class="col-12 col-sm-6">
+								<dt>12:腹帯</dt>
+								<dd>体に巻きつける部分です。<br>
+								打突部分ではないので、比較的弾力があってフィットしやすい<br>
+								仕立てになっているケースが多いです。</dd>
+								<dt>13:⼤垂</dt>
+								<dd>垂の⼤きい部位を指します。<br>
+								基本は弾力性が高いことが多いですが、場合によっては胴の<br>
+								打突を外れた⽵刀が当たりますので、ある程度の耐久性も<br>
+								必要です。</dd>
+								<dt>14:⼩垂</dt>
+								<dd>垂の⼩さい部分を指します。<br>
+								正面から見ると隠れている部分が多いので、大垂と同じように<br>
+								⽐較的弾⼒性が高いことが多いです。</dd>
+								</dl>
+								<div class="col-12 col-sm-6">
+								<img src="{{ asset('assets/img/AboutTools/parts_05.jpg','user_data')}}" alt=" ">
+								</div>
+							</div>
+							</div>
+							<div class="contents">
+							<div class="row">
+								<dl class="col-12 col-sm-6">
+								<dt>15:むし掛け</dt>
+								<dd>⼤垂と腹帯、大垂と小垂のつなぎ部分を補強する縫い付けです。<br>
+								外側にあると、⾧年の使⽤でまれにほつれてしますことも<br>
+								あります。</dd>
+								<dt>16:垂飾り</dt>
+								<dd>胴の打突を外れた⽵刀がよく当たる部分です。<br>
+								そのため、最近では飾りと飾りの間にクッション素材が<br>
+								入っているものもあります。<br>
+								また強固に縫い付けていないと、長年の使⽤で外れてしまう<br>
+								こともあります。</dd>
+								</dl>
+								<div class="col-12 col-sm-6">
+								<img src="{{ asset('assets/img/AboutTools/parts_06.jpg','user_data')}}" alt=" ">
+								</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>胴</h3>
+							<div class="contents">
+							<div class="row">
+								<dl class="col-12 col-sm-6">
+								<dt>17:胴胸</dt>
+								<dd>胸の部分全体を指します。<br>
+								比較的硬い構造のほうが安全性が高く、突きや胴の打突が<br>
+								外れた際に、竹刀から体を守ってくれます。<br>
+								飾りの外側はクロザン革を使用しているのが良いとされ、<br>
+								特に「手もみクロザン」は希少な高級品として<br>
+								高級手刺し防具などに使用されます。</dd>
+								<dt>18:胸飾り</dt>
+								<dd>様々な模様や色がありますが、胸突きをされた際に、<br>
+								⽵刀を止める役割も担っています。<br>
+								そのため、強固に縫い付けられている必要があります。</dd>
+								<dt>19:胴台</dt>
+								<dd>胴の腹の部分全体を指します。<br>
+								打突部位なので、強度はもちろんですが、長年使⽤にも耐える<br>
+								耐久性と衝撃吸収性が必要です。<br>
+								一般に強化紙を樹脂で固めた「ファイバー胴」、<br>
+								プラスチック樹脂で作った「ヤマト胴」、<br>
+								竹を組み上げて作った「竹胴」があります。<br>
+								最近ではヤマト胴でも、耐久性強化のために胴台の裏側に<br>
+								凹凸をつけて50本竹胴のような形状になっているタイプも<br>
+								あります。</dd>
+								<dt>20:小胸</dt>
+								<dd>脇腹を守る部位です。<br>
+								少年用防具にはついていないこともあります。</dd>
+								</dl>
+								<div class="col-12 col-sm-6">
+								<img src="{{ asset('assets/img/AboutTools/parts_07.jpg','user_data')}}" alt=" ">
+								</div>
+							</div>
+							</div>
+							<!-- //00 -->
+						</div>
+                        <!-- //parts -->
+                        <!-- sasi -->
+                        <div id="sasi" class="tit03">
+							<!-- 00 -->
+							<div class="contents">
+							<div class="row">
+							<h2 class="col-sm-12">「刺」に関しての基本的な考え方</h2>
+								<p class="col-sm-12">「耐久性」と「弾力性」の、相反する2要素のバランスをどこに見出すかがポイントです。<br>
+								<br>
+								一般に刺幅が大きいと柔らかくなる一方、凹凸をつけやすく耐久性を強化しやすくなります。<br>
+								刺幅が小さいと硬くなる一方、フラットで薄い構造となり耐久性の強化が難しくなります。</p>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<div class="contents dec_line">
+							<div class="row">
+								<h3>刺幅が大きい</h3>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/parts_sasi_01.jpg','user_data')}}" alt=" "> alt=" ">
+							</div>
+								<p class="col-12 col-sm-6 mt40">縁の部分に細かいステッチがあると、<br>
+								形状が安定しやすくなります。<br>
+								一方で、型のカスタマイズはしにくくなります。<br>
+								<br>
+								凸凹が大きいと、耐久性が高くなります。<br>
+								一方で、全体的に硬い構造となります。</p>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<div class="contents dec_line">
+							<div class="row">
+							<h3>刺幅が小さい</h3>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/parts_sasi_02.jpg','user_data')}}" alt=" "> alt=" ">
+							</div>
+								<p class="col-12 col-sm-6 mt40">縁の部分に細かいステッチが無いと、<br>
+								形状が安定しにくくなります。<br>
+								一方で、型のカスタマイズはしやすくなります。<br>
+								<br>
+								凸凹が小さいと、耐久性が低くなります。<br>
+								一方で、全体的に柔らかい構造となります。</p>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>刺の種類</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<h4 class="col-sm-6 col-xs-6 txt_center font16">手刺</h4>
+								<h4 class="col-sm-6 col-xs-6 txt_center font16">ミシン刺</h4>
+								<p class="col-sm-12 col-xs-12 mt40">
+									<img src="{{ asset('assets/img/AboutTools/watermarked-mensashi_02.jpg','user_data')}}" alt="刺の種類"></p>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>手刺とミシン刺の違い</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<h4 class="col-sm-7 col-xs-7 txt_center font16">手刺</h4>
+								<h4 class="col-sm-5 col-xs-5 txt_center font16">ミシン刺</h4>
+								<p class="col-sm-12 col-xs-12 mt40">
+								<img src="{{ asset('assets/img/AboutTools/watermarked-sashistyle_02.jpg','user_data')}}" alt="刺の種類"></p>
+								<p class="col-sm-12 col-xs-12 mt40">手刺は1本の糸で縫いますので、凹凸がつきやすく弾力が生まれやすくなります。<br>
+一方ミシン刺は、2本の糸を交差させながら縫っていきますので、比較的フラットなつくりとなります。</p>
+							</div>
+							</div>
+							<!-- //00 -->
+						</div>
+                        <!-- //sasi -->
+                        
+                        <!-- kagaku -->
+                        <div id="kagaku" class="tit03">
+							<!-- 00 -->
+							<div class="contents">
+							<div class="row">
+							<h2 class="col-sm-12">剣道具を科学する</h2>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<div class="contents dec_line">
+							<div class="row">
+								<h3>面金の役割ついて</h3>
+							<div class="col-sm-12 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/kagaku_01.jpg','user_data')}}" alt="面金">
+							</div>
+								<p class="col-sm-12 col-xs-12 mt40">面金は硬さだけでなく、重さが重要です。<br>
+それは、単に面の打突を受け止めるだけでなく、頭部のバランスを取る役割があるからです。<br>
+通常、面の打突は前から後ろへ衝撃を受けます。<br>
+そこで面金の重さがあることで、その重さが重り代わりとなり、前からの力を相殺します。<br>
+結果として首への負担が軽減されます。</p>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<div class="contents dec_line">
+							<div class="row">
+							<h3>布団の硬さについて</h3>
+							<div class="col-sm-12 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/kagaku_02.jpg','user_data')}}" alt="布団の硬さについて">
+							</div>
+								<p class="col-sm-12 col-xs-12 mt40">布団が柔らかすぎると、竹刀が地肌近くまで到達してしまします。<br>
+逆に硬すぎると衝撃を吸収できません。<br>
+このバランスが取れたものを選ぶのがポイントです。</p>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>胴台の素材について</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-12 col-xs-12 mt40"><img src="{{ asset('assets/img/AboutTools/kagaku_03.jpg','user_data')}}" alt="胴台の素材について"></p>
+								<p class="col-sm-12 col-xs-12 mt40">胴台も他の部位と同様に、弾力性に加えて重さが必要な部位です。<br>
+もし仮に竹刀と胴の重さが同じとすると、衝撃によって動く距離はお互いに同じです。<br>
+しかし胴が竹刀の２倍の重さである場合、衝撃によって胴が動く距離は1/2になります。<br>
+さらに”運動エネルギーは速さの2乗”であることから、重さが仮に2倍あった場合は衝撃による移動速度は半減し、<br>
+発生エネルギーは1/4になります。<br>
+このことから、ある程度の重さがあることが胴の打突へのの衝撃吸収には必要です。</p>
+							</div>
+							</div>
+							<!-- //00 -->
+						</div>
+                        <!-- //kagaku -->
+                        
+                        <!-- material -->
+                        <div id="material">
+							<h2>素材・用語解説</h2>
+							<!-- 00 -->
+							<h3>刺</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">刺とは縫い目の幅のことで、一般的に縫い目が細かいほど、<br>
+								硬くフラットな作りとなります。<br>
+								一⽅で縫い幅が大きいものは柔軟性に長けているので、可動域が広く<br>
+								フィットしやすい作りとなります。<br>
+								また凹凸をつけているもののほうが、安全性が高いと言われています。<br>
+								この刺と凹凸によって「弾力性」と「硬さ」のバランスが決まります。<br>
+								試合実戦向きであれば柔らかいもの、練習用であればある程度硬さのあるものが<br>
+								好まれます。<br>
+								初⼼者であればある程度硬さがあり、丈夫なものが良いとされています。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_01.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>織刺</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">一重・二重剣道衣に使用する藍染の生地を指します。<br>
+								通気性が高く衝撃吸収力も高いため、<br>
+								生地を細かくしたものを防具の打突部位に使⽤します。<br>
+								⿅革に比べて摩擦には弱いという弱点があります。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_02.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>藍染</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">藍染は、飛鳥〜奈良時代から日本で行われている植物由来の着色技術です。<br>
+								染めることで綿や革が強くなり、また抗菌効果もあることから、<br>
+								剣道具には欠かせない技術です。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_03.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>鹿毛</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">鹿毛は古くから小手の中に詰めて使用され、指や拳の周辺を守る役割を果たします。<br>
+								近年は合成繊維に取って代わられいますが、鹿毛に比べると弾力性があるものの<br>
+								換気性が悪く長持ちはしないと言われています。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_04.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>⿅革</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">⿅革は剣道具に幅広く利⽤され、特に白・茶・⻘の3種類が使用されます。<br>
+								弾⼒性がありながら丈夫で壊れにくい素材なので、<br>
+								小⼿や突き垂れ（面の喉の部分）等の耐久性と柔軟性が要求される部分に<br>
+								多く使用されています。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_05.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>⽣革</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">⽣革は牛の皮膚から作られており、特に耐久性が必要な部分に使⽤されます。<br>
+								濡れている状態では大変柔らかいのですが、乾くと一気に硬くなることから、<br>
+								主に硬度が要求される面に使用されています。<br>
+								職人は、乾かないうちに加工する高度な技術が要求されます。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_06.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>クロザン⾰</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">クロザン⾰は牛⾰をなめし、手で凹凸をつけてから漆を塗った、<br>
+								大変強固で独特な風合いの素材です。<br>
+								「なめしの技術」と「漆塗りの技術」を融合した素材であることから、<br>
+								大変高価な素材なので、近年は機械加工のものが主流です。<br>
+								機械加⼯のものを「型押しクロザン」、<br>
+								手で加⼯したものを「手もみクロザン」と呼び、<br>
+								主に胴の胸の部分や縁に使用されます。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_07.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>綿・フェルト</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">綿は⼩手・面・垂れ等、衝撃吸収の素材として幅広く使⽤されています。<br>
+								近年はポリエステル素材の合成繊維が主流です。<br>
+								フェルト素材は綿と同様に衝撃吸収材として、剣道具の様々な部位に使用されています。<br>
+								かつては天然の⽺毛素材でしたが、近年は強化フェルトが使用され、<br>
+								軽量化やコストダウンが図られています。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_08.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							<!-- 00 -->
+							<h3>紺反</h3>
+							<div class="contents dec_line">
+							<div class="row">
+								<p class="col-sm-8">藍染した⽊綿素材のことです。<br>
+								通気性がよく、シンプルなデザイン表現が可能なため、袴や防具に使⽤されます。<br>
+								付加されている番号は打ち込んだ糸の量を指し、一般的にその数が多いほど<br>
+								高級品とされています。</p>
+							<div class="col-sm-4 col-xs-12">
+								<img src="{{ asset('assets/img/AboutTools/material_09.jpg','user_data')}}" alt=" ">
+							</div>
+							</div>
+							</div>
+							<!-- //00 -->
+							
+						</div>
+                        <!-- //material -->
+                        
+
+							
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

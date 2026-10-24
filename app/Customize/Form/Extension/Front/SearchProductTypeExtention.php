@@ -61,7 +61,7 @@ class SearchProductTypeExtention extends AbstractTypeExtension
                 'required' => false,	
             ])
             ->add('Shop', EntityType::class, [
-                'label' => '武具店',						
+                'label' => '武道具店',						
                 'required' => false,						
                 'class' => Shop::class,						
                 'choices' => $this->em->getRepository(Shop::class)->findBy(['ShopStatus'=>1],['sort_no'=>'ASC','id'=>'ASC']),

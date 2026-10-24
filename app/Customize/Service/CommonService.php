@@ -61,7 +61,7 @@ class CommonService{
 
     /**
      * string
-     * @param $YamlPath 
+     * @var string $YamlPath 
      */
     public $YamlPath;
     /**

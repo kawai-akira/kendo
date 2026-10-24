@@ -1,0 +1,30 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月22日作成
+ #
+ # app\template\default\Block\Parts\logo.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div class="ec-headerNaviRole__left">
+    {% if flg %}
+        <div class="header_logo">
+    {% else %}   
+        <h1 class="header_logo">
+    {% endif %} 
+        <a href="{{ url('homepage') }}">
+            <img src="{{ asset('assets/img/common/logo.png' ,'user_data')}}" alt="剣道具通販・剣道防具通販ならKENDO PARK（ケンドーパーク）">
+        </a>
+    {% if flg %}
+        </div>
+    {% else %}   
+        </h1>
+    {% endif %}
+    <span class="logo_mail" >{{ BaseInfo.email01 }}</span>
+</div>

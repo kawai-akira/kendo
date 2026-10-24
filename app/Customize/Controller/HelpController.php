@@ -5,7 +5,7 @@
  * @author
  * 2026年08月25日作成
  *
- * app\Customize\Controller\HelpController.php
+ * app/Customize/Controller/HelpController.php
  *
  *  
  *
@@ -37,4 +37,29 @@ class HelpController extends \Eccube\Controller\HelpController
     {
         return [];
     }
-}
+
+    /**
+     * 剣道具について
+     *
+     * @Route("/help/about_tools", name="help_about_tools", methods={"GET"})
+     * @Template("Help/about_tools.twig")
+     */
+    public function about_tools(){
+
+        return [];
+    }   
+   
+
+    
+   /**
+     * Q&a
+     *
+     * @Route("/groupbuy", name="groupbuy", methods={"GET"})
+     * @Template("Help/groupbuy.twig")
+     */
+    public function groupbuy()
+    {
+        return [];
+    }
+
+    }
