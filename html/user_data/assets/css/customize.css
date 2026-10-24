@@ -1,5 +1,7 @@
 /* カスタマイズ用CSS */
-
+.ec-layoutRole__header{
+    /*background-color:#193248;*/
+}
 #header_area{
     max-width: 1400px;
     margin: 0 auto;
@@ -7,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
 }
 .header_logo_area{
     margin: 0 auto;
@@ -17,9 +19,7 @@
     color: #525263;
     -webkit-text-size-adjust: 100%;
     width: 100%;
-     display: flex;
-   
-    
+    display: flex;
     padding-top: 15px;
 }
 .ec-headerNaviRole__right{
@@ -30,10 +30,13 @@
     justify-content: center;     /* 上下の真ん中（中央）に寄せる */
     gap: 8px;             
 }
-.header_area .center-block{
-    display: flex;
+#header_area .center-block{
+    /*display: flex;*/
+    font-size: 16px;
+    font-weight: bold;
+
     }
-.header_area .center-block span{    
+#header_area .center-block span{    
     color :#b80000;
 }
 
@@ -41,16 +44,77 @@
     width:100%;
     display: flex;
     gap: 8px;
+    justify-content: flex-end
 }
-
+.ec-cartNaviWrap .ec-cartNavi{
+    position: relative;
+}
+.ec-cartNaviWrap .ec-cartNavi .ec-cartNavi__badge{
+    position: absolute;
+    top:18px;
+    left:42px;
+}
 .ec-role {
     max-width: 1400px;
 }
 .ec-categoryNaviRole{
     font-size: 14px;
     margin-bottom: 10px;
+    max-width:1400px;
     padding-left: 0;
     padding-right: 0;
+}
+/* ヘッダーキーワード検索 */
+.ec-headerNaviRole{
+    padding: 0px;
+}
+.ec-headerNaviRole .ec-headerNaviRole__left{
+    width:100%;
+    text-align: right;
+    padding-right: 31px;;
+}
+.ec-headerNaviRole .ec-headerNaviRole__search{
+    margin:0;
+    width:430px;
+}
+.ec-headerSearch .ec-headerSearch__keyword{
+    width:100%;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 7px;
+        border-bottom-left-radius: 7px;
+}
+.ec-headerSearch .ec-headerSearch__keyword input[type=search]{
+    height:30px;
+    padding-left: 0;
+    margin-right: 50px;
+    font-size:16px;
+}
+.ec-headerSearch .ec-headerSearch__keyword .ec-icon {
+    width: 22px;
+    height: 20px;
+}
+.ec-headerSearch .ec-headerSearch__keywordBtn {
+    right: -33px;
+    top: 50%;
+    width:40px;
+    height:31px;
+    background-color: #B80000 ;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.ec-headerNaviRole__right ul{
+    -webkit-text-size-adjust: 100%;
+    display: flex;
+    gap: 10px;
+}
+.ec-headerNaviRole__right ul li{
+    list-style-type: none;
+}
+.ec-headerNaviRole__right ul li a{
+    color:#333;
+    text-decoration: none;
 }
 /* ナビげーション */
 .ec-itemNav{

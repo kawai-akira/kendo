@@ -41,14 +41,16 @@ file that was distributed with this source code.
 
         <div class="ec-headerNav__item">
             <a href="{{ url('mypage_login') }}">
-                <i class="ec-headerNav__itemIcon fas fa-lock fa-fw"></i>
+                {#<i class="ec-headerNav__itemIcon fas fa-lock fa-fw"></i>#}
+                <img src="{{ asset('assets/img/common/login.png', 'user_data')}}" alt="ログイン">
                 <span class="ec-headerNav__itemLink">{{ 'ログイン'|trans }}</span>
             </a>
         </div>
         {% if BaseInfo.option_favorite_product %}
             <div class="ec-headerNav__item">
                 <a href="{{ url('mypage_favorite') }}">
-                    <i class="ec-headerNav__itemIcon fas fa-heart fa-fw"></i>
+                <img src="{{ asset('assets/img/common/favorite.png', 'user_data')}}" alt="お気に入り">
+                {#    <i class="ec-headerNav__itemIcon fas fa-heart fa-fw"></i>#}
                     <span class="ec-headerNav__itemLink">{{ 'お気に入り'|trans }}</span>
                 </a>
             </div>

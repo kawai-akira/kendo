@@ -12,67 +12,6 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
- <div id="header_login">
-
-
-    {#% if is_granted('ROLE_USER') %}
-        <div id="member" class="member drawer_block pc">
-            <ul class="member_link">
-                <li>
-                    <a href="{{ url('logout') }}">
-                        ログアウト
-                    </a>
-                </li>
-            <li>
-                    <a href="/mypage">
-                        マイページ
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ app.config.root }}help/about_tools">剣道具について</a>
-                </li>	        
-                <li>
-                    <a href="{{ app.config.root }}groupbuy">団体購入はこちら</a>
-                </li>
-                <li>
-                    <a href="{{ app.config.root }}help/faq">よくある質問</a>
-                </li>
-                <li>
-                    <a href="{{ app.config.root }}contact">お問い合わせ</a>
-                </li>
-                {% if BaseInfo.option_favorite_product == 1 %}
-                    <li class="sp"><a href="{{ app.config.root }}mypage/favorite">お気に入り</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    {% else %}
-    
-        <div id="member" class="member drawer_block pc">
-            <ul class="member_link">
-                <li>
-                    <a href="{{ app.config.root }}mypage/login">
-                        ログイン
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ app.config.root }}help/about_tools">剣道具について</a>
-                </li>	        
-                <li>
-                    <a href="{{ app.config.root }}groupbuy">団体購入はこちら</a>
-                </li>
-                <li>
-                    <a href="{{ app.config.root }}help/faq">よくある質問</a>
-                </li>
-                <li>
-                    <a href="{{ app.config.root }}contact">お問い合わせ</a>
-                </li>
-                {% if BaseInfo.option_favorite_product == 1 %}
-                    <li class="sp"><a href="{{ app.config.root }}mypage/favorite">お気に入り</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    {% endif %#}
     <div class="ec-headerNaviRole__right">
         <div class="login_area">
             <div class="ec-headerRole__navSP">
@@ -111,4 +50,3 @@
             </ul>
         </div>
     </div>
-</div>
