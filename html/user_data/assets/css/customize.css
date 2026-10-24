@@ -1,4 +1,7 @@
 /* カスタマイズ用CSS */
+ul li{
+    list-style-type: none;
+}
 .ec-layoutRole__header{
     /*background-color:#193248;*/
 }
@@ -22,6 +25,9 @@
     display: flex;
     padding-top: 15px;
 }
+.header_logo img{
+    max-width: 285px;
+} 
 .ec-headerNaviRole__right{
     display: flex;
     width:550px;
@@ -39,6 +45,7 @@
 #header_area .center-block span{    
     color :#b80000;
 }
+
 
 .ec-headerNaviRole__right .login_area{
     width:100%;
@@ -116,6 +123,87 @@
     color:#333;
     text-decoration: none;
 }
+/* フッター*/
+.ec-footerRole 
+{
+    background-color: #fffcf6;
+}
+.footer_container{
+    width:1400px;
+    margin:0 auto;
+    display: flex;
+    padding:0 20px;
+    margin-bottom: 50px;
+}
+
+.footer_container a{
+    color:#333;
+    font-size: 14px;
+   
+}
+.footer_container .footer_box01{
+    width:54%;
+    flex-shrink: 0;
+    display: flex;
+    gap: 10px;
+    margin-top: 3px;
+} 
+.footer_container .footer_box01 ul{
+    flex: 1;
+    padding-left: 0;
+
+}
+.footer_container .footer_box01 ul li{
+    margin-bottom: 10px;
+}
+.footer_container .footer_box01 ul.categorys li{
+    padding-left: 40px;   
+
+}
+.footer_container .footer_logo_area{
+    width:45%;
+    flex-shrink: 1;
+
+}
+.footer_container .footer_logo_area .social_media{
+    display: flex;
+    gap: 20px;
+    width: 100%; 
+    padding: 0;
+}
+.footer_container .footer_logo_area .social_media li{
+    width: 50%;
+    
+}
+.footer_container .footer_logo_area .social_media li a{
+    display: flex;
+    width: 100%;
+}
+.footer_container .footer_logo_area .social_media div p{
+    margin-top:10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.footer_container .footer_logo_area .social_media .facebook span{
+    color: #1877F2;    
+    font-size: 74px;
+    margin-right: 12px;
+}
+.footer_container .footer_logo_area .logo{
+    text-align: right;
+    max-width: 430px;
+    margin-left:auto;
+    margin-right: 40px;
+}
+.footer_container .footer_logo_area .logo img{
+    width: 98%;
+}
+.ec-footerTitle{
+    background-color: black;
+    padding: 20px 0 20px ;
+
+}
+
 /* ナビげーション */
 .ec-itemNav{
     max-width: 1400px;
@@ -221,6 +309,14 @@
     font-size:16px;
     color: #333;
     line-height:2.2;
+}
+#kenjoyCategorys .logo{
+    margin: 0 auto;
+    width:95%;
+}
+#kenjoyCategorys img{
+    width:100%;
+    border-radius: 7px;
 }
 
 #kenjoy {

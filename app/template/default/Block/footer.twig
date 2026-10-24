@@ -1,0 +1,94 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月24日作成
+ #
+ # app\template\default\Block\footer.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div class="ec-footerRole">
+    <div class="footer_container">
+        <div class="footer_box01">
+            <ul class="categorys">
+                <li><a href="{{ url('product_list')}}?category_id=2">防具</a></li>
+                <li><a href="{{ url('product_list')}}?category_id=1">剣道着</a></li>
+                <li><a href="{{ url('product_list')}}?category_id=6">竹刀</a></li>
+                <li><a href="{{ url('product_list')}}?category_id=7">その他</a></li>
+                <li><a href="{{ url('product_list')}}?category_id=8">ブランド</a></li>
+                
+            </ul>
+            <ul class="info">
+                <li><a href="{{ url('help_agreement')}}">ご利用規約</a></li>
+                <li><a href="{{ url('help_about') }}">よくある質問</a></li>
+                <li><a href="{{ url('help_about') }}">当サイトについて</a></li>
+                <li><a href="{{ url('help_tradelaw') }}">特定商取引法に基づく表記</a></li>
+                <li><a href="{{ url('help_privacy') }}">プライバシーポリシー</a></li>
+                
+            </ul>
+    
+            <ul class="customer">
+                <li><a href="{{ url('contact') }}contact">お問い合わせ</a></li>
+                <li><a href="{{ url('entry') }}entry">新規会員登録</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li><a href="{{ url('mypage') }}mypage/login">マイページ</a></li>
+                {% else %}
+                    <li><a href="{{ url('mypage_login') }}mypage/login">ログイン</a></li>
+                {% endif %}
+                <li><a href="{{ url('forgot') }}forgot">パスワードをお忘れの方</a></li>
+                <li><a href="{{ url('help_sitemap') }}">サイトマップ</a></li>
+            </ul>
+{#
+            <ul class="">
+                <li><a href="{{ url('help_about_tools')}}">剣道具について</a></li>
+                <li><a href="{{ url('groupbuy')}}">団体購入はこちら</a></li>
+            
+            </ul>
+#}
+        </div>    
+        <div class="footer_logo_area">
+            <ul class="social_media" >
+                <li class="line">
+                    <a href="{{ eccube_config.line_url }}">
+                        <img src="{{ asset('assets/img/common/LINE.png', 'user_data')}}" alt="LINE 御友達追加" target="_blank">
+                        <div>
+                            <p>LINE公式アカウント</p>
+                            直接お問い合わせ可能です
+                        </div>    
+                    </a>
+                </li>
+                <li class="facebook">
+                    <a href="{{ eccube_config.facebook_url}}" target="_blank">
+                        <span>
+                            <i class="fab fa-facebook"></i>
+                        </span>
+                        <div>
+                            <P>FaceBook</p>
+                            最新情報をお届け
+                        </div>    
+                    </a>
+                </li>    
+            </ul>
+            <div class="logo">
+                <a href="{{url('homepage')}}">
+                    <img src="{{ asset('assets/img/common/logo.png', 'user_data')}}" alt="{{ BaseInfo.shop_name }}">
+                    <p>{{'shop_title01'|trans}}</p>
+            </div>
+        </div>
+
+   
+
+    </div>    
+    <div class="ec-footerTitle">
+{#        <div class="ec-footerTitle__logo">
+            <a href="{{ url('homepage') }}">{{ BaseInfo.shop_name }}</a>
+        </div>
+#}
+        <div class="ec-footerTitle__copyright">copyright (c) {{ BaseInfo.shop_name }} all rights reserved.</div>
+    </div>
+</div>

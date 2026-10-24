@@ -6,6 +6,8 @@ parameters:
     coupon_remove_date: 60 #クーポン終了日から非表示にする
     html_user_data_dir: '%eccube_html_dir%/user_data'
     html_user_data_root: '%env(ECCUBE_COOKIE_PATH)%html/user_data'
+    line_url: 'https://lin.ee/ylqgwXZ'
+    facebook_url: 'https://www.facebook.com/KENDO-PARK-883582165101623/?hc_ref=PAGES_TIMELINE&fref=nf'
 services:
     Customize\EventListener\RenewPassEventListener:
         arguments:

@@ -1,0 +1,228 @@
+{# @version  EC=CUBE4.3 TWIG
+ # @copyright 株式会社 翔 kakeru.co.jp
+ # @author
+ # 2026年10月24日作成
+ #
+ # app\template\default\Help\sitmap.twig
+ #
+ #
+ #
+ # サイトマップ
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{# SHOP ショップIDをコンマで区切ってください　 #}
+{% set product = "2384,2377" %} {# Product  商品IDをコンマで区切ってください　 #}
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+<style>
+#sitemap_wrap a{
+    color: #000;
+}
+#sitemap_wrap h2{
+    display:inline-block;
+    width: 25%;
+    margin-bottom:0;
+    font-size:16px;
+}
+#sitemap_wrap h3{
+    margin-left:30px;
+    font-size:14px;
+}
+#sitemap_wrap h4{
+    font-size:14px;
+}
+#sitemap_wrap h2.Category {
+    display:block;
+    margin-left:20px;
+}
+#sitemap_wrap h3.Category {
+    margin-left:40px;
+}
+#sitemap_wrap h4.Category {
+    margin-left:60px;
+}
+#sitemap_wrap .lists ul{
+ 
+}
+#sitemap_wrap .lists ul li{
+    display:inline-block;
+    width: 170px;
+}
+</style>
+{% endblock %}
+{% block main %}
+    <div id="contents" class="main_only">
+        <div id="sitemap_wrap" class="container-fluid inner no-padding">
+            <div id="">
+                <h1 class="page-heading">サイトマップ</h1>
+                <div id="privacy_box" class="container-fluid">
+                    <div>
+                        <h2>
+                            <a href="{{url('homepage')}}">トップページ</a>
+                        </h2>
+                        <span>
+                            剣道パークトップページです
+                        </span>
+                </div>
+                    <div>
+                        <h2>
+                            <a href="{{url('product_list')}}"> 商品一覧ページ</a>
+                        </h2>
+                            <span>
+                                検索をかけた時の商品一覧ページです
+                            </span>
+                    </div>
+                    <div class="">
+                        <h2>
+                            商品詳細ページ
+                        </h2>
+                            <span>
+                               剣道具・剣道防具・竹刀の詳細です
+                            </span>
+                        <ul>    
+                            {% for product in getProducts(product) %}
+                            <li>
+                                <h3>
+                                    <a href="{{url('product_detail',{id:product.id})}}">{{product.name}}</a>
+                                </h3>
+                            </li>    
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <div>
+                        <h2>
+                            <a href="{{url('shop_list')}}"> 店舗一覧</a>
+                        </h2>
+                        <span>
+                             剣道パークで取り扱える武具店一覧です
+                        </span>
+                    </div>
+                    <div class="lists">
+                        <h2>
+                            店舗詳細
+                        </h2>
+                        <ul>
+                        {% for shop in getShops() %}
+                            <li>
+                                <h3>
+                                    <a href="{{url('product_list')}}?Shop={{shop.id}}">{{shop.shop_name}}</a>
+                                </h3>
+                            </li>    
+                        {% endfor %}
+                        </ul>
+                    </div>
+                        <div>
+                            <h2>     
+                                <a href="{{url('mypage')}}"> MYページページ</a>
+                            </h2>
+                            <span>
+                                会員専用ページです
+                            </span>         
+                        </div>
+                        <div>
+                            <h2>
+                                <a href="{{url('contact')}}"> お問い合わせ</a>
+                            </h2>
+                            <span>
+                                剣道パークへのお問い合わせ
+                            </span>
+                        </div>
+                        <div>
+                            <h2>
+                                <a href="{{url('entry')}}">会員登録</a>
+                            </h2>
+                            <span>
+                                剣道パーク会員登録ページ
+                            </span>
+                        </div>
+                        <div>
+                            <h2>
+                                <a href="{{url('help_about')}}"> 当サイトについて</a>
+                            </h2>
+                            <span>
+                                    剣道パークについて
+                            </span>
+                            <h3>
+                                <a href="{{url('help_tradelaw')}}">特定商取引法に基づく表記</a>
+                            </h3>
+                            <h3>
+                                <a href="{{url('help_about')}}">プライバシーポリシー</a>
+                            </h3>
+     
+                            <h3>
+                                <a href="{{url('help_about')}}">ご利用ガイド</a>
+                            </h3>
+                            <h3>
+                                <a href="{{url('help_faq')}}">よくある質問</a>
+                            </h3>
+                            <h3>
+                                <a href="{{url('help_about_tools')}}">剣道具について</a>
+                            </h3>
+                        </div>
+                        <div>
+                            <h2>
+                                剣道を心から楽しむ情報メディア
+                            </h2>
+                            <h3>
+                                <a href="{{url('help_about_tools')}}">剣道具について</a>
+                            </h3>
+                			<h3>                      
+				                <a href="{{url('Plugin_SubContent_Kenjoy', {cd:'kendo-rule'}) }}">
+				                    剣道のルールを知ろう！！
+				                </a>
+			                </h3>
+                			<h3>
+				                <a href="{{url('Plugin_SubContent_Kenjoy', {cd:'dan-grade'}) }}">
+				                    剣道の段位について
+				                </a>
+			                </h3>
+                			<h3>
+                				<a href="{{url('Plugin_SubContent_Kenjoy', {cd:'nitouryu'}) }}">
+				                    剣道の二刀流とは？
+				                </a>
+			                </h3>
+			                <h3>
+				                <a href="{{url('Plugin_SubContent_Kenjoy', {cd:'kendo-towel'}) }}">
+				                    剣道の「手ぬぐい」の巻き方と種類とは？
+				                </a>
+			                </h3>
+                        </div>
+                        <div >
+                            <h2>
+                                カテゴリー
+                            </h2>
+                            {% for Category in Categorys %}
+                                <h2 class="Category">
+                                <a href="{{ url('product_list') }}?category_id={{Category.id}}">
+                                    {{ Category.name}}
+                                </a>
+                                </h2>
+                                    {% if Category.children|length > 0 %}
+                                    {% for Category2 in Category.children %}
+                                    <h3 class="Category">
+                                        <a href="{{ url('product_list') }}?category_id={{Category2.id}}">
+                                        {{ Category2.name}}
+                                    </a>
+                                    </h3>
+                                        {% if Category2.children|length > 0 %}
+                                        {% for Category3 in Category2.children %}
+                                        <h4 class="Category">
+                                        <a href="{{ url('product_list') }}?category_id={{Category3.id}}">
+                                        {{ Category3.name}}
+                                        </a>
+                                        </h4>
+                                        {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

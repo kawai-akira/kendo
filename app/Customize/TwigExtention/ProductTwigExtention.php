@@ -173,9 +173,23 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('getYaml', [$this->CommonService, 'getYaml']),
             new TwigFunction('HeaderLogo', [$this, 'setHeaderLogo']),
             new TwigFunction('Headerlogin',[$this, 'setHeaderLogin']),
+            new TwigFunction('getShops',[$this, 'getShops']),
+            new TwigFunction('getProducts',[$this, 'getProducts']),
             
         ];
     }
+
+    public function getProducts(string $Products){
+    
+
+    return $this->em->getRepository(Product::class)->findby(['id'=> explode(',',$Products)]);
+    }
+
+    public function getShops(){
+
+    return $this->em->getRepository(Shop::class)->Search();    
+
+    } 
 
     public function setHeaderLogin()
     {

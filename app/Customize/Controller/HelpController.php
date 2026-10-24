@@ -17,6 +17,8 @@ namespace Customize\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;
+use Eccube\Entity\Category;
+
 
 class HelpController extends \Eccube\Controller\HelpController
 {
@@ -48,9 +50,7 @@ class HelpController extends \Eccube\Controller\HelpController
 
         return [];
     }   
-   
-
-    
+       
    /**
      * Q&a
      *
@@ -61,5 +61,18 @@ class HelpController extends \Eccube\Controller\HelpController
     {
         return [];
     }
+    /**
+     * サイトマップ
+     * 
+     * @Route("/help/sitemap", name="help_sitemap", methods={"GET"})
+     * @Template("Help/sitemap.twig")
+     */
+     public function sitemap()
+    {
+        return [
+            'Categorys'=> $this->entityManager->getRepository(Category::class)->getList(null, true),
+        ];
+    }
+
 
     }
