@@ -35,9 +35,11 @@
 
 
     <script type="text/javascript">
+        selectSelect();
         $(function () {
             $("input[name='recommend_search[type]']").on('change', function() {
-                $('.choices_area').toggle();
+                
+                selectSelect();
                 
             });
             // 初期表示時のsort noを保持.
@@ -119,6 +121,19 @@
 
             return true;
         }
+        function selectSelect(){
+            var type =  $("input[name='recommend_search[type]']:checked").val();
+            
+            if(1==type){
+                $('#Category_area').show();
+                $('#kbn_area').hide();
+            }else{
+                $('#Category_area').hide();
+                $('#kbn_area').show();
+
+
+            }
+        } 
 
     </script>
 {% endblock javascript %}

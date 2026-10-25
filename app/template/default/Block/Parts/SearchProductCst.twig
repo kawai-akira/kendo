@@ -19,13 +19,11 @@ $(function(){
     $('#searchProductCst #Shop').change(function(){
         var id = $(this).val();
         $('#searchProductCst button').prop('disabled', true);
-{#        const $Category = $('#searchProductCst .category')								
+        const $Category = $('#searchProductCst .category')								
             .prop('disabled', true)								
             .load('{{ url('block_search_category_load')}}'+'?Shop=' + id ,'' , function() {								
                 $(this).prop('disabled', false);								
-         
             });
-#}
         const $tag = $('#searchProductCst .tag')								
             .prop('disabled', true)								
             .load('{{ url('block_search_tag_load')}}'+'?Shop=' + id ,'' , function() {								

@@ -3,7 +3,7 @@ ul li{
     list-style-type: none;
 }
 .ec-layoutRole__header{
-    /*background-color:#193248;*/
+    background-color:#fffcf6 /*#193248;*/
 }
 #header_area{
     max-width: 1400px;

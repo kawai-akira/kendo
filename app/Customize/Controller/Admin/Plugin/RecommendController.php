@@ -166,7 +166,7 @@ class RecommendController extends \Plugin\Recommend42\Controller\RecommendContro
         $form->handleRequest($request);
         $data = $form->getData();
 
-        $reId = RecommendType::CATEGORY == $form->get('type')->getData()->getid() ? $form->get('Category')->getData()->getId() : $form->get('Kbn')->getData()->getId();
+        $reId = RecommendType::CATEGORY == $form->get('type')->getData()->getid() ? $form->get('Category')->getData()->getId() : $form->get('RecommendKbn')->getData()->getId();
         
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -174,6 +174,13 @@ class RecommendController extends \Plugin\Recommend42\Controller\RecommendContro
 
                 $this->entityManager->persist($Recommend);
                 $this->entityManager->flush();
+
+                if(!$Recommend->getSortno()){
+                    $Recommend->setSortno($Recommend->getId());
+              
+                    $this->entityManager->persist($Recommend);
+                    $this->entityManager->flush();
+                }  
 
                 $this->addSuccess('plugin_recommend.admin.register.success', 'admin');
                 log_info('Update the recommend product success.', ['Recommend id' => $Recommend->getId(), 'Product id' => $data['Product']->getId()]);

@@ -97,7 +97,7 @@ class RecommendProduct extends AbstractEntity
     /**
      * @var \Customize\Entity\Master\RecommendKbn
      *
-     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Category", inversedBy="ProductCategories")
+     * @ORM\ManyToOne(targetEntity="Customize\Entity\Master\RecommendKbn" )
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="recommend_kbn_id", referencedColumnName="id" , nullable=true)
      * })
