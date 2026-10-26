@@ -1,0 +1,133 @@
+{# @version  EC=CUBE4.1 TWIG
+ # @copyright 株式会社 翔 kakeru.co.jp
+ # @author
+ # 2022年04月30日作成
+ #
+ #　app\template\default\Block\ProductRanking.twig
+ #
+ #
+ #
+ # 商品ランキング
+ #　Top 左ブロック
+ # 
+ #  お勧め商品　区分で管理
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <style>
+#ProductRanking h2{
+    border-bottom:  solid 1px #ccc; 
+    font-size:20px;
+    padding-bottom:3px;
+}
+#ProductRanking ul{
+    width: 100% ;
+    padding:0;
+    margin-left:10px;
+}
+#ProductRanking li{
+    border-bottom:  solid 1px #ccc; 
+    padding-bottom: 2px;
+    margin-bottom:12px;
+}
+#ProductRanking li .inner{
+    display:flex;
+    justify-content: flex-start; 
+}
+#ProductRanking .image{
+    position:relative;
+    width: 33%;
+    padding-left:5px;
+}
+#ProductRanking .image img{
+    width: 98%;
+}
+#ProductRanking .image span{
+    position:absolute;
+    top:-6px;
+    left:-7px;
+    color:#b80000;
+    font-size:15px;
+    background-color: #fff;
+    display:block;
+    width:25px;
+    border-radius: 50%;
+
+}
+#ProductRanking .product{
+padding-left:5px;    
+width: 63%;
+}
+#ProductRanking .product h3{
+    margin:0;
+    font-size:18px;
+    color: #333;
+
+}
+#ProductRanking .product p{
+    margin-top:0;
+    color:#333;
+}
+#page_product_detail #ProductRanking li ,
+#page_product_list #ProductRanking li {
+        display:inline-block;
+        width:19%;
+}
+#page_product_detail #ProductRanking .image,
+#page_product_list #ProductRanking .image{
+    width: 95%;
+}
+#page_product_detail  #ProductRanking li div,
+#page_product_list  #ProductRanking li div{
+    float:none;
+  }
+
+/* # スマホ　#*/
+@media (max-width: 766px){
+    #page_product_detail #ProductRanking li ,
+    #page_product_list #ProductRanking li ,
+    #ProductRanking li {
+        display:inline-block;
+        width:32.5%;
+    }
+    #page_product_detail  #ProductRanking li div,
+    #page_product_list  #ProductRanking li div,
+    #ProductRanking li div{
+    float:none;
+  }
+    #page_product_detail #ProductRanking .image,
+    #page_product_list #ProductRanking .image,
+    #ProductRanking .image{
+    width: 95%;
+}
+
+}
+</style>
+<div id="ProductRanking" class="">
+    <h2>剣道具・剣道防具売れ筋ランキング</h2>
+    <ul>
+        {% for i,Product in RecommendKbn('Ranking') %}
+        {% set Ranking = i + 1 %}
+        <li>
+            <a href="{{ url('product_detail', {'id': Product.id}) }}">
+                <div class="inner">
+                    <div class="image">
+                        <img src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}">
+                        <span>{{ Ranking }}位<span>
+                    </div>
+                    <div class="product">
+                        <h3 class="item_name">{{ Product.name }}</h3>
+                            <p> 
+                                {% if Product.getPrice02Min == Product.getPrice02Max %}
+                                <span class="price01_default">{{ Product.getPrice02IncTaxMin|price }}</span>
+                                {% elseif Product.getPrice02Min is not null and Product.getPrice02Max is not null %}
+                                <span class="price01_default">{{ Product.getPrice02IncTaxMin|price }}</span><span>～</span>
+                                {% endif %}
+                                (税込)
+                            </p>
+                    </div>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

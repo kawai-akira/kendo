@@ -22,6 +22,7 @@ use Plugin\Recommend42\Entity\RecommendProduct;
 use Doctrine\Persistence\ManagerRegistry; 
 use Customize\Entity\Master\RecommendType;
 use Eccube\Entity\Category;
+use Customize\Entity\Master\RecommendKbn;
 
 /**
  * RecommendProductRepository.
@@ -89,5 +90,21 @@ class RecommendProductRepository extends \Plugin\Recommend42\Repository\Recommen
 
     }
 
+    public function getRecommendKbn(string $Kbn){
+
+        $RecommendKbn = $this->getEntityManager()->getRepository(RecommendKbn::class)->getByName($Kbn);
+        
+        $Recommends = $this->createQueryBuilder('rp')
+                           ->where('rp.RecommendKbn = :RecommendKbn')
+                           ->setParameter('RecommendKbn', $RecommendKbn)
+                           ->getQuery()->getResult();
+        
+        $Re = [];                   
+        foreach($Recommends as $Recommend ){
+            $Re[] = $Recommend->getProduct();
+        }       
+
+        return $Re;
+    }
 
 }

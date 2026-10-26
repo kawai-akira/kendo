@@ -1,11 +1,20 @@
 /* カスタマイズ用CSS */
+body {
+    font-family: "Noto Sans JP" , sans-serif;
+}
 ul li{
     list-style-type: none;
 }
-.ec-layoutRole__header{
-    background-color:#fffcf6 /*#193248;*/
+/* header */
+.ec-layoutRole__header{ 
+    background-color:  #fff ;/*#193248;*/
 }
-#header_area{
+#header-container{
+    width: 100%;
+    background-color:  #E6E9EB;/* #a4b0be;  *#fffcf6 */
+    padding-bottom: 15px;
+}
+#header_inner{
     max-width: 1400px;
     margin: 0 auto;
     margin-bottom:30px;
@@ -36,16 +45,18 @@ ul li{
     justify-content: center;     /* 上下の真ん中（中央）に寄せる */
     gap: 8px;             
 }
-#header_area .center-block{
-    /*display: flex;*/
+#header_inner .center-block{
     font-size: 16px;
     font-weight: bold;
 
     }
-#header_area .center-block span{    
+
+#header_inner .center-block span{    
     color :#b80000;
 }
-
+#header_inner .center-block .box01{
+    font-size: 22px;
+}
 
 .ec-headerNaviRole__right .login_area{
     width:100%;
@@ -58,18 +69,22 @@ ul li{
 }
 .ec-cartNaviWrap .ec-cartNavi .ec-cartNavi__badge{
     position: absolute;
-    top:18px;
+    top:8px;
     left:42px;
 }
 .ec-role {
     max-width: 1400px;
 }
 .ec-categoryNaviRole{
+    width:100%;
     font-size: 14px;
-    margin-bottom: 10px;
-    max-width:1400px;
+    margin-bottom: 40px;
+    max-width: none ; /*1400px;*/
     padding-left: 0;
     padding-right: 0;
+}
+.ec-headerNaviRole__right .info{
+    width: 100%;
 }
 /* ヘッダーキーワード検索 */
 .ec-headerNaviRole{
@@ -93,27 +108,28 @@ ul li{
 }
 .ec-headerSearch .ec-headerSearch__keyword input[type=search]{
     height:30px;
-    padding-left: 0;
-    margin-right: 50px;
+    padding-left: 8px;
+    padding-right: 0;
+    /*margin-right: 50px;*/
     font-size:16px;
 }
-.ec-headerSearch .ec-headerSearch__keyword .ec-icon {
-    width: 22px;
-    height: 20px;
-}
-.ec-headerSearch .ec-headerSearch__keywordBtn {
-    right: -33px;
-    top: 50%;
-    width:40px;
-    height:31px;
-    background-color: #B80000 ;
-    border-top-right-radius: 7px;
-    border-bottom-right-radius: 7px;
-}
 
+.ec-headerSearch .ec-headerSearch__keyword button
+{
+    position: absolute;
+    border: 0;
+    padding: 0;
+    top: -1px;
+    right: -33px;
+    background-color: transparent;
+}
+.ec-headerSearch .ec-headerSearch__keyword img{
+    height:32px;
+}
 .ec-headerNaviRole__right ul{
     -webkit-text-size-adjust: 100%;
     display: flex;
+    justify-content: flex-end;
     gap: 10px;
 }
 .ec-headerNaviRole__right ul li{
@@ -126,7 +142,8 @@ ul li{
 /* フッター*/
 .ec-footerRole 
 {
-    background-color: #fffcf6;
+    background-color: #E6E9EB; /* #fffcf6;*/
+    border-bottom: 0 ;
 }
 .footer_container{
     width:1400px;
@@ -175,6 +192,10 @@ ul li{
     width: 50%;
     
 }
+.footer_container .footer_logo_area .social_media li img{
+    width:86px;
+}
+
 .footer_container .footer_logo_area .social_media li a{
     display: flex;
     width: 100%;
@@ -184,10 +205,9 @@ ul li{
     font-size: 16px;
     font-weight: bold;
 }
-.footer_container .footer_logo_area .social_media .facebook span{
-    color: #1877F2;    
-    font-size: 74px;
-    margin-right: 12px;
+.footer_container .footer_logo_area .social_media .facebook img{
+    width:60px;
+    margin-right: 10px;
 }
 .footer_container .footer_logo_area .logo{
     text-align: right;
@@ -206,7 +226,8 @@ ul li{
 
 /* ナビげーション */
 .ec-itemNav{
-    max-width: 1400px;
+    width:100%;
+    /*max-width: 1400px;*/
     width:100%;
     background-color:#b80000;
 }

@@ -64,9 +64,7 @@
                 </li>
                 <li class="facebook">
                     <a href="{{ eccube_config.facebook_url}}" target="_blank">
-                        <span>
-                            <i class="fab fa-facebook"></i>
-                        </span>
+                        <img src="{{ asset('assets/img/common/facebook.png', 'user_data')}}" alt="LINE 御友達追加" target="_blank">
                         <div>
                             <P>FaceBook</p>
                             最新情報をお届け
@@ -80,15 +78,14 @@
                     <p>{{'shop_title01'|trans}}</p>
             </div>
         </div>
-
-   
+  
 
     </div>    
     <div class="ec-footerTitle">
-{#        <div class="ec-footerTitle__logo">
+        <div class="ec-footerTitle__logo">
             <a href="{{ url('homepage') }}">{{ BaseInfo.shop_name }}</a>
         </div>
-#}
+
         <div class="ec-footerTitle__copyright">copyright (c) {{ BaseInfo.shop_name }} all rights reserved.</div>
     </div>
 </div>

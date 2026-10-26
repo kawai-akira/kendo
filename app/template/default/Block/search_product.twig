@@ -19,10 +19,8 @@
         <div class="ec-headerSearch__keyword">
             <div class="ec-input">
                 {{ form_widget(form.name, {'id': null, 'attr': {'class': 'search-name', 'placeholder' : '商品キーワードで検索' }} ) }}
-                <button class="ec-headerSearch__keywordBtn" type="submit">
-                    <div class="ec-icon">
-                        <img src="{{ asset('assets/icon/search.svg') }}" alt="">
-                    </div>
+                <button class="" type="submit">
+                    <img src="{{ asset('assets/img/common/searchbtn.png', 'user_data')}}" alt="商品検索">
                 </button>
             </div>
         </div>

@@ -175,13 +175,18 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('Headerlogin',[$this, 'setHeaderLogin']),
             new TwigFunction('getShops',[$this, 'getShops']),
             new TwigFunction('getProducts',[$this, 'getProducts']),
-            
+            new TwigFunction('RecommendKbn',[$this->RecommendRepository, 'getRecommendKbn']),
         ];
     }
 
+
+    
+    
+    
+    
+    
     public function getProducts(string $Products){
     
-
     return $this->em->getRepository(Product::class)->findby(['id'=> explode(',',$Products)]);
     }
 
@@ -359,10 +364,6 @@ class ProductTwigExtention extends AbstractExtension
 
 
     }    
-
-
-
-
 
     public function setCategoryBestItem(?Category $Category){
         
