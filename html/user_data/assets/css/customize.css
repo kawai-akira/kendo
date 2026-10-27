@@ -340,16 +340,17 @@ a{
 }
 .block_product_items ul li h3{
     font-size:12px;
-
 }
-
-
 .product_list__shop_name{
     color: #b80000;
 }
 .product_list__sale{
     color: #b80000;
-
+}
+#page_homepage .block_product_items .item_photo span{
+    display:block;
+    font-size: 32px;
+    font-weight: 800;
 }
 /** kenjoy #################################################################*/
 .SubContent_Page li{

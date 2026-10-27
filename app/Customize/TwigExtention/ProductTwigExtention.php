@@ -202,10 +202,12 @@ class ProductTwigExtention extends AbstractExtension
     }
        
     
-    public function setTopProducts(array $Products){
+    public function setTopProducts(array $Products, bool $rankFlg = false){
 
         return $this->Twig->render(self::TopProducts, [
           'Products' => $Products,
+          'rankFlg' => $rankFlg,
+          'color'   => ['#FF8F00','#999AA4','#B43100','#696BCD','#1D1D2D'],
         ]);                    
 
 
