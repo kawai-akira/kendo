@@ -44,9 +44,9 @@
             ->setParameter('name', $Kbn)				
             ->getQuery()				
             ->getSingleResult();				
-                    
+
         return $re;				
-                    
+
         } catch (NoResultException $e) {				
         return null;				
         }				

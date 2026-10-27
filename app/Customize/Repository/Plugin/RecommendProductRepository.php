@@ -93,13 +93,16 @@ class RecommendProductRepository extends \Plugin\Recommend42\Repository\Recommen
     public function getRecommendKbn(string $Kbn){
 
         $RecommendKbn = $this->getEntityManager()->getRepository(RecommendKbn::class)->getByName($Kbn);
+        //echo $RecommendKbn->getName();
         
         $Recommends = $this->createQueryBuilder('rp')
                            ->where('rp.RecommendKbn = :RecommendKbn')
                            ->setParameter('RecommendKbn', $RecommendKbn)
+                           ->orderBy('rp.sort_no','DESC')
                            ->getQuery()->getResult();
         
-        $Re = [];                   
+        $Re = [];
+               
         foreach($Recommends as $Recommend ){
             $Re[] = $Recommend->getProduct();
         }       

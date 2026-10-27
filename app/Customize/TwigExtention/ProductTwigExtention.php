@@ -38,6 +38,7 @@ use Customize\Entity\Shop;
 use Plugin\SubContent43\Entity\SubContent;
 use Eccube\Entity\Shipping;
 use Plugin\SubContent43\Repository\SubContentRepository;
+use Customize\Repository\ProductRepository;
 
 
 
@@ -73,13 +74,15 @@ class ProductTwigExtention extends AbstractExtension
     private const FreeInput2Admin       = '@admin/Order/Parts/FreeInput2Form.twig';
     private const FreeInput3Admin       = '@admin/Order/Parts/FreeInput3Form.twig';
     private const ProductListImgTwig    = 'Product/Parts/ProductListImage.twig';
-    private Const categoryImgDir        = 'assets/img/categoryImg/';
+    private Const categoryImgDir        = 'assets/img/category/';
     private Const BestItemTwig          = 'Product/Parts/bestItem.twig';
     private const ProductListInfoTwig   = 'Product/Parts/ProductListInfo.twig';
     private const ItemOption            = 'Common/ItemOption.twig';
     private const DeliveryFeeAlert      = 'Cart\Parts\DeliveryFreeAlert.twig';
     private const HeaderLogo            = 'Block\Parts\logo.twig';
     private const HeaderLogin           = 'Block\Parts\login.twig';
+    private const TopProducts           = 'Block\Parts\TopProducts.twig';
+
 
    /**
      * Twig\Environment Twig;
@@ -107,19 +110,19 @@ class ProductTwigExtention extends AbstractExtension
 
     
     private DeliveryFeeService $DeliveryFeeService; 
-    
-
-
+   
     /**
      * @var SubContentRepository
      */
 
     private $SubContentRepository;
+    private ProductRepository $ProductRepository;
+
+
     /**
      *
      * @param Twig $Twig
      * @param CommonService $CommonService
-
      */
     public function __construct(
             Twig $Twig
@@ -129,6 +132,7 @@ class ProductTwigExtention extends AbstractExtension
             ,OptionService $OptionService
             ,DeliveryFeeService $DeliveryFeeService
             ,SubContentRepository $SubContentRepository
+            ,ProductRepository $ProductRepository
 
 
     ) {
@@ -139,7 +143,7 @@ class ProductTwigExtention extends AbstractExtension
         $this->OptionService = $OptionService;
         $this->DeliveryFeeService = $DeliveryFeeService;
         $this->SubContentRepository = $SubContentRepository;
-
+        $this->ProductRepository = $ProductRepository;
     }
 
     public function getFunctions()
@@ -176,15 +180,36 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('getShops',[$this, 'getShops']),
             new TwigFunction('getProducts',[$this, 'getProducts']),
             new TwigFunction('RecommendKbn',[$this->RecommendRepository, 'getRecommendKbn']),
+            new TwigFunction('TopProducts',[$this, 'setTopProducts']),
+            new TwigFunction('NewProducts',[$this, 'setNewProducts']),
+            new TwigFunction('BigSale',[$this, 'setBigSalee']),
         ];
     }
 
 
+    public function setBigSalee(){
+        $Products = $this->ProductRepository->getBigSele();
+        return $this->setTopProducts($Products);
+
+    }
+
+
+    public function setNewProducts(){
+
+    $Products = $this->ProductRepository->getNewItrem();
+    return $this->setTopProducts($Products);
+
+    }
+       
     
-    
-    
-    
-    
+    public function setTopProducts(array $Products){
+
+        return $this->Twig->render(self::TopProducts, [
+          'Products' => $Products,
+        ]);                    
+
+
+    }
     public function getProducts(string $Products){
     
     return $this->em->getRepository(Product::class)->findby(['id'=> explode(',',$Products)]);

@@ -59,7 +59,7 @@ width: 63%;
 }
 #ProductRanking .product h3{
     margin:0;
-    font-size:18px;
+    font-size:16px;
     color: #333;
 
 }
@@ -105,7 +105,7 @@ width: 63%;
 <div id="ProductRanking" class="">
     <h2>剣道具・剣道防具売れ筋ランキング</h2>
     <ul>
-        {% for i,Product in RecommendKbn('Ranking') %}
+        {% for i,Product in RecommendKbn('ProductRanking') %}
         {% set Ranking = i + 1 %}
         <li>
             <a href="{{ url('product_detail', {'id': Product.id}) }}">

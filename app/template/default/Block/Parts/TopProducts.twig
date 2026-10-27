@@ -1,0 +1,43 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月26日作成
+ #
+ # app\template\default\Block\Parts\TopProducts.twig
+ #
+ # 
+ #
+ #
+ #                                    ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <div class="block_product_items"> 
+    <ul>
+    {% for Product in Products %}
+        <li>
+            <a href="{{ url('product_detail', {'id': Product.id}) }}">
+                <div class="item_photo">
+                    <img src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}">
+                </div>
+                <div class="product_list__description_list">
+                    {{Product.description_list|raw|nl2br }}
+                </div>
+                <dl>
+                    <p class="product_list__shop_name">{{ Product.Shop.shop_name }}</p>
+                    <dt><h3 class="item_name">{{ Product.name }}</h3></dt>
+                    <dd class="item_price">
+                        <p class="normal_price">
+                            {% if Product.priceDownRate %}<span class="product_list__sale">SALE</span>{% endif %}
+                            {% if Product.getPrice02Min == Product.getPrice02Max %}
+                                <span class="price01_default">{{ Product.getPrice02IncTaxMin|price }}</span>
+                            {% elseif Product.getPrice02Min is not null and Product.getPrice02Max is not null %}
+                                <span class="price01_default">{{ Product.getPrice02IncTaxMin|price }}</span><span> ～</span>
+                            {% endif %}
+                        </p>
+                    </dd>
+                </dl>
+            </a>
+        </li>
+    {% endfor %}    
+    </ul>
+ </div>

@@ -224,22 +224,31 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
             }
             $qb->orderBy('p.create_date', 'DESC');
             $qb->addOrderBy('p.id', 'DESC');
-        //オススメ順（オススメに順序はないのでオススメタグが付いている商品のid順）
-       /* } else if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == '5') {
-            $Tag = $this->em->getRepository(Tag::class)->find(2);
-            $qb->addSelect('t2.id as HIDDEN tag')
-              ->leftJoin('p.ProductTag', 'pt2' , 'WITH', 'pt2.Tag = :Tag')
-              ->leftJoin('pt2.Tag', 't2')
-              ->setParameter('Tag', $Tag)
-              ->orderBy('tag', 'ASC');
+        //セール順）
+        } else if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == '5') {
+
+            $subQb = $this->_em->createQueryBuilder();
+            $subQb->select('p2.id')
+                  ->from('Eccube\Entity\Product', 'p2') // 抽出対象のエンティティ
+                  ->innerJoin('p2.ProductClasses', 'pc2')
+                  ->groupBy('p2.id')
+                  ->having('MIN(COALESCE(pc2.price01, pc2.price02)) > MIN(pc2.price02)');
+
+            $qb->andWhere('pc.visible = true ')
+               ->andWhere('pc.price01 IS NOT NULL') 
+               ->andwhere($qb->expr()->in('p.id', $subQb->getDQL()))
+               ->OrderBy('p.Total', 'DESC')  #売上順
+               ->addOrderBy('p.id', 'DESC');
+
+           /*
             //レビュー順（レビューの星の数の平均点降順）
-        } else if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == '4') {
+       
+            } else if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == '4') {
               $qb->addSelect('AVG(COALESCE(pr.recommend_level, 0)) as HIDDEN recommend_level');
               $qb->leftJoin('p.ProductReviews', 'pr');
               $qb->groupBy('p');
-              $qb->orderBy('recommend_level', 'DESC');*/
-
-
+              $qb->orderBy('recommend_level', 'DESC');
+        */
         } else {
             if ($categoryJoin === false) {
                 $qb
@@ -257,5 +266,33 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
         return $this->queries->customize(QueryKey::PRODUCT_SEARCH, $qb, $searchData);
     }
 
+    public function getNewItrem()
+    {
 
-}
+        $qb = $this->createQueryBuilder('p')
+                   ->where('p.Status = 1')
+                   ->setMaxResults(5)
+                   ->orderBy('p.create_date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getBigSele(){
+        $qb = $this->createQueryBuilder('p');
+
+            $qb->select('p')
+               ->innerJoin('p.ProductClasses', 'pc')
+               ->andWhere('pc.visible = true ')
+               ->andWhere('pc.price01 IS NOT NULL') 
+               ->groupBy('p.id') 
+               ->having('MIN(COALESCE(pc.price01, pc.price02)) > MIN(pc.price02)')
+               ->setMaxResults(5)
+               ->orderBy('p.Total', 'DESC')
+               ->addOrderBy('p.id','ASC');
+                 
+
+        return $qb->getQuery()->getResult();
+             
+    }
+
+    }

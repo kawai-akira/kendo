@@ -1,0 +1,20 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月26日作成
+ #
+ # default\Block\new_item.twig
+ #
+ # 
+ #
+ #
+ #                                    ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<div class="newProducts">
+    <h2>新着商品{# 剣道具・剣道防具の新着商品 #}</h2>
+    {{NewProducts()|raw}}
+    <div class="text-end">
+        <a href="{{url('product_list')}}?orderby=2" class="btn btn-outline-dark">もっと見る</a>
+    </div>
+</div>

@@ -5,13 +5,16 @@ body {
 ul li{
     list-style-type: none;
 }
+a{
+    color:#333;
+}
 /* header */
 .ec-layoutRole__header{ 
     background-color:  #fff ;/*#193248;*/
 }
 #header-container{
     width: 100%;
-    background-color:  #E6E9EB;/* #a4b0be;  *#fffcf6 */
+    background-color:   #a4b0be; /*#E6E9EB;/* *#fffcf6 */
     padding-bottom: 15px;
 }
 #header_inner{
@@ -307,7 +310,7 @@ ul li{
 }
 /** SEARCH Product Ex */
 #searchProductCst{
-    padding-left:20px ;
+    padding-right:20px ;
 }
 #searchProductCst .search p{
     margin: 10px 5px;
@@ -321,6 +324,32 @@ ul li{
 }
 #searchProductCst .btn{
     width: 50%;
+}
+/** TOP PAGE ########################################################### */
+.block_product_items ul{
+    display: flex;
+    gap:5px;
+    padding-left:0;
+    margin-bottom: 5px;
+}
+.block_product_items ul li{
+    width: 20%;
+}
+.block_product_items ul li img{
+    width: 98%;
+}
+.block_product_items ul li h3{
+    font-size:12px;
+
+}
+
+
+.product_list__shop_name{
+    color: #b80000;
+}
+.product_list__sale{
+    color: #b80000;
+
 }
 /** kenjoy #################################################################*/
 .SubContent_Page li{
