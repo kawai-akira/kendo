@@ -1,0 +1,176 @@
+{# @version  EC=CUBE4.1 TWIG
+ # @copyright 株式会社 翔 kakeru.co.jp
+ # @author
+ # 2022年04月30日作成
+ #
+ #　app\template\default\Block\ProductRanking.twig
+ #
+ #
+ #
+ # 
+ #
+ # 
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+    <style>
+    #shop_info .inner_block{
+        display:flex;
+        flex-wrap: wrap;
+        gap: 10px;      
+    }
+    #shop_info .inner_block .block01{
+        width:24%;
+        height:400px;
+
+    }
+    #shop_info .inner_block .block01 img{
+        width:98%;
+    }
+    #shop_info .inner_block .block01 .shop_detail{
+        border-right:1px solid #999;
+        height: 180px;
+        padding: 0 2px; 
+    }
+
+    #shop_info .inner_block .block01:nth-child(4) .shop_detail,
+    #shop_info .inner_block .block01:nth-child(8) .shop_detail{
+        border-right:0;
+}
+ </style>
+<div id="shop_info" class="top_blick">
+    <div class="block-heading">
+        <h2 class="header-line01">注目の武道具店</h2>
+     
+    </div>
+    <div class="inner_block">
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=50">
+                    <div class="shop_photo">
+                        <img src="{{ asset('assets/img/shop_info/eibudo23.jpeg','user_data')}}" alt="永武堂">
+                    </div>
+                    <h3 class="product_list__shop_name">永武堂</h3>
+                    <div class="shop_detail">
+                        <p>前身店舗から約60年以上もの歴史を誇り、全国の剣道家に愛される「かたつむり甲手」シリーズで知られます。</p>
+                        <p>「機能性」と「美しさ」を見事に両立し、製品調整や素材も含めて日本製にこだわった剣道具が特徴です。</p>
+                        <p>職人の佐藤氏は、全国からファンが会いに来る、まさしく「レジェンド」です。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=20">
+                    <div class="shop_photo">
+                        <img src="{{ asset('assets/img/shop_info/mtasukan_shop-min.jpg','user_data')}}" alt="松勘工業">
+                    </div>
+                    <h3 class="product_list__shop_name">松勘工業</h3>
+                    <div class="shop_detail">
+                        <p>良品かつ豊富な在庫量を持つ、大手武道具店です。</p>
+                        <p>独自の経営手腕により、画期的なオリジナル商品を次々に生み出しています。</p>
+                        <p>世界選手権で日本代表にも採用された、「冠」シリーズが有名です。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=31">
+                    <div class="shop_photo">
+                        <img src="{{ asset('assets/img/shop_info/niidomebokuto.jpg','user_data')}}" alt="新留木刀製作所">
+                    </div>
+                    <h3 class="product_list__shop_name">新留木刀製作所</h3>
+                    <div class="shop_detail">
+                        <p>国産木刀の名産地、宮崎県都城市を代表する木刀製作所です。</p>
+                        <p>兄弟での経営にして、2名とも宮崎県から伝統工芸師の指定を受けています。</p>
+                        <p>確かな技術を背景に、切り出しから加工まで、全て手作業にて行っています。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=13">
+                    <div class="shop_photo">
+                        <img src="{{ asset('assets/img/shop_info/madokoro_06-min.jpg','user_data')}}" alt="栄光武道具 / 眞仁">
+                    </div>
+                    <h3 class="product_list__shop_name">栄光武道具 / 眞仁</h3>
+                    <div class="shop_detail">
+                        <p>常識にとらわれない経営で、常にイノベーションを起こす間所俊晴社長と、専門知識が豊富な間所義明専務による武道具店です。</p>
+                        <p>スポーツ医学を取り入れた、新ブランドライン「眞仁」をリリースし、新時代の剣道具を生み出しています。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=36">
+                    <div class="shop_photo">
+                        <img src="{{ asset('assets/img/shop_info/matsukawa_shop-min.jpg','user_data')}}" alt="松川武道具">
+                    </div>
+                    <h3 class="product_list__shop_name">松川武道具</h3>
+                    <div class="shop_detail">
+                        <p>おそらく現代最高品質を誇る、手刺防具専門の武道具店です。</p>
+                        <p>全国剣道具職人会々員でもある2代目の松川靖博氏を中心に、創業時に作り上げた「靖龍」シリーズが有名です。</p>
+                        <p>細かい刺幅にも関わらず、驚異の柔軟性とコシを持つ防具は、芸術の域と言えるでしょう。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=42">
+                    <div class="shop_photo">
+                         <img src="{{ asset('assets/img/shop_info/tozando_shop-min.jpg','user_data')}}" alt="ミツボシ">
+                    </div>
+                    <h3 class="product_list__shop_name">ミツボシ</h3>
+                    <div class="shop_detail">
+                        <p>岩手県久慈市発の、東日本を代表する剣道具メーカーです。</p>
+                        <p>国産剣道具として、幅広いファンを持つ「峰」「天」シリーズが有名です。</p>
+                        <p>2014年に、東山堂（＠京都）と経営統合を果たしています。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=23">
+                    <div class="shop_photo">
+                        <img src="{{ asset('assets/img/shop_info/isenokami_shop-min.jpg','user_data')}}" alt="伊勢守">
+                    </div>
+                    <h3 class="product_list__shop_name">伊勢守</h3>
+                    <div class="shop_detail">
+                          <p>全剣連公式マスコット「ぶしし」の発案者でもある、稀代のクリエーター阿部晶人氏による剣道グッズブランドです。</p>
+                          <p>高度なデザイン性を誇り、身に付けるだけで剣道ライフが明るくなるアイテムばかりです。</p>
+                          <p>剣道ギフトとしても最適です。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="block01">
+            <div class="pickup_item" style="height: 274px;">
+                <a href="{{url('product_list')}}?Shop=22">
+                    <div class="shop_photo">
+                        <img src="{{ asset('assets/img/shop_info/shonbu_shop-min.jpg','user_data')}}" alt="信武商事">
+                    </div>
+                    <h3 class="product_list__shop_name">信武商事</h3>
+                    <div class="shop_detail">
+                        <p>世界最大の竹刀工場「宏逹」直営の武道具店です。</p>
+                        <p>竹刀の国内流通シェア70%を誇り、豊富なバリエーションを取り揃えています。</p>
+                        <p>個々人のプレイスタイルに合わせた、竹刀のカスタムも可能です。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>    
+    <div class="text-end">
+       <a href="{{url('shop_list')}}" class="btn btn-outline-dark">もっと見る</a>
+    </div>
+</div>

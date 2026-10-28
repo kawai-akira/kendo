@@ -1,0 +1,64 @@
+{# @version  EC=CUBE4.3 TWIG
+ # @copyright 株式会社 翔 kakeru.co.jp
+ # @author
+ # 2026年10月28日作成
+ #
+ # app\template\default\Block\column.twig
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <style>
+    #colume_area .inner{
+        display:flex;
+        flex-wrap: wrap;	
+        gap: 10px; 	
+
+    }
+    #colume_area .inner li{
+        width:32%;
+        margin-bottom:10px;
+    }
+
+ </style>   
+ <div id="colume_area" class="top_block">
+    <h2>剣道コラム</h2>
+    <ul class="inner">
+		<li>
+			<a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'kendo-rule'} ) }}kendo-rule">
+				<img src="{{ asset('assets/img/column/rule.png', 'user_data')}}" alt="剣道のルールを知ろう！！">
+			</a>
+
+		<li>
+            <a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'dan-grade'} ) }}">
+                <img src="{{ asset('assets/img/column/dani.png', 'user_data')}}" alt="剣道の段位について">
+            </a>
+		</li>
+		<li>
+			<a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'nitouryu'} ) }}">
+				<img src="{{ asset('assets/img/column/dualwielding.png', 'user_data')}}" alt="剣道の二刀流とは？">
+			</a>
+
+		</li>
+		<li>
+            <a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'kendo-towel'} ) }}">
+    			<img src="{{ asset('assets/img/column/tenugui.png', 'user_data')}}" alt="剣道の「手ぬぐい」の巻き方と種類とは？">
+			</a>
+		</li>
+		<li>
+			<a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'suburi_method'} ) }}">
+				<img src="{{ asset('assets/img/column/suburi.png', 'user_data')}}" alt="【剣道の素振り】 正しい素振りを身に付けるために">
+			</a>
+		</li>
+		<li>
+			<a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'open-tournament'} ) }}">
+				<img src="{{ asset('assets/img/column/Tournament.png', 'user_data')}}" alt="誰でも参加可能！【全国のオープン剣道大会・錬成会一覧】">
+			</a>
+		</li>
+	</ul>
+ </div>

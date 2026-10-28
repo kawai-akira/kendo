@@ -1,0 +1,91 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月28日作成
+ #
+ # app\template\default\Block\Banner.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <style>
+#Bannerarea .inner{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 4px;  
+}
+#Bannerarea .box01{
+    width:49.5%;
+    margin-bottom:10px;
+}
+#Bannerarea .title{
+    display:flex;
+    justify-content: space-between;
+}
+#Bannerarea .title a{
+    font-size:11px;
+    padding: 2px 6px;
+    height:25px;
+}
+#Bannerarea .Review h3{
+    margin-top: 0 ;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+#Bannerarea .Review ul{
+    padding-left:12px;
+    margin:0;
+    overflow: hidden;
+    max-height:300px;
+} 
+#Bannerarea .Review li div{
+    font-size:12px;
+    border-bottom: 1px solid #666;
+    margin-bottom: 5px;
+}
+#Bannerarea .Review li span{
+    margin-right: 10px;
+}
+</style>
+<div id="Bannerarea" class="ec-rolea top_block"> 
+    <div class="inner">
+        <div class="box01">
+            <a href="{{url('product_detail',{id:2702})}}">
+                <img src="{{ asset('assets/img/Banner/cleaning.png','user_data')}}" alt="クリーニング">
+            </a>  
+        </div>
+        <div class="box01 Review">
+            <div class="title">
+                <h3>お客様の声</h3>
+                <a href="{{url('product_detail',{id:2702})}}#redirect_review" class="btn btn-outline-dark">もっと見る</a>
+            </div>
+            <ul>
+            {% for ProductReview in ProductReview(2702,5)%}
+                <li>
+                    <div>
+                        <a href="{{url('product_detail',{id:2702})}}">
+                            <span>{{ ProductReview.reviewer_name }}:</span>
+                            {{ ProductReview.comment }}
+                        </a>    
+                    </div> 
+                </li>
+
+            {% endfor %}
+            <ul>
+        </div>
+        <div class="box01">
+            <a href="{{ url('entry')}}">
+            <img src="{{ asset('assets/img/Banner/entry.png','user_data')}}" alt="会員登録">
+        </div>
+
+        <div class="box01">
+            <a href="{{eccube_config.line_url}}" target="_blank">
+                <img src="{{ asset('assets/img/Banner/LINE.png','user_data')}}" alt="{{'line_alert'}}">
+            </a>
+        </div>
+    </div>
+</div>

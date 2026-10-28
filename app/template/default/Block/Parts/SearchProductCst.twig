@@ -34,7 +34,7 @@ $(function(){
     });    							
   });
 </script>
-<div id="searchProductCst" class="">
+<div id="searchProductCst" class="block_left">
     <div class="search" >
         <form method="get" id="searchformCst" action="{{ path('product_list') }}">
             <div class="search_inner">
@@ -50,7 +50,6 @@ $(function(){
                     <p>{{'front_search_product_tag'|trans}}</p>
                     {{ form_widget(formCst.Tag,{'attr': {'class': 'form-select'}}) }}
                 </div>
-                <div>
                 <div class="price_area ec-input">
                     <p>キーワードを入力</p>
                        {{ form_widget(formCst.name) }}

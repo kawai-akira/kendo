@@ -10,7 +10,7 @@ a{
 }
 /* header */
 .ec-layoutRole__header{ 
-    background-color:  #fff ;/*#193248;*/
+    background-color:  #fff ;/* #193248;*/
 }
 #header-container{
     width: 100%;
@@ -82,7 +82,7 @@ a{
     width:100%;
     font-size: 14px;
     margin-bottom: 40px;
-    max-width: none ; /*1400px;*/
+    max-width: none ; /*1400px; */
     padding-left: 0;
     padding-right: 0;
 }
@@ -232,21 +232,21 @@ a{
     width:100%;
     /*max-width: 1400px;*/
     width:100%;
-    background-color:#b80000;
+    background-color: #193248 /* #b80000;*/
 }
 .ec-itemNav__nav{
     margin: 0 auto;
 }
 
 .ec-itemNav__nav li a{
-    background-color:#b80000;
+    background-color:#193248; /*  #b80000;*/
     color:#fff;
     border-bottom: 1px solid #333;
     font-size: 14px;
 }
 .ec-itemNav__nav > li:hover >a{
     color:#fff;
-    background-color:#b80000;
+    background-color: #193248; /* #b80000;*/
 }
 
 .ec-itemNav__nav > li:hover li:hover > a {
@@ -309,9 +309,6 @@ a{
     font-size:12px;
 }
 /** SEARCH Product Ex */
-#searchProductCst{
-    padding-right:20px ;
-}
 #searchProductCst .search p{
     margin: 10px 5px;
     font-weight: 600;
@@ -325,7 +322,27 @@ a{
 #searchProductCst .btn{
     width: 50%;
 }
-/** TOP PAGE ########################################################### */
+/** TOP PAGE ### 
+/* index,php 
+*/
+.block_left{
+    margin-bottom: 50px;
+    margin-right:20px ;
+    box-sizing: border-box;
+    -webkit-text-size-adjust: 100%;
+
+}
+.top_block{
+    max-width: 1130px;
+    width:100%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    box-sizing: border-box;
+    -webkit-text-size-adjust: 100%;
+}
+.top_block img{
+    width: 98%;
+}
 .block_product_items ul{
     display: flex;
     gap:5px;
@@ -341,17 +358,20 @@ a{
 .block_product_items ul li h3{
     font-size:12px;
 }
+
+
+.block_product_items .item_photo span{
+    display:block;
+    font-size: 32px;
+    font-weight: 800;
+}
 .product_list__shop_name{
     color: #b80000;
 }
 .product_list__sale{
     color: #b80000;
 }
-#page_homepage .block_product_items .item_photo span{
-    display:block;
-    font-size: 32px;
-    font-weight: 800;
-}
+
 /** kenjoy #################################################################*/
 .SubContent_Page li{
     list-style: none
@@ -416,13 +436,10 @@ a{
     margin-left:5px;
 
 }
-
-
 #kenjoy .gallery{
     margin: 20px auto;
     width: 95%;
 }
-
 #kenjoy .blocks-gallery-grid{
     display: grid !important;
     /* 横に3等分の列（カラム）を作る */

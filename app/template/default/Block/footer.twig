@@ -33,14 +33,14 @@
             </ul>
     
             <ul class="customer">
-                <li><a href="{{ url('contact') }}contact">お問い合わせ</a></li>
-                <li><a href="{{ url('entry') }}entry">新規会員登録</a></li>
+                <li><a href="{{ url('contact') }}">お問い合わせ</a></li>
+                <li><a href="{{ url('entry') }}">新規会員登録</a></li>
                 {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ url('mypage') }}mypage/login">マイページ</a></li>
+                    <li><a href="{{ url('mypage') }}">マイページ</a></li>
                 {% else %}
-                    <li><a href="{{ url('mypage_login') }}mypage/login">ログイン</a></li>
+                    <li><a href="{{ url('mypage_login') }}">ログイン</a></li>
                 {% endif %}
-                <li><a href="{{ url('forgot') }}forgot">パスワードをお忘れの方</a></li>
+                <li><a href="{{ url('forgot') }}">パスワードをお忘れの方</a></li>
                 <li><a href="{{ url('help_sitemap') }}">サイトマップ</a></li>
             </ul>
 {#
@@ -55,7 +55,7 @@
             <ul class="social_media" >
                 <li class="line">
                     <a href="{{ eccube_config.line_url }}">
-                        <img src="{{ asset('assets/img/common/LINE.png', 'user_data')}}" alt="LINE 御友達追加" target="_blank">
+                        <img src="{{ asset('assets/img/common/LINE.png', 'user_data')}}" alt="{{'line_alert'|trans}}" target="_blank">
                         <div>
                             <p>LINE公式アカウント</p>
                             直接お問い合わせ可能です
@@ -64,7 +64,7 @@
                 </li>
                 <li class="facebook">
                     <a href="{{ eccube_config.facebook_url}}" target="_blank">
-                        <img src="{{ asset('assets/img/common/facebook.png', 'user_data')}}" alt="LINE 御友達追加" target="_blank">
+                        <img src="{{ asset('assets/img/common/facebook.png', 'user_data')}}" alt="facebook" target="_blank">
                         <div>
                             <P>FaceBook</p>
                             最新情報をお届け

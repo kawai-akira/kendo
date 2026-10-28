@@ -1,0 +1,46 @@
+{# @version  EC=CUBE4.3 TWIG
+ # @copyright 株式会社 翔 kakeru.co.jp
+ # @author
+ # 2026年10月28日作成
+ #
+ # app\template\default\Block\media.twig
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<style>
+#media_area .inner{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;  
+}
+#media_area .box01{
+    width:49%;
+}
+#media_area .right-wrap img{
+    width:95%;
+}
+</style>
+<div id="media_area" class="top_block">
+    <div class="inner">
+        <div class="tv-wrap box01">
+            <h2 class="header-line01">テレビ出演映像</h2>
+            <div class="movie-wrap">
+                <iframe width="500" height="281.25" src="https://www.youtube.com/embed/ZcoSVWNRgbY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="right-wrap box01">
+            <h2 class="header-line01">{{'kenjoy_title'|trans}}{#剣道を心から楽しむ情報メディア#}</h2>
+            <div class="right-banner">
+                <a href="{{url('Plugin_SubContent_Kenjoy',{cd:null}) }}" target="_blank">
+                    <img src="{{ asset('assets/img/media/kenjoy.jpg', 'user_data')}}" alt="{{'kenjoy_title'|trans}}{#剣道を心から楽しむ情報メディア#}">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
