@@ -65,7 +65,9 @@ a{
     width:100%;
     display: flex;
     gap: 8px;
-    justify-content: flex-end
+    justify-content: flex-end;
+    align-items: center;
+   padding-top: 10px;
 }
 .ec-cartNaviWrap .ec-cartNavi{
     position: relative;
@@ -74,6 +76,9 @@ a{
     position: absolute;
     top:8px;
     left:42px;
+}
+.ec-cartNaviWrap .ec-cartNavi img{
+    width:26px;
 }
 .ec-role {
     max-width: 1400px;
@@ -141,6 +146,12 @@ a{
 .ec-headerNaviRole__right ul li a{
     color:#333;
     text-decoration: none;
+}
+.ec-headerNav .entry img{
+    max-width:23px;
+}
+.ec-headerNav .logout img{
+    max-width:28px;
 }
 /* フッター*/
 .ec-footerRole 

@@ -12,9 +12,9 @@
  #                                    ≡≡≡┏(＾o＾)┛
  ##############################################################}
  <div class="BikSale">
-    <h2>大売出し！セール情報</h2>
+    <h2 class="block_title">大売出し！セール情報</h2>
     {{ BigSale()|raw}}
     <div class="text-end">
-        <a href="{{url('product_list')}}?orderby=5" class="btn btn-outline-dark">もっと見る</a>
+        <a href="{{url('product_list')}}?orderby=5" class="btn btn-outline-dark">{{'more'|trans}}</a>
     </div>
  </div>

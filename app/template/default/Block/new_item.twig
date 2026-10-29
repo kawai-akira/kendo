@@ -11,10 +11,10 @@
  #
  #                                    ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="newProducts">
-    <h2>新着商品{# 剣道具・剣道防具の新着商品 #}</h2>
+<div id="newProducts" class="top_block">
+    <h2 class="block_title">新着商品{# 剣道具・剣道防具の新着商品 #}</h2>
     {{NewProducts()|raw}}
     <div class="text-end">
-        <a href="{{url('product_list')}}?orderby=2" class="btn btn-outline-dark">もっと見る</a>
+        <a href="{{url('product_list')}}?orderby=2" class="btn btn-outline-dark">{{'more'|trans}}</a>
     </div>
 </div>
