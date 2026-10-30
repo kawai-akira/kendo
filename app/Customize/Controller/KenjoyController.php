@@ -49,14 +49,12 @@ class KenjoyController extends \Eccube\Controller\HelpController
             $this->CommonService = $CommonService; 
             }
     /**
-     * @Route("/kenjoy/list/{holder}", name="SubContent_Kenjoy_List", methods={"GET"} , requirements={"holder"="[a-zA-Z\-]+"})
+     * @Route("/kenjoy/list/{holder}", name="SubContent_Kenjoy_List", methods={"GET"} , requirements={"holder"="[a-zA-Z\-]*"})
      * @Template("Kenjoy/list.twig")
      */
     public function list(Request $request,PaginatorInterface $paginator,?string $holder = null ,)
     {
     
-
-
         $subtitle = null;
         if($holder){
             if(!$subtitle = $this->CommonService->getYamlValue('KenjoyCategorys.yaml',$holder)){
@@ -66,7 +64,7 @@ class KenjoyController extends \Eccube\Controller\HelpController
 
 
         /** @var \Symfony\Component\Form\FormBuilderInterface $builder */
-        $builder = $this->formFactory->createNamedBuilder('aa', KenJopypaginationType::class);
+        $builder = $this->formFactory->createNamedBuilder('', KenJopypaginationType::class);
 
         /** @var \Symfony\Component\Form\FormInterface $searchForm */
         $form   = $builder->getForm();
@@ -96,7 +94,8 @@ class KenjoyController extends \Eccube\Controller\HelpController
             'subtitle' => $subtitle,
             'pagination' => $pagination,
             'form' => $form->createView(),
-            'SubContents' => $SubContents, 
+            'SubContents' => $SubContents,
+            'holder' => $holder,
         ];
     }
 

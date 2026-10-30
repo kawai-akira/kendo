@@ -66,11 +66,12 @@ class breadcrumbListTwigExtention extends AbstractExtension
             ];
     }
 
-
     public function setbreadcrumbList(mixed $data = null,?Shop $Shop = null){
 
         $Category = null;
-        $Name     = null; 
+        $Name     = null;
+        $joyMemo  = null;
+    
             switch($UrlName = $this->CommonService->getUrlName()){
 
             case 'product_list':
@@ -97,14 +98,30 @@ class breadcrumbListTwigExtention extends AbstractExtension
                         $hierarchy = $Cat->getHierarchy();
                     }
                }
-               break;
+                break;
+            case 'Plugin_SubContent_Kenjoy':
+                $joyMemo = trans('kenjoy_title');
+                if($SubContent = $data){
+                    $Name = $SubContent->getTitle();
+                }
+                break;    
+
+            case  'SubContent_Kenjoy_List':
+                $Page = $this->em->getRepository(Page::class)->getPageByRoute($UrlName);
+                $joyMemo = $Page->getName();
+                $Name = $this->CommonService->getYamlValue('KenjoyCategorys.yaml',$data);
+                break;
             case 'contact':
             case 'help_faq':
             case 'help_about':    
             case 'entry':
             case 'help_tradelaw':
             case 'help_privacy': 
-            case 'shop_list':     
+            case 'shop_list':
+            case 'help_about_tools':
+            case 'groupbuy':
+            case 'help_sitemap':
+            case 'help_agreement':     
 
                 
                 $Page = $this->em->getRepository(Page::class)->getPageByRoute($UrlName);
@@ -121,7 +138,9 @@ class breadcrumbListTwigExtention extends AbstractExtension
     return $this->Twig->render(self::breadcrumbListTwig, [
         'Category' => $Category,
         'Name'     => $Name,
-        'Shop'     => $Shop
+        'Shop'     => $Shop,
+        'joyMemo'  => $joyMemo,
+      
 
       
       

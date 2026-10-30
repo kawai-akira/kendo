@@ -124,8 +124,15 @@
     /**
      * @var string
      *
+     * @ORM\Column(name=" thumbnail", type="text" , nullable=true)
+     */
+     private $thumbnail;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="text01", type="text" , nullable=true)
      */
+   
      private $text01;
     /**
      * @var string
@@ -393,21 +400,25 @@
               $this->css = $Value;
               return $this;
        }
-    /**
-      * Get text01
-      *
-      * @return string
-      */
-     public function getText01(){
+
+     public function getThumbnail(): ?string
+     {
+          return $this->thumbnail;
+     }
+ 
+       public function setThumbnail(?string $Value = null):self
+       {
+              $this->thumbnail= $Value;
+              return $this;
+       }
+
+     public function getText01(): ?string
+     {
           return $this->text01;
      }
-      /**
-       * Set text01
-       *
-       * @param string
-       * @return SubContent
-       */
-       public function setText01($Value){
+ 
+       public function setText01(?string $Value = null):self
+       {
               $this->text01= $Value;
               return $this;
        }

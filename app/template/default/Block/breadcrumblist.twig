@@ -18,6 +18,10 @@
     {{ breadcrumbList(Product)|raw }}
 {% elseif app.request.get('_route') == 'product_list' %}
     {{ breadcrumbList(Category,Shop)|raw }}
+{% elseif app.request.get('_route') == 'SubContent_Kenjoy_List' %}  
+    {{ breadcrumbList(holder)|raw }}
+{% elseif app.request.get('_route') == 'Plugin_SubContent_Kenjoy' %}  
+    {{ breadcrumbList(SubContent)|raw }}
 {% else %}
     {{ breadcrumbList()|raw }}
 {% endif %}    

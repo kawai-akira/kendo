@@ -63,6 +63,7 @@ class SubContentExtension extends AbstractExtension
            new  TwigFunction('SC_Thumbnail', [$this, 'SetThumbnail']),
            new  TwigFunction('SC_ImageList', [$this, 'SetImageList']),
            new  TwigFunction('SC_ImageUrl', [$this->ScService, 'GetImageRoot']),
+           new  TwigFunction('SC_ThumbUrl', [$this->ScService, 'getThumbUrl']),
            new  TwigFunction('SC_Parts', [$this, 'GetParts']),
            new  TwigFunction('SC_PartsId', [$this, 'GetPartId']),
            new  TwigFunction('SC_PartCompoPage', [$this , 'getPartCompoPage']),
@@ -94,7 +95,6 @@ class SubContentExtension extends AbstractExtension
            'SubContent' => $SubContent,
            'titleFlg'   => $titleFlg
         ]);
-
 
     }
 

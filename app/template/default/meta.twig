@@ -12,10 +12,33 @@
         <meta name="robots" content="noindex">
     {% endif %}
 {% elseif app.request.get('_route') == 'product_list' %}
-    {% set meta_canonical = url('product_list', {'category_id': Category.id|default(null)}) %}
+
+    {% set meta_canonical = url('product_list', {'category_id': Category.id|default(null),'Shop':Shop.id|default(null)}) %}
     {% if pagination|length == 0 %}
         <meta name="robots" content="noindex">
     {% endif %}
+{% elseif app.request.get('_route') == 'Plugin_SubContent_Kenjoy' %}
+    {% if SubContent is not null %}
+        {% set KenjoyTiTle   = SubContent.title %}
+        {% set KenJoyDescription = SubContent.description %}
+        {% set meta_canonical   = url('Plugin_SubContent_Kenjoy',{cd:SubContent.parameter }) %}
+        {% set KenjoyImage    = SC_ThumbUrl(SubContent) %}
+    {% else %}
+        {% set KenjoyTiTle = 'kenjoy_title'|trans %}
+        {% set KenJoyDescription = 'kenjoy_description'|trans %}
+        {% set meta_canonical = url('Plugin_SubContent_Kenjoy ,{cd:null}') %}
+        {% set KenjoyImage    = asset('assets/img/Slider/kndopark.png', 'user_data') %}
+    {% endif %}
+        <meta property="og:title" content="{{ KenjoyTiTle }}" />
+        <meta property="og:description" content="{{KenJoyDescription }}" />
+        {% if KenjoyImage %} 
+            <meta property="og:image" content="{{ absolute_url(KenjoyImage) }}" />
+        {% endif %}
+{% elseif app.request.get('_route') == 'SubContent_Kenjoy_List' %}
+        <meta property="og:title" content="{{ subtitle }}" />
+        {% set meta_canonical =  url('SubContent_Kenjoy_List',{holder:holder}) %}
+
+
 {% elseif app.request.get('_route') == 'homepage' %}
     {% set meta_og_type = 'website' %}
     {% set meta_canonical = url('homepage') %}

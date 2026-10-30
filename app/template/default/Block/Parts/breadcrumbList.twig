@@ -27,7 +27,7 @@
                     </a>
                 </li>
             {% endif %}
-            {% if Category is not null%}
+            {% if Category is not null %}
                 {% for ancestor in Category.path %}
                     {# ループの最後（＝現在表示しているカテゴリ自身）はリンクにしない #}
                     {% if loop.last %}
@@ -51,7 +51,14 @@
                         </li>
                     {% endif %}
                 {% endfor %}
-            {% endif %}   
+            {% endif %}
+            {% if joyMemo is not null %}
+                <li class="breadcrumb-item">
+                    <a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:null})}}">
+                        {{ joyMemo }}
+                    </a>    
+                </li>
+            {% endif %}
             {% if Name is not null %}
                 <li class="breadcrumb-item">
                     {{ Name }}
