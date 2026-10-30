@@ -37,7 +37,7 @@ use Customize\Service\DeliveryFeeService;
 use Customize\Entity\Shop;
 use Plugin\SubContent43\Entity\SubContent;
 use Eccube\Entity\Shipping;
-use Plugin\SubContent43\Repository\SubContentRepository;
+use Customize\Repository\Plugin\SubContentRepository;
 use Customize\Repository\ProductRepository;
 use Customize\Repository\Plugin\ProductReviewRepository;
 
@@ -115,7 +115,6 @@ class ProductTwigExtention extends AbstractExtension
     /**
      * @var SubContentRepository
      */
-
     private $SubContentRepository;
     private ProductRepository $ProductRepository;
     private ProductReviewRepository $ProductReviewRepository;
@@ -187,6 +186,7 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('NewProducts',[$this, 'setNewProducts']),
             new TwigFunction('BigSale',[$this, 'setBigSalee']),
             new TwigFunction('ProductReview',[ $this->ProductReviewRepository, 'getProductReview']),
+            new TwigFunction('kenjoyNew',[ $this->SubContentRepository, 'getkenjoyNew']),
         ];
     }
 

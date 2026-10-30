@@ -17,11 +17,49 @@
         <img src="{{ asset('assets/img/kenjoy/kenjoybanner.png', 'user_data')}}" alt="KENDO PARK KENJOY">
     </div>
 
-   <h3 class="h4 mb-2 mt-3 ps-3">一覧</h3>
-   <ul class="">
-   {% for holder , Category in  getYaml('KenjoyCategorys.yaml') %}
-    <li>
-        <a href="{{ url('SubContent_Kenjoy_List',{'holder':holder})  }}">{{Category}}</a>
-    </li>
-   {% endfor %}
+    <h3 class="h4 mb-2 mt-3 ps-3">{{'kenjoy_title'|trans}}一覧</h3>
+    <ul class="inner">
+        {% for holder , Category in  getYaml('KenjoyCategorys.yaml') %}
+            <li>
+                <a href="{{ url('SubContent_Kenjoy_List',{'holder':holder})}}">
+                    <span class="btn btn-outline-primary ec-icon"><img src="{{ asset('assets/icon/angle-right.svg') }}"></span>
+                    {{Category}}
+                </a>
+            </li>
+    {% endfor %}
+    </ul>
+    <h3 class="h4 mb-2 mt-3 ps-3">{{'最近の投稿'|trans}}一覧</h3>
+    <ul class="inner ">
+        {% for news in  kenjoyNew(6) %}
+            <li class="news">
+                <div class="image">
+                    <a href="{{ url('Plugin_SubContent_Kenjoy',{'cd':news.parameter})}}">
+                        <img src="{{SC_ThumbUrl(news)}}"></span>
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ url('Plugin_SubContent_Kenjoy',{'cd':news.parameter})}}">
+                        {{news.title}}
+                    </a>    
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <h3 class="h4 mb-2 mt-3 ps-3">{{'話題の投稿'|trans}}一覧</h3>
+    <ul class="inner ">
+        {% for news in  kenjoyNew(6,true) %}
+            <li class="news">
+                <div class="image">
+                    <a href="{{ url('Plugin_SubContent_Kenjoy',{'cd':news.parameter})}}">
+                        <img src="{{SC_ThumbUrl(news)}}"></span>
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ url('Plugin_SubContent_Kenjoy',{'cd':news.parameter})}}">
+                        {{news.title}}
+                    </a>    
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
  </div>

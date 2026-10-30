@@ -20,7 +20,7 @@ a{
 #header_inner{
     max-width: 1400px;
     margin: 0 auto;
-    margin-bottom:30px;
+    margin-bottom:10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -373,50 +373,77 @@ a{
 }
 
 /** kenjoy #################################################################*/
-.kenjoy_page li{
+.kenjoy_area {
+    font-size:14px;
+}
+.kenjoy_area img{
+    /*width: auto !important;*/ 
+    max-width: -webkit-fill-available !important;  /*ブラウザの自動サイズ調整を利用 */
+    max-width: max-content !important;          /* 画像本来の幅を上限にする */
+}
+.kenjoy_area li{
     list-style: none
 }
-.kenjoy_page blockquote {
+.kenjoy_area figcaption{
+    margin-top: 20px;
+    margin-bottom:10px;
+}
+.kenjoy_area blockquote {
     clear: both; 
     margin: 0 0 28px; 
     padding: 20px 25px 20px 25px;
     position: relative; 
     border: 1px #eee solid;
 }
-.kenjoy_page hr{
+.kenjoy_area hr{
     border-bottom: 1px solid #efefef;
     margin: 20px 0;
     clear: both;
 }
+.kenjoy_area p{
+    margin-bottom:10px;
+}
+
 /* サムネイル　*/
-.kenjoy_page .header_text{
+.kenjoy_area .headerText{
     display:flex;
+    width:100%;
     flex-direction: row-reverse;
 }
-.kenjoy_page .header_text div.thumb{
+
+.kenjoy_area .headerText div{
+    width:69%;
+    font-size:14px;
+    margin-right:20px;
+}
+
+.kenjoy_area .headerText div.thumb{
     width:30%
+}
+.kenjoy_area .headerText div.thumb img{
+    width:98%
 }
 .kenjoy_area {
     padding: 10px 30px;
 }
-.kenjoy_page li{ 
+.kenjoy_area li{ 
     list-style: none;
 }
-.kenjoy_page .block-image{
+.kenjoy_area .block-image{
     margin-bottom: 20px;
     max-width:90%;
 }
-.kenjoy_page .image{
+.kenjoy_area .image{
     max-width: 1000px;
 }
-.kenjoy_page .image img{
+.kenjoy_area .image img{
     width: 100%;
 }
-.kenjoy_page .bana{
+.kenjoy_area .bana{
  max-width: 400px;
 }
 
-.kenjoy_page .tiled-gallery img {
+.kenjoy_area .tiled-gallery img {
     display: block;
     height: auto;
     margin: 0;
@@ -427,26 +454,26 @@ a{
     padding: 0;
     width: 100%;
 }
-.kenjoy_page .tiled-gallery ul{
+.kenjoy_area .tiled-gallery ul{
     display: flex;
     width: 95%;
     margin: 20px auto;
 }
-.kenjoy_page .tiled-gallery li{
+.kenjoy_area .tiled-gallery li{
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 0;
 }
-.kenjoy_page .tiled-gallery li.box_1{
+.kenjoy_area .tiled-gallery li.box_1{
     margin-left:5px;
 
 }
-.kenjoy_page .gallery{
+.kenjoy_area .gallery{
     margin: 20px auto;
     width: 95%;
 }
-.kenjoy_page .blocks-gallery-grid{
+.kenjoy_area .blocks-gallery-grid{
     display: grid !important;
     /* 横に3等分の列（カラム）を作る */
     grid-template-columns: repeat(3, 1fr) !important; 
@@ -456,18 +483,18 @@ a{
     list-style: none !important;
     width: 100%;
 }
-.kenjoy_page .blocks-gallery-item{
+.kenjoy_area .blocks-gallery-item{
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
-.kenjoy_page .blocks-gallery-item:nth-child(4) {
+.kenjoy_area .blocks-gallery-item:nth-child(4) {
     grid-column: 1 / span 3 !important;
 }
 
 /* 3. 画像自体のサイズを枠（幅）に合わせて自動縮小させる */
-.kenjoy_page .blocks-gallery-grid img {
+.kenjoy_area .blocks-gallery-grid img {
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important; /* 幅に合わせて高さを比例縮小 */
@@ -475,17 +502,60 @@ a{
     display: block;
 }
 
-
+#kenjoyCategorys{
+    padding-right:20px;
+}
 #kenjoyCategorys a{
     font-size:16px;
     color: #333;
     line-height:2.2;
 }
+#kenjoyCategorys h3{
+    background-color: #193248;
+    color: #fff;
+    line-height: 36px;
+}
 #kenjoyCategorys .logo{
     margin: 0 auto;
-    width:95%;
+    width:100%;
 }
 #kenjoyCategorys img{
     width:100%;
     border-radius: 7px;
+}
+#kenjoyCategorys .inner{
+    padding: left 10px;
+}
+#kenjoyCategorys .inner li{
+    margin-bottom:5px; ;
+}
+#kenjoyCategorys .inner a{
+    font-size: 18px;
+}
+#kenjoyCategorys .inner a span{
+    padding: 2px 6px;
+    margin-right: 10px;
+}
+#kenjoyCategorys .inner a img{
+    width:15px;
+}
+#kenjoyCategorys .inner .news{
+    display: flex;
+    margin-bottom:20px;
+ }
+#kenjoyCategorys .news div:first-child{
+    width: 30%;
+    margin-right:10px;
+}
+#kenjoyCategorys .news div:last-child{
+    width: 69%;
+    max-height: 60px;
+    overflow:hidden;
+}
+#kenjoyCategorys .inner .news a{
+    font-size:14px;
+    line-height: 20px;
+}
+#kenjoyCategorys .inner .news img{
+    width: 100%;
 }
