@@ -1,0 +1,43 @@
+ {#
+ # EC-CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年10月30日作成
+ #
+ # app\template\default\Block\left_banner.twig
+ #
+ #
+ # サブコンテンツ フロント
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<style>
+#left_banne div{
+    width:100%;
+    margin-bottom:30px;
+}
+#left_banne div img{
+    width:98%;
+}
+</style>
+<div id="left_banne" class="block_left">
+    <div>
+        <a href="{{url('shop_list')}}">
+            <img src="{{ asset('assets/img/leftBanner/shop.png', 'user_data')}}" alt="{{'line_alert'|trans}}" >
+        </a>
+    </div>
+
+
+
+
+
+    <div>
+        <a href="{{eccube_config.line_url}}" target="_blank">
+            <img src="{{ asset('assets/img/leftBanner/LINE.png', 'user_data')}}" alt="{{'line_alert'|trans}}" >
+        </a>
+    </div>
+
+
+</div>

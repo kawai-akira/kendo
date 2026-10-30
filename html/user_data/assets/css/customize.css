@@ -304,18 +304,7 @@ a{
     font-size: 15px !important;
 }
 
-.SubContent blockquote {
-    clear: both; 
-    margin: 0 0 28px; 
-    padding: 30px 20px 35px 55px;
-    position: relative; 
-    border: 1px #eee solid;
-}
-.SubContent hr{
-    border-bottom: 1px solid #efefef;
-    margin: 20px 0;
-    clear: both;
-}
+
 .ItemOption div{
     font-size:12px;
 }
@@ -384,9 +373,109 @@ a{
 }
 
 /** kenjoy #################################################################*/
-.SubContent_Page li{
+.kenjoy_page li{
     list-style: none
 }
+.kenjoy_page blockquote {
+    clear: both; 
+    margin: 0 0 28px; 
+    padding: 20px 25px 20px 25px;
+    position: relative; 
+    border: 1px #eee solid;
+}
+.kenjoy_page hr{
+    border-bottom: 1px solid #efefef;
+    margin: 20px 0;
+    clear: both;
+}
+/* サムネイル　*/
+.kenjoy_page .header_text{
+    display:flex;
+    flex-direction: row-reverse;
+}
+.kenjoy_page .header_text div.thumb{
+    width:30%
+}
+.kenjoy_area {
+    padding: 10px 30px;
+}
+.kenjoy_page li{ 
+    list-style: none;
+}
+.kenjoy_page .block-image{
+    margin-bottom: 20px;
+    max-width:90%;
+}
+.kenjoy_page .image{
+    max-width: 1000px;
+}
+.kenjoy_page .image img{
+    width: 100%;
+}
+.kenjoy_page .bana{
+ max-width: 400px;
+}
+
+.kenjoy_page .tiled-gallery img {
+    display: block;
+    height: auto;
+    margin: 0;
+    margin-top:5px;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+    padding: 0;
+    width: 100%;
+}
+.kenjoy_page .tiled-gallery ul{
+    display: flex;
+    width: 95%;
+    margin: 20px auto;
+}
+.kenjoy_page .tiled-gallery li{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+}
+.kenjoy_page .tiled-gallery li.box_1{
+    margin-left:5px;
+
+}
+.kenjoy_page .gallery{
+    margin: 20px auto;
+    width: 95%;
+}
+.kenjoy_page .blocks-gallery-grid{
+    display: grid !important;
+    /* 横に3等分の列（カラム）を作る */
+    grid-template-columns: repeat(3, 1fr) !important; 
+    gap: 8px; /* 画像同士のすき間（お好みで調整） */
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    width: 100%;
+}
+.kenjoy_page .blocks-gallery-item{
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.kenjoy_page .blocks-gallery-item:nth-child(4) {
+    grid-column: 1 / span 3 !important;
+}
+
+/* 3. 画像自体のサイズを枠（幅）に合わせて自動縮小させる */
+.kenjoy_page .blocks-gallery-grid img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important; /* 幅に合わせて高さを比例縮小 */
+    object-fit: cover !important; /* 画像の比率が崩れて歪むのを防ぐ */
+    display: block;
+}
+
+
 #kenjoyCategorys a{
     font-size:16px;
     color: #333;
@@ -399,83 +488,4 @@ a{
 #kenjoyCategorys img{
     width:100%;
     border-radius: 7px;
-}
-
-#kenjoy {
-    padding: 10px 30px;
-}
-#kenjoy li{ 
-    list-style: none;
-}
-#kenjoy .block-image{
-    margin-bottom: 20px;
-    max-width:90%;
-}
-#kenjoy .image{
-    max-width: 1000px;
-}
-#kenjoy .image img{
-    width: 100%;
-}
-#kenjoy .bana{
- max-width: 400px;
-}
-
-#kenjoy .tiled-gallery img {
-    display: block;
-    height: auto;
-    margin: 0;
-    margin-top:5px;
-    max-width: 100%;
-    object-fit: cover;
-    object-position: center;
-    padding: 0;
-    width: 100%;
-}
-#kenjoy .tiled-gallery ul{
-    display: flex;
-    width: 95%;
-    margin: 20px auto;
-}
-#kenjoy .tiled-gallery li{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0;
-}
-#kenjoy .tiled-gallery li.box_1{
-    margin-left:5px;
-
-}
-#kenjoy .gallery{
-    margin: 20px auto;
-    width: 95%;
-}
-#kenjoy .blocks-gallery-grid{
-    display: grid !important;
-    /* 横に3等分の列（カラム）を作る */
-    grid-template-columns: repeat(3, 1fr) !important; 
-    gap: 8px; /* 画像同士のすき間（お好みで調整） */
-    padding: 0 !important;
-    margin: 0 !important;
-    list-style: none !important;
-    width: 100%;
-}
-#kenjoy .blocks-gallery-item{
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-#kenjoy .blocks-gallery-item:nth-child(4) {
-    grid-column: 1 / span 3 !important;
-}
-
-/* 3. 画像自体のサイズを枠（幅）に合わせて自動縮小させる */
-#kenjoy .blocks-gallery-grid img {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important; /* 幅に合わせて高さを比例縮小 */
-    object-fit: cover !important; /* 画像の比率が崩れて歪むのを防ぐ */
-    display: block;
 }

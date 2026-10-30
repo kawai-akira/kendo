@@ -14,7 +14,7 @@
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
 {% extends 'default_frame.twig' %}
-{% set body_class = 'SubContent_Page' %}
+{% set body_class = 'kenjoy_page' %}
 {% block stylesheet %}
 <style type="text/css">
 #subcontent_area{
@@ -34,13 +34,11 @@
 </script>
 {% endblock %}
 {% block main %}
-<div class="{{SC_Class(SubContent) }}" id="SubContent_{{ SubContent.id}}">
+<div class="kenjoy_area" id="kenjoy_{{SubContent.parameter}}">
 	{% if SubContent.Html is not null %}
-		<div id="kenjoy" class="kenjoy">
- 			{{kenjoyDate(SubContent)|raw}}    
+			{{kenjoyDate(SubContent)|raw}}    
         	<h2>{{SubContent.title}}</h2>
 			{{ SubContent.html|raw }}
-    	</div>
 	{% endif %}
 </div>
 {% endblock %}
