@@ -15,39 +15,72 @@
  ##############################################################}
 {% extends 'default_frame.twig' %}
 {% set body_class = 'kenjoy_page' %}
+{% block stylesheet %}
+<style>
+    #kenjoy_list h3{
+        margin-top:5px;
+        font-size:18px;
+    }
+    #kenjoy_list .dateContent{
+        display: none;
+    }
+    #kenjoy_list .kenjoy-content{
+        border-bottom: 1px solid #999;
+        margin-bottom:20px;
+        padding-bottom:5px;
+    }
+</style>
+{% endblock %}
+{% block javascript %}
+<script>
+    $(function(){
+        $(".dateContent").each(function(i,e){		
+        var header =  $(this).find('.headerText div:last').html();
+        $("#content_" + i).html(header); 	
+    });	
 
+
+
+    })
+</script>
+{% endblock %}
 {% block main %}
-    <form name="form1" id="form1" method="get" action="?">
-                {% for item in form %}
-                    <input type="hidden" id="{{ item.vars.id }}"
-                           name="{{ item.vars.full_name }}"
-                           {% if item.vars.value is not empty %}value="{{ item.vars.value }}" {% endif %}/>
-                {% endfor %}
-    </form>
+<form name="form1" id="form1" method="get" action="{{url('SubContent_Kenjoy_List' ,{holder:holder})}}">
+    {% for item in form %}
+        <input type="hidden" id="{{ item.vars.id }}"
+                name="{{ item.vars.full_name }}"
+                {% if item.vars.value is not empty %}value="{{ item.vars.value }}" {% endif %}/>
+    {% endfor %}
 
+<div class="kenjoy_area" id="kenjoy_list">
+<h2>{{ subtitle }}一覧</h2>
 {% if pagination.totalItemCount > 0 %}
     <div class="ec-shelfRole">
-        <ul class="ec-shelfGrid">
+        <ul>
             {% for SubContent in pagination %}
            
                 <li class="kenjoy-content">
                     <a href="{{ url('Plugin_SubContent_Kenjoy', {'cd': SubContent.parameter}) }}">
                         {{ kenjoyDate(SubContent)|raw }}
-                            
-                        <p>{{ SubContent.title }}</p>
-                        <div class='Content'>
+                        <h3>{{ SubContent.title }}</h3>
+
+                        <div class="headerText">
+                        <div class="thumb"><img src="{{ SC_ThumbUrl(SubContent)}}"/></div>
+                        <div id="content_{{loop.index0 }}"></div>
+                        </div>
+                        <div class='dateContent'>
                          {% set Content = SC_Converter(SubContent) %}
-                            {{Content.html|raw}}
-                        </div>    
-                    </a>
+                            {{ Content.html|raw}}
+                        </div>
+                      </a>
                 </li>    
             {% endfor %}
         </ul>
     </div>
     <div class="ec-pagerRole">
-        {#% include "pager.twig" with {'pages': pagination.paginationData} %#}
+        {% include "Kenjoy/Parts/pager.twig" with {'pages': pagination.paginationData,'holder':holder} %}
     </div>
 {% endif %}
-
-
+</div>
+</form>
 {% endblock %}

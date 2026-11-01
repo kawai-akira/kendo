@@ -513,7 +513,9 @@ a{
 #kenjoyCategorys h3{
     background-color: #193248;
     color: #fff;
-    line-height: 36px;
+    line-height: 42px;
+    margin-top:30px;
+    margin-bottom: 20px;
 }
 #kenjoyCategorys .logo{
     margin: 0 auto;
@@ -523,8 +525,9 @@ a{
     width:100%;
     border-radius: 7px;
 }
-#kenjoyCategorys .inner{
-    padding: left 10px;
+#kenjoyCategorys ul.inner{
+    padding-left: 10px;
+    margin-bottom: 30px;
 }
 #kenjoyCategorys .inner li{
     margin-bottom:5px; ;
@@ -558,4 +561,15 @@ a{
 }
 #kenjoyCategorys .inner .news img{
     width: 100%;
+}
+#kenjoyCategorys .inner a.btn{
+    font-size:12px;
+}
+.kenjoy_page .ec-layoutRole__header{
+    position: fixed;
+    top: 0;             /* 上部に固定 */
+    width: 100%      /* ヘッダーの幅を指定 */
+}
+.kenjoy_page .ec-layoutRole__contentTop{
+    margin-top: 250px;
 }

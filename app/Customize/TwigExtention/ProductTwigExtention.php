@@ -36,13 +36,12 @@ use Customize\Service\OptionService;
 use Customize\Service\DeliveryFeeService;
 use Customize\Entity\Shop;
 use Plugin\SubContent43\Entity\SubContent;
+use Plugin\SubContent43\Service\ScService;
 use Eccube\Entity\Shipping;
 use Customize\Repository\Plugin\SubContentRepository;
 use Customize\Repository\ProductRepository;
 use Customize\Repository\Plugin\ProductReviewRepository;
-
-
-
+use HTMLPurifier_AttrDef_HTML_Class;
 
 class ProductTwigExtention extends AbstractExtension
 {
@@ -83,6 +82,7 @@ class ProductTwigExtention extends AbstractExtension
     private const HeaderLogo            = 'Block\Parts\logo.twig';
     private const HeaderLogin           = 'Block\Parts\login.twig';
     private const TopProducts           = 'Block\Parts\TopProducts.twig';
+    private const HeaderClass           = 'headerText';
 
 
    /**
@@ -118,6 +118,7 @@ class ProductTwigExtention extends AbstractExtension
     private $SubContentRepository;
     private ProductRepository $ProductRepository;
     private ProductReviewRepository $ProductReviewRepository;
+    private ScService $ScService;
 
     /**
      *
@@ -134,6 +135,7 @@ class ProductTwigExtention extends AbstractExtension
             ,SubContentRepository $SubContentRepository
             ,ProductRepository $ProductRepository
             ,ProductReviewRepository $ProductReviewRepository
+            ,ScService $ScService
 
 
     ) {
@@ -145,7 +147,8 @@ class ProductTwigExtention extends AbstractExtension
         $this->DeliveryFeeService = $DeliveryFeeService;
         $this->SubContentRepository = $SubContentRepository;
         $this->ProductRepository = $ProductRepository;
-        $this->ProductReviewRepository = $ProductReviewRepository; 
+        $this->ProductReviewRepository = $ProductReviewRepository;
+        $this->ScService = $ScService; 
     }
 
     public function getFunctions()
@@ -187,8 +190,10 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('BigSale',[$this, 'setBigSalee']),
             new TwigFunction('ProductReview',[ $this->ProductReviewRepository, 'getProductReview']),
             new TwigFunction('kenjoyNew',[ $this->SubContentRepository, 'getkenjoyNew']),
+
         ];
     }
+
 
 
 

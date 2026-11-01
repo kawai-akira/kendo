@@ -83,11 +83,12 @@
 	}
 
    /**
-  	* @Route("/SubContent/{cd}" , requirements={"cd" = "\w+"}, name="Plugin_SubContent_Index")
+  	* @Route("/SubContent/{cd}" , requirements={"cd" = "\w*"}, name="Plugin_SubContent_Index")
 	* @Template("@SubContent43/default/index.twig")
     */
-	public function index(Request $request,PaginatorInterface $paginator,$cd = null){
+	public function index(Request $request,PaginatorInterface $paginator, $cd = ''){
 	
+
 
 		$Twig =self::Twig;
 		$UrlName = $request->get('_route');
@@ -152,6 +153,9 @@
 			case $cd:
 
 					$SubContent = $this->SubContentRepository->findOneBy(['Config'=>$Config->getId(),'parameter' => $cd]);
+				break;
+			case !$cd:
+					$SubContent = $this->SubContentRepository->find(7);
 				break;
 
 		}

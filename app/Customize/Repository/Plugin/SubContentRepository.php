@@ -59,9 +59,17 @@ class SubContentRepository extends \Plugin\SubContent43\Repository\SubContentRep
             ->setParameter('Config' , $Config)
             ->OrderBy('T.text03', 'DESC')
             ->addOrderBy('T.create_date','DESC');
+        
+        
+
         if($Holder){
-            $qb->andWhere('T.holder = :Holder')
-            ->setParameter('Holder',$Holder);
+            if ('mix' == $Holder){
+                $qb->andWhere($qb->expr()->in('T.holder', ':Holders'))
+                    ->setParameter('Holders',['keiko','kendo-bogu']);
+            }else{
+                $qb->andWhere('T.holder = :Holder')
+                ->setParameter('Holder',$Holder);
+            }
         }    
 
 

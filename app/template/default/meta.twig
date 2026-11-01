@@ -26,7 +26,7 @@
     {% else %}
         {% set KenjoyTiTle = 'kenjoy_title'|trans %}
         {% set KenJoyDescription = 'kenjoy_description'|trans %}
-        {% set meta_canonical = url('Plugin_SubContent_Kenjoy ,{cd:null}') %}
+        {% set meta_canonical = url('Plugin_SubContent_Kenjoy' ,{cd:null}) %}
         {% set KenjoyImage    = asset('assets/img/Slider/kndopark.png', 'user_data') %}
     {% endif %}
         <meta property="og:title" content="{{ KenjoyTiTle }}" />

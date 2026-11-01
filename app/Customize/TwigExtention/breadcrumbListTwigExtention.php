@@ -71,7 +71,7 @@ class breadcrumbListTwigExtention extends AbstractExtension
         $Category = null;
         $Name     = null;
         $joyMemo  = null;
-    
+        $joyMemolist   = null;
             switch($UrlName = $this->CommonService->getUrlName()){
 
             case 'product_list':
@@ -108,8 +108,12 @@ class breadcrumbListTwigExtention extends AbstractExtension
 
             case  'SubContent_Kenjoy_List':
                 $Page = $this->em->getRepository(Page::class)->getPageByRoute($UrlName);
-                $joyMemo = $Page->getName();
-                $Name = $this->CommonService->getYamlValue('KenjoyCategorys.yaml',$data);
+                $joyMemolist = $Page->getName();
+                if ($data){
+                    $Name = $this->CommonService->getYamlValue('KenjoyCategorys.yaml',$data);
+                }else{
+                    $Name = trans('kenjoy_title_all'); 
+                }
                 break;
             case 'contact':
             case 'help_faq':
@@ -140,6 +144,7 @@ class breadcrumbListTwigExtention extends AbstractExtension
         'Name'     => $Name,
         'Shop'     => $Shop,
         'joyMemo'  => $joyMemo,
+        'joyMemolist'  => $joyMemolist,
       
 
       

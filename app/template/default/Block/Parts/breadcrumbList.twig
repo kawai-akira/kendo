@@ -59,6 +59,13 @@
                     </a>    
                 </li>
             {% endif %}
+            {% if joyMemolist is not null %}
+                <li class="breadcrumb-item">
+                    <a href="{{url('SubContent_Kenjoy_List' ,{holder:null})}}">
+                        {{ joyMemolist }}
+                    </a>    
+                </li>
+            {% endif %}
             {% if Name is not null %}
                 <li class="breadcrumb-item">
                     {{ Name }}
