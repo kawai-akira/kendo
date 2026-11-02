@@ -1,5 +1,4 @@
 <?php
-
    /**
     * @version EC-CUBE4.3
     * @copyright 株式会社 翔 kakeru.co.jp
