@@ -574,3 +574,8 @@ a{
 .kenjoy_page .ec-layoutRole__contentTop{
     margin-top: 250px;
 }
+@media only screen and (min-width: 768px){
+    .ec-off2Grid .ec-off2Grid__cell {
+        width: 80%;
+    }
+}

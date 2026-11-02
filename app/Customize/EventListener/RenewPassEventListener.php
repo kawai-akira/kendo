@@ -128,7 +128,7 @@
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
         
-        $this->MailService->sendPasswordResetNotificationMail($Customer,$resetUrl);
+        $this->MailService->sendPasswordResetNotificationMail($Customer,$resetUrl,true);
        
         // ★ ログイン画面へ戻す
             throw new CustomUserMessageAuthenticationException(

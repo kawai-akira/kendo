@@ -26,8 +26,8 @@ use Eccube\Entity\Customer;
 #use Eccube\Entity\Order;
 #use Eccube\Entity\OrderItem;
 #use Eccube\Entity\Shipping;
-#use Eccube\Event\EccubeEvents;
-#use Eccube\Event\EventArgs;
+use Eccube\Event\EccubeEvents;
+use Eccube\Event\EventArgs;
 use Eccube\Repository\BaseInfoRepository;
 use Eccube\Repository\MailHistoryRepository;
 use Eccube\Repository\MailTemplateRepository;
@@ -207,6 +207,70 @@ const BirthdayMail    = 11;
         }
     }
 
+        /**
+     * Send password reset notification mail.
+     *
+     * @param $Customer 会員情報
+     * @param string $reset_url
+     */
+    public function sendPasswordResetNotificationMail(Customer $Customer, $reset_url, $flg = false)
+    {
+        log_info('パスワード再発行メール送信開始');
+
+        $MailTemplate = $this->mailTemplateRepository->find($this->eccubeConfig['eccube_forgot_mail_template_id']);
+        $body = $this->twig->render($MailTemplate->getFileName(), [
+            'BaseInfo' => $this->BaseInfo,
+            'Customer' => $Customer,
+            'expire' => $this->eccubeConfig['eccube_customer_reset_expire'],
+            'reset_url' => $reset_url,
+            'flg' => $flg,
+        ]);
+
+       // echo $body ;exit;
+        $message = (new Email())
+            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
+            ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
+            ->bcc($this->BaseInfo->getEmail01())
+            ->replyTo($this->BaseInfo->getEmail03())
+            ->returnPath($this->BaseInfo->getEmail04());
+
+        // HTMLテンプレートが存在する場合
+        $htmlFileName = $this->getHtmlTemplate($MailTemplate->getFileName());
+        if (!is_null($htmlFileName)) {
+            $htmlBody = $this->twig->render($htmlFileName, [
+                'BaseInfo' => $this->BaseInfo,
+                'Customer' => $Customer,
+                'expire' => $this->eccubeConfig['eccube_customer_reset_expire'],
+                'reset_url' => $reset_url,
+                'flg' => $flg,
+            ]);
+
+            $message
+                ->text($body)
+                ->html($htmlBody);
+        } else {
+            $message->text($body);
+        }
+
+        $event = new EventArgs(
+            [
+                'message' => $message,
+                'Customer' => $Customer,
+                'BaseInfo' => $this->BaseInfo,
+                'resetUrl' => $reset_url,
+            ],
+            null
+        );
+        $this->eventDispatcher->dispatch($event, EccubeEvents::MAIL_PASSWORD_RESET);
+
+        try {
+            $this->mailer->send($message);
+            log_info('パスワード再発行メール送信完了');
+        } catch (TransportExceptionInterface $e) {
+            log_critical($e->getMessage());
+        }
+    }
 
 
 
