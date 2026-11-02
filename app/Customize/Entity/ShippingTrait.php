@@ -30,7 +30,11 @@
         {
 
         $Items = $this->getProductOrderItems();
-        return $Items[0]->getShop();
+        if(!$Shop = $Items[0]->getShop()){
+           $Shop = $Items[0]->getProduct()->getShop();
+        };
+        return $Shop;
+
 
         }
     }

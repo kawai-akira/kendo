@@ -13,11 +13,12 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
- <style>
+<style>
     #colume_area .inner{
         display:flex;
         flex-wrap: wrap;	
-        gap: 10px; 	
+        gap: 10px;
+		padding-left:0px;
 
     }
     #colume_area .inner li{
@@ -25,12 +26,12 @@
         margin-bottom:10px;
     }
 
- </style>   
- <div id="colume_area" class="top_block">
+</style>   
+<div id="colume_area" class="top_block">
     <h2 class="block_title">剣道コラム</h2>
     <ul class="inner">
 		<li>
-			<a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'kendo-rule'} ) }}kendo-rule">
+			<a href="{{url('Plugin_SubContent_Kenjoy' ,{cd:'kendo-rule'} ) }}">
 				<img src="{{ asset('assets/img/column/rule.png', 'user_data')}}" alt="剣道のルールを知ろう！！">
 			</a>
 

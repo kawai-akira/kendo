@@ -31,6 +31,7 @@ use Plugin\SubContent43\Service\ScService;
 use Plugin\SubContent43\Validator as Valid;
 use Plugin\SubContent43\Form\Type\ConfigEntityType;
 
+
 class SubContentEditType extends AbstractType
 {
     /**
@@ -112,8 +113,13 @@ class SubContentEditType extends AbstractType
                     ])
                 ],
             ])
-            ->add('holder', TextType::class, [
+            ->add('holder', ChoiceType::class, [
                 'required' => false,
+                'choices' =>  $this->ScService->GetYaml('KenjoyCategorys.yaml',true,$this->ScService->GetConfig('Customize_Yaml_dir')),
+                'multiple' => false,
+                'expanded' => false,
+                'placeholder' => '選択してください',
+/*                
                 'constraints' => [
                     new Assert\Regex(['pattern' => $this->ScService->GetConfig('Plugin_SubContent_Holder_Limit'),'message'=>'SubContent.Common.ErrorMessage01']),
                     new Valid\UniqueParts([
@@ -121,6 +127,7 @@ class SubContentEditType extends AbstractType
                         'SubContent'   => $options['data'],            
                     ])
                 ],
+*/
             ])
             ->add('parameter', TextType::class, [
                 'label' => 'パラメーター',
@@ -142,7 +149,7 @@ class SubContentEditType extends AbstractType
                       new Assert\Length(['max' =>  $this->ScService->GetConfig('eccube_stext_len')]),
                 ],
             ])
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'label' => 'description',
                 'required' => false,
                 'attr'=>[
@@ -211,6 +218,18 @@ class SubContentEditType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
+
+            ->add('thumbnail', TextType::class, [
+                'label' => 'サムネイル',
+                'required' => false,
+                'attr'=>[
+                        'placeholder'=>'サムネイルを指定してください'
+                ],
+                'constraints' => [
+                       new Assert\Length(['max' => $this->ScService->GetConfig('eccube_stext_len')]),
+                ],
+            ])
+
 /* 追加項目 追加項目として TEXTを用意しています
             ->add('text01', TextType::class, [
                 'label' => 'サムネイル', 

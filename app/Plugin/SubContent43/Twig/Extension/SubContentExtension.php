@@ -123,8 +123,7 @@ class SubContentExtension extends AbstractExtension
 
     public function SetImageList($Id = null){
 
-        if(is_null($Id)){return ;}
-
+ 
         $Images =$this->ScService->GetImageList($Id);
  
         if (count($Images)<1){return ;}
