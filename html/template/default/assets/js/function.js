@@ -52,6 +52,7 @@ $(function() {
         $('.ec-layoutRole').toggleClass('is_active');
         $('.ec-drawerRole').toggleClass('is_active');
         $('.ec-drawerRoleClose').toggleClass('is_active');
+        $('.ec-headerNavSP').hide();
         $('body').toggleClass('have_curtain');
     });
 
@@ -59,6 +60,7 @@ $(function() {
         $('body').removeClass('have_curtain');
         $('.ec-layoutRole').removeClass('is_active');
         $('.ec-drawerRole').removeClass('is_active');
+        $('.ec-headerNavSP').show();
         $('.ec-drawerRoleClose').removeClass('is_active');
     });
 
@@ -66,6 +68,7 @@ $(function() {
         $('body').removeClass('have_curtain');
         $('.ec-layoutRole').removeClass('is_active');
         $('.ec-drawerRole').removeClass('is_active');
+        $('.ec-headerNavSP').show();
         $('.ec-drawerRoleClose').removeClass('is_active');
     });
 
@@ -101,16 +104,23 @@ $(function() {
 
     // スマホのドロワーメニュー内の下層カテゴリ表示
     // TODO FIXME スマホのカテゴリ表示方法
-    $('.ec-itemNav ul a').click(function() {
-        var child = $(this).siblings();
-        if (child.length > 0) {
-            if (child.is(':visible')) {
-                return true;
-            } else {
-                child.slideToggle();
-                return false;
-            }
-        }
+    $('.ec-itemNav ul span').click(function() {
+        var parentLi = $(this).closest('li');
+        var child = parentLi.find('ul');
+        child.slideToggle();
+        var span = parentLi.find('span');;
+        span.slideToggle();
+        
+        
+//        var child = $(this).siblings();
+//        if (child.length > 0) {
+//            if (child.is(':visible')) {
+//                return true;
+//            } else {
+//                child.slideToggle();
+//                return false;
+//            }
+ //       }
     });
 
     // イベント実行時のオーバーレイ処理

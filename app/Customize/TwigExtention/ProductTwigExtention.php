@@ -190,14 +190,22 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('BigSale',[$this, 'setBigSalee']),
             new TwigFunction('ProductReview',[ $this->ProductReviewRepository, 'getProductReview']),
             new TwigFunction('kenjoyNew',[ $this->SubContentRepository, 'getkenjoyNew']),
+            new TwigFunction('spCategory',[ $this, 'setspCategory']),
 
         ];
     }
 
 
+    public function setspCategory(Category $Category){
+
+        if($Category->getHierarchy()>1){return  false;}
+     
+        if($Category->countBranches()<2){return false;}
+
+        return true;
 
 
-
+    }
     public function setBigSalee(){
         $Products = $this->ProductRepository->getBigSele();
         return $this->setTopProducts($Products);

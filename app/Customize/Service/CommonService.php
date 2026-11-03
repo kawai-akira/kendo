@@ -225,9 +225,6 @@ class CommonService{
         return $this->Request->query->all();
     }*/
 
-
-    
-
     public function getRemmendTitle($flg = false ){
 
         $Re = [];
