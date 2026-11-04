@@ -82,7 +82,7 @@ class ProductTwigExtention extends AbstractExtension
     private const HeaderLogo            = 'Block\Parts\logo.twig';
     private const HeaderLogin           = 'Block\Parts\login.twig';
     private const TopProducts           = 'Block\Parts\TopProducts.twig';
-    private const HeaderClass           = 'headerText';
+    private const RankingColor          = ['#FF8F00','#999AA4','#B43100','#696BCD','#1D1D2D'];
 
 
    /**
@@ -191,10 +191,14 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('ProductReview',[ $this->ProductReviewRepository, 'getProductReview']),
             new TwigFunction('kenjoyNew',[ $this->SubContentRepository, 'getkenjoyNew']),
             new TwigFunction('spCategory',[ $this, 'setspCategory']),
+            new TwigFunction('RankingColor',[ $this, 'getRankingColor']),
 
         ];
     }
 
+    public function getRankingColor(int $i){
+        return self::RankingColor[$i] ?? '#333';
+    }
 
     public function setspCategory(Category $Category){
 
@@ -226,7 +230,7 @@ class ProductTwigExtention extends AbstractExtension
         return $this->Twig->render(self::TopProducts, [
           'Products' => $Products,
           'rankFlg' => $rankFlg,
-          'color'   => ['#FF8F00','#999AA4','#B43100','#696BCD','#1D1D2D'],
+          'color'   => self::RankingColor,
         ]);                    
 
 
