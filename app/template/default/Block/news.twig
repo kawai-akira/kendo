@@ -16,19 +16,34 @@
 {% set NewsList = repository('Eccube\\Entity\\News').getList() %}
 
 {% block stylesheet %}
-<style>
-.ec-newsRole{
-    padding-top: 0;
-}
-.ec-newsRole .ec-newsRole__news {
-    border: 0; 
-    padding:0;
-}
-.ec-newsRole .btn_block{
-    text-align:right;
-    padding-top:10px;
-}
-</style>
+    <style>
+    .ec-newsRole{
+        padding-top: 0;
+        margin-bottom:50px;
+    }
+    .ec-newsRole .ec-newsRole__news {
+        border: 0; 
+        padding:0;
+    }
+    .ec-newsRole .btn_block{
+        text-align:right;
+        padding-top:10px;
+    }
+    #news_readmore{
+        display:block;
+        margin: 10px auto;
+        width: 90%;
+    }
+    @media only screen and (min-width: 992px){
+        #news_readmore{
+           /* display:inline*/;
+            width: 100px;
+            margin-left:auto;
+            margin-right:0;
+        }
+    }    
+
+    </style>
 {% endblock stylesheet %}
 {% block javascript %}
     <script>
@@ -39,7 +54,7 @@
                     $(this).find('.ec-newsRole__newsItem:gt(4)').each(function() {
                         $(this).hide();
                     });
-                    $(this).append('<div class="btn_block"><a id="news_readmore" class="btn btn-outline-dark">{{ 'more'|trans }}</a></div>');
+                    $(this).append('<a id="news_readmore" class="btn btn-outline-dark">{{ 'more'|trans }}</a>');
                     var dispNum = 5;
                     $(this).find('#news_readmore').click(function() {
                         dispNum += 5;
@@ -66,9 +81,12 @@
         });
     </script>
 {% endblock %}
-    <div class="ec-newsRole top_block">
+<div class="ec-role">
+    <div class="ec-newsRole">
         <div class="ec-secHeading">
-            <h2>{{ '新着情報'|trans }}</h2>
+            <span class="ec-secHeading__en">{{ 'NEWS'|trans }}</span>
+            <span class="ec-secHeading__line"></span>
+            <span class="ec-secHeading__ja">{{ '新着情報'|trans }}</span>
         </div>
         <div class="ec-newsRole__news">
             {% for News in NewsList %}
@@ -101,3 +119,4 @@
             {% endfor %}
         </div>
     </div>
+</div>

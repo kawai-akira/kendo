@@ -15,23 +15,38 @@
  ##############################################################}
 <style>
 #media_area .inner{
-    display:flex;
-    flex-wrap: wrap;
-    gap: 10px;  
+    width:90%;
+    margin:15px auto ;
 }
 #media_area .box01{
-    width:49%;
+    text-align:center;
 }
 #media_area .right-wrap img{
     width:95%;
 }
+#media_area iframe {
+  width: 100%;           
+  max-width: 800px;      
+  height: auto;          
+  aspect-ratio: 16 / 9
+}
+@media only screen and (min-width: 992px){
+    #media_area .inner{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;  
+}
+    #media_area .box01{
+    width:49%;
+    }
+}    
 </style>
 <div id="media_area" class="top_block">
     <div class="inner">
         <div class="tv-wrap box01">
             <h2 class="block_title">テレビ出演映像</h2>
             <div class="movie-wrap">
-                <iframe width="500" height="281.25" src="https://www.youtube.com/embed/ZcoSVWNRgbY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe {# height="281.25" #}src="https://www.youtube.com/embed/ZcoSVWNRgbY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
         <div class="right-wrap box01">

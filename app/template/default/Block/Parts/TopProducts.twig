@@ -24,8 +24,8 @@
                 <div class="product_list__description_list">
                     {{Product.description_list|raw|nl2br }}
                 </div>
+                <div class="product_list__shop_name">{{ Product.Shop.shop_name }}</div>
                 <dl>
-                    <p class="product_list__shop_name">{{ Product.Shop.shop_name }}</p>
                     <dt><h3 class="item_name">{{ Product.name }}</h3></dt>
                     <dd class="item_price">
                         <p class="normal_price">

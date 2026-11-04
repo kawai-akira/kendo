@@ -14,13 +14,12 @@
  ##############################################################}
  <style>
 #Bannerarea .inner{
-    display:flex;
-    flex-wrap: wrap;
-    gap: 4px;  
+  
 }
 #Bannerarea .box01{
-    width:49.5%;
-    margin-bottom:10px;
+    width:90%;
+    margin: 0 auto 30px;
+    text-align: center;
 }
 #Bannerarea .title{
     display:flex;
@@ -30,6 +29,9 @@
     font-size:11px;
     padding: 2px 6px;
     height:25px;
+}
+#Bannerarea .Review{
+    margin: 10px, 0 30px;
 }
 #Bannerarea .Review h3{
     margin-top: 0 ;
@@ -50,6 +52,21 @@
 #Bannerarea .Review li span{
     margin-right: 10px;
 }
+@media only screen and (min-width: 992px){
+    #Bannerarea .inner{
+        display:flex;
+        flex-wrap: wrap;
+        gap: 4px;  
+    }
+    #Bannerarea .box01{
+        margin: 0 0 10px;
+        width:49.5%;
+        text-align:left;
+    }
+    #Bannerarea .Review{
+    margin-bottom: 10px;
+}
+} 
 </style>
 <div id="Bannerarea" class="ec-rolea top_block"> 
     <div class="inner">
@@ -60,7 +77,7 @@
         </div>
         <div class="box01 Review">
             <div class="title">
-                <h3>お客様の声</h3>
+                <h3>クリーニングお客様の声</h3>
                 <a href="{{url('product_detail',{id:2702})}}#redirect_review" class="btn btn-outline-dark">もっと見る</a>
             </div>
             <ul>

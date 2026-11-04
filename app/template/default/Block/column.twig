@@ -14,6 +14,9 @@
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
 <style>
+	#colume_area{
+		width:95%;
+	}
     #colume_area .inner{
         display:flex;
         flex-wrap: wrap;	
@@ -22,10 +25,17 @@
 
     }
     #colume_area .inner li{
-        width:32%;
+        width:48%;
         margin-bottom:10px;
     }
-
+@media only screen and (min-width: 992px){
+		#colume_area{
+		width:100%;
+	}
+	#colume_area .inner li{
+        width:32%;
+    }
+}
 </style>   
 <div id="colume_area" class="top_block">
     <h2 class="block_title">剣道コラム</h2>
