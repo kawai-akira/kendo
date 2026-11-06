@@ -21,7 +21,7 @@
 <section id="SubContent" class="SubContent_part">
     <div class="{{SC_Class(SubContent) }}" id="SubContent_part{{ SubContent.id}}">
     {% if titleFlg %}
-    <h2>{{ SubContent.Title }}</h2> 
+    <h2>{{ SubContent.Title|raw}}</h2> 
     {% endif %}
 	{% if SubContent.html is not null %}
     	{{ SubContent.html|raw}}

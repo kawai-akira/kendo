@@ -37,7 +37,7 @@
 <div class="kenjoy_area" id="kenjoy_{{SubContent.parameter}}">
 	{% if SubContent.Html is not null %}
 			{{kenjoyDate(SubContent)|raw}}    
-        	<h2>{{SubContent.title}}</h2>
+        	<h2>{{SubContent.title|raw}}</h2>
 			{{ SubContent.html|raw }}
 	{% endif %}
 </div>

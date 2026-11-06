@@ -4,7 +4,7 @@
  #
  # 2026年09月19日作成
  #
- # app\template\default\default_frame.twig
+ # app\template\default\Block\slider.twig
  #
  # 
  #
@@ -48,7 +48,7 @@
         }
         .item img {
             width:100%;
-            height:500px;
+            height:auto;
         }
 
 
@@ -77,7 +77,7 @@
         </div> 
         <div class="item">
             <a href="{{url('product_list')}}?shop=51">
-                <img src="{{ asset('assets/img/Slider/doren_slider.jpg', 'user_data')}}" height="500" alt="全日本剣道道場連">
+                <img src="{{ asset('assets/img/Slider/NotForSale.jpeg', 'user_data')}}" height="500" alt="全日本剣道道場連非売品">
             </a>
         </div> 
         <div class="item">
@@ -86,28 +86,28 @@
             </a>
         </div> 
         <div class="item">
-            <a href="{{url('product_list')}}?shop=50>?category_id=75" alt="お得な竹刀セット">
-                <img src="{{ asset('assets/img/Slider/shinaiset.png', 'user_data')}}" >
+            <a href="{{url('product_list')}}?shop=50>?category_id=75" >
+                <img src="{{ asset('assets/img/Slider/shinaiSet.jpeg', 'user_data')}}" alt="お得な竹刀セット" >
             </a>
         </div> 
         <div class="item">
             <a href="{{url('product_list')}}?category_id=82">
-                <img src="{{ asset('assets/img/Slider/reika-5.jpg', 'user_data')}}" alt="信武 【礼華】女性専用ジャージ剣道着">
+                <img src="{{ asset('assets/img/Slider/reika.jpeg', 'user_data')}}" alt="信武 【礼華】女性専用ジャージ剣道着">
             </a>
         </div> 
         <div class="item">
             <a href="{{url('product_detail',{'id':2463} )}}">
-                <img src="{{ asset('assets/img/Slider/1017135359_5bc6c0674ad40.jpg', 'user_data')}}" alt="福田武道具 軽快撥水リュック">
+                <img src="{{ asset('assets/img/Slider/Backpack.jpeg', 'user_data')}}" alt="福田武道具 軽快撥水リュック">
             </a>
         </div> 
         <div class="item">
             <a href="{{url('product_list')}}?shop=49">
-                <img src="{{ asset('assets/img/Slider/hide-bana-2.jpg', 'user_data')}}" alt="剣道具工房「秀」">
+                <img src="{{ asset('assets/img/Slider/nishikawa.jpeg', 'user_data')}}" alt="剣道具工房「秀」">
             </a>
         </div> 
         <div class="item">
             <a href="{{url('product_detail',{'id':2835} )}}">
-                <img src="{{ asset('assets/img/Slider/kijido_slider.jpg', 'user_data')}}" alt="KPセレクト【綴じ胸・生地胴】">
+                <img src="{{ asset('assets/img/Slider/kijido.jpeg', 'user_data')}}" alt="KPセレクト【綴じ胸・生地胴】">
             </a>
         </a>
         </div> 
@@ -125,12 +125,12 @@
         </div> 
         <div class="item">
             <a href="{{url('product_list')}}?23">
-                <img src="{{ asset('assets/img/Slider/isenokami04.jpg', 'user_data')}}" alt="伊勢守">
+                <img src="{{ asset('assets/img/Slider/isenokami.jpeg', 'user_data')}}" alt="伊勢守">
             </a>
         </div> 
         <div class="item">
             <a href="{{url('product_detail',{'id':2705} )}}">
-                <img src="{{ asset('assets/img/Slider/nipponbudobanner04.jpg', 'user_data')}}" alt="日本武道宮崎【サード】小手">
+                <img src="{{ asset('assets/img/Slider/nipponbudo.jpeg', 'user_data')}}" alt="日本武道宮崎【サード】小手">
             </a>
         </div>
     </div>

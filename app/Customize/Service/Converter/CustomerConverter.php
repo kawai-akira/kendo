@@ -54,7 +54,6 @@ use Customize\Service\SqlService;
             $this->setCustomer();
             $this->setAddress();
             $this->favorite();
-
         }
 
        

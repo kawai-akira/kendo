@@ -21,7 +21,6 @@
                 <li><a href="{{ url('product_list')}}?category_id=6">竹刀</a></li>
                 <li><a href="{{ url('product_list')}}?category_id=7">その他</a></li>
                 <li><a href="{{ url('product_list')}}?category_id=8">ブランド</a></li>
-                
             </ul>
             <ul class="info">
                 <li><a href="{{ url('help_agreement')}}">ご利用規約</a></li>
@@ -29,10 +28,18 @@
                 <li><a href="{{ url('help_about') }}">当サイトについて</a></li>
                 <li><a href="{{ url('help_tradelaw') }}">特定商取引法に基づく表記</a></li>
                 <li><a href="{{ url('help_privacy') }}">プライバシーポリシー</a></li>
-                
+
+                <li class="mobile"><a href="{{ url('contact') }}">お問い合わせ</a></li>
+                <li class="mobile"><a href="{{ url('entry') }}">新規会員登録</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li class="mobile"><a href="{{ url('mypage') }}">マイページ</a></li>
+                {% else %}
+                    <li class="mobile"><a href="{{ url('mypage_login') }}">ログイン</a></li>
+                {% endif %}
+                <li class="mobile"><a href="{{ url('forgot') }}">パスワードをお忘れの方</a></li>
+                <li class="mobile"><a href="{{ url('help_sitemap') }}">サイトマップ</a></li>
             </ul>
-    
-            <ul class="customer">
+            <ul class="desktop">
                 <li><a href="{{ url('contact') }}">お問い合わせ</a></li>
                 <li><a href="{{ url('entry') }}">新規会員登録</a></li>
                 {% if is_granted('ROLE_USER') %}
@@ -71,8 +78,6 @@
                     <p>{{'shop_title01'|trans}}</p>
             </div>
         </div>
-  
-
     </div>    
     <div class="ec-footerTitle">
         <div class="ec-footerTitle__logo">

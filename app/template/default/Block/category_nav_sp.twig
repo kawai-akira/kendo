@@ -22,8 +22,8 @@
         {{ Category.name }}
     </a>
     {% if spCategory(Category) %}
-        <span class="orpun"><img src="{{ asset('assets/icon/plus-dark.svg') }}"/></span>
-        <span class="close"><img src="{{ asset('assets/icon/minus-dark.svg') }}"/></span>
+           <span class="orpun"><img src="{{ asset('assets/img/common/categoryOpen.png' ,'user_data')}}"/></span>
+           <span class="close"><img src="{{ asset('assets/img/common/categoryClose.png' ,'user_data')}}"/></span>
         </div>
     {% endif %}   
 
@@ -40,7 +40,6 @@
 
 {# @see https://github.com/bolt/bolt/pull/2388 #}
 {% from _self import tree %}
-
 <div class="ec-headerCategoryArea">
     <div class="ec-headerCategoryArea__heading">
         <p>{{ 'カテゴリ一覧'|trans }}</p>
@@ -58,8 +57,8 @@
                     <a href="{{ url('shop_list') }}">
                         剣道具店
                     </a>
-                    <span class="orpun"><img src="{{ asset('assets/icon/plus-dark.svg') }}"/></span>
-                    <span class="close"><img src="{{ asset('assets/icon/minus-dark.svg') }}"/></span>
+                    <span class="orpun"><img src="{{ asset('assets/img/common/categoryOpen.png' ,'user_data')}}"/></span>
+                    <span class="close"><img src="{{ asset('assets/img/common/categoryClose.png' ,'user_data')}}"/></span>
                 </div>
                 <ul>
                     {% for Shop in getShops() %}
@@ -70,10 +69,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-
-
             </li>
         </ul>
-
     </div>
 </div>
