@@ -14,7 +14,7 @@
  ##############################################################}
 <div class="ec-headerLinkArea">
     <div class="ec-headerLink__list">
-        {% if false == is_granted('ROLE_USER') %}
+        {#% if false == is_granted('ROLE_USER') % }
             <a class="ec-headerLink__item" href="{{ url('mypage') }}">
                 <div class="ec-headerLink__icon">
                     <i class="fas fa-user fa-fw"></i>
@@ -56,9 +56,10 @@
             </div>
             <span>{{ 'カートを見る'|trans }}</span>
             </a>
+#}
         <a class="ec-headerLink__item" href="{{ url('homepage') }}">
             <div class="ec-headerLink__icon">
-                <i class="fas fa-home fa-fw"></i>
+                <img src="{{ asset('assets/img/common/home.png', 'user_data')}}" alt="ホームに戻る">
             </div>
             <span>{{ 'ホームに戻る'|trans }}</span>
         </a>

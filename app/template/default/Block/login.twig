@@ -45,7 +45,7 @@
             </a>
         </div>
 
-        <div class="ec-headerNav__item">
+        <div class="ec-headerNav__item login">
             <a href="{{ url('mypage_login') }}">
                 {#<i class="ec-headerNav__itemIcon fas fa-lock fa-fw"></i>#}
                 <img src="{{ asset('assets/img/common/login.png', 'user_data')}}" alt="ログイン">
@@ -53,7 +53,7 @@
             </a>
         </div>
         {% if BaseInfo.option_favorite_product %}
-            <div class="ec-headerNav__item">
+            <div class="ec-headerNav__item favorite">
                 <a href="{{ url('mypage_favorite') }}">
                 <img src="{{ asset('assets/img/common/favorite.png', 'user_data')}}" alt="お気に入り">
                 {#    <i class="ec-headerNav__itemIcon fas fa-heart fa-fw"></i>#}
