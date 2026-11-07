@@ -650,8 +650,6 @@ width: 63%;
     color:#333;
 }
 
-
-
 #page_product_detail .ProductRanking li ,
 #page_product_list .ProductRanking li {
         display:inline-block;
@@ -680,7 +678,31 @@ width: 63%;
 .product_list__sale{
     color: #b80000;
 }
-
+/*トップページボタン*/
+.ec-blockTopBtn
+{
+    width: 80px;
+    height: 80px;
+    bottom: 120px;
+    line-height: 40px;
+    opacity: 1;
+    background-color: transparent; 
+}
+.ec-blockTopBtn img{
+    width:100%;
+}
+.blockLineBtn{
+    display: none;
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    bottom: 30px;
+    right:30px;
+    cursor: pointer;
+}
+.blockLineBtn img{
+    width:100%;
+}
 /** kenjoy #################################################################*/
 .kenjoy_area {
     font-size:14px;

@@ -181,7 +181,9 @@
         {{ include('block.twig', {'Blocks': Layout.Drawer}) }}
     {% endif %}
 </div>
-<div class="ec-blockTopBtn pagetop">{{'ページトップへ'|trans}}</div>
+{#<div class="ec-blockTopBtn pagetop">{{'ページトップへ'|trans}}</div>#}
+<div class="ec-blockTopBtn pagetop"><img src="{{ asset('assets/img/common/top.png', 'user_data')}}" alt="ページトップへ"></div>
+<div class="blockLineBtn pagetop"><a href="{{eccube_config.line_url}}" target="_blank"><img src="{{ asset('assets/img/common/LINE.png', 'user_data')}}" alt="{{'line_alert'|trans}}"></a></div>
 {% include('@common/lang.twig') %}
 <script src="{{ asset('assets/js/function.js') }}"></script>
 <script src="{{ asset('assets/js/eccube.js') }}"></script>
