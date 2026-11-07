@@ -342,6 +342,31 @@
 	
 	}
 
+	public function setYoutube(string $Html){
+
+ 		$Html = preg_replace_callback(
+  
+			 '/\{\{youtube\s+url="([^"]+)"\s+\}\}/',
+             function ($matches) {
+  
+
+               if( preg_match('/^https:\/\/www\.youtube\.com/',$matches[1])){
+                  $Youtube = '<iframe src="' . $matches[1] . '" frameborder="0" allowfullscreen></iframe>';
+				  return str_replace('watch?v=','embed/',$Youtube );
+
+               }
+                  return '';
+            },
+           
+            $Html
+            );      
+
+	return $Html;
+
+
+
+	}
+
 	protected function SetInfo(string $Html){
 	//その他の変換
 
@@ -363,6 +388,7 @@
 				}   
 
 			}else{
+				$Value = $this->setYoutube($Value);
 				$Value = $this->getBaseInfo(trim($Param[1],' '));
 			}
 					
@@ -424,8 +450,9 @@
 	
 		$Html = $this->SetImage($SubContent->getId(),$SubContent->getHtml());
         $Html = $this->SetAnchor($Html);
+        $Html = $this->setYoutube($Html);
 		$Html = $this->SetInfo($Html);
-        $Css = $this->SetCss($SubContent);
+	    $Css = $this->SetCss($SubContent);
 	
 		$this->SubContent->setHtml($Html)->setCss($Css);
 
@@ -477,7 +504,9 @@
 
 			$Html = $this->SetImage($id ,$Html);
 			$Html = $this->SetAnchor($Html);
+			$Html = $this->setYoutube($Html);
 			$Html = $this->SetInfo($Html);
+			
 		return $Html;			
 		}
 

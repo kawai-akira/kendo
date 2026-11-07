@@ -316,6 +316,11 @@ a{
 .ec-headerCategoryArea ul li {
     background-color: #E6E9EB;
 }
+.ec-headerCategoryArea ul li span{
+    display: inline-block;
+    width:40px;line-height: 50px;
+    text-align: center;
+}
 .ec-drawerRole .ec-headerCategoryArea .ec-itemNav__nav > li:hover li:hover > a{
     background-color:#F2F4F5;
 }
@@ -878,6 +883,16 @@ width: 63%;
     margin-top: 250px;
 }
 
+.kenjoy_page  iframe {
+  width: 100%;             /* 親要素の横幅いっぱいに広げる */
+  max-width: 800px;        /* 動画が大きくなりすぎないように制限（サイズはお好みで） */
+  aspect-ratio: 16 / 9;    /* YouTube標準の横縦比「16:9」を自動で維持 */
+  
+  border: none;            /* 前に解説した、古いブラウザの余計な枠線を消す設定 */
+  border-radius: 12px;     /* 動画の四隅をほんのり丸くしてモダンに見せる（不要なら削除してOK） */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* 軽い影をつけて立体感を出す（不要なら削除してOK） */
+}
+コードは注意してご使用ください。
 @media only screen and (min-width: 420px){
     .ec-headerNaviRole__right .login_area{
         gap: 8px;

@@ -38,7 +38,9 @@
 	{% if SubContent.Html is not null %}
 			{{kenjoyDate(SubContent)|raw}}    
         	<h2>{{SubContent.title|raw}}</h2>
+			<section class="kenjoy_content">
 			{{ SubContent.html|raw }}
+			</section>
 	{% endif %}
 </div>
 {% endblock %}
