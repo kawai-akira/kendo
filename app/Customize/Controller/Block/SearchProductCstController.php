@@ -46,6 +46,10 @@ class SearchProductCstController extends AbstractController
         {}else{
             $kbn='';
         };
+        $collapse = null;
+        if($request->get('collapse')){
+           $collapse = ' collapse';
+        }
          
         $request = $this->requestStack->getMainRequest();
      
@@ -58,7 +62,8 @@ class SearchProductCstController extends AbstractController
 
         return [
             'formCst' => $form->createView(),
-            'kbn'     => $kbn,    
+            'kbn'     => $kbn,
+            'collapse'=> $collapse,    
             ];
     }
     /**

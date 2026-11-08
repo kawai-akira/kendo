@@ -13,6 +13,19 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
+<style>
+.category_img{
+    padding:20px;
+}
+.category_img img{
+    width:100%;
+}
+@media only screen and (min-width: 768px){
+  .category_img{
+    padding:0;
+}
+}
+</style>
  <div class="category_img mt-3" >
    {% if 'category' == flg %}
     {% if Shop is not null %}<h2>{{Shop.ShopName}}の{{ Category.name }}</h2>{% endif %}

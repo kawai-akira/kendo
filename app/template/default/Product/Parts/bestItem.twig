@@ -16,70 +16,92 @@
  ##############################################################}
 <style>
 #recomand_category{
-    margin-top: 20px;
-    margin-bottom: 2px;
+    margin: 20px 20px 2px;
+    width:100%;
+
 }
-#recomand_category .pickup_item {
-position:relative;
+#recomand_category .inner a{
+    display:flex;
 }
-#recomand_category .pickup_item .icon_image{
+#recomand_category .item{
+    margin-bottom:30px;
+}
+
+#recomand_category .item .photo{
+    position:relative;
+    width:25%;
+}
+#recomand_category .item .photo img{
+    width:100%
+}
+#recomand_category .item .photo .icon_image{
     position:absolute;
     top:0;
     left:0;
-    width:25%;
+    width:30%;
 }
+#recomand_category .item .detaile{
+    padding-left:10px;
+    width:70%;
+}
+
+@media only screen and (min-width: 768px){
+    #recomand_category{
+        margin: 20px 0 2px;
+    }
+    #recomand_category .inner{
+        display: flex;
+        gap: 10px; 
+    }
+    #recomand_category .inner a{
+        display:block;
+        width:28%;
+    }
+    #recomand_category .item .photo{
+        width:98%;
+    }
+    #recomand_category .item .detaile{
+        width:98%;
+    }
+}
+
 </style>
 <div id="recomand_category">
-    <div id="item_list">
-        <h2 class="header-line01">{{ Category.name }}の人気ランキングTOP3</h2>
-        <div class="row">
-            {% for rcid , Recommand in Recommands %}
-                {% set Product = Recommand.Product %}
-                <div class="col-md-3 col-xs-6 col-3-list">
-                    <div class="pickup_item">
-                        <a href="{{ url('product_detail', {'id': Product.id}) }}">
-                            <div class="item_photo">
-                                {#<img src="{{ asset(ProductImage, 'save_image') }}/{{ Product.mainFileName|no_image_product }}" alt="{{ Product.name }}">#}
-                                <img src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}">
-                            </div>
-                            <img src="{{ asset('assets/img/bastItem','user_data') }}/lank_{{rcid}}.png" class="icon_image">
-                            <div class="product_list__description_list">
-                                {{Product.description_list|raw|nl2br }}
-                            </div>
-                            <dl>
-                                {#<div class="product_list__shop_name">{{ Product.Shop.shop_name }}</div>#}
-                                <dt class="item_name">{{ Product.name }}</dt>
-                                <!-- <dd><p class="item_comment">{{ Recommand.comment|raw }}</p></dd> -->
-                                <dd class="item_price">
-                                    <p>
-                                        {{Product|SALE|raw}} 
-                                        {#.priceDownRate() %}<span class="plgShiro8PriceDownRate3">SALE</span>{% endif %}#}
-                                        {% if Product.hasProductClass %}
-                                            {% if Product.getPrice02Min == Product.getPrice02Max %}
-                                                {{ Product.getPrice02IncTaxMin|price }}
-                                            {% else %}
-                                                {{ Product.getPrice02IncTaxMin|price }} ～
-                                            {% endif %}
-                                        {% else %}
+    <h2 class="header-line01">{{ Category.name }}の人気ランキングTOP3</h2>
+    <div class="inner">
+        {% for rcid , Recommand in Recommands %}
+            {% set Product = Recommand.Product %}
+                <a href="{{ url('product_detail', {'id': Product.id}) }}" class="item">
+                    <div class="photo">
+                        <img src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}">
+                        <img src="{{ asset('assets/img/bastItem','user_data') }}/lank_{{rcid}}.png" class="icon_image">
+                    </div> 
+                    <div class="detaile">   
+                        <div class="product_list__description_list">
+                            {{Product.description_list|raw|nl2br }}
+                        </div>
+                        <dl>
+                            {#<div class="product_list__shop_name">{{ Product.Shop.shop_name }}</div>#}
+                            <dt class="item_name">{{ Product.name }}</dt>
+                            <!-- <dd><p class="item_comment">{{ Recommand.comment|raw }}</p></dd> -->
+                            <dd class="item_price">
+                                <p>
+                                    {{Product|SALE|raw}} 
+                                    {#.priceDownRate() %}<span class="plgShiro8PriceDownRate3">SALE</span>{% endif %}#}
+                                    {% if Product.hasProductClass %}
+                                        {% if Product.getPrice02Min == Product.getPrice02Max %}
                                             {{ Product.getPrice02IncTaxMin|price }}
+                                        {% else %}
+                                            {{ Product.getPrice02IncTaxMin|price }} ～
                                         {% endif %}
-                                    </p>
-                                </dd>
-                            </dl>
-                        </a>
-
-                    <!-- <div class="product_list__free_area">
-                        {{ Product.free_area|raw|nl2br }}
-                    </div> -->
-
-                    <div>
-                  {#% for ProductTag in Recommand.Product.ProductTag %}#}
-        {#<span id="product_tag_box__product_tag--{{ ProductTag.Tag.id }}" class="product_tag_list" style="margin-bottom: 5px;">{{ ProductTag.Tag }}</span>#}
-    {#{% endfor %}#}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+                                    {% else %}
+                                        {{ Product.getPrice02IncTaxMin|price }}
+                                    {% endif %}
+                                </p>
+                            </dd>
+                        </dl>
+                    </div>    
+                </a>
+        {% endfor %}
     </div>
 </div>

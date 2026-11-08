@@ -14,9 +14,10 @@
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
 <style>
+
 #product_list_info_area{
     max-width: 1400px;
-    margin: 0 auto;
+    margin: 0 20px;
 }
 #product_list_info_area h2.header-line01{
    font-size: 20px;
@@ -36,6 +37,10 @@
     font-weight: bold;
 }
 
+@media only screen and (min-width: 768px){
+   margin: 0 auto;
+   width:100%;
+}
 </style>
 <div id="product_list_info_area" >
 {% if 'category'==Flg %}

@@ -309,6 +309,9 @@ a{
 .ec-headerCategoryArea .ec-itemNav{
     background-color: #fff ;
 }
+.ec-drawerRole .ec-headerCategoryArea .ec-itemNav__nav li a{
+    width:280px;
+}
 .ec-drawerRole .ec-headerCategoryArea .ec-itemNav__nav li ul li a,
 .ec-drawerRole .ec-headerCategoryArea .ec-itemNav__nav li a{
     background-color:transparent;
@@ -684,6 +687,7 @@ width: 63%;
     width: 80px;
     height: 80px;
     bottom: 120px;
+    right:30px;
     line-height: 40px;
     opacity: 1;
     background-color: transparent; 
@@ -914,7 +918,7 @@ width: 63%;
   border-radius: 12px;     /* 動画の四隅をほんのり丸くしてモダンに見せる（不要なら削除してOK） */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* 軽い影をつけて立体感を出す（不要なら削除してOK） */
 }
-コードは注意してご使用ください。
+
 @media only screen and (min-width: 420px){
     .ec-headerNaviRole__right .login_area{
         gap: 8px;
@@ -927,7 +931,7 @@ width: 63%;
         /*gap: 20px;*/
         width: 100%; 
         padding: 0;
-        margin-left: 20px;
+        margin-left: 0;
     }
     .footer_container .footer_logo_area .social_media li{
         width: 50%;
@@ -984,6 +988,7 @@ width: 63%;
         margin-left: auto;
         margin-right: 0;
     }
+    #searchProductCstsp,
     .movile_nav_header{
         display: none;
     }
@@ -1008,9 +1013,7 @@ width: 63%;
     .ec-footerRole .desktop{
         display: block;
     }
-    .ec-footerRole .mobile{
-        display: none;
-    }
+
 
     .footer_container .footer_box01{
         margin-top: 0;
@@ -1018,9 +1021,6 @@ width: 63%;
     }
     .footer_container .footer_logo_area{
         width:45%;
-    }
-    #searchProductCstsp{
-        display: none;
     }
     #ProductRankingsp{
         display: none;

@@ -13,4 +13,51 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-{{ render(path('block_search_product_cst',{kbn:'sp'})) }}
+
+{% set collapse='' %}
+{% if app.request.get('_route') != 'homepage' %}
+{% set collapse='?collapse=true' %}
+<style>
+.search_product_mobile{
+    padding:10px;
+    margin: 10px 10px 0 ;
+    display: flex;
+    justify-content: space-between;
+    background-color:#E6E9EB;
+    font-size:16px;
+    color:#333;
+}
+.search_product_mobile .d-inline-block{
+    line-height:36px
+}
+.search_product_mobile .text-close{
+    display:none;
+}
+@media only screen and (min-width: 768px){
+    .search_product_mobile{
+        display: none;
+    }
+}
+</style>
+<script>
+    $(function() {
+        $('.search_product_mobile a').click(function(){
+            $('.search_product_mobile img').toggle();
+        });
+    });
+</script>
+<div class="search_product_mobile">
+    <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" 
+                title="{{ 'front_search_product_mobile_title'|trans }}">
+            <span class="card-title">{{ 'front_search_product_mobile'|trans }}</span>
+    </div>
+    <div class='btn'>
+        <a data-bs-toggle="collapse" href="#searchProductCstsp" aria-expanded="false"
+            aria-controls="searchProductCstsp">
+            <img class="text-open" src="{{ asset('assets/img/common/categoryOpen.png' ,'user_data')}}" alt="開く"/>
+            <img class="text-close"   src="{{ asset('assets/img/common/categoryclose.png' ,'user_data')}}" alt="閉じる"/>
+        </a>
+    </div>
+</div>
+{% endif %}
+{{ render(path('block_search_product_cst',{kbn:'sp'}) ~ collapse)}}
