@@ -8,6 +8,11 @@ ul li{
 a{
     color:#333;
 }
+.ec-layoutRole .ec-layoutRole__contents,
+.ec-layoutRole .ec-layoutRole__left{
+    display: block;
+    max-width: 1400px;
+}
 /* header */
 .ec-layoutRole__header{ 
     background-color:  #fff ;/* #193248;*/
@@ -489,9 +494,7 @@ a{
 .ec-itemNav__nav li a{
     height:50px; 
 }
-.ec-layoutRole .ec-layoutRole__contents{
-    max-width: 1400px;
-}
+
 #breadcrumb_area{
     max-width: 1400px;
     margin: 0 auto;
@@ -521,25 +524,19 @@ a{
     width: 42%;
 }
 #searchProductCst .btn{
-    width: 50%;
+    width: 80%;
 }
-#searchProductCstsp{
-    margin: 20px;
-}
-#searchProductCstsp .btn{
-    width:98%;
-    margin:0 auto
 
-}
 /** TOP PAGE ### 
 /* index,php 
 */
 .block_left{
-    margin-bottom: 50px;
-    margin-right:20px ;
+    margin:0 20px 50px;
     box-sizing: border-box;
     -webkit-text-size-adjust: 100%;
-
+}
+#left_banne{
+    display: none;
 }
 .top_block{
     max-width: 1130px;
@@ -836,7 +833,6 @@ width: 63%;
     object-fit: cover !important; /* 画像の比率が崩れて歪むのを防ぐ */
     display: block;
 }
-
 #kenjoyCategorys{
     padding-right:20px;
 }
@@ -947,6 +943,11 @@ width: 63%;
 }
 
 @media only screen and (min-width: 768px){
+
+    
+    .ec-layoutRole .ec-layoutRole__contents{
+        display: flex;
+    }
     .headerNaviRole_left{
         padding-top: 10px ;
         margin-left: 10px ;
@@ -988,9 +989,8 @@ width: 63%;
         margin-left: auto;
         margin-right: 0;
     }
-    #searchProductCstsp,
-    .movile_nav_header{
-        display: none;
+    #searchProductCst .btn{
+        width: 50%;
     }
     .ec-cartNavi {
         padding: 10px 0 0 20px;
@@ -1001,7 +1001,9 @@ width: 63%;
     .ec-off2Grid .ec-off2Grid__cell {
         width: 80%;
     }
-
+    #left_banne{
+    display: block;
+    }
     .footer_container{
         max-width:1400px;
         width:100%;
@@ -1013,7 +1015,10 @@ width: 63%;
     .ec-footerRole .desktop{
         display: block;
     }
+    .block_left{
+        margin: 0 20px 50px 0;
 
+    }
 
     .footer_container .footer_box01{
         margin-top: 0;

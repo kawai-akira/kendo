@@ -13,4 +13,9 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-{{ render(path('block_search_product_cst',{kbn:''})) }}
+{% set kbn = '' %}
+{% if app.request.get('_route') != 'homepage' %}
+{% set kbn = 'sp' %}
+{% include 'Block/Parts/SearchProductCStsp.twig' with{'flg' : ''} %}
+{% endif %}
+{{ render(path('block_search_product_cst')) }}

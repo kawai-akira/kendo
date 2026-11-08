@@ -3,7 +3,7 @@
  # @author
  # 2026年11月04日作成
  #
- # app\template\default\Block\SearchProductCStp.twig
+ # app\template\default\Block\Parts\SearchProductCStp.twig
  #
  #
  #
@@ -13,11 +13,10 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-
-{% set collapse='' %}
-{% if app.request.get('_route') != 'homepage' %}
-{% set collapse='?collapse=true' %}
 <style>
+.searchProductCst {
+    display:none;
+}
 .search_product_mobile{
     padding:10px;
     margin: 10px 10px 0 ;
@@ -42,7 +41,9 @@
 <script>
     $(function() {
         $('.search_product_mobile a').click(function(){
+            $('.searchProductCst').toggle('fast');
             $('.search_product_mobile img').toggle();
+
         });
     });
 </script>
@@ -59,5 +60,3 @@
         </a>
     </div>
 </div>
-{% endif %}
-{{ render(path('block_search_product_cst',{kbn:'sp'}) ~ collapse)}}

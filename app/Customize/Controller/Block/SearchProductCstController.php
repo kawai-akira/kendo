@@ -37,19 +37,11 @@ class SearchProductCstController extends AbstractController
     }
 
     /**
-     * @Route("/block/search_product_cast{kbn}", name="block_search_product_cst", methods={"GET"})
+     * @Route("/block/search_product_cast", name="block_search_product_cst", methods={"GET"})
      * @Template("Block/Parts/SearchProductCst.twig")
      */
-    public function index(Request $request,$kbn = '')
+    public function index(Request $request)
     {
-        if($kbn =='' || $kbn == 'sp')
-        {}else{
-            $kbn='';
-        };
-        $collapse = null;
-        if($request->get('collapse')){
-           $collapse = ' collapse';
-        }
          
         $request = $this->requestStack->getMainRequest();
      
@@ -62,8 +54,6 @@ class SearchProductCstController extends AbstractController
 
         return [
             'formCst' => $form->createView(),
-            'kbn'     => $kbn,
-            'collapse'=> $collapse,    
             ];
     }
     /**
