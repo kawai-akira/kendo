@@ -104,8 +104,8 @@ const BirthdayMail    = 11;
             $htmlBody = $this->twig->render($htmlFileName, [
                 'Customer' => $Customer,
                 'BaseInfo' => $this->BaseInfo,
+                'Coupon' => $Coupon
             ]);
-
             $message
                 ->text($body)
                 ->html($htmlBody);
@@ -121,6 +121,7 @@ const BirthdayMail    = 11;
             ],
             null
         );
+
         $this->eventDispatcher->dispatch($event, EccubeEvents::MAIL_CUSTOMER_COMPLETE);
 
         try {
@@ -178,6 +179,7 @@ const BirthdayMail    = 11;
 
         $MailTemplate = $this->mailTemplateRepository->find(self::BirthdayMail);
 
+
         $body = $this->twig->render($MailTemplate->getFileName(), [
             'Customer' => $Customer,
             'Coupon' =>$Coupon,
@@ -194,8 +196,20 @@ const BirthdayMail    = 11;
             ->replyTo($this->BaseInfo->getEmail03())
             ->returnPath($this->BaseInfo->getEmail04());
 
+        // HTMLテンプレートが存在する場合
+        $htmlFileName = $this->getHtmlTemplate($MailTemplate->getFileName());
+        if (!is_null($htmlFileName)) {
+            $htmlBody = $this->twig->render($htmlFileName, [
+                'Customer' => $Customer,
+                'Coupon' =>$Coupon,
+            ]);
 
-        $message->text($body);
+            $message
+                ->text($body)
+                ->html($htmlBody);
+        } else {
+            $message->text($body);
+        }
 
         try {
             $this->mailer->send($message);
@@ -243,7 +257,6 @@ const BirthdayMail    = 11;
                 'reset_url' => $reset_url,
                 'flg' => $flg,
             ]);
-echo $htmlBody;exit;
             $message
                 ->text($body)
                 ->html($htmlBody);

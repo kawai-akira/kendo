@@ -9,6 +9,7 @@ parameters:
     shop_url: 'https://kendopark.jp/'
     line_url: 'https://lin.ee/ylqgwXZ'
     facebook_url: 'https://www.facebook.com/KENDO-PARK-883582165101623/?hc_ref=PAGES_TIMELINE&fref=nf'
+    bank_code: 'PayPay銀行 ビジネス営業部（005） 普通 1191232 株式会社パークフォーアス'
 services:
     Customize\EventListener\RenewPassEventListener:
         arguments:

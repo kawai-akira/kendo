@@ -13,162 +13,134 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-{% include('Mail/Parts/css.twig') %}
-</head>
-<body bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-
-<br>
-<br>
-<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
-    <tr>
-        <td align="center" valign="top" >
-           {% include('Mail/Parts/header.twig') %}
-        </td>
-    </tr>
-    <tr>
-        <td align="center" valign="top" >
-            <br>
-            <!-- 600px container (white background) -->
-            <table id="html-mail-table1" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
+{% extends 'Mail/Parts/htmlMail_frame.twig' %}
+{% block header %}
+    <p>この度はご注文いただき誠にありがとうございます。</p>
+    <p>下記ご注文内容にお間違えがないかご確認下さい。</p>
+{% endblock header %}
+{% block main %}
+ <hr style="border-top: 3px double #8c8b8b;">
+    <div>
+        <p class="title">ご請求金額</p>
+        <hr style="border-top: 3px double #8c8b8b;">
+        ご注文日時：{{ Order.order_date|date_sec }}<br/>
+        ご注文番号：{{ Order.order_no }}<br/>
+        お支払い合計：{{ Order.payment_total|price }}<br/>
+        お支払い方法：{{ Order.payment_method }}<br/>
+        {% if BaseInfo.isOptionPoint and Order.Customer is not null %}
+        ご利用ポイント：{{ Order.usePoint|number_format }} pt<br/>
+        加算ポイント：{{ Order.addPoint|number_format }} pt<br/>
+        {% endif %}
+        お問い合わせ：{{ Order.message }}<br/>
+        <br/>
+        <hr style="border-top: 3px double #8c8b8b;">
+        <p class="title">ご注文商品明細</p>
+        <hr style="border-top: 3px double #8c8b8b;">
+        {% set isShowReducedTaxMess = false %}
+        <table class="product" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
+            {% for OrderItem in Order.MergedProductOrderItems %}
+                {% set Product = OrderItem.Product  %}
                 <tr>
-                    <td class="container-padding content" align="left" {#style="border-collapse:collapse;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;"#}>
-                        <br>
-                        <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550;">
-                            この度はご注文いただき誠にありがとうございます。
-                        </div>
-                        <br>
-                        <div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
-                            {{ Order.name01 }} {{ Order.name02 }} 様<br/>
-                            <br/>
-                            下記ご注文内容にお間違えがないかご確認下さい。<br/>
-                            <br/>
+                    <td width="150">
+                        <img src="{{ absolute_url(asset(Product.main_list_image|no_image_product, 'save_image')) }}" alt="{{ Product.name }}" style="width:98%" >
+                    </td>
+                    <td width="450">
+                        {{ Product.Shop.shop_name}}</br>
+                        商品コード：{{ OrderItem.product_code }}<br/>
+                        商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}{% if is_reduced_tax_rate(OrderItem) %}※{% set isShowReducedTaxMess = true %}{% endif %}<br/>
+                        単価：{{ OrderItem.price_inctax|price }}<br/>
+                        数量：{{ OrderItem.quantity|number_format }}<br/>
                     </td>
                 </tr>
-                <tr>        
-                    <td>
-                        <hr style="border-top: 3px double #8c8b8b;">
-                            　ご請求金額<br/>
-                            <hr style="border-top: 3px double #8c8b8b;">
-                            ご注文日時：{{ Order.order_date|date_sec }}<br/>
-                            ご注文番号：{{ Order.order_no }}<br/>
-                            お支払い合計：{{ Order.payment_total|price }}<br/>
-                            お支払い方法：{{ Order.payment_method }}<br/>
-                            {% if BaseInfo.isOptionPoint and Order.Customer is not null %}
-                            ご利用ポイント：{{ Order.usePoint|number_format }} pt<br/>
-                            加算ポイント：{{ Order.addPoint|number_format }} pt<br/>
-                            {% endif %}
-                            お問い合わせ：{{ Order.message }}<br/>
-                            <br/>
-                            <hr style="border-top: 3px double #8c8b8b;">
-                            　ご注文商品明細<br/>
-                            <hr style="border-top: 3px double #8c8b8b;">
-                            {% set isShowReducedTaxMess = false %}
-                             <table class="product" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
-                            {% for OrderItem in Order.MergedProductOrderItems %}
-                                {% set Product = OrderItem.Product  %}
-                                    <tr>
-                                        <td width="150">
-                                            <img src="{{ absolute_url(asset(Product.main_list_image|no_image_product, 'save_image')) }}" alt="{{ Product.name }}" style="width:98%" >
-                                        </td>
-                                        <td width="450">
-                                            {{ Product.Shop.shop_name}}</br>
-                                            商品コード：{{ OrderItem.product_code }}<br/>
-                                            商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}{% if is_reduced_tax_rate(OrderItem) %}※{% set isShowReducedTaxMess = true %}{% endif %}<br/>
-                                            単価：{{ OrderItem.price_inctax|price }}<br/>
-                                            数量：{{ OrderItem.quantity|number_format }}<br/>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                            {% if isShowReducedTaxMess %}※は軽減税率対象商品です。{% endif %}
-                            <hr style="border-top: 2px dashed #8c8b8b;">
-                            小　計：{{ Order.subtotal|price }}<br/>
-                            手数料：{{ Order.charge|price }}<br/>
-                            送　料：{{ Order.delivery_fee_total|price }}<br/>
-                            {% if Order.taxable_discount < 0 %}
-                            値引き：{{ Order.taxable_discount|price }}<br/>
-                            {% endif %}
-                            <hr style="border-top: 1px dotted #8c8b8b;">
-                            合　計：{{ Order.taxable_total|price }}<br/>
-                            {% for item in Order.tax_free_discount_items %}
-                                <hr style="border-top: 1px dotted #8c8b8b;">
-                                {{ item.product_name }}：{{ item.total_price|price }}<br/>
-                            {% endfor %}
-                            <hr style="border-top: 1px dotted #8c8b8b;">
-                            お支払い合計：{{ Order.payment_total|price }}
-                            {% for rate, total in Order.total_by_tax_rate %}
-                                ({{ rate }} %対象：{{ total|price }} 内消費税： {{ Order.tax_by_tax_rate[rate]|price }})<br/>
-                            {% endfor %}
-                            <br/>
-                            <hr style="border-top: 3px double #8c8b8b;">
-                            ご注文者情報<br/>
-                            <hr style="border-top: 3px double #8c8b8b;">
-                            お名前：{{ Order.name01 }} {{ Order.name02 }} 様<br/>
-                            お名前(カナ)：{{ Order.kana01 }} {{ Order.kana02 }} 様<br/>
-                            {% if Order.company_name %}
-                                会社名：{{ Order.company_name }}<br/>
-                            {% endif %}
-                            郵便番号：〒{{ Order.postal_code }}<br/>
-                            住所：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}<br/>
-                            電話番号：{{ Order.phone_number }}<br/>
-                            メールアドレス：{{ Order.email }}<br/>
-                            <br/>
-                            <hr style="border-top: 3px double #8c8b8b;">
-                            　配送情報<br/>
-                            <hr style="border-top: 3px double #8c8b8b;">
+            {% endfor %}
+        </table>
+        {% if isShowReducedTaxMess %}※は軽減税率対象商品です。{% endif %}
+        <hr style="border-top: 2px dashed #8c8b8b;">
+        小　計：{{ Order.subtotal|price }}<br/>
+        手数料：{{ Order.charge|price }}<br/>
+        送　料：{{ Order.delivery_fee_total|price }}<br/>
+        {% if Order.taxable_discount < 0 %}
+        値引き：{{ Order.taxable_discount|price }}<br/>
+        {% endif %}
+        <hr style="border-top: 1px dotted #8c8b8b;">
+        合　計：{{ Order.taxable_total|price }}<br/>
+        {% for item in Order.tax_free_discount_items %}
+            <hr style="border-top: 1px dotted #8c8b8b;">
+            {{ item.product_name }}：{{ item.total_price|price }}<br/>
+        {% endfor %}
+        <hr style="border-top: 1px dotted #8c8b8b;">
+        お支払い合計：{{ Order.payment_total|price }}
+        {% for rate, total in Order.total_by_tax_rate %}
+            ({{ rate }} %対象：{{ total|price }} 内消費税： {{ Order.tax_by_tax_rate[rate]|price }})<br/>
+        {% endfor %}
+        <br/>
+        <hr style="border-top: 3px double #8c8b8b;">
+        <p class="title">ご注文者情報</p>
+        <hr style="border-top: 3px double #8c8b8b;">
+        お名前：{{ Order.name01 }} {{ Order.name02 }} 様<br/>
+        お名前(カナ)：{{ Order.kana01 }} {{ Order.kana02 }} 様<br/>
+        {% if Order.company_name %}
+            会社名：{{ Order.company_name }}<br/>
+        {% endif %}
+        郵便番号：〒{{ Order.postal_code }}<br/>
+        住所：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}<br/>
+        電話番号：{{ Order.phone_number }}<br/>
+        メールアドレス：{{ Order.email }}<br/>
+        <br/>
+        <hr style="border-top: 3px double #8c8b8b;">
+        <p class="title">配送情報</p>
+        <hr style="border-top: 3px double #8c8b8b;">
 
-                            {% for Shipping in Order.Shippings %}
-                                <p>{{ Shipping.getShop().ShopName }}</p>
-                                ◎お届け先{% if Order.multiple %}{{ loop.index }}{% endif %}<br/>
-                                <br/>
-                                お名前：{{ Shipping.name01 }} {{ Shipping.name02 }} 様<br/>
-                                お名前(カナ)：{{ Shipping.kana01 }} {{ Shipping.kana02 }} 様<br/>
-                                {% if Shipping.company_name %}
-                                    会社名：{{ Shipping.company_name }}<br/>
-                                {% endif %}
-                                郵便番号：〒{{ Shipping.postal_code }}<br/>
-                                住所：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}<br/>
-                                電話番号：{{ Shipping.phone_number }}<br/>
-                                <br/>
-                                配送方法：{{ Shipping.shipping_delivery_name }}<br/>
-                                お届け日：{{ Shipping.shipping_delivery_date is empty ? '指定なし' : Shipping.shipping_delivery_date|date_day }}<br/>
-                                お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}<br/>
-                                <table class="product" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
-                                {% for OrderItem in Shipping.productOrderItems %}
-                                    {% set Product = OrderItem.Product %}
-                                    <tr>
-                                        <td width="150">
-                                            <img src="{{ absolute_url(asset(Product.main_list_image|no_image_product, 'save_image')) }}" alt="{{ Product.name }}" style="width:98%" >
-                                        </td>
-                                        <td width="450">
-                                            商品コード：{{ OrderItem.product_code }}<br/>
-                                            商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}<br/>
-                                            {{showOption(OrderItem.getOptions(),false)|raw}}
-                                            数量：{{ OrderItem.quantity|number_format }}<br/>
-                                        </td>
-                                    <tr>
-                                {% endfor %}
-                                <table>
-                            {% endfor %}
-                            {% if Order.complete_mail_message is not empty %}
-                                {{ Order.complete_mail_message|nl2br }}<br/>
-                            {% endif %}
-                        </div>
+        {% for Shipping in Order.Shippings %}
+            <p class="title">{{ Shipping.getShop().ShopName }}</p>
+            {#◎お届け先{% if Order.multiple %}{{ loop.index }}{% endif %}<br/>#}
+            お名前：{{ Shipping.name01 }} {{ Shipping.name02 }} 様<br/>
+            お名前(カナ)：{{ Shipping.kana01 }} {{ Shipping.kana02 }} 様<br/>
+            {% if Shipping.company_name %}
+                会社名：{{ Shipping.company_name }}<br/>
+            {% endif %}
+            郵便番号：〒{{ Shipping.postal_code }}<br/>
+            住所：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}<br/>
+            電話番号：{{ Shipping.phone_number }}<br/>
+            <br/>
+            配送方法：{{ Shipping.shipping_delivery_name }}<br/>
+            お届け日：{{ Shipping.shipping_delivery_date is empty ? '指定なし' : Shipping.shipping_delivery_date|date_day }}<br/>
+            お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}<br/>
+            <table class="product" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
+            {% for OrderItem in Shipping.productOrderItems %}
+                {% set Product = OrderItem.Product %}
+                <tr>
+                    <td width="150">
+                        <img src="{{ absolute_url(asset(Product.main_list_image|no_image_product, 'save_image')) }}" alt="{{ Product.name }}" style="width:98%" >
                     </td>
-                </tr>
-            </table>
-            <!--/600px container -->
+                    <td width="450">
+                        商品コード：{{ OrderItem.product_code }}<br/>
+                        商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}<br/>
+                        {{showOption(OrderItem.getOptions(),false)|raw}}
+                        数量：{{ OrderItem.quantity|number_format }}<br/>
+                         </td>
+                <tr>
+            {% endfor %}
+            <table>
             <br>
-            <br>
-            {% include('Mail/Parts/footer.twig') %}
-        </td>
-    </tr>
-</table>
-<!--/100% background wrapper-->
-<br>
-<br>
-</body>
-</html>
+        {% endfor %}
+        {% if Order.complete_mail_message is not empty %}
+            {{ Order.complete_mail_message|nl2br }}<br/>
+        {% endif %}
+    </div>
+{% endblock main %}
+{% block footer %}
+    {% if 3 == Order.Payment.id %}
+       <p class="title">銀行振込</p>
+       <p class="title">{{eccube_config.bank_code}}
+       <p>銀行振り込みの場合入金が確認されてから商品の手配をいたします。<p>
+       <br>
+    {% endif %}
+    {% if true == cleaningFlg(Order.MergedProductOrderItems) %}
+        <div>
+            {{ SC_PartsId(9)|raw }}
+        <br>    
+        </div>
+    {% endif %}
+    
+{% endblock footer %}

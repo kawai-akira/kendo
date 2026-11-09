@@ -83,6 +83,7 @@ class ProductTwigExtention extends AbstractExtension
     private const HeaderLogin           = 'Block\Parts\login.twig';
     private const TopProducts           = 'Block\Parts\TopProducts.twig';
     private const RankingColor          = ['#FF8F00','#999AA4','#B43100','#696BCD','#1D1D2D'];
+    private const CleaningProductId     = 2702;
 
 
    /**
@@ -192,8 +193,22 @@ class ProductTwigExtention extends AbstractExtension
             new TwigFunction('kenjoyNew',[ $this->SubContentRepository, 'getkenjoyNew']),
             new TwigFunction('spCategory',[ $this, 'setspCategory']),
             new TwigFunction('RankingColor',[ $this, 'getRankingColor']),
+            new TwigFunction('cleaningFlg',[ $this, 'getCleaningFlg']),
+            
 
         ];
+    }
+
+    public function getCleaningFlg(array $OrderItems){
+
+        foreach($OrderItems as $OrderItem){
+           /** @var Product */
+            $Product = $OrderItem->getProduct();
+            if( self::CleaningProductId == $Product->getId()){return true;}
+        } 
+
+    return false;
+
     }
 
     public function getRankingColor(int $i){

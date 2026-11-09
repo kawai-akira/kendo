@@ -206,7 +206,7 @@
 
 		$FileSys = new Filesystem();
         if(!file_exists($ImagePath)){
-         	$FileSys->mkdir($ImagePath,'0757');
+         	$FileSys->mkdir($ImagePath, 0757);
         }
         $ImageList=[];
 
