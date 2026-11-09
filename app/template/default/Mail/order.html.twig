@@ -25,13 +25,7 @@
 <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
     <tr>
         <td align="center" valign="top" >
-            <table id="html-mail-table_header" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
-                <tr>
-                    <td>
-                        {% include('Mail/Parts/header.twig') %}
-                    </td>
-                </tr>
-            </table>
+           {% include('Mail/Parts/header.twig') %}
         </td>
     </tr>
     <tr>
@@ -72,13 +66,23 @@
                             　ご注文商品明細<br/>
                             <hr style="border-top: 3px double #8c8b8b;">
                             {% set isShowReducedTaxMess = false %}
+                             <table class="product" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
                             {% for OrderItem in Order.MergedProductOrderItems %}
-                                商品コード：{{ OrderItem.product_code }}<br/>
-                                商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}{% if is_reduced_tax_rate(OrderItem) %}※{% set isShowReducedTaxMess = true %}{% endif %}<br/>
-                                単価：{{ OrderItem.price_inctax|price }}<br/>
-                                数量：{{ OrderItem.quantity|number_format }}<br/>
-                                <br/>
-                            {% endfor %}
+                                {% set Product = OrderItem.Product  %}
+                                    <tr>
+                                        <td width="150">
+                                            <img src="{{ absolute_url(asset(Product.main_list_image|no_image_product, 'save_image')) }}" alt="{{ Product.name }}" style="width:98%" >
+                                        </td>
+                                        <td width="450">
+                                            {{ Product.Shop.shop_name}}</br>
+                                            商品コード：{{ OrderItem.product_code }}<br/>
+                                            商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}{% if is_reduced_tax_rate(OrderItem) %}※{% set isShowReducedTaxMess = true %}{% endif %}<br/>
+                                            単価：{{ OrderItem.price_inctax|price }}<br/>
+                                            数量：{{ OrderItem.quantity|number_format }}<br/>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
                             {% if isShowReducedTaxMess %}※は軽減税率対象商品です。{% endif %}
                             <hr style="border-top: 2px dashed #8c8b8b;">
                             小　計：{{ Order.subtotal|price }}<br/>
@@ -117,6 +121,7 @@
                             <hr style="border-top: 3px double #8c8b8b;">
 
                             {% for Shipping in Order.Shippings %}
+                                <p>{{ Shipping.getShop().ShopName }}</p>
                                 ◎お届け先{% if Order.multiple %}{{ loop.index }}{% endif %}<br/>
                                 <br/>
                                 お名前：{{ Shipping.name01 }} {{ Shipping.name02 }} 様<br/>
@@ -131,21 +136,26 @@
                                 配送方法：{{ Shipping.shipping_delivery_name }}<br/>
                                 お届け日：{{ Shipping.shipping_delivery_date is empty ? '指定なし' : Shipping.shipping_delivery_date|date_day }}<br/>
                                 お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}<br/>
-                                <br/>
+                                <table class="product" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
                                 {% for OrderItem in Shipping.productOrderItems %}
-                                    商品コード：{{ OrderItem.product_code }}<br/>
-                                    商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}<br/>
-                                    数量：{{ OrderItem.quantity|number_format }}<br/>
-                                    <br/>
+                                    {% set Product = OrderItem.Product %}
+                                    <tr>
+                                        <td width="150">
+                                            <img src="{{ absolute_url(asset(Product.main_list_image|no_image_product, 'save_image')) }}" alt="{{ Product.name }}" style="width:98%" >
+                                        </td>
+                                        <td width="450">
+                                            商品コード：{{ OrderItem.product_code }}<br/>
+                                            商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}<br/>
+                                            {{showOption(OrderItem.getOptions(),false)|raw}}
+                                            数量：{{ OrderItem.quantity|number_format }}<br/>
+                                        </td>
+                                    <tr>
                                 {% endfor %}
+                                <table>
                             {% endfor %}
                             {% if Order.complete_mail_message is not empty %}
                                 {{ Order.complete_mail_message|nl2br }}<br/>
                             {% endif %}
-                            <hr style="border-top: 2px dotted #8c8b8b;">
-                            このメッセージはお客様へのお知らせ専用ですので、<br/>
-                            このメッセージへの返信としてご質問をお送りいただいても回答できません。<br/>
-                            ご了承ください。<br/>
                         </div>
                     </td>
                 </tr>
@@ -153,13 +163,7 @@
             <!--/600px container -->
             <br>
             <br>
-            <table id="html-mail-table_footer" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
-                <tr>
-                    <td class="container-padding content footer-text" align="left" {#style="border-collapse:collapse;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;"#}>
-                         {% include('Mail/Parts/header.twig') %}
-                    </td>
-                </tr>
-            </table>
+            {% include('Mail/Parts/footer.twig') %}
         </td>
     </tr>
 </table>
@@ -167,5 +171,4 @@
 <br>
 <br>
 </body>
-
 </html>

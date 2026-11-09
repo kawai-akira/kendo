@@ -1,0 +1,35 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年11月09作成
+ #
+ #                      
+ #  app\template\default\Mail\forgot_mail.html.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+{% extends 'Mail/Parts/htmlMail_frame.twig' %}
+{% block header %}
+    {% if flg %}
+        <p>サイトリニューアル、初回ログイン セキュリティ強化 パスワード変更メール</p>
+    {% else %} 
+        <p>パスワード 再発行手続きメール</p>
+    {% endif %}
+{% endblock header %}
+{% block main %}
+    <p>パスワードを変更するには下記URLにアクセスしてください。</p>
+    <p>※入力されたお客様の情報はSSL暗号化通信により保護されます。</p>
+    <p>※URLの有効期限は{{ expire }}分以内です。有効期限を過ぎますとURLは無効となりますので、<br>その場合、もう一度最初から手続きを行ってください。
+    <br>
+    <p>{{ reset_url }}<p>
+    <br>
+{% endblock main %}
+{% block footer %}
+    <p>上記URLにてパスワードを変更が完了いたしましたら</p>
+    <p>改めてご登録内容のご確認メールをお送り致します。 </p>
+{% endblock footer %}

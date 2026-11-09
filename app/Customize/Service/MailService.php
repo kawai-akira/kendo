@@ -225,7 +225,6 @@ const BirthdayMail    = 11;
             'flg' => $flg,
         ]);
 
-       // echo $body ;exit;
         $message = (new Email())
             ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
@@ -244,14 +243,13 @@ const BirthdayMail    = 11;
                 'reset_url' => $reset_url,
                 'flg' => $flg,
             ]);
-
+echo $htmlBody;exit;
             $message
                 ->text($body)
                 ->html($htmlBody);
         } else {
             $message->text($body);
         }
-
         $event = new EventArgs(
             [
                 'message' => $message,

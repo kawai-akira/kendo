@@ -1,0 +1,62 @@
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年11月09作成
+ #
+ #                      
+ # app\template\default\Mail\Parts\htmlMail_frame.twig
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    {% include('Mail/Parts/css.twig') %}
+    </head>
+    <body bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+        <br>
+        <br>
+        <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+            <tr>
+                <td align="center" valign="top" >
+                    <br>
+                    <!-- 600px container (white background) -->
+                    <table id="html-mail-table1" border="0" width="600px" cellpadding="10" cellspacing="0" class="container">
+                        <tr>
+                            <td align="center" valign="top" >
+                                {% include('Mail/Parts/header.twig') %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class"header">
+                                {% block header %}{% endblock %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="main">
+                                {% block main %}{% endblock %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footer">
+                                {% block footre %}{% endblock %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% include('Mail/Parts/footer.twig') %}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>            
+        </table>
+        <br>
+        <br>
+    </body>
+</html>        

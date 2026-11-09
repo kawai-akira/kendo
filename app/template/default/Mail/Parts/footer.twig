@@ -1,5 +1,50 @@
-本メールは、{{ BaseInfo.shop_name }}より送信しております。<br/>
-もしお心当たりが無い場合は、その旨 <a href="mailto:{{ BaseInfo.email02 }}" style="text-decoration:none;">{{ BaseInfo.email02 }}</a> までご連絡いただければ幸いです。<br/>
-<br/>
-<div class="title" style="font-size:14px;font-family:Helvetica, Arial, sans-serif;font-weight:600;color:#374550;"><a href="{{ url('homepage') }}" style="color:#aaaaaa;text-decoration:none;">{{ BaseInfo.shop_name }}</a></div>
-                        <div>copyright &copy; {{ BaseInfo.shop_name }} all rights reserved.</div>
+
+{#
+ # EC=CUBE4.3 TWIG
+ # 株式会社 翔 kakeru.co.jp
+ #
+ # 2026年08月06作成
+ #
+ # app\template\default\Mail\admin_renew_mail.twig
+ a                           
+ #
+ #
+ # 
+ #
+ #
+ #
+ #                                                  ≡≡≡┏(＾o＾)┛
+ ##############################################################}
+<table id="table_footer" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+    <tr>
+        <td align="left">
+            <a href="{{ url('homepage')}}">
+            <img src="{{absolute_url(asset('assets/img/common/mail_footer_logo.png', 'user_data'))}}"  alt="{{BaseInfo.shop_name }}" />
+            <p class="logo_title">国内最大級の剣道具通販サイト<p>
+            </a>
+            <br>
+            <br>
+            本メールは、{{ BaseInfo.shop_name }}より送信しております。<br/>
+            もしお心当たりが無い場合は、ご面倒でも <a href="mailto:{{ BaseInfo.email02 }}" style="text-decoration:none;">{{ BaseInfo.email02 }}</a> までご連絡いただければ幸いです。<br/>
+           <br>
+        </td>
+    </tr>
+    <tr>    
+        <td class="foot">
+        <p>KENDO PARKでは、「剣道具選びに革命を起こせ」をコンセプトとしております。</p>
+        <p>「本当に良い剣道具はどれか？」を剣道家の皆様に正しく伝えたいと考えております。</p>
+        <p>末永いお付き合いのほど、何卒宜しくお願いいたします。</p>
+        <p>剣道パーク運営事務局</p>
+        <br>    
+        <p>MAIL: {{ eccube_config.shop_url }}</p>
+        <p>URL: {{ BaseInfo.email01}}</p>
+        <br>
+        <br>
+            <div class="copyright">
+                <a href="{{ url('homepage') }}">
+                    copyright &copy; {{ BaseInfo.shop_name }} all rights reserved.
+                </a>
+            </div>
+        </td>
+    </tr>
+</table>

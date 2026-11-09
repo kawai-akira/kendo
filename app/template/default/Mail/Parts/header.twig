@@ -14,8 +14,12 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="header">ヘッターだよ
-
-<div align="center"><a href="{{ url('homepage') }}" style="font-family:Helvetica, Arial, sans-serif;font-size:30px;color:#333333;text-decoration:none;">{{ BaseInfo.shop_name }}</a></div>
-
-</div>
+<table id="header_table" border="0" width="100%" cellpadding="10" cellspacing="0" class="container">
+    <tr>
+        <td>
+            <a href="{{ url('homepage')}}">
+                <img src="{{absolute_url(asset('assets/img/common/wh_logo.png', 'user_data'))}}"  alt="{{BaseInfo.shop_name }}" />
+            </a>
+        </td>
+    </tr>
+</table>
