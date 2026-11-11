@@ -13,16 +13,17 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-6">
+<div class="size-area" id="sex">
+    <div class="size-box">
         <dl class="sex_size">
-            <dt>{{'product_common_sex'|trans}}</dt>
+            <dt>
+                {{'product_common_sex'|trans}}
+                <span class="required">必須</span>
+            </dt>
             <dd class="radio">
                 {{ form_widget(form.sex.sex ,{'label_attr': {'class': 'radio-inline'}}) }}
                 {{ form_errors(form.sex.sex) }}
             </dd>
          </dl>    
-    </div>
-    <div class="col-5">
     </div>
 </div>

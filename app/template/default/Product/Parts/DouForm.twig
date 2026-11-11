@@ -13,41 +13,48 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-
-    <div class="size-box col-8">
-        <h2>{{'product_dou_title'|trans}}</h2>
-        <dl class="dou_size">
-            <dt>{{'product_dou_size_bust'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.dou.dou_size_bust) }}cm
-                {{ form_errors(form.dou.dou_size_bust) }}
-            </dd>
-            <dt>{{'product_dou_size_waist'|trans}}
-            <dd class="input">
-                {{ form_widget(form.dou.dou_size_waist) }}cm
-                {{ form_errors(form.dou.dou_size_waist) }}
-            </dd>
-            <dt>{{'product_dou_size_g'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.dou.dou_size_g) }}cm
-                {{ form_errors(form.dou.dou_size_g) }}
-            </dd>
-
-            <dt>{{'product_dou_etc'|trans}}</dt>
-            <dd>
-                {{ form_widget(form.dou.dou_etc) }}
-                {{ form_errors(form.dou.dou_etc) }}
-            </dd>
-        </dl>    
+<div class="size-area_img ">
+    <h2>{{'product_dou_title'|trans}}</h2>
+    <div class="inner">
+        <div class="size-box col-8">
+            <dl class="dou_size">
+                <dt>
+                    {{'product_dou_size_bust'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.dou.dou_size_bust) }}<span>cm</span>
+                    {{ form_errors(form.dou.dou_size_bust) }}
+                </dd>
+                <dt title="{{'product_dou_size_waist'|trans}}">
+                    {{'product_dou_size_waist_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.dou.dou_size_waist, {'attr':{'placeholder':'product_dou_size_waist_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.dou.dou_size_waist) }}
+                </dd>
+                <dt title="{{'product_dou_size_g'|trans}}">
+                    {{'product_dou_size_g_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>   
+                <dd class="input_cm">
+                    {{ form_widget(form.dou.dou_size_g, {'attr':{'placeholder':'product_dou_size_g_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.dou.dou_size_g) }}
+                </dd>
+                <dt>
+                    {{'product_dou_etc'|trans}}
+                </dt>
+                <dd class="ets">
+                    {{ form_widget(form.dou.dou_etc) }}
+                    {{ form_errors(form.dou.dou_etc) }}
+                </dd>
+            </dl>    
+        </div>
+        <div class="image col-4">
+            <img src="{{ asset('assets/img/product/dou_g.png') }}">
+        </div>
     </div>
-
-    <div class="col-4">
-        <img src="{{ asset('assets/img/product/dou_g.png') }}">
-
-    </div>
-
-
  </div>
 
 

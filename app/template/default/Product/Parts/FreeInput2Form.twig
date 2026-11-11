@@ -9,25 +9,23 @@
  #
  # 
  #
- # フリーインプット1
+ # フリーインプット2
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-8">
+<div class="size-area" id="frre2">
+    <div class="size-box">
         <dl class="sex_size">
             <dt>
                 {{Product.freeInputName2}}
-                <span>必須</span>
+                <span class="required">必須</span>
             </dt>
-            <dd class="radio">
+            <dd class="">
                 {{ form_widget(form.FreeInput2.value) }}
                 {{ form_errors(form.FreeInput2.value) }}
                 {{ form_widget(form.FreeInput2.name) }}
             </dd>
          </dl>    
-    </div>
-    <div class="col-4">
     </div>
  </div>
 

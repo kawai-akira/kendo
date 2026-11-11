@@ -13,51 +13,72 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-8">
-        <h2>{{'product_kote_title'|trans}}</h2>
-        <dl class="men_size">
-            <dt>{{'product_kote_size_left_d'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.kote.kote_size_left_d) }}cm
-                {{ form_errors(form.kote.kote_size_left_d) }}
-            </dd>
-            <dt>{{'product_kote_size_left_e'|trans}}
-            <dd class="input">
-                {{ form_widget(form.kote.kote_size_left_e) }}cm
-                {{ form_errors(form.kote.kote_size_left_e) }}
-            </dd>
-            <dt>{{'product_kote_size_left_f'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.kote.kote_size_left_f) }}cm
-                {{ form_errors(form.kote.kote_size_left_f) }}
-            </dd>
-            <dt>{{'product_kote_size_right_d'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.kote.kote_size_right_d) }}cm
-                {{ form_errors(form.kote.kote_size_right_d) }}
-            </dd>
-            <dt>{{'product_kote_size_right_e'|trans}}
-            <dd class="input">
-                {{ form_widget(form.kote.kote_size_right_e) }}cm
-                {{ form_errors(form.kote.kote_size_right_e) }}
-            </dd>
-            <dt>{{'product_kote_size_right_f'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.kote.kote_size_right_f) }}cm
-                {{ form_errors(form.kote.kote_size_right_f) }}
-            </dd>
-            <dt>{{'product_kote_etc'|trans}}</dt>
-            <dd>
-                {{ form_widget(form.kote.kote_etc) }}
-                {{ form_errors(form.kote.kote_etc) }}
-            </dd>
-        </dl>
-    </div>
+<div class="size-area_img" id="kote">
+    <h2>{{'product_kote_title'|trans}}</h2>
+    <div class="inner">
+        <div class="size-box col-8">
+            <dl class="men_size">
+                <dt title="{{'product_kote_size_left_d'|trans}}">
+                    {{'product_kote_size_left_d_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm" title="{{'product_kote_size_left_d'|trans}}">
+                    {{ form_widget(form.kote.kote_size_left_d, {'attr':{'placeholder':'product_kote_size_left_d_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.kote.kote_size_left_d) }}
+                </dd>
+                <dt title="{{'product_kote_size_left_e'|trans}}">
+                    {{'product_kote_size_left_e_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.kote.kote_size_left_e, {'attr':{'placeholder':'product_kote_size_left_e_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.kote.kote_size_left_e) }}
+                </dd>
+                <dt title="{{'product_kote_size_left_f'|trans}}">
+                    {{'product_kote_size_left_f_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.kote.kote_size_left_f, {'attr':{'placeholder':'product_kote_size_left_f_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.kote.kote_size_left_f) }}
+                </dd>
+                <dt title="{{'product_kote_size_right_d'|trans}}">
+                    {{'product_kote_size_right_d_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.kote.kote_size_right_d, {'attr':{'placeholder':'product_kote_size_right_d_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.kote.kote_size_right_d) }}
+                </dd>
+                <dt title="{{'product_kote_size_right_e'|trans}}">
+                    {{'product_kote_size_right_e_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.kote.kote_size_right_e, {'attr':{'placeholder':'product_kote_size_right_e_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.kote.kote_size_right_e) }}
+                </dd>
+                <dt title="{{'product_kote_size_right_f'|trans}}">
+                    {{'product_kote_size_right_f_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.kote.kote_size_right_f, {'attr':{'placeholder':'product_kote_size_right_f_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.kote.kote_size_right_f) }}
+                </dd>
+                <dt>
+                    {{'product_kote_etc'|trans}}
+                </dt>
+                <dd class="ets">
+                    {{ form_widget(form.kote.kote_etc) }}
+                    {{ form_errors(form.kote.kote_etc) }}
+                </dd>
+            </dl>
+        </div>    
+        <div class="image col-4">
+            <img src="{{ asset('assets/img/product/kote.png') }}">
 
-    <div class="col-4">
-        <img src="{{ asset('assets/img/product/kote.png') }}">
-
+        </div>
     </div>
 </div>
 

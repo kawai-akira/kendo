@@ -13,34 +13,45 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-8">
-        <h2>{{'product_men_title'|trans}}</h2>
-        <dl class="men_size">
-            <dt>{{'product_men_size_a'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.men.men_size_a) }}cm
-                {{ form_errors(form.men.men_size_a) }}
-            </dd>
-        </dl>
-            <dt>{{'product_men_size_b'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.men.men_size_b) }}cm
-                {{ form_errors(form.men.men_size_b) }}
-            </dd>
-            <dt>{{'product_men_size_c'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.men.men_size_c) }}cm
-                {{ form_errors(form.men.men_size_c) }}
-            </dd>
-            <dt>{{'product_men_etc'|trans}}</dt>
-            <dd>
-                {{ form_widget(form.men.men_etc) }}
-                {{ form_errors(form.men.men_etc) }}
-            </dd>
-        </dl>    
-    </div>
-    <div class="col-4">
-        <img src="{{ asset('assets/img/product/men.png') }}">
-    </div>
+<div class="size-area_img" id="men">
+    <h2>{{'product_men_title'|trans}}</h2>
+    <div class="inner">
+        <div class="size-box col-8">
+            <dl class="men_size">
+                <dt title="product_men_size_a">
+                    {{'product_men_size_a_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.men.men_size_a, {'attr':{'placeholder':'product_men_size_a_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.men.men_size_a) }}
+                </dd>
+            </dl>
+                <dt title="{{'product_men_size_b'|trans}}">
+                    {{'product_men_size_b_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.men.men_size_b, {'attr':{'placeholder':'product_men_size_b_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.men.men_size_b) }}
+                </dd>
+                <dt title="{{'product_men_size_c'|trans}}">
+                    {{'product_men_size_c_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.men.men_size_c, {'attr':{'placeholder':'product_men_size_c_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.men.men_size_c) }}
+                </dd>
+                <dt>{{'product_men_etc'|trans}}</dt>
+                <dd class="ets">
+                    {{ form_widget(form.men.men_etc) }}
+                    {{ form_errors(form.men.men_etc) }}
+                </dd>
+            </dl>    
+        </div>
+        <div class="image col-4">
+            <img src="{{ asset('assets/img/product/men.png') }}">
+        </div>
+    </div>    
 </div>

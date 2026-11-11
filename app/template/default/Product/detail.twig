@@ -109,12 +109,6 @@
             width:90%;
             display:inline-block;
         }
-        .invalid-feedback {
-            color: #FFF;
-            background: #ff4f4f;
-            width: 90%;
-        }
-
         @media only screen and (min-width: 768px) {
             .ec-headingTitle
             {
@@ -324,7 +318,6 @@
         <div class="ec-grid2">
             <div class="ec-grid2__cell">
                 <div class="ec-sliderItemRole">
-
                     <div class="item_visual">
                         {% for ProductImage in Product.ProductImage %}
                             <div class="slide-item"><img src="{{ asset(ProductImage, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}" width="550" height="550"{% if loop.index > 1 %} loading="lazy"{% endif %}></div>
@@ -418,7 +411,6 @@
                     <div class="sns_button_area">
 						<p id="detail_social_button" class="sns_area">{#{include('Product/Parts/SocalBtn.twig')|raw}#}</p>
 					</div>
- 
                     {% if BaseInfo.option_favorite_product %}
                         <form action="{{ url('product_add_favorite', {id:Product.id}) }}" method="post">
                             <div class="ec-productRole__btn">
@@ -434,18 +426,23 @@
                             </div>
                         </form>
                     {% endif %}
-                    <div class="ec-productRole__description">{{ Product.description_detail|raw|nl2br }}
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="ec-grid2">
-            <div class="ec-grid2__cell">
-                {# Product/Parts/ItemDetailArea.twig #}
+        <div class="ec-grid2 grid3">
+            <div class="ec-grid2__cell grid3_detail">
+                    <div class="ec-productRole__description">
+                        {{ Product.description_detail|raw|nl2br }}
+                    </div>
+                {# フリーエリア #}
+                {% if Product.freearea %}
+                    <div class="ec-productRole__description">
+                        {{ include(template_from_string(Product.freearea|raw|nl2br), sandboxed = true) }}
+                    </div>
+                {% endif %}
                 {{ ItemDetail(Product)|raw}}
-
             </div>
-            <div class="ec-grid2__cell">
+            <div class="ec-grid2__cell input_area">
                 {% if not form.vars.valid %}
                     <div class="alert alert-danger" role="alert">
                         <p><strong>入力内容にエラーがあります。修正してください。</strong></p>
@@ -496,19 +493,13 @@
                             {% endif %}
                         </div>
 
-                        {# フリーエリア #}
-                        {% if Product.freearea %}
-                            <div class="ec-productRole__description">
-                                {{ include(template_from_string(Product.freearea|raw|nl2br), sandboxed = true) }}
-                            </div>
-                        {% endif %}
 
 
                     {# 性別 #}
                     {{ SexForm(Product,form)|raw }} 
                     {# 身長 #}
-                    {{ HeightForm(Product,form)|raw }}     
-                    {#　面 #}
+                    {{ HeightForm(Product,form)|raw }}
+                      {#　面 #}
                     {{ MenForm(Product,form)|raw }}
                     {#　小手 #}
                     {{ KoteForm(Product,form)|raw }}
@@ -530,8 +521,7 @@
                     {{ ShinaiForm(Product,form)|raw }}
                     {# ゼッケン #}
                     {{ ZekkenForm(Product,form)|raw }}
-
-                    <div class="ec-productRole__actions">
+                    <div class="ec-productRole__actions" id="quantity_area">
                         <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
                             {{ form_widget(form.quantity) }}
                             {{ form_errors(form.quantity) }}
@@ -552,8 +542,6 @@
                                 </button>
                             </div>
                     {% endif %}
-
-{#
                     <div class="ec-modal">
                         <div class="ec-modal-overlay">
                             <div class="ec-modal-wrap">
@@ -568,12 +556,21 @@
                             </div>
                         </div>
                     </div>
-#}
                 </form>
             </div>
         </div>
         <div style="display:hidden" id="redirect_review"></div>
-
     </div>
+    <div class="scroll_button">
+{#}
 
+        {% if Product.stock_find %}
+            <div class="ec-productRole__btn">
+                <button type="button" class="ec-blockBtn--action add-cart" onclick="form01Submit()" >
+                    {{ 'カートに入れる'|trans }}
+                </button>
+            </div>
+        {% endif %}
+#}
+    </div>
 {% endblock %}

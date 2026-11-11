@@ -12,23 +12,23 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-12">
+<div class="size-area" id="tare">
+    <div class="size-box">
         <h2>{{'product_tare_title'|trans}}</h2>
         <dl class="tare_size">
-            <dt>{{'product_tare_size_waist'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.tare.tare_size_waist) }}cm
+            <dt>{{'product_tare_size_waist'|trans}}
+                <span class="required">必須</span>
+            </dt>
+            <dd class="input_cm">
+                {{ form_widget(form.tare.tare_size_waist) }}<span>cm</span>
                 {{ form_errors(form.tare.tare_size_waist) }}
             </dd>
             <dt>{{'product_tare_etc'|trans}}</dt>
-            <dd>
+            <dd class="ets">
                 {{ form_widget(form.tare.tare_etc) }}
                 {{ form_errors(form.tare.tare_etc) }}
             </dd>
         </dl>    
-    </div>
-    <div class="col-5">
     </div>
 </div>
 

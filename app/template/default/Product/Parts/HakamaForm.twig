@@ -13,28 +13,36 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-8">
-        <h2>{{'product_hakama_title'|trans}}</h2>
-        <dl class="hakama_size">
-            <dt>{{'product_hakama_size_waist'|trans}}
-            <dd class="input">
-                {{ form_widget(form.hakama.hakama_size_waist) }}cm
-                {{ form_errors(form.hakama.hakama_size_waist) }}
-            </dd>
-            <dt>{{'product_hakama_size_length'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.hakama.hakama_size_length) }}cm
-                {{ form_errors(form.hakama.hakama_size_length) }}
-            </dd>
-            <dt>{{'product_hakama_etc'|trans}}</dt>
-            <dd>
-                {{ form_widget(form.hakama.hakama_etc) }}
-                {{ form_errors(form.hakama.hakama_etc) }}
-            </dd>
-        </dl>    
-    </div>
-    <div class="col-4">
-        <img src="{{ asset('assets/img/product/hakama.png') }}">
-    </div>
+<div class="size-area_img" id="hakama">
+    <h2>{{'product_hakama_title'|trans}}</h2>
+    <div class="inner">    
+        <div class="size-box col-8">    
+            <dl class="hakama_size">
+                <dt title="{{'product_hakama_size_waist'|trans}}">
+                    {{'product_hakama_size_waist_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>    
+                <dd class="input_cm">
+                    {{ form_widget(form.hakama.hakama_size_waist, {'attr':{'placeholder':'product_hakama_size_waist_caution'}}) }}<span>cm</span>
+                    {{ form_errors(form.hakama.hakama_size_waist) }}
+                </dd>
+                <dt title="{{'product_hakama_size_length'|trans}}">
+                    {{'product_hakama_size_length_name'|trans}}
+                    <span class="required">必須</span>
+                </dt>
+                <dd class="input_cm">
+                    {{ form_widget(form.hakama.hakama_size_length, {'attr':{'placeholder':'product_hakama_size_length'}}) }}<span>cm</span>
+                    {{ form_errors(form.hakama.hakama_size_length) }}
+                </dd>
+                <dt>{{'product_hakama_etc'|trans}}</dt>
+                <dd class="ets">
+                    {{ form_widget(form.hakama.hakama_etc) }}
+                    {{ form_errors(form.hakama.hakama_etc) }}
+                </dd>
+            </dl>    
+        </div>
+        <div class="image col-4">
+            <img src="{{ asset('assets/img/product/hakama.png') }}">
+        </div>
+    </div>    
 </div>

@@ -29,22 +29,44 @@ product_common_height: 身長
 product_men_title: 面サイズ
 
 product_men_size_a: 面サイズA (あご先〜耳前〜つむじの周囲)
+product_men_size_a_name: 面サイズA
+product_men_size_a_caution:  あご先〜耳前〜つむじの周囲
 product_men_size_b: 面サイズB (まゆ上ハチマキの位置の周囲)
-product_men_size_c: 面サイズC (あご先〜目の物見高さ)
+product_men_size_b_name: 面サイズB
+product_men_size_b_caution: まゆ上ハチマキの位置の周囲
+product_men_size_c: 面サイズC (あご先〜目の物見高さ
+product_men_size_c_name: 面サイズC
+product_men_size_c_caution: あご先〜目の物見高さ
 product_men_height: 身長
 product_men_etc: 面その他希望
 product_kote_title: 小手サイズ
 product_kote_size_left_d: 小手サイズ左D(親指以外の指付け根の周囲)
+product_kote_size_left_d_name: 小手サイズ左D
+product_kote_size_left_d_caution: 親指以外の指付け根の周囲
 product_kote_size_left_e: 小手サイズ左E (親指付け根の周囲)
+product_kote_size_left_e_name: 小手サイズ左E
+product_kote_size_left_e_caution: 親指付け根の周囲
 product_kote_size_left_f: 小手サイズ左F (中指先〜手の平付け根の長さ)
+product_kote_size_left_f_name: 小手サイズ左F
+product_kote_size_left_f_caution: 中指先〜手の平付け根の長さ
 product_kote_size_right_d: 小手サイズ右D (親指以外の指付け根の周囲)
+product_kote_size_right_d_name: 小手サイズ右D
+product_kote_size_right_d_caution: 親指以外の指付け根の周囲
 product_kote_size_right_e: 小手サイズ右E (親指付け根の周囲)
+product_kote_size_right_e_name: 小手サイズ右E
+product_kote_size_right_e_caution: 親指付け根の周囲
 product_kote_size_right_f: 小手サイズ右F (中指先〜手の平付け根の長さ)
+product_kote_size_right_f_name: 小手サイズ右F
+product_kote_size_right_f_caution: 中指先〜手の平付け根の長さ
 product_kote_etc: 小手その他希望
 product_dou_title: 胴サイズ
 product_dou_size_bust: 胸囲
 product_dou_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_dou_size_waist_name: ウエスト最大箇所
+product_dou_size_waist_caution: 不明の場合「0」と記入
 product_dou_size_g: 胴サイズG (胴台の幅)
+product_dou_size_g_name: 胴サイズG
+product_dou_size_g_caution: 胴台の幅
 product_dou_etc: 胴その他希望
 product_tare_title: 垂サイズ
 product_tare_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
@@ -55,7 +77,11 @@ product_doui_hope: サイズ希望
 product_doui_etc: 道衣その他希望
 product_hakama_title: 袴サイズ
 product_hakama_size_waist: ウエスト最大箇所 (不明の場合「0」と記入)
+product_hakama_size_waist_name: ウエスト最大箇所
+product_hakama_size_waist_caution: 不明の場合「0」と記入
 product_hakama_size_length: 袴サイズH ( =前紐下丈 / 不明の場合「0」と記入)
+product_hakama_size_length_name: 袴サイズH
+product_hakama_size_length_caution: =前紐下丈 / 不明の場合「0」と記入
 product_hakama_etc: 袴その他希望 (サイズ指定等)
 product_shinai_etc: 竹刀その他希望
 product_zekken_etc: 垂名札その他希望

@@ -12,17 +12,18 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-6">
+<div class="size-area" id="height">
+    <div class="size-box">
         <dl class="sex_size">
-            <dt>{{'product_common_height'|trans}}</dt>
-            <dd class="input">
-                {{ form_widget(form.height.height ) }}cm
+            <dt>
+                {{'product_common_height'|trans}}
+                <span class="required">必須</span>
+            </dt>
+            <dd class="input_cm">
+                {{ form_widget(form.height.height ) }}<span>cm</span>
                 {{ form_errors(form.height.height ) }}
             </dd>
          </dl>    
-    </div>
-    <div class="col-5">
     </div>
 </div>
 

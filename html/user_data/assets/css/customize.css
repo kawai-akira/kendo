@@ -704,7 +704,85 @@ width: 63%;
 .blockLineBtn img{
     width:100%;
 }
-/** kenjoy #################################################################*/
+/** 商品詳細　#########################*/
+    #page_product_detail .invalid-feedback {
+            color: #FFF;
+            background: #ff4f4f;
+            width: 90%;
+        }
+    #page_product_detail .grid3{
+            display:flex;
+            flex-direction: column-reverse;
+        }
+    #page_product_detail .ec-grid2__cell{
+            width:100%;
+        }
+    .input_area{
+        margin: 30px 0 50px;
+    }    
+    .input_area h2{
+        padding: 20px 0 10px 20px;
+        margin:0;
+    }
+    .input_area .size-area{
+        padding:10px 10px 5px;
+        background-color: #fff8ea;
+    }
+    .input_area #doui,
+    .input_area #tare{
+        margin-bottom: 20px;
+    }
+    .input_area #sex,
+    .input_area #height{
+        background-color: #fff;
+    }
+
+    .input_area .size-area_img{
+        background-color: #fff8ea;
+        margin-bottom: 20px;
+    }
+    .input_area .size-area_img .inner{
+        display:flex;
+        flex-direction: row-reverse;
+        background-color:#fff8ea;
+        }
+    #page_product_detail .required{
+        display: inline-block;
+        width: 40px;
+        line-height: 24px;
+        background-color: #bb0000;
+        color:#fff;
+        text-align: center;
+        font-size:12px;
+        margin-left:5px;
+    }
+    .input_area dt{
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 2px;
+    }
+    .input_area .input_cm input{
+        max-width: 210px;
+        display: inline-block;
+    }
+    .input_area .ec-select select{
+        background-color: #fff;
+    }
+    .input_area dd.ets{
+        padding-right: 10px;
+    }
+    .input_area .input_cm span{
+        font-size: 12px;;
+    }
+    #page_product_detail .input_area .size-area_img .image{
+        padding:2%;
+    }
+
+    #page_product_detail .size-area_img .image img{
+
+    }
+
+        /** kenjoy #################################################################*/
 .kenjoy_area {
     font-size:14px;
 }
@@ -943,8 +1021,6 @@ width: 63%;
 }
 
 @media only screen and (min-width: 768px){
-
-    
     .ec-layoutRole .ec-layoutRole__contents{
         display: flex;
     }
@@ -1030,7 +1106,17 @@ width: 63%;
     #ProductRankingsp{
         display: none;
     }
-}
+    /** 商品詳細 */
+    #page_product_detail .ec-grid2__cell{
+        width:50%;
+    }
+    #page_product_detail .grid3 {
+        flex-direction: row;
+    }
+    #page_product_detail .grid3_detail{
+        padding: 0 10px;
+    }
+ }
 @media only screen and (min-width: 992px){
    .headerNaviRole_left{
         margin-left: 0;

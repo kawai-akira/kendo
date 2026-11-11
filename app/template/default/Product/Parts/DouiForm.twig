@@ -13,28 +13,32 @@
  #
  #                                                  ≡≡≡┏(＾o＾)┛
  ##############################################################}
-<div class="size-area row">
-    <div class="size-box col-8">
+<div class="size-area" id="doui">
+    <div class="size-box">
         <h2>{{'product_doui_title'|trans}}</h2>
         <dl class="doui_size">
-            <dt>{{'product_doui_type'|trans}}
+            <dt>
+                {{'product_doui_type'|trans}}
+                <span class="required">必須</span>
+            <dt>
             <dd class="input">
                 {{ form_widget(form.doui.doui_type) }}
                 {{ form_errors(form.doui.doui_type) }}
             </dd>
-            <dt>{{'product_doui_hope'|trans}}</dt>
+            <dt>
+                {{'product_doui_hope'|trans}}
+                <span class="required">必須</span>
+            </dt>
             <dd class="input">
                 {{ form_widget(form.doui.doui_hope) }}
                 {{ form_errors(form.doui.doui_hope) }}
             </dd>
             <dt>{{'product_doui_etc'|trans}}</dt>
-            <dd>
+            <dd class="ets">
                 {{ form_widget(form.doui.doui_etc) }}
                 {{ form_errors(form.doui.doui_etc) }}
             </dd>
         </dl>    
-    </div>
-    <div class="col-4">
     </div>
 </div>
 

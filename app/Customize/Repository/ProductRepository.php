@@ -109,7 +109,7 @@ class ProductRepository extends \Eccube\Repository\ProductRepository
 
     /**
      * get query builder.
-     *
+     * フロント商品一覧
      * @param array{
      *         category_id?:Category,
      *         name?:string,
