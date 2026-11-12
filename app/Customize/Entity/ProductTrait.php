@@ -19,6 +19,7 @@
     use Eccube\Entity\Product;
     use Customize\Entity\Master\ProductType;
     use Customize\Entity\Shop;
+    use Eccube\Entity\Category;
     
 
 
@@ -491,4 +492,26 @@
 
         return $rate;
     }
+    public function ProductOption(){
+        $OprionCategory = array_merge(Category::MEN,Category::KOTE,Category::DOU,Category::TARE,Category::DOUI,Category::HAKAMA,Category::SHINAI);
+        $SetCategory    = [Category::SET,Category::SET2];
+        $i = 0;
+        foreach ($this->ProductCategories as $productCategory) {
+            if(in_array($productCategory->getCategoryId(), $SetCategory)){
+                  return true;      
+            }
+            if(in_array($productCategory->getCategoryId(), $OprionCategory)){
+                $i++;
+
+                if($i>1){
+                    return  true ;
+                }
+            } 
+        }
+            return false;
+        }
+
+        
+
+    
     }

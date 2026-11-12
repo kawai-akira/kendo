@@ -112,6 +112,13 @@ class AddCartType extends \Customize\Form\Type\ItemOptionType
                         ]),
                         new Assert\Regex(['pattern' => '/^\d+$/']),
                     ],
+                ])
+                ->add('quantity_scroll', IntegerType::class, [
+                    'mapped'=>false,
+                    'attr' => [
+                        'min' => 1,
+                        'maxlength' => $this->config['eccube_int_len'],
+                    ]
                 ]);
             if ($Product && $Product->getProductClasses()) {
                 if (!is_null($Product->getClassName1())) {

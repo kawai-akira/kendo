@@ -235,7 +235,8 @@ private $OptionService;
             }
 
 
-            }
+        }
+
 
         $is_favorite = false;
         if ($this->isGranted('ROLE_USER')) {

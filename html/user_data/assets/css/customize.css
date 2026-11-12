@@ -705,84 +705,89 @@ width: 63%;
     width:100%;
 }
 /** 商品詳細　#########################*/
-    #page_product_detail .invalid-feedback {
-            color: #FFF;
-            background: #ff4f4f;
-            width: 90%;
-        }
-    #page_product_detail .grid3{
-            display:flex;
-            flex-direction: column-reverse;
-        }
-    #page_product_detail .ec-grid2__cell{
-            width:100%;
-        }
-    .input_area{
-        margin: 30px 0 50px;
-    }    
-    .input_area h2{
-        padding: 20px 0 10px 20px;
-        margin:0;
+#page_product_detail .invalid-feedback {
+        color: #FFF;
+        background: #ff4f4f;
+        width: 90%;
     }
-    .input_area .size-area{
-        padding:10px 10px 5px;
-        background-color: #fff8ea;
-    }
-    .input_area #doui,
-    .input_area #tare{
-        margin-bottom: 20px;
-    }
-    .input_area #sex,
-    .input_area #height{
-        background-color: #fff;
-    }
-
-    .input_area .size-area_img{
-        background-color: #fff8ea;
-        margin-bottom: 20px;
-    }
-    .input_area .size-area_img .inner{
+#page_product_detail .grid3{
         display:flex;
-        flex-direction: row-reverse;
-        background-color:#fff8ea;
-        }
-    #page_product_detail .required{
-        display: inline-block;
-        width: 40px;
-        line-height: 24px;
-        background-color: #bb0000;
-        color:#fff;
-        text-align: center;
-        font-size:12px;
-        margin-left:5px;
+        flex-direction: column-reverse;
     }
-    .input_area dt{
-        font-size: 15px;
-        font-weight: 500;
-        margin-bottom: 2px;
+#page_product_detail .ec-grid2__cell{
+        width:100%;
     }
-    .input_area .input_cm input{
-        max-width: 210px;
-        display: inline-block;
-    }
-    .input_area .ec-select select{
-        background-color: #fff;
-    }
-    .input_area dd.ets{
-        padding-right: 10px;
-    }
-    .input_area .input_cm span{
-        font-size: 12px;;
-    }
-    #page_product_detail .input_area .size-area_img .image{
-        padding:2%;
-    }
+.input_area{
+    margin: 30px 0 50px;
+}    
+.input_area h2{
+    padding: 20px 0 10px 20px;
+    margin:0;
+}
+.input_area .size-area{
+    padding:10px 10px 5px;
+    background-color: #fff8ea;
+}
+.input_area #doui,
+.input_area #tare{
+    margin-bottom: 20px;
+}
+.input_area #sex,
+.input_area #height{
+    background-color: #fff;
+}
 
-    #page_product_detail .size-area_img .image img{
-
+.input_area .size-area_img{
+    background-color: #fff8ea;
+    margin-bottom: 20px;
+}
+.input_area .size-area_img .inner{
+    display:flex;
+    flex-direction: row-reverse;
+    background-color:#fff8ea;
     }
+#page_product_detail .required{
+    display: inline-block;
+    width: 40px;
+    line-height: 24px;
+    background-color: #bb0000;
+    color:#fff;
+    text-align: center;
+    font-size:12px;
+    margin-left:5px;
+}
+.input_area dt{
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.input_area .input_cm input{
+    max-width: 210px;
+    display: inline-block;
+}
+.input_area .ec-select select{
+    background-color: #fff;
+}
+.input_area dd.ets{
+    padding-right: 10px;
+}
+.input_area .input_cm span{
+    font-size: 12px;;
+}
+#page_product_detail .input_area .size-area_img .image{
+    padding:2%;
+}
+#page_product_detail .product_scroll_button{
+    display: none;
+    position:fixed;
+    /*right:30px;*/
+    bottom:220px;
+    background-color: #fff;
+    width:100%;
+    padding:10px 20px;
+}
 
-        /** kenjoy #################################################################*/
+    /** kenjoy #################################################################*/
 .kenjoy_area {
     font-size:14px;
 }
@@ -992,6 +997,11 @@ width: 63%;
   border-radius: 12px;     /* 動画の四隅をほんのり丸くしてモダンに見せる（不要なら削除してOK） */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* 軽い影をつけて立体感を出す（不要なら削除してOK） */
 }
+#product_review_area .review_list .recommend_level,
+#product_review_area .recommend_average{
+    color:#F3B943 !important;
+}
+
 
 @media only screen and (min-width: 420px){
     .ec-headerNaviRole__right .login_area{
@@ -1095,7 +1105,6 @@ width: 63%;
         margin: 0 20px 50px 0;
 
     }
-
     .footer_container .footer_box01{
         margin-top: 0;
         width:54%;
@@ -1115,6 +1124,16 @@ width: 63%;
     }
     #page_product_detail .grid3_detail{
         padding: 0 10px;
+    }
+    #page_product_detail .product_scroll_button{
+        right:30px;
+        max-width: 140px;
+        width: auto;
+        padding:5px;
+    }
+    #page_product_detail .product_scroll_button button{
+       max-width: 140px;
+
     }
  }
 @media only screen and (min-width: 992px){

@@ -205,83 +205,43 @@
         });
     </script>
     <script>
-        $(function() {
-{#
-            $('.add-cart').on('click', function(event) {
-                {% if form.classcategory_id1 is defined %}
-                // 規格1フォームの必須チェック
-                if ($('#classcategory_id1').val() == '__unselected' || $('#classcategory_id1').val() == '') {
-                    $('#classcategory_id1')[0].setCustomValidity('{{ '項目が選択されていません'|trans }}');
-                    return true;
-                } else {
-                    $('#classcategory_id1')[0].setCustomValidity('');
-                }
-                {% endif %}
 
-                {% if form.classcategory_id2 is defined %}
-                // 規格2フォームの必須チェック
-                if ($('#classcategory_id2').val() == '__unselected' || $('#classcategory_id2').val() == '') {
-                    $('#classcategory_id2')[0].setCustomValidity('{{ '項目が選択されていません'|trans }}');
-                    return true;
-                } else {
-                    $('#classcategory_id2')[0].setCustomValidity('');
-                }
-                {% endif %}
+   $(function() {
+    {% if true == Product.ProductOption() %}
+      $(window).on('scroll resize', function() {
+        const scroll = $(this).scrollTop();       // 現在のスクロール量
+        const windowHeight = $(this).height();    // ブラウザの画面の高さ
+        const $target = $('#quantity');                 // 目印の要素
+        const $button = $('.product_scroll_button');                   // 表示・非表示を切り替える要素
 
-                // 個数フォームのチェック
-                if ($('#quantity').val() < 1) {
-                    $('#quantity')[0].setCustomValidity('{{ '1以上で入力してください。'|trans }}');
-                    return true;
-                } else {
-                    //$('#quantity')[0].setCustomValidity('');
-                }
+        if ($target.length === 0 || $button.length === 0) return;
+        const targetTop = $target.offset().top;
+        const istargetVisible = (scroll + windowHeight) > targetTop;
 
-                event.preventDefault();
-                $form = $('#form1');
-                $.ajax({
-                    url: $form.attr('action'),
-                    type: $form.attr('method'),
-                    data: $form.serialize(),
-                    dataType: 'json',
-                    beforeSend: function(xhr, settings) {
-                        // Buttonを無効にする
-                        $('.add-cart').prop('disabled', true);
-                    }
-                }).done(function(data) {
-                    // レスポンス内のメッセージをalertで表示
-                    $.each(data.messages, function() {
-                        $('#ec-modal-header').text(this);
-                    });
-
-                    $('.ec-modal').show()
-
-                    // カートブロックを更新する
-                    $.ajax({
-                        url: "{{ url('block_cart') }}",
-                        type: 'GET',
-                        dataType: 'html'
-                    }).done(function(html) {
-                        $('.ec-headerRole__cart').html(html);
-                    });
-                }).fail(function(data) {
-                    alert('{{ 'カートへの追加に失敗しました。'|trans }}');
-                }).always(function(data) {
-                    // Buttonを有効にする
-                    $('.add-cart').prop('disabled', false);
-                });
-            });
-#}
+        if (scroll > 300 && !istargetVisible) {
+            $button.fadeIn();
+        } else {
+            $button.fadeOut();
+        }
         });
-{#
-        $('.ec-modal-wrap').on('click', function(e) {
-            // モーダル内の処理は外側にバブリングさせない
-            e.stopPropagation();
-        });
-        $('.ec-modal-overlay, .ec-modal, .ec-modal-close, .ec-inlineBtn--cancel').on('click', function() {
-            $('.ec-modal').hide()
-        });
-#}
-    function form01Submit(){
+
+        $(window).trigger('scroll');
+    {% endif %}
+    {# エラーがある場合 スクロールする　 #}    
+    var $error = $('.invalid-feedback').first();
+        if ($error.length > 0) {
+            var headerHeight = 300; 
+            var position = $error.offset().top - headerHeight;
+            
+            $('html, body').animate({
+                scrollTop: position
+            }, 400);
+        }
+    });
+    function form01Submit(flg){
+        if(true == flg){
+          $('#quantity').val($('#quantity_scroll').val());
+        }
         $('#form01').submit();
     }     
     </script>
@@ -441,27 +401,27 @@
                     </div>
                 {% endif %}
                 {{ ItemDetail(Product)|raw}}
-            </div>
+            </div>            
             <div class="ec-grid2__cell input_area">
-                {% if not form.vars.valid %}
-                    <div class="alert alert-danger" role="alert">
-                        <p><strong>入力内容にエラーがあります。修正してください。</strong></p>
+                {% if not form.vars.valid  or errorMessages|length > 0 %}
+                    <div class="ec-alert-warning" role="alert">
+                        <div class="ec-alert-warning__icon">
+                            <img src="{{ asset('assets/icon/exclamation-white.svg') }}">
+                        </div>
+                        <div class="ec-alert-warning__text">
+                            入力内容にエラーがあります。修正してください。
+                        </div>
+                        {% if errorMessages|length > 0 %}
+                            {% for errorMessage in errorMessages %}
+                                    <p class="mt-2 pl-2 text-left text-white">{{ errorMessage }}</p>
+                            {% endfor %}
+                        {% endif %}    
                     </div>
                 {% endif %}
-
-                
-                {% if errorMessages|length > 0 %}
-                    <div>
-                        <div class="alert alert-danger" role="alert">
-                            <p><strong>内容にエラーがあります。剣道パークまでお問い合わせください。</strong></p>
-                        </div>
-                        {% for errorMessage in errorMessages %}
-                            <p class="mb-5">{{ errorMessage }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}     
                 <form action="{{ url('product_detail', {id:Product.id}) }}" method="post" id="form01" name="form01">
-                
+                {{ form_widget(form._token) }}
+                {{ form_widget(form.product_id) }}
+                {{ form_widget(form.ProductClass) }}
                     {% if Product.stock_find %}
                         <div class="ec-productRole__actions">
                             {% if form.classcategory_id1 is defined %}
@@ -492,8 +452,6 @@
                                 {% endif %}
                             {% endif %}
                         </div>
-
-
 
                     {# 性別 #}
                     {{ SexForm(Product,form)|raw }} 
@@ -527,11 +485,9 @@
                             {{ form_errors(form.quantity) }}
                         </div>
                     </div>
-                   {{ form_rest(form) }}
-                    {% endif %}
-                   {% if Product.stock_find %}
+                   {#{ form_rest(form) }#}
                             <div class="ec-productRole__btn">
-                                <button type="button" class="ec-blockBtn--action add-cart" onclick="form01Submit()" >
+                                <button type="button" class="ec-blockBtn--action add-cart" onclick="form01Submit(false)" >
                                     {{ 'カートに入れる'|trans }}
                                 </button>
                             </div>
@@ -542,35 +498,23 @@
                                 </button>
                             </div>
                     {% endif %}
-                    <div class="ec-modal">
-                        <div class="ec-modal-overlay">
-                            <div class="ec-modal-wrap">
-                                <span class="ec-modal-close"><span class="ec-icon"><img src="{{ asset('assets/icon/cross-dark.svg') }}" alt=""/></span></span>
-                                <div id="ec-modal-header" class="text-center">{{ 'カートに追加しました。'|trans }}</div>
-                                <div class="ec-modal-box">
-                                    <div class="ec-role">
-                                        <span class="ec-inlineBtn--cancel">{{ 'お買い物を続ける'|trans }}</span>
-                                        <a href="{{ url('cart') }}" class="ec-inlineBtn--action">{{ 'カートへ進む'|trans }}</a>
-                                    </div>
-                                </div>
+                    <div class="product_scroll_button">
+                        {% if Product.stock_find %}
+                            <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
+                                {{ form_widget(form.quantity_scroll)}}
+                                {{ form_errors(form.quantity_scroll)}}
                             </div>
-                        </div>
+                            <div class="ec-productRole__btn">
+                                <button type="button" class="ec-blockBtn--action add-cart" onclick="form01Submit(true)" >
+                                    {{ 'カートに入れる'|trans }}
+                                </button>
+                            </div>
+                        {% endif %}
                     </div>
                 </form>
             </div>
         </div>
         <div style="display:hidden" id="redirect_review"></div>
     </div>
-    <div class="scroll_button">
-{#}
 
-        {% if Product.stock_find %}
-            <div class="ec-productRole__btn">
-                <button type="button" class="ec-blockBtn--action add-cart" onclick="form01Submit()" >
-                    {{ 'カートに入れる'|trans }}
-                </button>
-            </div>
-        {% endif %}
-#}
-    </div>
 {% endblock %}
