@@ -24,7 +24,7 @@
         {% if is_granted('ROLE_USER') %}
             <div class="item">
                 <a href="{{ url('mypage') }}">
-                    <i class="ec-headerNav__itemIcon fas fa-user fa-fw"></i>
+                    <img src="{{ asset('assets/img/common/mypage.png', 'user_data')}}" alt="マイページ">
                     <span class="ec-headerNav__itemLink">{{ 'マイページ'|trans }}</span>
                 </a>
             </div>

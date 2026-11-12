@@ -501,7 +501,7 @@
                     <div class="product_scroll_button">
                         {% if Product.stock_find %}
                             <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
-                                {{ form_widget(form.quantity_scroll)}}
+                                {{ form_widget(form.quantity_scroll,{'value': form.quantity.vars.value ?: 1}) }}
                                 {{ form_errors(form.quantity_scroll)}}
                             </div>
                             <div class="ec-productRole__btn">

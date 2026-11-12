@@ -105,6 +105,9 @@ a{
 .ec-headerNav .favorite img{
     max-width: 28px;
 }
+.ec-headerNav .mypage img{
+    max-width: 28px;
+}
 .ec-cartNaviWrap .ec-cartNavi .ec-cartNavi__badge{
     position: absolute;
     top:8px;
@@ -295,7 +298,6 @@ a{
     width:33%;
     text-align: center;
     color:#000;
-    text-shadow: 2px 2px 2px #fff;
     font-weight: 600;
 }
 
@@ -303,6 +305,9 @@ a{
     max-width: 23px;
 }
 .movile_nav_header .head .favorite img{
+    max-width: 28px;
+}
+.movile_nav_header .head .mypage img{
     max-width: 28px;
 }
 .movile_nav_header .ec-itemNav{
